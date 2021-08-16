@@ -1,85 +1,34 @@
 {
-    "nodes": [
-      {
-        "id": "1",
-        "title": "Hello friend",
-        "weight": 1200,
-        "label": "здравствуй, Человек",
-        "y": 500,
-        "x": 250
-      },
-      {
-        "id": "2",
-        "title": "Exit",
-        "weight": 1200,
-        "label": "уйти",
-        "y": 100,
-        "x": 50,
-        "children": [{
-          "name": "Exit",
-          "label": "Exit"
-          }, {
-          "name": "Cancel",
-          "label": "Cancel"
-          }]
-      },
-      {
-        "id": "3",
-        "title": "Say Hello",
-        "weight": 1200,
-        "label": "Сказать привет",
-        "y": -150,
-        "x": 50,
-        "children": [{
-            "id": "4",
-            "name": "Hello1",
-            "label": "Привет 1",
-            "weight": 1200,
-            "y": 300,
-            "x": 450
-            }, {
-            "id": "5",
-            "name": "Hello2",
-            "label": "Привет 2",
-            "weight": 1200,
-            "y": 350,
-            "x": 550
-            }, {
-            "id": "6",
-            "name": "Hello3",
-            "label": "Привет 3",
-            "weight": 1200,
-            "y": 400,
-            "x": 450
-            }],
-        "childrenLinks": [
-          {
-            "value": 5,
-            "source": "3",
-            "target": "4"
-          },
-          {
-            "value": 5,
-            "source": "3",
-            "target": "5"
-          },
-          {
-            "value": 5,
-            "source": "3",
-            "target": "6"
-          }
-        ]
-        }],
-    "links": [
-      {
-        "value": 5,
-        "source": "1",
-        "target": "2"
-      },
-      {
-        "value": 5,
-        "source": "1",
-        "target": "3"
-      }
-    ]
-  }
+  "nodes": [
+    {
+      "id": "1",
+      "label": "1",
+      "parent": []
+    },
+    {
+      "id": "2",
+      "label": "2",
+      "parent": [1]
+    },
+    {
+      "id": "3",
+      "label": "3",
+      "parent": [1]
+    },
+    {
+      "id": "4",
+      "label": "4",
+      "parent": [2]
+    },
+    {
+      "id": "5",
+      "label": "5",
+      "parent": [2, 1]
+    },
+    {
+      "id": "6",
+      "label": "6",
+      "parent": [2]
+    }
+  ]
+}
