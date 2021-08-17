@@ -5,6 +5,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 	// var svgViewPort = [0, 0, width, height];
 	var activeDepth = 1;
+	var nodeRadius = width/20;
+	var playBubble = make_sound("sounds/bubble.mp3");
+
 
 	d3.json("json/graphdata.json", function(fileData) {
 		//data init
@@ -28,7 +31,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		
 		// console.log( (width/4 + width/2*(d.depth-1)) - width/2 );
-		
+
 
 		//svg init
 		const svg = d3.select("#my_data").append("svg")
@@ -37,8 +40,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		const slideForse = d3.forceX( d => (width/4 + width/2*(d.depth - activeDepth)) - width/2 ).strength(0.05);
 
 		const simulation = d3.forceSimulation(nodes)
-		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(200))
-		.force("charge", d3.forceManyBody().strength(-500))
+		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(160))
+		.force("charge", d3.forceManyBody().strength(-1200))
 		// .force("x", d3.forceX())//strength(0,1)
 		// .force("y", d3.forceY());
 		// .force("center", d3.forceCenter(width / 2, height / 2))
@@ -51,23 +54,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		const link = svg.append("g")
 		.attr("class", "links")
-		.attr("stroke", "#999")
-		.attr("stroke-opacity", 0.6)
 		.selectAll("line")
 		.data(links)
 		.enter().append("line")
-		.attr("stroke-width", d => Math.sqrt(d.value));
+		.attr("stroke-width", d => d.value);
 
 		const node = svg.append("g")
 		.attr("class", "nodes")
 		.selectAll("circle")
 		.data(nodes)
 		.enter().append("circle")
-		.attr("stroke", "#fff")
-		.attr("stroke-width", 20)
-		.attr("stroke-opacity", 0.5)
-		.attr("r", 50)
-		.attr("fill", "#fff")
+		.attr("r", nodeRadius)
+		.attr("stroke-width", nodeRadius*2)
 		.call(
 			d3.drag(simulation)
 			.on("start", dragstarted)
@@ -75,6 +73,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.on("end", dragended)
 		)
 		.on("click", function(d) {
+			playBubble();
+			makeActive(d);
 			activeDepth = d.depth;
 			simulation
 			.force("slideForse", slideForse)
@@ -91,11 +91,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.selectAll("text")
 		.data(nodes)
 		.enter().append("text")
-		.text(function(d, i) { return d.label })
-		.style("fill", "#555")
-		.style("font-family", "Arial")
-		.style("font-size", 12)
-		.style("pointer-events", "none");
+		.text(function(d, i) { return d.label });
 
 		simulation.on("tick", () => {
 			link
@@ -131,6 +127,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			d.fx = null;
 			d.fy = null;
 		}
+
+		function makeActive(d){
+			d3.selectAll('.nodes circle').classed("active", false);
+			// d.classed("active", true);
+		}
 	});
 
 	//resize
@@ -142,5 +143,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.attr("height", height)
 		.attr("viewBox", svgViewPort);
 	});
+
+	function make_sound(name){
+		var myAudio = new Audio;
+			myAudio.src = name; 
+		return function(){
+			myAudio.play(); 
+		}
+	}
 
 });
