@@ -2,10 +2,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var width = window.innerWidth;
 	var height = window.innerHeight;
+	var svgViewPort = [-width / 2, -height / 2, width, height];
+	// var svgViewPort = [0, 0, width, height];
+	var activeDepth = 1;
 
 	d3.json("json/graphdata.json", function(fileData) {
 		//data init
-		var nodes = [];
+		window.nodes = [];
 		var links = [];
 		fileData.nodes.forEach(function(currentValue, index, array) {
 			nodes.push(currentValue);
@@ -23,15 +26,28 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// console.dir( nodes );
 		// console.dir( links );
 
+		
+		// console.log( (width/4 + width/2*(d.depth-1)) - width/2 );
+		
+
 		//svg init
 		const svg = d3.select("#my_data").append("svg")
-		.attr("viewBox", [-width / 2, -height / 2, width, height]);
+		.attr("viewBox", svgViewPort);
+
+		const slideForse = d3.forceX( d => (width/4 + width/2*(d.depth - activeDepth)) - width/2 ).strength(0.05);
 
 		const simulation = d3.forceSimulation(nodes)
-		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015))
-		.force("charge", d3.forceManyBody().strength(-1500))
-		.force("x", d3.forceX())
-		.force("y", d3.forceY());
+		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(200))
+		.force("charge", d3.forceManyBody().strength(-500))
+		// .force("x", d3.forceX())//strength(0,1)
+		// .force("y", d3.forceY());
+		// .force("center", d3.forceCenter(width / 2, height / 2))
+		// .force("center", d3.forceCenter(0,0))
+		// .force("center", d3.forceCenter(0,0).strength(0.05));
+		.force("slideForse", slideForse)
+		.force("y", d3.forceY().strength(0.015))
+		// .force("x", d3.forceX(d => (width/4 + width/2*(d.depth-1)) - width/2 ).strength(0.005));
+		// simulation.force("x", d3.data(simulation.nodes()).forceX(d => (width/4 + width/2*(d.depth-1)) - width/2 ).strength(0.005));
 
 		const link = svg.append("g")
 		.attr("class", "links")
@@ -57,7 +73,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.on("start", dragstarted)
 			.on("drag", dragged)
 			.on("end", dragended)
-		);
+		)
+		.on("click", function(d) {
+			activeDepth = d.depth;
+			simulation
+			.force("slideForse", slideForse)
+			.alphaTarget(0.2);
+			// console.log(activeDepth);
+			return;
+		});
 
 		node.append("title")
 		.text(d => d.id);
@@ -116,7 +140,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		d3.select("#my_data svg")
 		.attr("width", width)
 		.attr("height", height)
-		.attr("viewBox", [-width / 2, -height / 2, width, height]);
+		.attr("viewBox", svgViewPort);
 	});
 
 });
