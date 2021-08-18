@@ -5,9 +5,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 	// var svgViewPort = [0, 0, width, height];
 	var activeDepth = 1;
-	var nodeRadius = width/20;
+	var nodeRadius = width/30;
 	var playBubble = make_sound("sounds/bubble.mp3");
 
+	window.simulationResize = function (){};
 
 	d3.json("json/graphdata.json", function(fileData) {
 		//data init
@@ -29,26 +30,34 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// console.dir( nodes );
 		// console.dir( links );
 
-		
-		// console.log( (width/4 + width/2*(d.depth-1)) - width/2 );
+		// console.log(a);
 
 
 		//svg init
 		const svg = d3.select("#my_data").append("svg")
 		.attr("viewBox", svgViewPort);
 
-		const slideForse = d3.forceX( d => (width/4 + width/2*(d.depth - activeDepth)) - width/2 ).strength(0.05);
+		const slideForse = d3.forceX( 
+			// d => (width/4 + width/2*(d.depth - activeDepth)) - width/2 
+			function (d){
+				console.log('width-'+width);
+				console.log((width/4 + width/2*(d.depth - activeDepth)) - width/2);
+				return (width/4 + width/2*(d.depth - activeDepth)) - width/2 
+			}
+			).strength(0.05);
+		var manyBodyForce = -width + (1200/width)*50;
+		if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
 
 		const simulation = d3.forceSimulation(nodes)
-		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(160))
-		.force("charge", d3.forceManyBody().strength(-1200))
+		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
+		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("x", d3.forceX())//strength(0,1)
 		// .force("y", d3.forceY());
 		// .force("center", d3.forceCenter(width / 2, height / 2))
 		// .force("center", d3.forceCenter(0,0))
 		// .force("center", d3.forceCenter(0,0).strength(0.05));
 		.force("slideForse", slideForse)
-		.force("y", d3.forceY().strength(0.015))
+		.force("y", d3.forceY().strength(0.015));
 		// .force("x", d3.forceX(d => (width/4 + width/2*(d.depth-1)) - width/2 ).strength(0.005));
 		// simulation.force("x", d3.data(simulation.nodes()).forceX(d => (width/4 + width/2*(d.depth-1)) - width/2 ).strength(0.005));
 
@@ -132,21 +141,43 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			d3.selectAll('.nodes circle').classed("active", false);
 			// d.classed("active", true);
 		}
+
+		window.simulationResize = function (){
+			width = window.innerWidth;
+			height = window.innerHeight;
+
+			nodeRadius = width/30;
+			d3.selectAll('.nodes circle')
+			.attr("r", nodeRadius)
+			.attr("stroke-width", nodeRadius*2);
+
+			simulation
+			// .force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
+			// .force("charge", d3.forceManyBody().strength( manyBodyForce ))
+			.force("slideForse", slideForse)
+			// .force("y", d3.forceY().strength(0.015))
+			.alphaTarget(0.2);
+		}
 	});
 
 	//resize
 	window.addEventListener('resize', function(event){
+
 		width = window.innerWidth;
 		height = window.innerHeight;
+		svgViewPort = [-width / 2, -height / 2, width, height];
 		d3.select("#my_data svg")
 		.attr("width", width)
 		.attr("height", height)
 		.attr("viewBox", svgViewPort);
+
+		simulationResize();
 	});
 
 	function make_sound(name){
 		var myAudio = new Audio;
 			myAudio.src = name; 
+			myAudio.volume = 0.1;
 		return function(){
 			myAudio.play(); 
 		}
