@@ -32,6 +32,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		// console.log(a);
 
+		var activeRadius = nodeRadius*2;
 
 		//svg init
 		const svg = d3.select("#my_data").append("svg")
@@ -40,8 +41,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		const slideForse = d3.forceX( 
 			// d => (width/4 + width/2*(d.depth - activeDepth)) - width/2 
 			function (d){
-				console.log('width-'+width);
-				console.log((width/4 + width/2*(d.depth - activeDepth)) - width/2);
+				// console.log('width-'+width);
+				// console.log((width/4 + width/2*(d.depth - activeDepth)) - width/2);
 				return (width/4 + width/2*(d.depth - activeDepth)) - width/2 
 			}
 			).strength(0.05);
@@ -67,6 +68,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.data(links)
 		.enter().append("line")
 		.attr("stroke-width", d => d.value);
+		
 
 		const node = svg.append("g")
 		.attr("class", "nodes")
@@ -75,6 +77,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.enter().append("circle")
 		.attr("r", nodeRadius)
 		.attr("stroke-width", nodeRadius*2)
+		.attr("node-id", d => d.id)
 		.call(
 			d3.drag(simulation)
 			.on("start", dragstarted)
@@ -118,6 +121,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.attr("y", d => d.y);
 		});
 
+		makeActive(nodes[0]);
+
 		// console.dir( data );
 
 		function dragstarted(d) {
@@ -138,18 +143,35 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function makeActive(d){
-			d3.selectAll('.nodes circle').classed("active", false);
-			// d.classed("active", true);
-		}
+			//add property
+			nodes.forEach( item => item.active = false );
+			d.active = true;
+			//add class
+			d3.selectAll('.nodes circle').classed('active', false);
+			d3.select('.nodes [node-id="'+d.id+'"]').classed('active', true);
+			//make all nodes inactive
+			d3.selectAll('.nodes circle')
+			.transition()
+			.duration(250)
+			.attr("r", nodeRadius)
+			.attr("stroke-width", nodeRadius*2);
+			//make selected one active
+			d3.select('.nodes [node-id="'+d.id+'"]')
+			.transition()
+			.duration(250)
+			.attr("r", activeRadius)
+			.attr("stroke-width", activeRadius*2);
+			// console.log(d);
+			}
 
 		window.simulationResize = function (){
-			width = window.innerWidth;
-			height = window.innerHeight;
+			// width = window.innerWidth;
+			// height = window.innerHeight;
 
 			nodeRadius = width/30;
 			d3.selectAll('.nodes circle')
-			.attr("r", nodeRadius)
-			.attr("stroke-width", nodeRadius*2);
+			.attr("r", d => d.active ? activeRadius : nodeRadius)
+			.attr("stroke-width", d => d.active ? activeRadius*2 : nodeRadius*2);
 
 			simulation
 			// .force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))

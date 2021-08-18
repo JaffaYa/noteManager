@@ -30,7 +30,7 @@ body {
   stroke-opacity: 0.7;
   }
 
-.labelNodes text {
+.nodesLabel text {
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
@@ -39,12 +39,12 @@ body {
   pointer-events: none;
   fill: #40403F;
   font: bold 36px/1 "Fira Sans", sans-serif; }
-  /*.labelNodes text:nth-child(1) {
+  /*.nodesLabel text:nth-child(1) {
     font: bold 50px/1 "Fira Sans", sans-serif !important; }*/
   /*@media (max-width: 767px) {
-    .labelNodes text {
+    .nodesLabel text {
       font: bold 16px/1 "Fira Sans", sans-serif !important; }
-      .labelNodes text:nth-child(1) {
+      .nodesLabel text:nth-child(1) {
         font: bold 24px/1 "Fira Sans", sans-serif !important; } }*/
 
 .links line {
