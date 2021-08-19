@@ -10,22 +10,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.simulationResize = function (){};
 
-	d3.json("json/graphdata.json", function(fileData) {
+	d3.json("json/graphdata.json", function(jsonData) {
 		//data init
 		window.nodes = [];
 		var links = [];
-		fileData.nodes.forEach(function(currentValue, index, array) {
-			nodes.push(currentValue);
-			if( Array.isArray(currentValue.parent) && currentValue.parent.length > 0 ){
-				currentValue.parent.forEach(function(parent) {
-					links.push({
-						source: parent,
-						target: parseInt(currentValue.id),
-						value: 2
-					});
-				});
-			}
-		});
+		makeDataArray(1);
 
 		// console.dir( nodes );
 		// console.dir( links );
@@ -52,15 +41,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		const simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
 		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
-		// .force("x", d3.forceX())//strength(0,1)
-		// .force("y", d3.forceY());
-		// .force("center", d3.forceCenter(width / 2, height / 2))
 		// .force("center", d3.forceCenter(0,0))
-		// .force("center", d3.forceCenter(0,0).strength(0.05));
 		.force("slideForse", slideForse)
 		.force("y", d3.forceY().strength(0.015));
-		// .force("x", d3.forceX(d => (width/4 + width/2*(d.depth-1)) - width/2 ).strength(0.005));
-		// simulation.force("x", d3.data(simulation.nodes()).forceX(d => (width/4 + width/2*(d.depth-1)) - width/2 ).strength(0.005));
 
 		const link = svg.append("g")
 		.attr("class", "links")
@@ -83,7 +66,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.on("start", dragstarted)
 			.on("drag", dragged)
 			.on("end", dragended)
-		)
+			)
 		.on("click", function(d) {
 			playBubble();
 			makeActive(d);
@@ -125,6 +108,58 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		// console.dir( data );
 
+		function makeDataArray(depth){
+			if(depth <= 0) return;
+			var newNodes = [];
+			var newLinks = [];
+			let curentDepth = 1;
+
+
+			recursiveDataBuild(depth+1);
+
+			console.log(newNodes);
+			console.log(newLinks);
+			exit();
+
+			function recursiveDataBuild(depth, parentId = 1){
+				let nodes = jsonData.nodes;
+				mainFor: for (var i = 0; i < nodes.length; i++) {
+					if( Array.isArray(nodes[i].parent) && nodes[i].parent.length > 0 ){
+						for (var j = 0; j < newNodes.length; j++) {
+							if(nodes[i].id == newNodes[j].id){
+								continue mainFor;
+							}
+						}
+						if(curentDepth > 1 && nodes[i].parent.includes(parentId)){
+							nodes[i].depth = curentDepth;
+							newNodes.push(nodes[i]);
+
+							nodes[i].parent.forEach(function(parent) {
+								newLinks.push({
+									source: parent,
+									target: parseInt(nodes[i].id),
+									value: 2
+								});
+							});
+						}else if(nodes[i].parent[0] == 0){
+							nodes[i].depth = curentDepth;
+							newNodes.push(nodes[i]);
+						}
+					}
+				}
+				curentDepth++;
+				if( newNodes.length > 0 && curentDepth <= depth){
+					for (var i = 0; i < newNodes.length; i++) {
+						if(curentDepth-1 == newNodes[i].depth){
+							recursiveDataBuild(depth, parseInt(newNodes[i].id));
+						}
+					}
+				}
+
+			}
+			//сравнение нод
+		}
+
 		function dragstarted(d) {
 			if (!d3.event.active) simulation.alphaTarget(0.8).restart();
 			d.fx = d.x;
@@ -162,13 +197,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.attr("r", activeRadius)
 			.attr("stroke-width", activeRadius*2);
 			// console.log(d);
-			}
+		}
 
 		window.simulationResize = function (){
 			// width = window.innerWidth;
 			// height = window.innerHeight;
 
 			nodeRadius = width/30;
+			activeRadius = nodeRadius*2;
 			d3.selectAll('.nodes circle')
 			.attr("r", d => d.active ? activeRadius : nodeRadius)
 			.attr("stroke-width", d => d.active ? activeRadius*2 : nodeRadius*2);
@@ -179,7 +215,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.force("slideForse", slideForse)
 			// .force("y", d3.forceY().strength(0.015))
 			.alphaTarget(0.2);
+			// .restart();
 		}
+		window.simulationResize = throttle(simulationResize, 50);
+
 	});
 
 	//resize
@@ -198,10 +237,33 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function make_sound(name){
 		var myAudio = new Audio;
-			myAudio.src = name; 
-			myAudio.volume = 0.1;
+		myAudio.src = name; 
+		myAudio.volume = 0.1;
 		return function(){
 			myAudio.play(); 
+		}
+	}
+
+	// затормозить функцию до одного раза в time мс
+	function throttle(func, time) {
+		var permision = true;
+		var saveArg = null;
+		var saveThis = null;
+		return function waper(){
+			if (permision){
+				func.apply(this, arguments);
+				permision = false;
+				setTimeout(function(){
+					permision = true;
+					if(saveThis){
+						waper.apply(saveThis, saveArg);
+						saveArg = saveThis = null;
+					}
+				}, time);
+			}else{
+				saveArg = arguments;
+				saveThis = this;
+			}
 		}
 	}
 

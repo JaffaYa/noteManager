@@ -4,7 +4,7 @@
       "id": "1",
       "label": "1",
       "depth": 1,
-      "parent": []
+      "parent": [0]
     },
     {
       "id": "2",
