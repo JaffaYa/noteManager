@@ -14,6 +14,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//data init
 		window.nodes = [];
 		var links = [];
+
 		makeDataArray(1);
 
 		// console.dir( nodes );
@@ -71,6 +72,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			playBubble();
 			makeActive(d);
 			activeDepth = d.depth;
+			makeDataArray(d.depth);
+			simulation
+			.nodes(nodes)
+			.alphaTarget(0.2);
 			simulation
 			.force("slideForse", slideForse)
 			.alphaTarget(0.2);
@@ -110,54 +115,70 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function makeDataArray(depth){
 			if(depth <= 0) return;
+			let nodes = jsonData.nodes;
 			var newNodes = [];
 			var newLinks = [];
-			let curentDepth = 1;
+			
+			setDepth(depth+1);
+			buildData(depth+1);
 
+			//сравнение нод
+			window.nodes = newNodes;
+			links = newLinks;
 
-			recursiveDataBuild(depth+1);
-
+			// console.log(nodes);
 			console.log(newNodes);
-			console.log(newLinks);
-			exit();
+			// console.log(newLinks);
+			// exit();
 
-			function recursiveDataBuild(depth, parentId = 1){
-				let nodes = jsonData.nodes;
-				mainFor: for (var i = 0; i < nodes.length; i++) {
-					if( Array.isArray(nodes[i].parent) && nodes[i].parent.length > 0 ){
-						for (var j = 0; j < newNodes.length; j++) {
-							if(nodes[i].id == newNodes[j].id){
-								continue mainFor;
+			function setDepth(depth){
+				let curentDepth = 1;
+				let parentIds = [];
+				let oldparentIds = [];
+				for (;curentDepth <= depth; curentDepth++ ){
+					oldparentIds = parentIds;
+					parentIds = [];
+					for (var i = 0; i < nodes.length; i++){
+						let hasId = false;
+						for (var j = 0; j < oldparentIds.length; j++) {
+							for (var k = 0; k < nodes[i].parent.length; k++) {
+								if( nodes[i].parent[k] == oldparentIds[j] ){
+									hasId = true;
+								}
 							}
 						}
-						if(curentDepth > 1 && nodes[i].parent.includes(parentId)){
+						if(nodes[i].parent[0] == 0 && curentDepth == 1){
+							nodes[i].depth = 1;
+							parentIds.push(nodes[i].id);
+						}else if( hasId ){
 							nodes[i].depth = curentDepth;
-							newNodes.push(nodes[i]);
-
-							nodes[i].parent.forEach(function(parent) {
-								newLinks.push({
-									source: parent,
-									target: parseInt(nodes[i].id),
-									value: 2
-								});
-							});
-						}else if(nodes[i].parent[0] == 0){
-							nodes[i].depth = curentDepth;
-							newNodes.push(nodes[i]);
+							parentIds.push(nodes[i].id);
 						}
 					}
 				}
-				curentDepth++;
-				if( newNodes.length > 0 && curentDepth <= depth){
-					for (var i = 0; i < newNodes.length; i++) {
-						if(curentDepth-1 == newNodes[i].depth){
-							recursiveDataBuild(depth, parseInt(newNodes[i].id));
-						}
-					}
-				}
-
 			}
-			//сравнение нод
+
+			function buildData(depth){
+				for (var i = 0; i < nodes.length; i++) {
+					if( nodes[i].depth && nodes[i].depth <= depth){
+
+						newNodes.push(nodes[i]);
+
+						nodes[i].parent.forEach(function(parent) {
+							//core node hasn't links
+							if(parent == 0) return;
+
+							newLinks.push({
+								source: parent,
+								target: parseInt(nodes[i].id),
+								value: 2
+							});
+						});
+					
+					}
+				}
+			}
+			
 		}
 
 		function dragstarted(d) {

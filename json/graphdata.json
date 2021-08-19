@@ -3,49 +3,41 @@
     {
       "id": "1",
       "label": "1",
-      "depth": 1,
       "parent": [0]
     },
     {
       "id": "2",
       "label": "2",
-      "depth": 2,
       "parent": [1]
     },
     {
       "id": "3",
       "label": "3",
-      "depth": 2,
       "parent": [1]
     },
     {
       "id": "4",
       "label": "4",
-      "depth": 3,
       "parent": [2]
     },
     {
       "id": "5",
       "label": "5",
-      "depth": 2,
       "parent": [2, 1]
     },
     {
       "id": "6",
       "label": "6",
-      "depth": 3,
       "parent": [2]
     },
     {
       "id": "7",
       "label": "7",
-      "depth": 4,
       "parent": [6]
     },
     {
       "id": "8",
       "label": "8",
-      "depth": 4,
       "parent": [6]
     }
   ]
