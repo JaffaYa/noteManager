@@ -68,112 +68,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.on("drag", dragged)
 			.on("end", dragended)
 			)
-		.on("click", function(d) {
-			playBubble();
-			makeActive(d);
-			activeDepth = d.depth;
+		.on("click", bubleClick);
 
-			// console.log(links);
-			makeDataArray(d.depth);
-			// console.log(nodes);
-			// console.log(links);
-
-			// node =  d3.selectAll(".nodes circle")
-			// .data(nodes)
-			// .enter().append("circle")
-			// .attr("r", nodeRadius)
-			// .attr("stroke-width", nodeRadius*2)
-			// .attr("node-id", d => d.id)
-			// .exit().remove()
-			// .call(
-			// 	d3.drag(simulation)
-			// 	.on("start", dragstarted)
-			// 	.on("drag", dragged)
-			// 	.on("end", dragended)
-			// 	);
-			
-			console.log(link);
-
-			link
-			.data(links, 
-				// d => [d.source, d.target]
-				function(d){
-					// console.log(d);
-					// return [d.source, d.target];
-					return d => [d.source, d.target];
-				}
-				)
-			.enter().append("line")
-			.attr("stroke-width", 
-				// d => d.value
-				function(d){
-					// console.log(d);
-					// return [d.source, d.target];
-					return d ;
-				}
-				);
-			// .exit().remove();
-			console.log(link);
-
-			// console.log(node);
-
-			node
-			.data(nodes, d => d.id)
-			.enter().append("circle")
-			.attr("r", nodeRadius)
-			.attr("stroke-width", nodeRadius*2)
-			.attr("node-id", d => d.id );
-			// .call(
-			// 	d3.drag(simulation)
-			// 	.on("start", dragstarted)
-			// 	.on("drag", dragged)
-			// 	.on("end", dragended)
-			// 	);
-			// .exit().remove();
-
-			// console.log(node);
-			// console.log(nodes);
-
-			// node.append("title")
-			// .text(d => d.id);
-
-			// nodesLabel
-			// .data(nodes)
-			// .enter().append("text")
-			// .text(function(d, i) { return d.label })
-			// .exit().remove();
-
-
-			simulation
-			// .nodes(nodes)
-			// .restart()
-			// .force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
-			.force("slideForse", slideForse)
-			.alphaTarget(0.2);
-
-			simulation.nodes(nodes);
-			simulation.force("link").links(links);
-			simulation.alpha(1).restart();
-			
-			simulation.on("tick", () => {
-				link
-				.attr("x1", d => d.source.x)
-				.attr("y1", d => d.source.y)
-				.attr("x2", d => d.target.x)
-				.attr("y2", d => d.target.y);
-
-				node
-				.attr("cx", d => d.x)
-				.attr("cy", d => d.y);
-
-				nodesLabel
-				.attr("x", d => d.x)
-				.attr("y", d => d.y);
-			});
-
-			// console.log(activeDepth);
-			return;
-		});
 
 		node.append("title")
 		.text(d => d.id);
@@ -193,7 +89,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.attr("y2", d => d.target.y);
 
 			node
-			.attr("cx", d => d.x)
+			.attr("cx", 
+				// d => d.x
+				function(d){
+					// console.log(d)
+					return d.x;
+				}
+				)
 			.attr("cy", d => d.y);
 
 			nodesLabel
@@ -201,9 +103,104 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.attr("y", d => d.y);
 		});
 
+
 		makeActive(nodes[0]);
 
 		// console.dir( data );
+
+		function bubleClick(d) {
+			playBubble();
+			makeActive(d);
+			activeDepth = d.depth;
+
+			// console.log(links);
+			makeDataArray(d.depth);
+			// console.log(nodes);
+			// console.log(links);
+
+			
+			
+
+			link
+			.data(links, 
+				// d => [d.source, d.target]
+				function(d){
+					if(typeof d.source === 'object' ){
+						return [d.source.id, d.target.id];
+					}else{
+						return [d.source, d.target];
+					}
+				}
+				)
+			.enter().append("line")
+			.attr("stroke-width", 
+				// d => d.value
+				function(d){
+					// console.log(this);
+					link._groups[0].push(this);
+					return d.value ;
+				}
+				)
+			.exit().remove();
+			// console.log(link);
+			// console.log(links);
+
+			node 
+			.data(nodes, d => d.id
+				// function(d){
+				// 	// console.log(this);
+				// 	// console.dir(this);
+				// 	// console.dir(arguments);
+				// 	return d.id
+				// }
+				)
+			.enter().append("circle")
+			.attr("r", nodeRadius)
+			.attr("stroke-width", nodeRadius*2)
+			.attr("node-id", // d => d.id 
+				function(d){
+					// console.log(this);
+					// console.dir(this);
+					node._groups[0].push(this);
+					return d.id
+				}
+				)
+			.call(
+				d3.drag(simulation)
+				.on("start", dragstarted)
+				.on("drag", dragged)
+				.on("end", dragended)
+				)
+			.on("click", bubleClick)
+			.exit().remove();
+			
+			node
+			.selectAll('title')
+			.remove();
+			node
+			.append("title")
+			.text(d => d.id);
+
+			nodesLabel
+			.data(nodes, d => d.id)
+			.enter().append("text")
+			.text(function(d, i) {
+				nodesLabel._groups[0].push(this);
+				return d.label 
+			})
+			.exit().remove();
+
+
+			simulation.force("slideForse", slideForse);
+			simulation.nodes(nodes);
+			simulation.force("link").links(links);
+			simulation.alphaTarget(0.8);
+
+			// console.log(activeDepth);
+			return;
+		}
+
+
 
 		function makeDataArray(depth){
 			if(depth <= 0) return;
