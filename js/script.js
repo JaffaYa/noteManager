@@ -7,6 +7,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var activeDepth = 1;
 	var nodeRadius = width/30;
 	var playBubble = make_sound("sounds/bubble.mp3");
+	var isAdmin = false;
 
 	window.simulationResize = function (){};
 
@@ -14,6 +15,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//data init
 		window.nodes = [];
 		var links = [];
+
+		d3.select("#my_data")
+		.append("button")
+		.attr('class', 'adminButton')
+		.text('Admin')
+		.on("click", function(event){
+			isAdmin = !isAdmin;
+			this.classList.toggle('active');
+			var activeNode = nodes.filter(d => d.active)[0];
+			bubleClick(activeNode);
+		});
 
 		makeDataArray(1);
 
@@ -207,9 +219,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let nodes = jsonData.nodes;
 			var newNodes = [];
 			var newLinks = [];
+			var maxNodeId = nodes[nodes.length-1].id;
 
 			setDepth(depth+1);
 			buildData(depth+1);
+			if(!isAdmin){
+				newNodes = newNodes.filter(d => d.label != '+');
+			}
 
 			//сравнение нод
 			window.nodes = newNodes.map( d => Object.assign( window.nodes.find(t => t.id == d.id) || {}, d) );
@@ -253,6 +269,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					if( nodes[i].depth && nodes[i].depth <= depth){
 
 						newNodes.push(nodes[i]);
+						if(isAdmin){
+							maxNodeId += 1;
+							newNodes.push(
+								{
+									"depth": nodes[i].depth+1,
+									"id": maxNodeId,
+									"label": "+",
+									"parent": [nodes[i].id]
+								}
+							);
+							newLinks.push({
+								source: maxNodeId,
+								target: parseInt(nodes[i].id),
+								value: 2
+							});
+						}
 
 						nodes[i].parent.forEach(function(parent) {
 							//core node hasn't links
