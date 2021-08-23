@@ -8,6 +8,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var nodeRadius = width/30;
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = false;
+	
 
 	window.simulationResize = function (){};
 
@@ -40,14 +41,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		const svg = d3.select("#my_data").append("svg")
 		.attr("viewBox", svgViewPort);
 
+		var scrollNext = true;
 		const slideForse = d3.forceX( 
-			// d => (width/4 + width/2*(d.depth - activeDepth)) - width/2 
 			function (d){
-				// console.log('width-'+width);
-				// console.log((width/4 + width/2*(d.depth - activeDepth)) - width/2);
-				return (width/4 + width/2*(d.depth - activeDepth)) - width/2 
+				if(scrollNext){
+					return (width/4 + width/2*(d.depth - activeDepth)) - width/2;
+				}else{
+					return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+				}
 			}
-			).strength(0.05);
+			).strength(0.1);
 		var manyBodyForce = -width + (1200/width)*50;
 		if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
 
@@ -56,7 +59,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForse", slideForse)
-		.force("y", d3.forceY().strength(0.015));
+		.force("y", d3.forceY().strength(0.015))
+		.alphaTarget(0.3);
 
 		var link = svg.append("g")
 		.attr("class", "links")
@@ -123,56 +127,40 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function bubleClick(d) {
 			playBubble();
 			makeActive(d);
+
+			var dataObj = makeDataArray(d.depth, d);
+
+
+			var isAddNewNode;
+
+
+
+			//apply click function
+
+			//draw
 			activeDepth = d.depth;
-
-			// console.log(links);
-			makeDataArray(d.depth);
-			// console.log(nodes);
-			// console.log(links);
-
 			
-			
+			rebuildLinks();
+			rebuildNodes();
+			rebuildNodeTitles();
+			rebuildNodeLables()
 
-			link
-			.data(links, 
-				// d => [d.source, d.target]
-				function(d){
-					if(typeof d.source === 'object' ){
-						return [d.source.id, d.target.id];
-					}else{
-						return [d.source, d.target];
-					}
-				}
-				)
-			.enter().append("line")
-			.attr("stroke-width", 
-				// d => d.value
-				function(d){
-					// console.log(this);
-					link._groups[0].push(this);
-					return d.value ;
-				}
-				)
-			.exit().remove();
-			// console.log(link);
-			// console.log(links);
+			simulation.nodes(nodes);
+			simulation.force("link").links(links);
+			simulation.alphaTarget(0.8).restart();
 
-			node 
-			.data(nodes, d => d.id
-				// function(d){
-				// 	// console.log(this);
-				// 	// console.dir(this);
-				// 	// console.dir(arguments);
-				// 	return d.id
-				// }
-				)
-			.enter().append("circle")
+			return;
+		}
+
+		function rebuildNodes(){
+			var tempNode = node 
+			.data(nodes, d => d.id);
+			tempNode.enter().append("circle")
 			.attr("r", nodeRadius)
 			.attr("stroke-width", nodeRadius*2)
 			.attr("node-id", // d => d.id 
 				function(d){
-					// console.log(this);
-					// console.dir(this);
+					//add nodes
 					node._groups[0].push(this);
 					return d.id
 				}
@@ -183,48 +171,96 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				.on("drag", dragged)
 				.on("end", dragended)
 				)
-			.on("click", bubleClick)
-			.exit().remove();
-			
+			.on("click", bubleClick);
+			tempNode.exit()
+			.attr('node-id',function(d, i){
+					//remove nodes
+					delete node._groups[0][i];
+					return 1;
+				})
+			.remove();
+		}
+
+		function rebuildLinks(){
+			var tempLink = link
+			.data(links, 
+				function(d){
+					if(typeof d.source === 'object' ){
+						return [d.source.id, d.target.id];
+					}else{
+						return [d.source, d.target];
+					}
+				}
+				);
+			tempLink.enter().append("line")
+			.attr("stroke-width", 
+				// d => d.value
+				function(d){
+					//add links
+					link._groups[0].push(this);
+					return d.value ;
+				}
+				);
+			tempLink.exit()
+			.attr('node-id',function(d, i){
+					//remove links
+					delete link._groups[0][i];
+					return 1;
+				})
+			.remove();
+		}
+
+		function rebuildNodeTitles(){
 			node
 			.selectAll('title')
 			.remove();
 			node
 			.append("title")
 			.text(d => d.id);
-
-			nodesLabel
-			.data(nodes, d => d.id)
-			.enter().append("text")
-			.text(function(d, i) {
-				nodesLabel._groups[0].push(this);
-				return d.label 
-			})
-			.exit().remove();
-
-
-			simulation.force("slideForse", slideForse);
-			simulation.nodes(nodes);
-			simulation.force("link").links(links);
-			simulation.alphaTarget(0.8);
-
-			// console.log(activeDepth);
-			return;
 		}
 
+		function rebuildNodeLables(){
+			var tempNodeLables = nodesLabel
+			.data(nodes, d => d.id);
+			tempNodeLables.enter().append("text")
+			.text(function(d, i) {
+				//add lables
+				nodesLabel._groups[0].push(this);
+				return d.label 
+			});
+			tempNodeLables.exit()
+			.attr('node-id',function(d, i){
+					//remove lables
+					delete nodesLabel._groups[0][i];
+					return 1;
+				})
+			.remove();
+		}
 
-
-		function makeDataArray(depth){
+		function makeDataArray(depth, d = jsonData.nodes[0]){
 			if(depth <= 0) return;
+			var myThis = {};
 			let nodes = jsonData.nodes;
 			var newNodes = [];
 			var newLinks = [];
 			var maxNodeId = nodes[nodes.length-1].id;
 
-			setDepth(depth+1);
-			buildData(depth+1);
+			
+
+			var isHasChild = isHasChild(d);
+			scrollNext = isHasChild;
+			console.log(isHasChild);
+			if(isHasChild){
+				setDepth(depth+1);
+				buildData(depth+1);
+			}else{
+				setDepth(depth);
+				buildData(depth);
+			}
+
+
 			if(!isAdmin){
-				newNodes = newNodes.filter(d => d.label != '+');
+				newNodes = newNodes.filter(d => !d.addNew);
 			}
 
 			//сравнение нод
@@ -234,8 +270,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			// console.log(nodes);
 			// console.log(newNodes);
+			// console.log(window.nodes);
 			// console.log(newLinks);
 			// exit();
+
+			function isHasChild(d){
+				if(isAdmin && !d.addNew) return true;
+				for (var i = 0; i < nodes.length; i++) {
+					for (var k = 0; k < nodes[i].parents.length; k++) {
+						if(nodes[i].parents[k] == d.id){
+							return true;
+						}
+					}
+				}
+				return false;
+			}
 
 			function setDepth(depth){
 				let curentDepth = 1;
@@ -247,13 +296,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					for (var i = 0; i < nodes.length; i++){
 						let hasId = false;
 						for (var j = 0; j < oldparentIds.length; j++) {
-							for (var k = 0; k < nodes[i].parent.length; k++) {
-								if( nodes[i].parent[k] == oldparentIds[j] ){
+							for (var k = 0; k < nodes[i].parents.length; k++) {
+								if( nodes[i].parents[k] == oldparentIds[j] ){
 									hasId = true;
 								}
 							}
 						}
-						if(nodes[i].parent[0] == 0 && curentDepth == 1){
+						if(nodes[i].parents[0] == 0 && curentDepth == 1){
 							nodes[i].depth = 1;
 							parentIds.push(nodes[i].id);
 						}else if( hasId ){
@@ -268,16 +317,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				for (var i = 0; i < nodes.length; i++) {
 					if( nodes[i].depth && nodes[i].depth <= depth){
 
+						nodes[i].id = 1*nodes[i].id;
 						newNodes.push(nodes[i]);
-						if(isAdmin){
-							maxNodeId += 1;
+						if(isAdmin && d.id == nodes[i].id){
+							maxNodeId = 1*maxNodeId + 1;
 							newNodes.push(
-								{
-									"depth": nodes[i].depth+1,
-									"id": maxNodeId,
-									"label": "+",
-									"parent": [nodes[i].id]
-								}
+							{
+								"depth": nodes[i].depth+1,
+								"id": maxNodeId,
+								"label": "+",
+								"parents": [nodes[i].id],
+								"addNew": true
+							}
 							);
 							newLinks.push({
 								source: maxNodeId,
@@ -286,25 +337,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							});
 						}
 
-						nodes[i].parent.forEach(function(parent) {
+						nodes[i].parents.forEach(function(parent) {
 							//core node hasn't links
 							if(parent == 0) return;
 
 							newLinks.push({
-								source: parent,
+								source: 1*parent,
 								target: parseInt(nodes[i].id),
 								value: 2
 							});
 						});
-					
+
 					}
 				}
 			}
-			
+			return myThis;
 		}
 
 		function dragstarted(d) {
-			if (!d3.event.active) simulation.alphaTarget(0.8).restart();
+			if (!d3.event.active) simulation.alphaTarget(0.3).restart();
 			d.fx = d.x;
 			d.fy = d.y;
 		}
