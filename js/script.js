@@ -245,25 +245,38 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var newLinks = [];
 			var maxNodeId = nodes[nodes.length-1].id;
 
-			
 
-			var isHasChild = isHasChild(d);
-			scrollNext = isHasChild;
-			console.log(isHasChild);
-			if(isHasChild){
+			scrollNext = isHasChild(d);
+			var hasChild = isHasChild(d,false);
+
+			if(hasChild){
 				setDepth(depth+1);
 				buildData(depth+1);
 			}else{
 				setDepth(depth);
 				buildData(depth);
 			}
-
+			//click by "+" node to make it active need to add it to
+			//newNodes manually
+			if(isAdmin && d.id >= maxNodeId){
+				newNodes.push(d);
+				newLinks.push(links.find(t => t.source.id == d.id));
+			}
 
 			if(!isAdmin){
 				newNodes = newNodes.filter(d => !d.addNew);
 			}
 
 			//сравнение нод
+			// forNewNodes: for (var i = 0; i < newNodes.length; i++) {
+			// 	for (var k = window.nodes.length - 1; k >= 0; k--) {
+			// 		if(window.nodes[k].id == newNodes[i].id){
+			// 			window.nodes[k].depth = newNodes[i].depth;
+			// 			continue forNewNodes;
+			// 		}
+			// 	}
+			// 	window.nodes.push(newNodes[i]);
+			// }
 			window.nodes = newNodes.map( d => Object.assign( window.nodes.find(t => t.id == d.id) || {}, d) );
 			links = newLinks.map( d => Object.assign({}, d));
 
@@ -274,8 +287,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// console.log(newLinks);
 			// exit();
 
-			function isHasChild(d){
-				if(isAdmin && !d.addNew) return true;
+			function isHasChild(d, testForAdminChild = true){
+				if(isAdmin && !d.addNew && testForAdminChild) return true;
 				for (var i = 0; i < nodes.length; i++) {
 					for (var k = 0; k < nodes[i].parents.length; k++) {
 						if(nodes[i].parents[k] == d.id){
@@ -351,6 +364,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					}
 				}
 			}
+
 			return myThis;
 		}
 
