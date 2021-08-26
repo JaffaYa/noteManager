@@ -185,6 +185,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var tempLink = link
 			.data(links, 
 				function(d){
+					console.log(d);
 					if(typeof d.source === 'object' ){
 						return [d.source.id, d.target.id];
 					}else{
@@ -258,7 +259,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 			//click by "+" node to make it active need to add it to
 			//newNodes manually
-			if(isAdmin && d.id >= maxNodeId){
+			if(isAdmin && (d.id >= maxNodeId || d.addNew) ){
 				newNodes.push(d);
 				newLinks.push(links.find(t => t.source.id == d.id));
 			}
@@ -266,6 +267,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			if(!isAdmin){
 				newNodes = newNodes.filter(d => !d.addNew);
 			}
+
+			//check if all links has they nodes
+			checkLinks: for (var i = 0; i < newLinks.length; i++) {
+				for (var k = 0; k < newNodes.length; k++) {
+					if(newLinks[i].source == newNodes[k].id){
+						continue checkLinks;
+					}
+				}
+				newLinks.splice(i, 1);
+			}
+
+			//delete not chosen way
 
 			//сравнение нод
 			// forNewNodes: for (var i = 0; i < newNodes.length; i++) {
