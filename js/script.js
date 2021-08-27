@@ -9,6 +9,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = false;
 
+	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
+
 
 	window.simulationResize = function (){};
 
@@ -488,6 +490,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulationResize();
 	});
 
+	document.addEventListener('keypress', keyFunc, false);
+
+	function keyFunc(event){
+		console.dir(event);
+		switch (event.code){
+			case 'KeyF':
+				bodyFullScreanTogle();;
+				break;
+			default:
+				break;
+		}
+	}
+
 	function make_sound(name){
 		var myAudio = new Audio;
 		myAudio.src = name; 
@@ -519,5 +534,42 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 	}
+
+	function make_FullScrinTogle(elem){
+		var is_fullScrin = false;
+		function openFullscreen(elem) {
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.mozRequestFullScreen) { /* Firefox */
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+				elem.webkitRequestFullscreen();
+			} else if (elem.msRequestFullscreen) { /* IE/Edge */
+				elem.msRequestFullscreen();
+			}
+		}
+		function closeFullscreen() {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.mozCancelFullScreen) { /* Firefox */
+				document.mozCancelFullScreen();
+			} else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+				document.webkitExitFullscreen();
+			} else if (document.msExitFullscreen) { /* IE/Edge */
+				document.msExitFullscreen();
+			}
+		}
+
+		return function(){
+			if(!is_fullScrin){
+				openFullscreen(elem);
+				is_fullScrin = true;
+			}else{
+				closeFullscreen(elem);
+				is_fullScrin = false;
+			}
+		}
+	}
+	
 
 });
