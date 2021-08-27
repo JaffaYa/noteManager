@@ -17,9 +17,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//data init
 		window.nodes = [];
 		var links = [];
-			
 
-		d3.select("#my_data")
+
+		d3.select("body")
 		.append("button")
 		.attr('class', 'adminButton')
 		.text('Admin')
@@ -102,6 +102,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.enter().append("text")
 		.classed('active', d => d.active)
 		.text(function(d, i) { return d.label });
+		// const nodesLabel = svg.append("g")
+		// .attr("class", "nodesLabel")
+		// .selectAll("foreignObject")
+		// .data(nodes)
+		// .enter().append("foreignObject")
+		// .attr('width', 320)
+		// .attr('height', 320)
+		// .classed('active', d => d.active);
+		// nodesLabel
+		// .append("div")
+		// .attr('xmlns', "http://www.w3.org/1999/xhtml")
+		// .html(function(d, i) { return d.label });
 
 		simulation.on("tick", () => {
 			link
@@ -272,11 +284,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//newNodes manually
 			if(isAdmin && (d.id >= maxNodeId || d.addNew) ){
 				newNodes.push(d);
-				// newLinks.push({
-				// 	source: newNodes.find(t => t.active).id,
-				// 	target: parseInt(d.id),
-				// 	value: 2
-				// });
 				newLinks.push(links.find(t => t.target.id == d.id));
 			}
 			
