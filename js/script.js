@@ -9,15 +9,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = false;
 
-	//data init
-	window.nodes = [];
-	var links = [];
-	
 
 	window.simulationResize = function (){};
 
 	d3.json("json/graphdata.json", function(jsonData) {
 
+		//data init
+		window.nodes = [];
+		var links = [];
+			
 
 		d3.select("#my_data")
 		.append("button")
