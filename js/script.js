@@ -95,26 +95,26 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//времено делаем первую ноду активной
 		nodes[0].active = true;
-		// const nodesLabel = svg.append("g")
-		// .attr("class", "nodesLabel")
-		// .selectAll("text")
-		// .data(nodes)
-		// .enter().append("text")
-		// .classed('active', d => d.active)
-		// .text(function(d, i) { return d.label });
 		const nodesLabel = svg.append("g")
 		.attr("class", "nodesLabel")
-		.selectAll("foreignObject")
+		.selectAll("text")
 		.data(nodes)
-		.enter().append("foreignObject")
-		.attr('width', 320)
-		.attr('height', 240)
-		.classed('active', d => d.active);
-		nodesLabel
-		.append("body")
-		.attr('xmlns', "http://www.w3.org/1999/xhtml")
-		.append("div")
-		.html(function(d, i) { return d.label });
+		.enter().append("text")
+		.classed('active', d => d.active)
+		.text(function(d, i) { return d.label });
+		// const nodesLabel = svg.append("g")
+		// .attr("class", "nodesLabel")
+		// .selectAll("foreignObject")
+		// .data(nodes)
+		// .enter().append("foreignObject")
+		// .attr('width', 320)
+		// .attr('height', 240)
+		// .classed('active', d => d.active);
+		// nodesLabel
+		// .append("body")
+		// .attr('xmlns', "http://www.w3.org/1999/xhtml")
+		// .append("div")
+		// .html(function(d, i) { return d.label });
 
 		simulation.on("tick", () => {
 			link
