@@ -5,17 +5,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 	// var svgViewPort = [0, 0, width, height];
 	var activeDepth = 1;
-	var nodeRadius = width/30;
+	var nodeRadius = width/48;
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = false;
+
+	//data init
+	window.nodes = [];
+	var links = [];
 	
 
 	window.simulationResize = function (){};
 
 	d3.json("json/graphdata.json", function(jsonData) {
-		//data init
-		window.nodes = [];
-		var links = [];
+
 
 		d3.select("#my_data")
 		.append("button")
@@ -67,7 +69,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.selectAll("line")
 		.data(links)
 		.enter().append("line")
-		.attr("stroke-width", d => d.value);
+		.attr("stroke-width", d => d.value)
+		.attr("stroke-dasharray", d => d.dashed ? '8 11' : 'unset');
 		
 
 		var node = svg.append("g")
@@ -76,7 +79,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.data(nodes)
 		.enter().append("circle")
 		.attr("r", nodeRadius)
-		.attr("stroke-width", nodeRadius*2)
+		.attr("stroke-width", nodeRadius*(5/3))
 		.attr("node-id", d => d.id)
 		.call(
 			d3.drag(simulation)
@@ -90,11 +93,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		node.append("title")
 		.text(d => d.id);
 
+		//времено делаем первую ноду активной
+		nodes[0].active = true;
 		const nodesLabel = svg.append("g")
 		.attr("class", "nodesLabel")
 		.selectAll("text")
 		.data(nodes)
 		.enter().append("text")
+		.classed('active', d => d.active)
 		.text(function(d, i) { return d.label });
 
 		simulation.on("tick", () => {
@@ -157,7 +163,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.data(nodes, d => d.id);
 			tempNode.enter().append("circle")
 			.attr("r", nodeRadius)
-			.attr("stroke-width", nodeRadius*2)
+			.attr("stroke-width", nodeRadius*(5/3))
 			.attr("node-id", // d => d.id 
 				function(d){
 					//add nodes
@@ -185,7 +191,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var tempLink = link
 			.data(links, 
 				function(d){
-					console.log(d);
 					if(typeof d.source === 'object' ){
 						return [d.source.id, d.target.id];
 					}else{
@@ -201,7 +206,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					link._groups[0].push(this);
 					return d.value ;
 				}
-				);
+				)
+			.attr("stroke-dasharray", d => d.dashed ? '8 11' : 'unset');
 			tempLink.exit()
 			.attr('node-id',function(d, i){
 					//remove links
@@ -223,6 +229,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function rebuildNodeLables(){
 			var tempNodeLables = nodesLabel
 			.data(nodes, d => d.id);
+
+			tempNodeLables
+			.classed('active', d => d.active);
+
 			tempNodeLables.enter().append("text")
 			.text(function(d, i) {
 				//add lables
@@ -257,12 +267,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				setDepth(depth);
 				buildData(depth);
 			}
+
 			//click by "+" node to make it active need to add it to
 			//newNodes manually
 			if(isAdmin && (d.id >= maxNodeId || d.addNew) ){
 				newNodes.push(d);
-				newLinks.push(links.find(t => t.source.id == d.id));
+				// newLinks.push({
+				// 	source: newNodes.find(t => t.active).id,
+				// 	target: parseInt(d.id),
+				// 	value: 2
+				// });
+				newLinks.push(links.find(t => t.target.id == d.id));
 			}
+			
 
 			if(!isAdmin){
 				newNodes = newNodes.filter(d => !d.addNew);
@@ -271,8 +288,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//check if all links has they nodes
 			checkLinks: for (var i = 0; i < newLinks.length; i++) {
 				for (var k = 0; k < newNodes.length; k++) {
-					if(newLinks[i].source == newNodes[k].id){
-						continue checkLinks;
+					if(typeof newLinks[i].source === 'object' ){
+						if(newLinks[i].source.id == newNodes[k].id){
+							continue checkLinks;
+						}
+					}else{
+						if(newLinks[i].source == newNodes[k].id){
+							continue checkLinks;
+						}
 					}
 				}
 				newLinks.splice(i, 1);
@@ -357,8 +380,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}
 							);
 							newLinks.push({
-								source: maxNodeId,
-								target: parseInt(nodes[i].id),
+								source: parseInt(nodes[i].id),
+								target: maxNodeId,
+								dashed: true,
 								value: 2
 							});
 						}
@@ -410,13 +434,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.transition()
 			.duration(250)
 			.attr("r", nodeRadius)
-			.attr("stroke-width", nodeRadius*2);
+			.attr("stroke-width", nodeRadius*(5/3));
 			//make selected one active
 			d3.select('.nodes [node-id="'+d.id+'"]')
 			.transition()
 			.duration(250)
 			.attr("r", activeRadius)
-			.attr("stroke-width", activeRadius*2);
+			.attr("stroke-width", activeRadius*(5/3));
 			// console.log(d);
 		}
 
@@ -424,11 +448,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// width = window.innerWidth;
 			// height = window.innerHeight;
 
-			nodeRadius = width/30;
+			nodeRadius = width/48;
 			activeRadius = nodeRadius*2;
 			d3.selectAll('.nodes circle')
 			.attr("r", d => d.active ? activeRadius : nodeRadius)
-			.attr("stroke-width", d => d.active ? activeRadius*2 : nodeRadius*2);
+			.attr("stroke-width", d => d.active ? activeRadius*(5/3) : nodeRadius*(5/3));
 
 			simulation
 			// .force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
