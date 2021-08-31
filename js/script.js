@@ -315,7 +315,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						if(i == 0){
 							result += '<tspan>';
 						}else{
-							result += '<tspan dy="1em">';
+							result += '<tspan dy="'+i+'em">';
 						}
 						result += element;
 						result += '</tspan>';
@@ -347,7 +347,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(i == 0){
 					result += '<tspan>';
 				}else{
-					result += '<tspan dy="1em">';
+					result += '<tspan dy="'+i+'em">';
 				}
 				result += element;
 				result += '</tspan>';
@@ -503,8 +503,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function buildData(depth){
-			for (var i = 0; i < nodes.length; i++) {
+			buildDataNodes: for (var i = 0; i < nodes.length; i++) {
 				if( nodes[i].depth && nodes[i].depth <= depth){
+
+					//don't show not own children
+					// if(nodes[i].depth >= depth){
+					// 	var parentFlag = true;
+					// 	for (var k = 0; k < nodes[i].parents.length; k++) {
+					// 		if(nodes[i].parents[k] == d.id) parentFlag = false;
+					// 	}
+					// 	if(parentFlag) continue buildDataNodes;
+					// }
 
 					nodes[i].id = 1*nodes[i].id;
 					newNodes.push(nodes[i]);
