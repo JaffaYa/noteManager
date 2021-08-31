@@ -1,8 +1,9 @@
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var playBubble = make_sound("sounds/bubble.mp3");
-	var isAdmin = false;
+	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
+
 
 	//graphics var
 	var width = window.innerWidth;
@@ -30,16 +31,26 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var svgNodeLables = false;
 
 	var scrollNext = true;
-	const slideForse = d3.forceX( 
-		function (d){
+	const slideForse = function (d){
+		if(!d.functional){
 			if(scrollNext){
 				return (width/4 + width/2*(d.depth - activeDepth)) - width/2;
 			}else{
 				return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
 			}
+		}else{
+			if(d.fullscreen){
+				if(scrollNext){
+					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+				}else{
+					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+				}
+			}
 		}
-		).strength(0.1);
-	const manyBodyForce = -width + (1200/width)*50;
+	}
+
+	var manyBodyForce = -width + (1200/width)*50;
+	// var manyBodyForce = -1200;
 	if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
 
 
@@ -52,11 +63,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
-		.force("charge", d3.forceManyBody().strength( manyBodyForce ))//нада лі тут регулірувати іменно силу
+		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("center", d3.forceCenter(0,0))
-		.force("slideForse", slideForse)
-		.force("y", d3.forceY().strength(0.015))
-		.force("fullscreenButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.fullscreen ? 0.1 : 0))
+		.force("slideForse", d3.forceX(slideForse).strength(0.1))
+		.force("y", d3.forceY().strength(d => d.functional ? 0.03 : 0.03))
+		.force("fullscreenButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
 		.alphaTarget(0.5);
 
 		buildLinks(links);
@@ -69,16 +80,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	//admin button
-	d3.select("body")
-	.append("button")
-	.attr('class', 'adminButton')
-	.text('Admin')
-	.on("click", function(event){
-		isAdmin = !isAdmin;
-		this.classList.toggle('active');
-		var activeNode = nodes.filter(d => d.active)[0];
-		bubleClick(activeNode);
-	});
+	// d3.select("body")
+	// .append("button")
+	// .attr('class', 'adminButton')
+	// .text('Admin')
+	// .on("click", function(event){
+	// 	isAdmin = !isAdmin;
+	// 	this.classList.toggle('active');
+	// 	var activeNode = nodes.filter(d => d.active)[0];
+	// 	bubleClick(activeNode);
+	// });
 
 
 
@@ -130,8 +141,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.attr("cy", d => d.y);
 
 		svgNodeLables
-		.attr("x", d => d.x)
+		.attr("x", d => {
+			// console.log(d);
+			svgNodeLables.selectAll('.c'+d.id+' tspan')
+			.attr("x", d.x-getNodeRadius()+10)
+			.attr("y", d.y+getNodeRadius()-10)
+			return d.x;
+		})
 		.attr("y", d => d.y);
+
+		// svgNodeLables
+		// .selectAll("tspan")
+		// .attr("x", d => {
+		// 	// return d.x;
+		// })
 	}
 
 	function buildNodes(nodes){
@@ -249,9 +272,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.selectAll("text")
 			.data(nodes)
 			.enter().append("text")
+			.attr('class', d => 'c'+d.id)
 			.classed('active', d => d.active)
-			.text(function(d, i) { return d.label });
-			// const nodesLabel = svg.append("g")
+			.html(formatNodeLablesText)
+
+			// console.dir(svgNodeLables);
+			// svgNodeLables
+			// .append("tspan")
+			// .text(formatNodeLablesText);
+			// svgNodeLables = svg.append("g")
 			// .attr("class", "nodesLabel")
 			// .selectAll("foreignObject")
 			// .data(nodes)
@@ -259,7 +288,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// .attr('width', 320)
 			// .attr('height', 240)
 			// .classed('active', d => d.active);
-			// nodesLabel
+			// svgNodeLables
 			// .append("body")
 			// .attr('xmlns', "http://www.w3.org/1999/xhtml")
 			// .append("div")
@@ -270,13 +299,34 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.data(nodes, d => d.id);
 
 			tempNodeLables
+			.attr('class', d => 'c'+d.id)
 			.classed('active', d => d.active);
 
 			tempNodeLables.enter().append("text")
-			.text(function(d, i) {
+			.attr('class', d => 'c'+d.id)
+			.html(function(d, i) {
 				//add lables
 				svgNodeLables._groups[0].push(this);
-				return d.label 
+				//временно подставил сюда функцию formatNodeLablesText
+				var textArr = d.label.split("\n"); 
+				var result = '';
+				if(textArr.length > 1){
+					textArr.forEach((element, i) => {
+						if(i == 0){
+							result += '<tspan>';
+						}else{
+							result += '<tspan dy="1em">';
+						}
+						result += element;
+						result += '</tspan>';
+					}
+					);
+				}else{
+					result += '<tspan>';
+					result += d.label;
+					result += '</tspan>';
+				}
+				return result; 
 			});
 
 			tempNodeLables.exit()
@@ -287,6 +337,28 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				})
 			.remove();
 		}
+	}
+
+	function formatNodeLablesText(d, i) { 
+		var textArr = d.label.split("\n"); 
+		var result = '';
+		if(textArr.length > 1){
+			textArr.forEach((element, i) => {
+				if(i == 0){
+					result += '<tspan>';
+				}else{
+					result += '<tspan dy="1em">';
+				}
+				result += element;
+				result += '</tspan>';
+			}
+			);
+		}else{
+			result += '<tspan>';
+			result += d.label;
+			result += '</tspan>';
+		}
+		return result;
 	}
 
 	function setDashedLineStyle(node){
@@ -330,13 +402,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			buildData(depth);
 		}
 
-		//add to full screen button
+		// add to full screen button
 		newNodes.push({
 			"id": "fullscreen",
-			"label": "To fullscreen",
+			// "label": "🖵",
+			"label": "Full\nscreen",
 			"parents": [0],
+			"depth": depth,
 			"fullscreen": true,
-			"depth": activeDepth+0.5
+			"functional": true
 		});
 
 		//click by "+" node to make it active need to add it to
@@ -499,13 +573,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		setNodeStyle();
 
+		// simulation.force("link").links(links);
 		simulation
 		// .force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
-		// .force("charge", d3.forceManyBody().strength( manyBodyForce ))
-		.force("slideForse", slideForse)
+		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
+		.force("slideForse", d3.forceX(slideForse).strength(0.1))
 		// .force("y", d3.forceY().strength(0.015))
-		.alphaTarget(0.2);
-		// .restart();
+		.alphaTarget(0.2)
+		.restart();
 	}
 	window.simulationResize = throttle(simulationResize, 50);
 
