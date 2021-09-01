@@ -77,9 +77,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.force("mobileVertical", d3.forceY(
 				function(d){
 					if(scrollNext){
-						return (height/18 + height*(d.depth - activeDepth)) - height/2;
+						return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
 					}else{
-						return (height/18 + height*(d.depth - activeDepth+1)) - height/2;
+						return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
 					}
 				}
 				).strength(
