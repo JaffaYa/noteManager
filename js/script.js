@@ -77,9 +77,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.force("mobileVertical", d3.forceY(
 				function(d){
 					if(scrollNext){
-						return (height/4 + height/2*(d.depth - activeDepth)) - height/2;
+						return (height/18 + height*(d.depth - activeDepth)) - height/2;
 					}else{
-						return (height/4 + height/2*(d.depth - activeDepth+1)) - height/2;
+						return (height/18 + height*(d.depth - activeDepth+1)) - height/2;
 					}
 				}
 				).strength(
@@ -90,7 +90,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						}else if(d.activePath == 'child'){
 							console.dir(d.activePath);
 							console.dir(d.id);
-							return 0.001 + d.id/100;
+							return 0.01 + d.id/100;
 						}else{
 							return 0.1;
 						}
