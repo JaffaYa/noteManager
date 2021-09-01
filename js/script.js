@@ -8,6 +8,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//graphics var
 	var width = window.innerWidth;
 	var height = window.innerHeight;
+	var verticalScreen = height/width > width/height ? true : false;
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 	var activeDepth = 1;
 	var nodeRadius = width/48;
@@ -70,6 +71,33 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("y", d3.forceY().strength(d => d.functional ? 0.03 : 0.03))
 		.force("fullscreenButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
 		.alphaTarget(0.5);
+
+		if(verticalScreen){
+			window.simulation
+			.force("mobileVertical", d3.forceY(
+				function(d){
+					if(scrollNext){
+						return (height/4 + height/2*(d.depth - activeDepth)) - height/2;
+					}else{
+						return (height/4 + height/2*(d.depth - activeDepth+1)) - height/2;
+					}
+				}
+				).strength(
+					// d => d.functional ? 0.00 : 0.1
+					function(d){
+						if(d.functional){
+							return 0;
+						}else if(d.activePath == 'child'){
+							console.dir(d.activePath);
+							console.dir(d.id);
+							return 0.001 + d.id/100;
+						}else{
+							return 0.1;
+						}
+					}
+				)
+			)
+		}
 
 		buildLinks(links);
 		buildNodes(nodes);
@@ -167,6 +195,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			svgNodes = svgNodes.enter().append("circle")
 			.classed('active', d => d.active)
+			.classed('fade', d => d.activePath == 'fade')
 			.attr("node-id", d => d.id)
 			.call(
 				d3.drag(simulation)
@@ -183,7 +212,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.data(nodes, d => d.id);
 
 			tempNode
-			.classed('active', d => d.active);
+			.classed('active', d => d.active)
+			.classed('fade', d => d.activePath == 'fade');
 
 			tempNode.enter().append("circle")
 			// .attr("r", nodeRadius)
@@ -553,7 +583,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					}
 					if(nodes[i].activePath === true){
 						nodes[i].activePath = true;
-					}else if(activePathChild){
+					}else if(activePathChild && nodes[i].depth <= (depth-1)){
+						nodes[i].activePath = 'fade';
+					}else if(activePathChild && nodes[i].depth > (depth-1)){
 						nodes[i].activePath = 'child';
 					}else{
 						nodes[i].activePath = false;
@@ -653,6 +685,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		width = window.innerWidth;
 		height = window.innerHeight;
+		verticalScreen = height/width > width/height ? true : false;
 		svgViewPort = [-width / 2, -height / 2, width, height];
 		d3.select("#my_data svg")
 		.attr("viewBox", svgViewPort);
