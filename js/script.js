@@ -21,6 +21,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	window.nodes = [];
 	var links = [];
 	var jsonData = null;
+	var activePath = [];
 
 	//svg init
 	const svg = d3.select("#my_data").append("svg")
@@ -383,12 +384,47 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	function makeDataArray(depth, d = jsonData.nodes[0]){
+
 		if(depth <= 0) return;
+		//add node to active path
+		var nodesToDelFormActive = [];
+		for (var i = 0; i < activePath.length; i++) {
+			if(activePath[i].depth >= depth){
+				for (var j = 0; j < jsonData.nodes.length; j++) {
+					if(jsonData.nodes[j].id == activePath[i].id){
+						jsonData.nodes[j].activePath = false;
+						nodesToDelFormActive.push(activePath[i].id);
+					}
+				}
+			}
+		}
+		for (var i = 0; i < nodesToDelFormActive.length; i++) {
+			for (var j = 0; j < activePath.length; j++) {
+				if(activePath[j].id == nodesToDelFormActive[i]){
+					activePath.splice(j, 1);
+				}
+			}
+			
+		}
+		
+		for (var i = 0; i < jsonData.nodes.length; i++) {
+			if(jsonData.nodes[i].id == d.id){
+				jsonData.nodes[i].activePath = true;
+				activePath.push({
+					"id" :jsonData.nodes[i].id,
+					"depth": depth
+					});
+			}
+			
+		}
+
+
 		var myThis = {};
 		let nodes = jsonData.nodes;
 		var newNodes = [];
 		var newLinks = [];
 		var maxNodeId = nodes[nodes.length-1].id;
+
 
 
 		scrollNext = isHasChild(d);
@@ -505,8 +541,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function buildData(depth){
 			buildDataNodes: for (var i = 0; i < nodes.length; i++) {
 				if( nodes[i].depth && nodes[i].depth <= depth){
-
-					//don't show not own children
+					
+					//Do node on active path?
+					var activePathChild = false;
+					for (var j = 0; j < activePath.length; j++) {
+						for (var k = 0; k < nodes[i].parents.length; k++) {
+							if( nodes[i].parents[k] == activePath[j].id ){
+								activePathChild = true;
+							}
+						}
+					}
+					if(nodes[i].activePath === true){
+						nodes[i].activePath = true;
+					}else if(activePathChild){
+						nodes[i].activePath = 'child';
+					}else{
+						nodes[i].activePath = false;
+						continue buildDataNodes;
+					}
 					// if(nodes[i].depth >= depth){
 					// 	var parentFlag = true;
 					// 	for (var k = 0; k < nodes[i].parents.length; k++) {
