@@ -90,7 +90,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						}else if(d.activePath == 'child'){
 							console.dir(d.activePath);
 							console.dir(d.id);
-							return 0.01 + d.id/100;
+							return  d.id/90;
 						}else{
 							return 0.1;
 						}
