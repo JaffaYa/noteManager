@@ -58,14 +58,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var tree = new Tree("json/graphdata.json", simInit);
 
-	function simInit(tempNodes){
+	function simInit(){
 
-		console.dir(tempNodes);
-		console.dir(this.nodes);
-		exit;
+		console.dir(tree.nodes);
+		console.dir(tree.nodesToDisplay);
+		console.dir(tree.links);
+		nodes = tree.nodesToDisplay;
+		links = tree.links;
+
 		//init first data
-		makeDataArray(1);
-		makeNodeActive(nodes[0]);
+		// makeDataArray(1);
+		// makeNodeActive(nodes[0]);
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
@@ -139,9 +142,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return
 		}
 
-		makeNodeActive(d);
+		// makeNodeActive(d);
 
-		makeDataArray(d.depth, d);
+		// makeDataArray(d.depth, d);
+
+		tree.clikOnNode(d)
+		nodes = tree.nodesToDisplay;
+		links = tree.links;
+
 		var isAddNewNode;
 
 		//apply click function
@@ -661,10 +669,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		d.fy = null;
 	}
 
-	function makeNodeActive(currNode){
-		nodes.forEach( item => item.active = false );
-		currNode.active = true;
-	}
+	// function makeNodeActive(currNode){
+	// 	nodes.forEach( item => item.active = false );
+	// 	currNode.active = true;
+	// }
 
 	window.simulationResize = function (){
 		// width = window.innerWidth;
@@ -784,7 +792,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.getChildrenNodes = function(node){};
 		this.getClosestParent = function(node){};
 		this.makeNodeActive = makeNodeActive;
-		this.rebuildData = function(node){};
+		this.clikOnNode = clikOnNode;
 		this.jsonPath = jsonPath;
 		
 		/*
@@ -802,6 +810,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		* }
 		*/
 		this.nodes = [];
+		this.nodesToDisplay = [];
 		/*
 		* link = {
 		*	source: int || obj of node,
@@ -824,26 +833,204 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function readJsonData(jsonDataFromFile){
-			var tempNodes = [];
-			var tempLinks = [];
 
 			jsonData = jsonDataFromFile;
 
 			if(!simulationInit){
 				simulationInit = true;
 				makeNodeTree(jsonData);
-				initCallback.apply(myThis, [tempNodes]);
+				initCallback.apply(myThis, []);
 			}
 		}
 
 		function makeNodeTree(jsonData){
-			
+			var nodes = [];
+			myThis.nodes = nodes = jsonData.nodes;
+			for (var i = 0; i < nodes.length; i++) {
+				nodes[i].id = nodes[i].id*1;
+				nodes[i].active = false;
+				nodes[i].activePath = false;
+				nodes[i].depth = undefined;
+				nodes[i].children = setNodeChildrens(nodes[i]);
+				nodes[i].functional = false;
+				nodes[i].function = '';
+				nodes[i].display = false;
+			}
+			setNodesDepth(1);
+			makeNodeActive(nodes[0]);
+			setNodesDisplay(1);
+			updateNodesToDisplay();
+			updateLinks();
+			// console.dir(myThis.links);exit;
 		}
 
-		function setNodesDepth(){}
+		function setNodesDepth(depth, widthChildrens = true){
+			let curentDepth = 1;
+			let parentIds = [];
+			let oldparentIds = [];
+			let nodes = myThis.nodes;
+
+			if(widthChildrens) depth++;
+
+			for (;curentDepth <= depth; curentDepth++ ){
+				oldparentIds = parentIds;
+				parentIds = [];
+				for (var i = 0; i < nodes.length; i++){
+					let hasId = false;
+					for (var j = 0; j < oldparentIds.length; j++) {
+						for (var k = 0; k < nodes[i].parents.length; k++) {
+							if( nodes[i].parents[k] == oldparentIds[j] ){
+								hasId = true;
+							}
+						}
+					}
+					if(nodes[i].parents[0] == 0 && curentDepth == 1){
+						nodes[i].depth = 1;
+						parentIds.push(nodes[i].id);
+					}else if( hasId ){
+						nodes[i].depth = curentDepth;
+						parentIds.push(nodes[i].id);
+					}
+				}
+			}
+		}
+
+		function setNodeChildrens(node){
+			var id = node.id;
+			var nodeChildrens = [];
+			let nodes = myThis.nodes;
+
+			for (var i = 0; i < nodes.length; i++) {
+				for (var k = 0; k < nodes[i].parents.length; k++) {
+					if( nodes[i].parents[k] == id ){
+						nodeChildrens.push(nodes[i].id*1);
+					}
+				}
+			}
+			return nodeChildrens;
+		}
+
+		function makeNodeActive(currNode){
+			myThis.nodes.forEach( function(item){
+				item.active = false;
+				if(item.depth && item.depth == currNode.depth){
+					item.activePath = false;
+				}
+			});
+			currNode.active = true;
+			currNode.activePath = true;
+			myThis.activeNode = currNode;
+		}
+
+		function setNodesDisplay(depth, widthChildrens = true){
+			let nodes = myThis.nodes;
+			let activeNode = myThis.activeNode;
+			if(widthChildrens) depth++;
+
+			for (var i = 0; i < nodes.length; i++) {
+				if(showNode(nodes[i], depth)){
+					nodes[i].display = true;
+				}else{
+					nodes[i].display = false;
+				}
+			}
+
+			if(widthChildrens){
+				for (var i = 0; i < activeNode.children.length; i++) {
+					for (var j = 0; j < nodes.length; j++) {
+						if(nodes[j].id == activeNode.children[i]){
+							nodes[j].display = true;
+						}
+					}
+				}
+			}
+		}
+
+		function showNode(node, depth){
+			if(node.depth <= depth && node.activePath == true){
+				return true;
+			}else{
+				return false;
+			}
+
+		}
+
+		function updateNodesToDisplay(){
+			let nodes = myThis.nodes;
+			let nodesToDisplay = myThis.nodesToDisplay;
+			let nodeToHide = true;
+			let nodeToAdd = true;
+
+			//update-delete exiting nodes
+			for (var i = 0; i < nodesToDisplay.length; i++) {
+				nodeToHide = true;
+				for (var j = 0; j < nodes.length; j++) {
+					if(nodes[j].id == nodesToDisplay[i].id && nodes[j].display){
+						Object.assign(nodesToDisplay[i], nodes[j]);
+						nodeToHide = false;
+					}
+				}
+				if(nodeToHide){
+					myThis.nodesToDisplay.splice(i, 1);
+				}
+			}
+
+			nodesToDisplay = myThis.nodesToDisplay;
+
+			//add new
+			for (var i = 0; i < nodes.length; i++) {
+				if(nodes[i].display){
+					nodeToAdd = true
+					for (var j = 0; j < nodesToDisplay.length; j++){
+						if(nodesToDisplay[j].id == nodes[i].id){
+							nodeToAdd = false;
+						}
+					}
+					if(nodeToAdd){
+						myThis.nodesToDisplay.push(nodes[i]);
+					}
+				}
+			}
+		}
+
+		function updateLinks(){
+			let nodes = myThis.nodesToDisplay;
+			myThis.links = [];
+
+			for (var i = 0; i < nodes.length; i++) {
+
+				nodes[i].parents.forEach(function(parent) {
+					//core node hasn't links
+					if(parent == 0) return;
+
+					myThis.links.push({
+						source: getNodeById(parent*1),
+						target: nodes[i],
+						value: 2
+					});
+				});
+
+			}
+		}
+
+		function getNodeById(id){
+			let nodes = myThis.nodes;
+			for (var i = 0; i < nodes.length; i++) {
+				if(nodes[i].id == id){
+					return nodes[i];
+				}
+			}
+		}
+
+		function clikOnNode(node){
+			setNodesDepth(node.depth);
+			makeNodeActive(node);
+			setNodesDisplay(node.depth);
+			updateNodesToDisplay();
+			updateLinks();
+		}
+
 		function updateNodes(){}
-		function updateLinks(){}
-		function makeNodeActive(currNode){}
 
 
 
