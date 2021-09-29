@@ -21,7 +21,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//data init
 	window.nodes = [];
 	var links = [];
-	var jsonData = null;
+	// var jsonData = null;
 	var activePath = [];
 
 	//svg init
@@ -56,9 +56,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
 
 
-	d3.json("json/graphdata.json", function readDataFormFileFirstTime(jsonDataFromFile) {
-		jsonData = jsonDataFromFile;
+	var tree = new Tree("json/graphdata.json", simInit);
 
+	function simInit(tempNodes){
+
+		console.dir(tempNodes);
+		console.dir(this.nodes);
+		exit;
 		//init first data
 		makeDataArray(1);
 		makeNodeActive(nodes[0]);
@@ -105,7 +109,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		buildNodeLables(nodes);
 
 		simulation.on("tick", simulationTick);
-	});
+	}
+	// d3.json("json/graphdata.json", function readDataFormFileFirstTime(jsonDataFromFile) {
+	// 	jsonData = jsonDataFromFile;
+
+		
+	// });
 
 
 	//admin button
@@ -132,7 +141,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		makeNodeActive(d);
 
-		var dataObj = makeDataArray(d.depth, d);
+		makeDataArray(d.depth, d);
 		var isAddNewNode;
 
 		//apply click function
@@ -449,7 +458,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 
-		var myThis = {};
 		let nodes = jsonData.nodes;
 		var newNodes = [];
 		var newLinks = [];
@@ -634,8 +642,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 		}
-
-		return myThis;
 	}
 
 	function dragstarted(d) {
@@ -676,8 +682,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.restart();
 	}
 	window.simulationResize = throttle(simulationResize, 50);
-
-	
 
 
 	//resize
@@ -774,5 +778,77 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	}
 	
+	//prepare data to simulation
+	function Tree(jsonPath, callback){
+		this.activeNode = null;
+		this.getChildrenNodes = function(node){};
+		this.getClosestParent = function(node){};
+		this.makeNodeActive = makeNodeActive;
+		this.rebuildData = function(node){};
+		this.jsonPath = jsonPath;
+		
+		/*
+		* node = {
+		*	id: int,
+		*	active: bool,
+		*	activePath: bool,
+		*	depth: int,
+		*	label: str,
+		*	parents: arr,
+		*	children: arr,
+		*	functional: bool,
+		*	function: str,
+		*	display: bool,
+		* }
+		*/
+		this.nodes = [];
+		/*
+		* link = {
+		*	source: int || obj of node,
+		*	target: int || obj of node,
+		*	value: int=2,
+		* }
+		*/
+		this.links = [];
+		var myThis = this;
+
+		var jsonData = null;
+		var simulationInit = false;
+		var initCallback = callback;
+
+		init(this.jsonPath);
+
+		function init(jsonPath){
+			//read data
+			d3.json(jsonPath, readJsonData);
+		}
+
+		function readJsonData(jsonDataFromFile){
+			var tempNodes = [];
+			var tempLinks = [];
+
+			jsonData = jsonDataFromFile;
+
+			if(!simulationInit){
+				simulationInit = true;
+				makeNodeTree(jsonData);
+				initCallback.apply(myThis, [tempNodes]);
+			}
+		}
+
+		function makeNodeTree(jsonData){
+			
+		}
+
+		function setNodesDepth(){}
+		function updateNodes(){}
+		function updateLinks(){}
+		function makeNodeActive(currNode){}
+
+
+
+
+
+	}
 
 });
