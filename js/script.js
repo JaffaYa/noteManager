@@ -41,12 +41,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
 			}
 		}else{
-			if(d.fullscreen){
-				if(scrollNext){
-					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
-				}else{
-					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
-				}
+			switch (d.function){
+				case 'back':
+					if(scrollNext){
+						return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+					}else{
+						return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+					}
+					break;
+				default:
+					throw new Error('Неизвестная нода.')
 			}
 		}
 	}
@@ -79,7 +83,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForse", d3.forceX(slideForse).strength(0.1))
 		.force("y", d3.forceY().strength(d => d.functional ? 0.03 : 0.03))
-		.force("fullscreenButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
+		.force("backButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
 		.alphaTarget(0.5);
 
 		if(verticalScreen){
@@ -140,13 +144,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function bubleClick(d) {
 		playBubble();
-		if(d.fullscreen){
-			bodyFullScreanTogle();
-			return
-		}
-
 
 		tree.cliсkOnNode(d);
+
+		if(d.functional){
+			switch (d.function){
+				case 'back':
+					tree.backButton();
+					break;
+				default:
+					throw new Error('Неизвестная нода.')
+			}
+		}
 
 		console.dir(tree.nodes);
 		console.dir(tree.nodesToDisplay);
@@ -803,6 +812,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.jsonPath = jsonPath;
 		this.admin = Admin(document.location.search == '?admin');
 		this.showAllTree = showAllTree;
+		this.backButton = backButton;
 		/*
 		* node = {
 		*	id: int,
@@ -903,6 +913,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					}else if( hasId ){
 						nodes[i].depth = curentDepth;
 						parentIds.push(nodes[i].id);
+					}else if( nodes[i].functional ){
+						nodes[i].depth = myThis.activeNode.depth;
 					}
 				}
 			}
@@ -917,6 +929,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				id = nodes[j].id;
 				nodeChildrens = [];
 
+				if(nodes[j].functional) continue;
+
 				for (var i = 0; i < nodes.length; i++) {
 					for (var k = 0; k < nodes[i].parents.length; k++) {
 						if( nodes[i].parents[k] == id ){
@@ -930,6 +944,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function makeNodeActive(currNode){
 			if('first' == currNode) currNode = myThis.nodes[0];
+			if(currNode.functional) return;
 			myThis.nodes.forEach( function(item){
 				item.active = false;
 				if(item.depth && item.depth == currNode.depth){
@@ -951,6 +966,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			for (var i = 0; i < nodes.length; i++) {
 				if(showNode(nodes[i], depth)){
+					nodes[i].display = true;
+				}else if(nodes[i].functional){
 					nodes[i].display = true;
 				}else{
 					nodes[i].display = false;
@@ -1023,6 +1040,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			for (var i = 0; i < nodes.length; i++) {
 
+				if(nodes[i].functional) continue;
+
 				nodes[i].parents.forEach(function(parent) {
 					//core node hasn't links
 					if(parent == 0) return;
@@ -1044,6 +1063,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					return myThis.nodes[i];
 				}
 			}
+			return false;
 		}
 
 		function cliсkOnNode(node){
@@ -1052,11 +1072,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		
 		function updateNodes(node = 'first'){
-			makeNodeActive(node);
+			makeNodeActive(node);// перенести в cliсkOnNode
+			addFunctionalButtons();
 			myThis.admin.updateNodes();
 			setNodesChildrens();
-			setNodesDepth(node.depth || 'first');
-			setNodesDisplay(node.depth || 'first');
+			setNodesDepth(node.depth || 'first'); // убрать глубину и сделать зависимой от активной ноды
+			setNodesDisplay(node.depth || 'first'); // убрать глубину и сделать зависимой от активной ноды
 			updateNodesToDisplay();
 			updateLinks();
 		}
@@ -1145,6 +1166,55 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function showAllTree(show = true){
 			isShowAllTree = !!show;
+		}
+
+		function addFunctionalButtons(){
+			addFunctionalButton(10000, 'назад', 'back');
+		}
+
+		function addFunctionalButton(id, name, function1){
+			if(!getNodeById(id)){
+				myThis.nodes.push({
+					id: id,
+					active: false,
+					activePath: false,
+					depth: undefined,
+					label: name,
+					parents: [],
+					children: [],
+					functional: true,
+					function: function1,
+					addNew: false,
+					display: false
+				});
+			}
+		}
+
+
+		function backButton(){
+			let activeDepth = myThis.activeNode.depth;
+			let currActivePath = getActivePath();
+
+			activeDepth--;
+
+			console.log(activeDepth);
+			for (var i = 0; i < currActivePath.length; i++) {
+				if(currActivePath[i].depth == activeDepth){
+					console.log(activeDepth);
+					cliсkOnNode(currActivePath[i]);
+				}
+			}
+		}
+
+		function getActivePath(){
+			let nodes = myThis.nodes;
+			let activePath = [];
+			for (var i = 0; i < nodes.length; i++) {
+				if(nodes[i].activePath){
+					activePath.push(nodes[i]);
+				}
+			}
+			return activePath.sort( (a, b) => a.depth*1 - b.depth*1 );
 		}
 
 
