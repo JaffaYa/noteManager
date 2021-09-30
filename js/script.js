@@ -3,7 +3,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
+	document.getElementById('fullscreenButton').addEventListener('click', e => bodyFullScreanTogle() );
 
+	function popupActive(popupClass){
+		document.querySelector('.paranja').classList.add('active');
+		document.querySelector('.popup.' + popupClass).classList.add('active');
+	}
+	document.querySelector('.paranja').addEventListener('click', function(event){
+		this.classList.remove('active');
+		let popup = document.querySelectorAll('.popup');
+		for (var i = 0; i < popup.length; i++) {
+			popup[i].classList.remove('active');
+		}
+	});
+	
 
 	//graphics var
 	var width = window.innerWidth;
@@ -44,9 +57,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			switch (d.function){
 				case 'back':
 					if(scrollNext){
-						return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+						return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 					}else{
-						return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+						return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+					}
+					break;
+				case 'menu':
+					if(scrollNext){
+						return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+					}else{
+						return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
 					}
 					break;
 				default:
@@ -60,16 +80,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
 
 
-	var tree = new Tree("json/graphdata.json", simInit);
+	window.tree = new Tree("json/graphdata.json", simInit);
 
 	// tree.admin.set(true);
 	// tree.showAllTree();
 
 	function simInit(){
 
-		console.dir(tree.nodes);
-		console.dir(tree.nodesToDisplay);
-		console.dir(tree.links);
+		// console.dir(tree.nodes);
+		// console.dir(tree.nodesToDisplay);
+		// console.dir(tree.links);
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
 
@@ -152,14 +172,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				case 'back':
 					tree.backButton();
 					break;
+				case 'menu':
+					popupActive('menu');
+					break;
 				default:
 					throw new Error('Неизвестная нода.')
 			}
 		}
 
-		console.dir(tree.nodes);
-		console.dir(tree.nodesToDisplay);
-		console.dir(tree.links);
+		if(d.iframe){
+			//не заміняти атрибут еслі там уже стоїть той шо нада
+			document.querySelector('.iframe iframe').setAttribute("src", d.iframe);
+			popupActive('iframe');
+		}
+		// console.dir(tree.nodes);
+		// console.dir(tree.nodesToDisplay);
+		// console.dir(tree.links);
 
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
@@ -968,7 +996,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(showNode(nodes[i], depth)){
 					nodes[i].display = true;
 				}else if(nodes[i].functional){
-					nodes[i].display = true;
+					switch (nodes[i].function){
+						case 'back':
+							if(myThis.activeNode.depth > 1){
+								nodes[i].display = true;
+							}else{
+								nodes[i].display = false;
+							}
+							break;
+						default:
+							nodes[i].display = true;
+							break;
+							// throw new Error('Неизвестная функциональная нода.')
+					}
 				}else{
 					nodes[i].display = false;
 				}
@@ -1170,6 +1210,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function addFunctionalButtons(){
 			addFunctionalButton(10000, 'назад', 'back');
+			addFunctionalButton(10001, 'меню', 'menu');
 		}
 
 		function addFunctionalButton(id, name, function1){
@@ -1197,10 +1238,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			activeDepth--;
 
-			console.log(activeDepth);
+			//clear previos activePath
+			//spep back activePath
+			myThis.activeNode.activePath = false;
+
+			console.log(currActivePath);
 			for (var i = 0; i < currActivePath.length; i++) {
 				if(currActivePath[i].depth == activeDepth){
-					console.log(activeDepth);
 					cliсkOnNode(currActivePath[i]);
 				}
 			}

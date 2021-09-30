@@ -38,7 +38,8 @@
     {
       "id": "8",
       "label": "лайк",
-      "parents": [6]
+      "parents": [6],
+      "iframe": "https://etalon-idea.com/"
     }
   ]
 }
