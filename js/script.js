@@ -58,6 +58,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var tree = new Tree("json/graphdata.json", simInit);
 
+	// tree.admin.set(true);
+	// tree.showAllTree();
+
 	function simInit(){
 
 		console.dir(tree.nodes);
@@ -142,11 +145,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return
 		}
 
-		// makeNodeActive(d);
 
-		// makeDataArray(d.depth, d);
+		tree.cliсkOnNode(d);
 
-		tree.clikOnNode(d)
+		console.dir(tree.nodes);
+		console.dir(tree.nodesToDisplay);
+		console.dir(tree.links);
+
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
 
@@ -289,6 +294,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				function(d){
 					//add links
 					svgLinks._groups[0].push(this);
+					
 					return d.value ;
 				}
 				)
@@ -788,13 +794,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	
 	//prepare data to simulation
 	function Tree(jsonPath, callback){
+		var myThis = this;
 		this.activeNode = null;
 		this.getChildrenNodes = function(node){};
 		this.getClosestParent = function(node){};
 		this.makeNodeActive = makeNodeActive;
-		this.clikOnNode = clikOnNode;
+		this.cliсkOnNode = cliсkOnNode;
 		this.jsonPath = jsonPath;
-		
+		this.admin = Admin(document.location.search == '?admin');
+		this.showAllTree = showAllTree;
 		/*
 		* node = {
 		*	id: int,
@@ -806,6 +814,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	children: arr,
 		*	functional: bool,
 		*	function: str,
+		*	addNew: bool,
 		*	display: bool,
 		* }
 		*/
@@ -819,7 +828,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		* }
 		*/
 		this.links = [];
-		var myThis = this;
+
+		var isShowAllTree = false;
+
+
 
 		var jsonData = null;
 		var simulationInit = false;
@@ -851,17 +863,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].active = false;
 				nodes[i].activePath = false;
 				nodes[i].depth = undefined;
-				nodes[i].children = setNodeChildrens(nodes[i]);
+				nodes[i].children = [];
 				nodes[i].functional = false;
 				nodes[i].function = '';
+				nodes[i].addNew = false;
 				nodes[i].display = false;
 			}
-			setNodesDepth(1);
-			makeNodeActive(nodes[0]);
-			setNodesDisplay(1);
-			updateNodesToDisplay();
-			updateLinks();
-			// console.dir(myThis.links);exit;
+			updateNodes();
 		}
 
 		function setNodesDepth(depth, widthChildrens = true){
@@ -870,7 +878,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let oldparentIds = [];
 			let nodes = myThis.nodes;
 
+			if('first' == depth) depth = 1;
 			if(widthChildrens) depth++;
+			if(isShowAllTree){
+				//calculate all depht if need to show whole tree
+				depth = nodes.length;
+			}
 
 			for (;curentDepth <= depth; curentDepth++ ){
 				oldparentIds = parentIds;
@@ -895,28 +908,35 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
-		function setNodeChildrens(node){
-			var id = node.id;
-			var nodeChildrens = [];
+		function setNodesChildrens(node){
 			let nodes = myThis.nodes;
+			var id = undefined;
+			var nodeChildrens = [];
 
-			for (var i = 0; i < nodes.length; i++) {
-				for (var k = 0; k < nodes[i].parents.length; k++) {
-					if( nodes[i].parents[k] == id ){
-						nodeChildrens.push(nodes[i].id*1);
+			for (var j = 0; j < nodes.length; j++) {
+				id = nodes[j].id;
+				nodeChildrens = [];
+
+				for (var i = 0; i < nodes.length; i++) {
+					for (var k = 0; k < nodes[i].parents.length; k++) {
+						if( nodes[i].parents[k] == id ){
+							nodeChildrens.push(nodes[i].id*1);
+						}
 					}
 				}
+				myThis.nodes[j].children = nodeChildrens;
 			}
-			return nodeChildrens;
 		}
 
 		function makeNodeActive(currNode){
+			if('first' == currNode) currNode = myThis.nodes[0];
 			myThis.nodes.forEach( function(item){
 				item.active = false;
 				if(item.depth && item.depth == currNode.depth){
 					item.activePath = false;
 				}
 			});
+			currNode = getNodeById(currNode.id)
 			currNode.active = true;
 			currNode.activePath = true;
 			myThis.activeNode = currNode;
@@ -925,6 +945,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setNodesDisplay(depth, widthChildrens = true){
 			let nodes = myThis.nodes;
 			let activeNode = myThis.activeNode;
+
+			if('first' == depth) depth = 1;
 			if(widthChildrens) depth++;
 
 			for (var i = 0; i < nodes.length; i++) {
@@ -947,17 +969,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function showNode(node, depth){
-			if(node.depth <= depth && node.activePath == true){
+			if(node.depth <= depth && node.activePath == true || isShowAllTree){
 				return true;
 			}else{
 				return false;
 			}
-
 		}
 
 		function updateNodesToDisplay(){
-			let nodes = myThis.nodes;
-			let nodesToDisplay = myThis.nodesToDisplay;
+			let nodes = myThis.nodes.map((node) => node);
+			let nodesToDisplay = myThis.nodesToDisplay.map((node) => node);
 			let nodeToHide = true;
 			let nodeToAdd = true;
 
@@ -971,7 +992,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					}
 				}
 				if(nodeToHide){
-					myThis.nodesToDisplay.splice(i, 1);
+					for (var k = 0; k < myThis.nodesToDisplay.length; k++) {
+						if(myThis.nodesToDisplay[k].id == nodesToDisplay[i].id)
+						myThis.nodesToDisplay.splice(k, 1);
+					}
 				}
 			}
 
@@ -1017,22 +1041,111 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let nodes = myThis.nodes;
 			for (var i = 0; i < nodes.length; i++) {
 				if(nodes[i].id == id){
-					return nodes[i];
+					return myThis.nodes[i];
 				}
 			}
 		}
 
-		function clikOnNode(node){
-			setNodesDepth(node.depth);
+		function cliсkOnNode(node){
+			updateNodes(node);
+		}
+
+		
+		function updateNodes(node = 'first'){
 			makeNodeActive(node);
-			setNodesDisplay(node.depth);
+			myThis.admin.updateNodes();
+			setNodesChildrens();
+			setNodesDepth(node.depth || 'first');
+			setNodesDisplay(node.depth || 'first');
 			updateNodesToDisplay();
 			updateLinks();
 		}
 
-		function updateNodes(){}
+		function Admin(admin = false){
+			var isAdmin = admin;
+			var maxNodeId = 0;
+
+			function getMaxId(nodes){
+				let nodeIds = nodes.map((node) => node.id);
+				return Math.max.apply(null, nodeIds);
+			}
+
+			function delAllNewNodes(){
+				let nodes = myThis.nodes.map((node) => node);
+				for (var i = 0; i < nodes.length; i++) {
+					if(nodes[i].addNew){
+						myThis.nodes.splice(i, 1);
+					}
+				}
+			}
+
+			function delAllNewNodesExceptActive(){
+				let nodes = myThis.nodes.map((node) => node);
+				for (var i = 0; i < nodes.length; i++) {
+					if(nodes[i].addNew && !nodes[i].active){
+						myThis.nodes.splice(i, 1);
+					}
+				}
+			}
+
+			function isHasNewNode(node){
+				let childrens = node.children;
+				let currNode = null;
+				for (var i = 0; i < childrens.length; i++) {
+					currNode = getNodeById(childrens[i]);
+					if(currNode.addNew){
+						return true;
+					}
+				}
+				return false;
+			}
+
+			return {
+				set: function(admin){
+					isAdmin = !!admin;
+				},
+				get: function(admin){
+					return isAdmin;
+				},
+				updateNodes: function(){
+					let nodes = myThis.nodes.map((node) => node);
+
+					if(isAdmin){
+						delAllNewNodesExceptActive();
+						for (var i = 0; i < nodes.length; i++) {
+							//режым бесконечных плюсиков !nodes[i].addNew
+							if(
+								myThis.activeNode.id == nodes[i].id && 
+								!nodes[i].addNew && 
+								!isHasNewNode(nodes[i])
+							){
+								maxNodeId = getMaxId(myThis.nodes)*1 + 1;
+								myThis.nodes.push({
+									id: maxNodeId,
+									active: false,
+									activePath: false,
+									depth: undefined,//nodes[i].depth+1
+									label: "+",
+									parents: [nodes[i].id],
+									children: [],
+									functional: false,
+									function: '',
+									addNew: true,
+									display: false,
+								});
+							}
+						}
+					}else{
+						delAllNewNodes();
+					}
+				}
+			}
+		}
 
 
+		function showAllTree(show = true){
+			isShowAllTree = !!show;
+		}
 
 
 
