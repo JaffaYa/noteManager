@@ -57,7 +57,7 @@ body {
   font-weight: 900;
   line-height: 0.9;
   word-break: normal;
-  transition: font-size 0.75s;
+  transition: font-size 0.3s, transform 0.3s;
 }
 .nodesLabel text.active{
   font-size: 8rem;
@@ -151,6 +151,8 @@ body {
     opacity: 1;
 }
 
+
+/* popup */
 .paranja{
     position: fixed;
     /*background: #0000009c;*/

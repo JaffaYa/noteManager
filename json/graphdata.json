@@ -13,7 +13,8 @@
     {
       "id": "3",
       "label": "уйти",
-      "parents": [1]
+      "parents": [1],
+      "iframe": "https://etalon-idea.com/"
     },
     {
       "id": "4",

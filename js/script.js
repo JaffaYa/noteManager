@@ -49,25 +49,23 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	const slideForse = function (d){
 		if(!d.functional){
 			if(scrollNext){
-				return (width/4 + width/2*(d.depth - activeDepth)) - width/2;
+				if(d.active){
+					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+				}else{
+					return (width/4 + width/2*(d.depth - activeDepth)) - width/2;
+				}
 			}else{
 				return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
 			}
 		}else{
 			switch (d.function){
 				case 'back':
-					if(scrollNext){
-						return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
-					}else{
-						return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
-					}
+						// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+						return (width/10) - width/2;
 					break;
 				case 'menu':
-					if(scrollNext){
-						return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-					}else{
-						return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-					}
+						// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+						return (width - width/4) - width/2;
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -102,7 +100,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForse", d3.forceX(slideForse).strength(0.1))
-		.force("y", d3.forceY().strength(d => d.functional ? 0.03 : 0.03))
+		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
 		.alphaTarget(0.5);
 
@@ -181,8 +179,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		if(d.iframe){
-			//не заміняти атрибут еслі там уже стоїть той шо нада
-			document.querySelector('.iframe iframe').setAttribute("src", d.iframe);
+			var iframe = document.querySelector('.iframe iframe');
+			var iframeSrc = iframe.getAttribute("src");
+			if(iframeSrc !=  d.iframe){
+				iframe.setAttribute("src", d.iframe);
+			}
 			popupActive('iframe');
 		}
 		// console.dir(tree.nodes);
@@ -207,6 +208,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
 		simulation.alphaTarget(0.8).restart();
+		// simulation.alpha(0.2).restart();
 
 		return;
 	}
@@ -256,12 +258,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.classed('active', d => d.active)
 			.classed('fade', d => d.activePath == 'fade')
 			.attr("node-id", d => d.id)
-			.call(
-				d3.drag(simulation)
-				.on("start", dragstarted)
-				.on("drag", dragged)
-				.on("end", dragended)
-				)
+			// .call(
+			// 	d3.drag(simulation)
+			// 	.on("start", dragstarted)
+			// 	.on("drag", dragged)
+			// 	.on("end", dragended)
+			// 	)
 			.on("click", bubleClick);
 
 			setNodeStyle();
@@ -284,12 +286,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					return d.id
 				}
 				)
-			.call(
-				d3.drag(simulation)
-				.on("start", dragstarted)
-				.on("drag", dragged)
-				.on("end", dragended)
-				)
+			// .call(
+			// 	d3.drag(simulation)
+			// 	.on("start", dragstarted)
+			// 	.on("drag", dragged)
+			// 	.on("end", dragended)
+			// 	)
 			.on("click", bubleClick);
 
 			tempNode.exit()
@@ -365,6 +367,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.enter().append("text")
 			.attr('class', d => 'c'+d.id)
 			.classed('active', d => d.active)
+			.attr('translate', translateText)
 			.html(formatNodeLablesText)
 
 			// console.dir(svgNodeLables);
@@ -391,7 +394,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			tempNodeLables
 			.attr('class', d => 'c'+d.id)
-			.classed('active', d => d.active);
+			.classed('active', d => d.active)
+			.attr('translate', translateText);
 
 			tempNodeLables.enter().append("text")
 			.attr('class', d => 'c'+d.id)
@@ -450,6 +454,33 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			result += '</tspan>';
 		}
 		return result;
+	}
+
+	function translateText(d){
+		if(d.active){
+			var bbox = this.getBBox();
+			//if text size no init yet
+			if(bbox.width == 0) {
+				setTimeout(function(self){
+					var bbox = self.getBBox();
+
+					self.style.setProperty('transform', 'translateX(-'+bbox.width+'px)');
+				}, 100, this);
+			}else{
+				setTimeout(function(self){
+					var bbox = self.getBBox();
+					
+					//посмотреть можно ли сделать анимацию через d3, force
+
+					self.style.setProperty('transform', 'translateX(-'+bbox.width+'px)');
+				}, 300, this);
+			}
+			// this.style.setProperty('transform', 'translateX(-'+bbox.width*2+'px)');
+			return 'active'
+		}else{
+			this.style.removeProperty('transform');
+			return 'unset'
+		}
 	}
 
 	function setDashedLineStyle(node){
@@ -862,6 +893,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		* link = {
 		*	source: int || obj of node,
 		*	target: int || obj of node,
+		*	dashed: bool,
 		*	value: int=2,
 		* }
 		*/
@@ -1089,6 +1121,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					myThis.links.push({
 						source: getNodeById(parent*1),
 						target: nodes[i],
+						dashed: nodes[i].addNew,
 						value: 2
 					});
 				});
@@ -1240,9 +1273,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			//clear previos activePath
 			//spep back activePath
+			//тут надо функцию которя буде удалять activePath во всех нодах в которых depth <= activeDepth
+			//или это не тут а при клике на ноду нужно делать
 			myThis.activeNode.activePath = false;
 
-			console.log(currActivePath);
+			// console.log(currActivePath);
 			for (var i = 0; i < currActivePath.length; i++) {
 				if(currActivePath[i].depth == activeDepth){
 					cliсkOnNode(currActivePath[i]);
