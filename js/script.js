@@ -100,7 +100,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
 		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("center", d3.forceCenter(0,0))
-		.force("slideForse", d3.forceX(slideForse).strength(0.1))
+		.force("slideForse", d3.forceX(slideForse).strength(0.035))
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
 		.alphaTarget(0.5);
@@ -361,15 +361,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildNodeLables(nodes){
 		if(!svgNodeLables){
-			// svgNodeLables = svg.append("g")
-			// .attr("class", "nodesLabel")
-			// .selectAll("text")
-			// .data(nodes)
-			// .enter().append("text")
-			// .attr('class', d => 'c'+d.id)
-			// .classed('active', d => d.active)
-			// .attr('translate', translateText)
-			// .html(formatNodeLablesText)
+			svgNodeLables = svg.append("g")
+			.attr("class", "nodesLabel")
+			.selectAll("text")
+			.data(nodes)
+			.enter().append("text")
+			.attr('class', d => 'c'+d.id)
+			.classed('active', d => d.active)
+			.attr('translate', translateText)
+			.html(formatNodeLablesText)
 
 			//отдельно
 			// console.dir(svgNodeLables);
@@ -378,19 +378,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// .text(formatNodeLablesText);
 			//отдельно
 
-			svgNodeLables = svg.append("g")
-			.attr("class", "nodesLabel")
-			.selectAll("foreignObject")
-			.data(nodes)
-			.enter().append("foreignObject")
-			.attr('width', 320)
-			.attr('height', 240)
-			.classed('active', d => d.active);
-			svgNodeLables
-			// .append("body")
-			.append("xhtml:div")
-			.attr('xmlns', "http://www.w3.org/1999/xhtml")
-			.html(function(d, i) { return d.label });
+			// svgNodeLables = svg.append("g")
+			// .attr("class", "nodesLabel")
+			// .selectAll("foreignObject")
+			// .data(nodes)
+			// .enter().append("foreignObject")
+			// .attr('width', width*0.5)
+			// .attr('height', height*0.5)
+			// .classed('active', d => d.active);
+			// svgNodeLables
+			// // .append("body")
+			// .append("xhtml:div")
+			// .attr('xmlns', "http://www.w3.org/1999/xhtml")
+			// .html(function(d, i) { return d.label });
 
 		}else{
 			var tempNodeLables = svgNodeLables
@@ -874,6 +874,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.cliсkOnNode = cliсkOnNode;
 		this.jsonPath = jsonPath;
 		this.admin = Admin(document.location.search == '?admin');
+		//для использования нужно сделать очистку activePath с учётом возможности прижка между нодами
 		this.showAllTree = showAllTree;
 		this.backButton = backButton;
 		/*
@@ -950,7 +951,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let curentDepth = 1;
 			let parentIds = [];
 			let oldparentIds = [];
+			let currActivePath = getActivePath();
 			let nodes = myThis.nodes;
+
+			//возможно стоить брать depth не от текущей нажатой ноды а от глобального значения
 
 			if('first' == depth) depth = 1;
 			if(widthChildrens) depth++;
@@ -965,8 +969,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				for (var i = 0; i < nodes.length; i++){
 					let hasId = false;
 					for (var j = 0; j < oldparentIds.length; j++) {
+						if(!isInArrayId(oldparentIds[j], currActivePath)) continue;
 						for (var k = 0; k < nodes[i].parents.length; k++) {
-							if( nodes[i].parents[k] == oldparentIds[j] ){
+							if( nodes[i].parents[k] == oldparentIds[j]){
 								hasId = true;
 							}
 						}
@@ -1121,6 +1126,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].parents.forEach(function(parent) {
 					//core node hasn't links
 					if(parent == 0) return;
+					//node don't show
+					if(!isInArrayId(parent, nodes)) return;
 
 					myThis.links.push({
 						source: getNodeById(parent*1),
@@ -1131,6 +1138,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				});
 
 			}
+		}
+
+		function isInArrayId(id, array = []){
+			for (var i = 0; i < array.length; i++) {
+				if(array[i].id == id){
+					return true;
+				}
+			}
+			return false
 		}
 
 		function getNodeById(id){
