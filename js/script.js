@@ -39,6 +39,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	//svg init
 	const svg = d3.select("#my_data").append("svg")
+	.attr('xmlns:xlink', "http://www.w3.org/1999/xlink")
 	.attr("viewBox", svgViewPort);
 
 	var svgLinks = false;
@@ -360,33 +361,36 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildNodeLables(nodes){
 		if(!svgNodeLables){
-			svgNodeLables = svg.append("g")
-			.attr("class", "nodesLabel")
-			.selectAll("text")
-			.data(nodes)
-			.enter().append("text")
-			.attr('class', d => 'c'+d.id)
-			.classed('active', d => d.active)
-			.attr('translate', translateText)
-			.html(formatNodeLablesText)
+			// svgNodeLables = svg.append("g")
+			// .attr("class", "nodesLabel")
+			// .selectAll("text")
+			// .data(nodes)
+			// .enter().append("text")
+			// .attr('class', d => 'c'+d.id)
+			// .classed('active', d => d.active)
+			// .attr('translate', translateText)
+			// .html(formatNodeLablesText)
 
+			//отдельно
 			// console.dir(svgNodeLables);
 			// svgNodeLables
 			// .append("tspan")
 			// .text(formatNodeLablesText);
-			// svgNodeLables = svg.append("g")
-			// .attr("class", "nodesLabel")
-			// .selectAll("foreignObject")
-			// .data(nodes)
-			// .enter().append("foreignObject")
-			// .attr('width', 320)
-			// .attr('height', 240)
-			// .classed('active', d => d.active);
-			// svgNodeLables
+			//отдельно
+
+			svgNodeLables = svg.append("g")
+			.attr("class", "nodesLabel")
+			.selectAll("foreignObject")
+			.data(nodes)
+			.enter().append("foreignObject")
+			.attr('width', 320)
+			.attr('height', 240)
+			.classed('active', d => d.active);
+			svgNodeLables
 			// .append("body")
-			// .attr('xmlns', "http://www.w3.org/1999/xhtml")
-			// .append("div")
-			// .html(function(d, i) { return d.label });
+			.append("xhtml:div")
+			.attr('xmlns', "http://www.w3.org/1999/xhtml")
+			.html(function(d, i) { return d.label });
 
 		}else{
 			var tempNodeLables = svgNodeLables
