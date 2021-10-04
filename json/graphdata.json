@@ -2,45 +2,49 @@
   "nodes": [
     {
       "id": "1",
-      "label": "здравствуй \nклассный \nЧеловек",
+      "label": "здравствуй \nчеловек",
       "parents": [0]
     },
     {
       "id": "2",
-      "label": "сказать \nпривет",
+      "label": "кто ты?",
       "parents": [1]
     },
     {
       "id": "3",
-      "label": "уйти",
-      "parents": [1],
-      "iframe": "https://etalon-idea.com/"
+      "label": "сказать \nпривет",
+      "parents": [1]
     },
     {
       "id": "4",
-      "label": "закрыть",
-      "parents": [3]
-    },
-    {
-      "id": "5",
-      "label": "остаться",
-      "parents": [3]
-    },
-    {
-      "id": "6",
-      "label": "финансы \n бизнес \n маркетплейсы \n_всё это классные штуки",
+      "label": "моё имя \nvariant\nя искусственный\nразум",
       "parents": [2]
     },
     {
+      "id": "5",
+      "label": "сказать \nпривет",
+      "parents": [4]
+    },
+    {
+      "id": "6",
+      "label": "ты хочешь \nулучшить\nпаказатели\nбизнеса?",
+      "parents": [3,5]
+    },
+    {
       "id": "7",
-      "label": "диз",
+      "label": "ты знаешь\nкак это\nсделать?",
       "parents": [6]
     },
     {
       "id": "8",
-      "label": "лайк",
-      "parents": [6],
-      "iframe": "https://etalon-idea.com/"
+      "label": "да",
+      "parents": [7]
+    },
+    {
+      "id": "9",
+      "label": "нет",
+      "parents": [7]
     }
+
   ]
 }
