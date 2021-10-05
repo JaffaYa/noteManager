@@ -81,7 +81,7 @@ body {
   font-size: 20px;
   color: white;
   pointer-events: none;
-  transition: transform 1s;
+  /*transition: transform 1s;*/
   /*transition: 1s;*/
 }
 .nodesLabel .text.active{
