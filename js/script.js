@@ -302,6 +302,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.classed('text', true)
 			.html(d => d.label);
 
+			svgNodes.append("div")
+			.classed('c1', true);
+
+			svgNodes.append("div")
+			.classed('c2', true);
+
 			setNodeStyle();
 
 		}else{
@@ -334,6 +340,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			tt.append("div")
 			.classed('text', true)
 			.html(d => d.label);
+
+
+			tt.append("div")
+			.classed('c1', true);
+
+			tt.append("div")
+			.classed('c2', true);
 
 
 			tempNode.exit()

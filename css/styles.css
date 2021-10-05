@@ -111,7 +111,6 @@ body {
   stroke: white; }
 
 .node text {
-  pointer-events: none;
   font: 20px sans-serif; }
 
 .nodes circle {
