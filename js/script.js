@@ -16,6 +16,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			popup[i].classList.remove('active');
 		}
 	});
+
+	//fps
+	var fps = document.getElementById("fps");
+	var startTime = Date.now();
+	var frame = 0;
+
+
 	
 
 	//graphics var
@@ -219,6 +226,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	function simulationTick(){
+		//fps
+		var time = Date.now();
+		frame++;
+		if (time - startTime > 1000) {
+			fps.innerHTML = (frame / ((time - startTime) / 1000)).toFixed(1);
+			startTime = time;
+			frame = 0;
+		}
+
+
 		// svgLinks
 		// .attr("x1", d => d.source.x)
 		// .attr("y1", d => d.source.y)
