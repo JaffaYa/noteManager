@@ -24,8 +24,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var verticalScreen = height/width > width/height ? true : false;
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 	var activeDepth = 1;
-	var nodeRadius = width/48;
-	var activeRadius = nodeRadius*2;
+	// var nodeRadius = width/48;
+	var nodeRadius = 20;
+	// var activeRadius = nodeRadius*2;
+	var activeRadius = 20;
 	var animationTime = 250;//ms
 
 
@@ -38,8 +40,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var activePath = [];
 
 	//svg init
-	const svg = d3.select("#my_data").append("svg")
+	// const svg = d3.select("#my_data").append("svg")
+	const svg = d3.select("#my_data").append("div")
 	.attr('xmlns:xlink', "http://www.w3.org/1999/xlink")
+	.attr('style', "width: 100vw;height: 100vh;position: relative;")
 	.attr("viewBox", svgViewPort);
 
 	var svgLinks = false;
@@ -132,10 +136,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			)
 		}
 
-		buildLinks(links);
+		// buildLinks(links);
 		buildNodes(nodes);
-		buildNodeTitles(svgNodes);
-		buildNodeLables(nodes);
+		// buildNodeTitles(svgNodes);
+		// buildNodeLables(nodes);
 
 		simulation.on("tick", simulationTick);
 	}
@@ -201,10 +205,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//draw
 		activeDepth = d.depth;
 		
-		buildLinks(links);
+		// buildLinks(links);
 		buildNodes(nodes);
-		buildNodeTitles(svgNodes);
-		buildNodeLables(nodes);
+		// buildNodeTitles(svgNodes);
+		// buildNodeLables(nodes);
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
@@ -215,31 +219,34 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	function simulationTick(){
-		svgLinks
-		.attr("x1", d => d.source.x)
-		.attr("y1", d => d.source.y)
-		.attr("x2", d => d.target.x)
-		.attr("y2", d => d.target.y);
+		// svgLinks
+		// .attr("x1", d => d.source.x)
+		// .attr("y1", d => d.source.y)
+		// .attr("x2", d => d.target.x)
+		// .attr("y2", d => d.target.y);
 
 		svgNodes
-		.attr("cx", 
-			// d => d.x
-			function(d){
-				// console.log(d)
-				return d.x;
-			}
-			)
-		.attr("cy", d => d.y);
+		// .attr("cx", 
+		// 	// d => d.x
+		// 	function(d){
+		// 		// console.log(d)
+		// 		return d.x;
+		// 	}
+		// 	)
+		// .attr("cy", d => d.y);
+		.attr("style", function (d){ 
+			return 'left:'+d.x+'px;top:'+d.y+'px;'
+		});
 
-		svgNodeLables
-		.attr("x", d => {
-			// console.log(d);
-			svgNodeLables.selectAll('.c'+d.id+' tspan')
-			.attr("x", d.x-getNodeRadius()+10)
-			.attr("y", d.y+getNodeRadius()-10)
-			return d.x;
-		})
-		.attr("y", d => d.y);
+		// svgNodeLables
+		// .attr("x", d => {
+		// 	// console.log(d);
+		// 	svgNodeLables.selectAll('.c'+d.id+' tspan')
+		// 	.attr("x", d.x-getNodeRadius()+10)
+		// 	.attr("y", d.y+getNodeRadius()-10)
+		// 	return d.x;
+		// })
+		// .attr("y", d => d.y);
 
 		// svgNodeLables
 		// .selectAll("tspan")
@@ -250,12 +257,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildNodes(nodes){
 		if(!svgNodes){
-			svgNodes = svg.append("g")
+			// svgNodes = svg.append("g")
+			svgNodes = svg.append("div")
 			.attr("class", "nodes")
-			.selectAll("circle")
+			.attr("style", "position: absolute;left: 50vw;top: 50vh;")
+			.selectAll("div")
+			
 			.data(nodes);
 
-			svgNodes = svgNodes.enter().append("circle")
+			// svgNodes = svgNodes.enter().append("circle")
+			svgNodes = svgNodes.enter().append("div")
 			.classed('active', d => d.active)
 			.classed('fade', d => d.activePath == 'fade')
 			.attr("node-id", d => d.id)
@@ -277,7 +288,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.classed('active', d => d.active)
 			.classed('fade', d => d.activePath == 'fade');
 
-			tempNode.enter().append("circle")
+			tempNode.enter().append("div")
 			// .attr("r", nodeRadius)
 			// .attr("stroke-width", nodeRadius*(5/3))
 			.attr("node-id", // d => d.id 
@@ -498,14 +509,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.transition()
 		.duration(animationTime)
 		.attr("r", d => d.active ? activeRadius : nodeRadius)
-		.attr("stroke-width", d => d.active ? activeRadius*(5/3) : nodeRadius*(5/3));
+		// .attr("stroke-width", d => d.active ? activeRadius*(5/3) : nodeRadius*(5/3));
 	}
 
 	function getNodeRadius(){
-		return width/48;
+		// return width/48;
+		return 5;
 	}
 	function getActiveNodeRadius(){
-		return getNodeRadius()*2;
+		// return getNodeRadius()*2;
+		return getNodeRadius();
 	}
 
 	function makeDataArray(depth, d = jsonData.nodes[0]){
