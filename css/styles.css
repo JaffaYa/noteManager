@@ -81,12 +81,12 @@ body {
   font-size: 20px;
   color: white;
   pointer-events: none;
-  transition: font-size 0.3s, transform 0.3s;
+  transition: transform 1s;
   /*transition: 1s;*/
 }
 .nodesLabel .text.active{
-  font-size: 80px;
-  transform: translateX(-100%);
+  /*font-size: 80px;*/
+  transform: scale(3) translateX(-100%);
 }
 /*temp*/
 
