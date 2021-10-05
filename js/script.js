@@ -29,12 +29,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var width = window.innerWidth;
 	var height = window.innerHeight;
 	var verticalScreen = height/width > width/height ? true : false;
-	var svgViewPort = [-width / 2, -height / 2, width, height];
 	var activeDepth = 1;
-	// var nodeRadius = width/48;
-	var nodeRadius = 20;
-	// var activeRadius = nodeRadius*2;
-	var activeRadius = 20;
+	// // var nodeRadius = width/48;
+	// var nodeRadius = 20;
+	// // var activeRadius = nodeRadius*2;
+	// var activeRadius = 20;
 	var animationTime = 250;//ms
 
 
@@ -46,12 +45,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var jsonData = null;
 	var activePath = [];
 
-	//svg init
+	//viewPort init
 	// const svg = d3.select("#my_data").append("svg")
-	const svg = d3.select("#my_data").append("div")
-	.attr('xmlns:xlink', "http://www.w3.org/1999/xlink")
-	.attr('style', "width: 100vw;height: 100vh;position: relative;")
-	.attr("viewBox", svgViewPort);
+	const viewPort = d3.select("#my_data")
+	.style('width', width+'px')
+	.style('height', height+'px')
+	;
 
 	var svgLinks = false;
 	var svgNodes = false;
@@ -113,7 +112,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForse", d3.forceX(slideForse).strength(0.035))
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
-		.force("backButton", d3.forceY(height/2 - getNodeRadius()*2).strength(d => d.functional ? 0.1 : 0))
+		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		.alphaTarget(0.5);
 
 		if(verticalScreen){
@@ -278,7 +277,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function buildNodes(nodes){
 		if(!svgNodes){
 			// svgNodes = svg.append("g")
-			svgNodes = svg.append("div")
+			svgNodes = viewPort.append("div")
 			.attr("class", "nodes")
 			.attr("style", "position: absolute;left: 50vw;top: 50vh;")
 			.selectAll("div")
@@ -363,7 +362,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildLinks(links){
 		if(!svgLinks){
-			svgLinks = svg.append("g")
+			svgLinks = viewPort.append("g")
 			.attr("class", "links")
 			.selectAll("line")
 			.data(links)
@@ -415,7 +414,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildNodeLables(nodes){
 		if(!svgNodeLables){
-			svgNodeLables = svg.append("div")
+			svgNodeLables = viewPort.append("div")
 			.attr("class", "nodesLabel")
 			.selectAll("div")
 			.data(nodes)
@@ -553,23 +552,27 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	function setNodeStyle(){
-		nodeRadius = getNodeRadius();
-		activeRadius = getActiveNodeRadius();
-		svgNodes
-		.transition()
-		.duration(animationTime)
-		.attr("r", d => d.active ? activeRadius : nodeRadius)
+		// nodeRadius = getNodeRadius();
+		// activeRadius = getActiveNodeRadius();
+		// svgNodes
+		// .transition()
+		// .duration(animationTime)
+		// .attr("r", d => d.active ? activeRadius : nodeRadius)
 		// .attr("stroke-width", d => d.active ? activeRadius*(5/3) : nodeRadius*(5/3));
 	}
 
-	function getNodeRadius(){
+	function getNodeRadius(node){
+		// console.dir(getNodeElementById(node.id));
 		// return width/48;
-		return 5;
+		return 70;
 	}
-	function getActiveNodeRadius(){
-		// return getNodeRadius()*2;
-		return getNodeRadius();
-	}
+
+	// function getNodeElementById(id){
+	// 		console.dir(svgNodes);
+	// 	// for (var i = 0; i < nodes.length; i++) {
+	// 	// }
+	// 	return id;
+	// }
 
 	function makeDataArray(depth, d = jsonData.nodes[0]){
 
@@ -839,9 +842,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		width = window.innerWidth;
 		height = window.innerHeight;
 		verticalScreen = height/width > width/height ? true : false;
-		svgViewPort = [-width / 2, -height / 2, width, height];
-		d3.select("#my_data svg")
-		.attr("viewBox", svgViewPort);
+
+		viewPort
+		.style('width', width+'px')
+		.style('height', height+'px')
 
 		simulationResize();
 	});
