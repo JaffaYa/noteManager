@@ -63,6 +63,7 @@ body {
   font-size: 8rem;
 }
 
+/*temp*/
 .nodes div{
   background: black;
   width: 50px;
@@ -70,6 +71,25 @@ body {
   border-radius: 50%;
   position: absolute;
 }
+.nodesLabel{
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+}
+.nodesLabel .text{
+  position: absolute;
+  font-size: 20px;
+  color: white;
+  pointer-events: none;
+  transition: font-size 1s;
+  /*transition: 1s;*/
+}
+.nodesLabel .text.active{
+  font-size: 80px;
+}
+/*temp*/
+
+
   /*.nodesLabel text:nth-child(1) {
     font: bold 50px/1 "Fira Sans", sans-serif !important; }*/
   /*@media (max-width: 767px) {

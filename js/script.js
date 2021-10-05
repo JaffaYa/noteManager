@@ -139,7 +139,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// buildLinks(links);
 		buildNodes(nodes);
 		// buildNodeTitles(svgNodes);
-		// buildNodeLables(nodes);
+		buildNodeLables(nodes);
 
 		simulation.on("tick", simulationTick);
 	}
@@ -208,7 +208,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// buildLinks(links);
 		buildNodes(nodes);
 		// buildNodeTitles(svgNodes);
-		// buildNodeLables(nodes);
+		buildNodeLables(nodes);
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
@@ -238,7 +238,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
-		// svgNodeLables
+		svgNodeLables
 		// .attr("x", d => {
 		// 	// console.log(d);
 		// 	svgNodeLables.selectAll('.c'+d.id+' tspan')
@@ -247,6 +247,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	return d.x;
 		// })
 		// .attr("y", d => d.y);
+		.attr("style", function (d){ 
+			return 'left:'+d.x+'px;top:'+d.y+'px;'
+		});
 
 		// svgNodeLables
 		// .selectAll("tspan")
@@ -372,15 +375,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildNodeLables(nodes){
 		if(!svgNodeLables){
-			svgNodeLables = svg.append("g")
+			svgNodeLables = svg.append("div")
 			.attr("class", "nodesLabel")
-			.selectAll("text")
+			.selectAll("div")
 			.data(nodes)
-			.enter().append("text")
-			.attr('class', d => 'c'+d.id)
+			.enter().append("div")
+			.attr('class', d => 'c'+d.id+' text')
 			.classed('active', d => d.active)
-			.attr('translate', translateText)
-			.html(formatNodeLablesText)
+			// .attr('translate', translateText)
+			// .html(formatNodeLablesText)
+			.html(d => d.label)
 
 			//отдельно
 			// console.dir(svgNodeLables);
@@ -408,36 +412,42 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.data(nodes, d => d.id);
 
 			tempNodeLables
-			.attr('class', d => 'c'+d.id)
+			.attr('class', d => 'c'+d.id+' text')
 			.classed('active', d => d.active)
-			.attr('translate', translateText);
+			// .attr('translate', translateText);
 
-			tempNodeLables.enter().append("text")
-			.attr('class', d => 'c'+d.id)
+			tempNodeLables.enter().append("div")
+			.attr('class', d => 'c'+d.id+' text')
 			.html(function(d, i) {
 				//add lables
 				svgNodeLables._groups[0].push(this);
-				//временно подставил сюда функцию formatNodeLablesText
-				var textArr = d.label.split("\n"); 
-				var result = '';
-				if(textArr.length > 1){
-					textArr.forEach((element, i) => {
-						if(i == 0){
-							result += '<tspan>';
-						}else{
-							result += '<tspan dy="'+i+'em">';
-						}
-						result += element;
-						result += '</tspan>';
-					}
-					);
-				}else{
-					result += '<tspan>';
-					result += d.label;
-					result += '</tspan>';
-				}
-				return result; 
-			});
+				return d.label
+
+			})
+			// .html(function(d, i) {
+			// 	//add lables
+			// 	svgNodeLables._groups[0].push(this);
+			// 	//временно подставил сюда функцию formatNodeLablesText
+			// 	var textArr = d.label.split("\n"); 
+			// 	var result = '';
+			// 	if(textArr.length > 1){
+			// 		textArr.forEach((element, i) => {
+			// 			if(i == 0){
+			// 				result += '<tspan>';
+			// 			}else{
+			// 				result += '<tspan dy="'+i+'em">';
+			// 			}
+			// 			result += element;
+			// 			result += '</tspan>';
+			// 		}
+			// 		);
+			// 	}else{
+			// 		result += '<tspan>';
+			// 		result += d.label;
+			// 		result += '</tspan>';
+			// 	}
+			// 	return result; 
+			// });
 
 			tempNodeLables.exit()
 			.attr('node-id',function(d, i){
