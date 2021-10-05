@@ -51,7 +51,7 @@ body {
   font-family: 'Fira Sans', sans-serif;
   word-break: normal;
   pointer-events: none;
-  transition: 0.75s cubic-bezier(.5,.41,.05,.99);
+  transition: 3s cubic-bezier(.5,.41,.05,.99);
   transform: scale(0.55);
 }
 .nodes .active .text{
