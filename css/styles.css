@@ -86,7 +86,7 @@ body {
 }
 .nodesLabel .text.active{
   /*font-size: 80px;*/
-  transform: scale(3) translateX(-100%);
+  /*transform: scale(3) translateX(-100%);*/
 }
 /*temp*/
 
