@@ -287,8 +287,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			// svgNodes = svgNodes.enter().append("circle")
 			svgNodes = svgNodes.enter().append("div")
+			.classed('node', true)
 			.classed('active', d => d.active)
-			.classed('fade', d => d.activePath == 'fade')
 			.attr("node-id", d => d.id)
 			// .call(
 			// 	d3.drag(simulation)
@@ -315,10 +315,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.data(nodes, d => d.id);
 
 			tempNode
-			.classed('active', d => d.active)
-			.classed('fade', d => d.activePath == 'fade');
+			.classed('active', d => d.active);
 
 			var tt = tempNode.enter().append("div")
+			.classed('node', true)
 			// .attr("r", nodeRadius)
 			// .attr("stroke-width", nodeRadius*(5/3))
 			.attr("node-id", // d => d.id 
