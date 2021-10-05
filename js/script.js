@@ -287,6 +287,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// svgNodes = svgNodes.enter().append("circle")
 			svgNodes = svgNodes.enter().append("div")
 			.classed('node', true)
+			.classed('btn-back', d => d.function == 'back')
+			.classed('btn-menu', d => d.function == 'menu')
 			.classed('active', d => d.active)
 			.attr("node-id", d => d.id)
 			// .call(
@@ -318,6 +320,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			var tt = tempNode.enter().append("div")
 			.classed('node', true)
+			.classed('btn-back', d => d.function == 'back')
+			.classed('btn-menu', d => d.function == 'menu')
 			// .attr("r", nodeRadius)
 			// .attr("stroke-width", nodeRadius*(5/3))
 			.attr("node-id", // d => d.id 
