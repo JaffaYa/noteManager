@@ -35,15 +35,12 @@ body {
   overflow: hidden;
 }
 
+
+
 /*temp*/
 .nodes div{
   position: absolute;
   cursor: pointer;
-}
-.nodesLabel{
-  position: absolute;
-  left: 50vw;
-  top: 50vh;
 }
 .nodes .text{
   position: absolute;
@@ -71,7 +68,6 @@ body {
   align-items: center;
   z-index: -1;
   transition: 0.75s cubic-bezier(.5,.41,.05,.99);
-  transform: scale(0.55);
 }
 .c2 {
   position: absolute;
@@ -83,11 +79,18 @@ body {
   transform-origin: center;
   z-index: 1;
   transition: 0.7s cubic-bezier(.5,.41,.05,.99);
-  transform: scale(0.55);
 }
+
+.node .c1, 
+.node .c2 {
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) scale(0.55);
+}
+
 .active .c1,
 .active .c2 {
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /*temp*/

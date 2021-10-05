@@ -35,6 +35,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// // var activeRadius = nodeRadius*2;
 	// var activeRadius = 20;
 	var animationTime = 250;//ms
+	var svgViewPort = [-width / 2, -height / 2, width, height];
 
 
 	window.simulationResize = function (){};
@@ -46,11 +47,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var activePath = [];
 
 	//viewPort init
-	// const svg = d3.select("#my_data").append("svg")
+	const svg = d3.select("#my_data").append("svg")
+		.attr('xmlns:xlink', "http://www.w3.org/1999/xlink")
+		.attr("viewBox", svgViewPort);
 	const viewPort = d3.select("#my_data")
-	.style('width', width+'px')
-	.style('height', height+'px')
-	;
+		.style('width', width+'px')
+		.style('height', height+'px');
 
 	var svgLinks = false;
 	var svgNodes = false;
@@ -142,7 +144,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			)
 		}
 
-		// buildLinks(links);
+		buildLinks(links);
 		buildNodes(nodes);
 		// buildNodeTitles(svgNodes);
 		// buildNodeLables(nodes);
@@ -211,7 +213,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//draw
 		activeDepth = d.depth;
 		
-		// buildLinks(links);
+		buildLinks(links);
 		buildNodes(nodes);
 		// buildNodeTitles(svgNodes);
 		// buildNodeLables(nodes);
@@ -235,11 +237,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 
-		// svgLinks
-		// .attr("x1", d => d.source.x)
-		// .attr("y1", d => d.source.y)
-		// .attr("x2", d => d.target.x)
-		// .attr("y2", d => d.target.y);
+		svgLinks
+		.attr("x1", d => d.source.x)
+		.attr("y1", d => d.source.y)
+		.attr("x2", d => d.target.x)
+		.attr("y2", d => d.target.y);
 
 		svgNodes
 		// .attr("cx", 
@@ -366,7 +368,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function buildLinks(links){
 		if(!svgLinks){
-			svgLinks = viewPort.append("g")
+			svgLinks = svg.append("g")
 			.attr("class", "links")
 			.selectAll("line")
 			.data(links)
@@ -846,10 +848,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		width = window.innerWidth;
 		height = window.innerHeight;
 		verticalScreen = height/width > width/height ? true : false;
+		svgViewPort = [-width / 2, -height / 2, width, height];
+
+		svg
+		.attr("viewBox", svgViewPort);
 
 		viewPort
 		.style('width', width+'px')
-		.style('height', height+'px')
+		.style('height', height+'px');
 
 		simulationResize();
 	});
