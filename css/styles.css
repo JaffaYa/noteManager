@@ -76,7 +76,7 @@ body {
     left: 50vw;
     top: 50vh;
 }
-.nodesLabel .text{
+.nodes .text{
   position: absolute;
   font-size: 20px;
   color: white;
@@ -84,7 +84,7 @@ body {
   /*transition: transform 1s;*/
   /*transition: 1s;*/
 }
-.nodesLabel .text.active{
+.nodes .text.active{
   /*font-size: 80px;*/
   /*transform: scale(3) translateX(-100%);*/
 }

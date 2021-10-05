@@ -139,7 +139,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// buildLinks(links);
 		buildNodes(nodes);
 		// buildNodeTitles(svgNodes);
-		buildNodeLables(nodes);
+		// buildNodeLables(nodes);
 
 		simulation.on("tick", simulationTick);
 	}
@@ -208,7 +208,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// buildLinks(links);
 		buildNodes(nodes);
 		// buildNodeTitles(svgNodes);
-		buildNodeLables(nodes);
+		// buildNodeLables(nodes);
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
@@ -238,18 +238,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
-		svgNodeLables
-		// .attr("x", d => {
-		// 	// console.log(d);
-		// 	svgNodeLables.selectAll('.c'+d.id+' tspan')
-		// 	.attr("x", d.x-getNodeRadius()+10)
-		// 	.attr("y", d.y+getNodeRadius()-10)
-		// 	return d.x;
-		// })
-		// .attr("y", d => d.y);
-		.attr("style", function (d){ 
-			return 'left:'+d.x+'px;top:'+d.y+'px;'
-		});
+		// svgNodeLables
+		// // .attr("x", d => {
+		// // 	// console.log(d);
+		// // 	svgNodeLables.selectAll('.c'+d.id+' tspan')
+		// // 	.attr("x", d.x-getNodeRadius()+10)
+		// // 	.attr("y", d.y+getNodeRadius()-10)
+		// // 	return d.x;
+		// // })
+		// // .attr("y", d => d.y);
+		// .attr("style", function (d){ 
+		// 	return 'left:'+d.x+'px;top:'+d.y+'px;'
+		// });
 
 		// svgNodeLables
 		// .selectAll("tspan")
@@ -281,6 +281,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	)
 			.on("click", bubleClick);
 
+			svgNodes.append("div")
+			.classed('text', true)
+			.html(d => d.label);
+
 			setNodeStyle();
 
 		}else{
@@ -291,7 +295,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.classed('active', d => d.active)
 			.classed('fade', d => d.activePath == 'fade');
 
-			tempNode.enter().append("div")
+			var tt = tempNode.enter().append("div")
 			// .attr("r", nodeRadius)
 			// .attr("stroke-width", nodeRadius*(5/3))
 			.attr("node-id", // d => d.id 
@@ -308,6 +312,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	.on("end", dragended)
 			// 	)
 			.on("click", bubleClick);
+
+
+			tt.append("div")
+			.classed('text', true)
+			.html(d => d.label);
+
 
 			tempNode.exit()
 			.attr('node-id',function(d, i){
