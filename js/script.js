@@ -17,13 +17,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
-	//fps
-	var fps = document.getElementById("fps");
-	var startTime = Date.now();
-	var frame = 0;
-
-
-	
 
 	//graphics var
 	var width = window.innerWidth;
@@ -55,8 +48,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.style('height', height+'px');
 
 	var svgLinks = false;
-	var svgNodes = false;
-	var svgNodeLables = false;
+	var htmlNodes = false;
 
 	var scrollNext = true;
 	const slideForse = function (d){
@@ -93,20 +85,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.tree = new Tree("json/graphdata.json", simInit);
 
+	tree.fps.start();
 	// tree.admin.set(true);
 	// tree.showAllTree();
 
 	function simInit(){
 
-		// console.dir(tree.nodes);
-		// console.dir(tree.nodesToDisplay);
-		// console.dir(tree.links);
+		//init first data
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
 
-		//init first data
-		// makeDataArray(1);
-		// makeNodeActive(nodes[0]);
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
@@ -146,29 +134,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		buildLinks(links);
 		buildNodes(nodes);
-		// buildNodeTitles(svgNodes);
-		// buildNodeLables(nodes);
 
 		simulation.on("tick", simulationTick);
 	}
-	// d3.json("json/graphdata.json", function readDataFormFileFirstTime(jsonDataFromFile) {
-	// 	jsonData = jsonDataFromFile;
-
-		
-	// });
-
-
-	//admin button
-	// d3.select("body")
-	// .append("button")
-	// .attr('class', 'adminButton')
-	// .text('Admin')
-	// .on("click", function(event){
-	// 	isAdmin = !isAdmin;
-	// 	this.classList.toggle('active');
-	// 	var activeNode = nodes.filter(d => d.active)[0];
-	// 	bubleClick(activeNode);
-	// });
 
 
 
@@ -181,10 +149,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		tree.cliсkOnNode(d);
 
+		nodes = tree.nodesToDisplay;
+		links = tree.links;
+
+		//apply click function
 		if(d.functional){
 			switch (d.function){
 				case 'back':
 					tree.backButton();
+					nodes = tree.nodesToDisplay;
+					links = tree.links;
 					break;
 				case 'menu':
 					popupActive('menu');
@@ -202,24 +176,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 			popupActive('iframe');
 		}
-		// console.dir(tree.nodes);
-		// console.dir(tree.nodesToDisplay);
-		// console.dir(tree.links);
-
-		nodes = tree.nodesToDisplay;
-		links = tree.links;
-
-		var isAddNewNode;
-
-		//apply click function
+	
 
 		//draw
 		activeDepth = d.depth;
 		
 		buildLinks(links);
 		buildNodes(nodes);
-		// buildNodeTitles(svgNodes);
-		// buildNodeLables(nodes);
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
@@ -230,15 +193,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	function simulationTick(){
-		//fps
-		var time = Date.now();
-		frame++;
-		if (time - startTime > 1000) {
-			fps.innerHTML = (frame / ((time - startTime) / 1000)).toFixed(1);
-			startTime = time;
-			frame = 0;
-		}
-
+		tree.fps.tick();
 
 		svgLinks
 		.attr("x1", d => d.source.x)
@@ -246,7 +201,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.attr("x2", d => d.target.x)
 		.attr("y2", d => d.target.y);
 
-		svgNodes
+		htmlNodes
 		// .attr("cx", 
 		// 	// d => d.x
 		// 	function(d){
@@ -259,42 +214,34 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
-		// svgNodeLables
-		// // .attr("x", d => {
-		// // 	// console.log(d);
-		// // 	svgNodeLables.selectAll('.c'+d.id+' tspan')
-		// // 	.attr("x", d.x-getNodeRadius()+10)
-		// // 	.attr("y", d.y+getNodeRadius()-10)
-		// // 	return d.x;
-		// // })
-		// // .attr("y", d => d.y);
-		// .attr("style", function (d){ 
-		// 	return 'left:'+d.x+'px;top:'+d.y+'px;'
-		// });
-
-		// svgNodeLables
-		// .selectAll("tspan")
-		// .attr("x", d => {
-		// 	// return d.x;
-		// })
 	}
 
+	var showDalay = 500;
+
 	function buildNodes(nodes){
-		if(!svgNodes){
-			// svgNodes = svg.append("g")
-			svgNodes = viewPort.append("div")
+		if(!htmlNodes){
+			htmlNodes = viewPort.append("div")
 			.attr("class", "nodes")
 			.attr("style", "position: absolute;left: 50vw;top: 50vh;")
-			.selectAll("div")
+			.selectAll("div.node")
 			
 			.data(nodes);
 
-			// svgNodes = svgNodes.enter().append("circle")
-			svgNodes = svgNodes.enter().append("div")
+			htmlNodes = htmlNodes.enter().append("div")
 			.classed('node', true)
 			.classed('btn-back', d => d.function == 'back')
 			.classed('btn-menu', d => d.function == 'menu')
 			.classed('active', d => d.active)
+			// .classed('show', (d) => {
+			// 	var showIds = tree.activeNode.children;
+			// 	console.dir(getHtmlNodeById(d.id));
+			// 	for (var i = 1; i <= showIds.length; i++) {
+			// 		// if(showIds[i] == d.id){
+			// 		// 	setTimeout
+			// 		// }
+			// 	}
+			// 	return true
+			// })
 			.attr("node-id", d => d.id)
 			// .call(
 			// 	d3.drag(simulation)
@@ -304,21 +251,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	)
 			.on("click", bubleClick);
 
-			svgNodes.append("div")
+			htmlNodes.append("div")
 			.classed('text', true)
 			.html(d => d.label);
 
-			svgNodes.append("div")
+			htmlNodes.append("div")
 			.classed('c1', true);
 
-			svgNodes.append("div")
+			htmlNodes.append("div")
 			.classed('c2', true);
 
-			setNodeStyle();
-
 		}else{
-			var tempNode = svgNodes 
+			var tempNode = htmlNodes
+			// .selectAll("div.node")
 			.data(nodes, d => d.id);
+
+			// console.dir(tempNode);exit
 
 			tempNode
 			.classed('active', d => d.active);
@@ -327,15 +275,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.classed('node', true)
 			.classed('btn-back', d => d.function == 'back')
 			.classed('btn-menu', d => d.function == 'menu')
-			// .attr("r", nodeRadius)
-			// .attr("stroke-width", nodeRadius*(5/3))
 			.attr("node-id", // d => d.id 
 				function(d){
 					//add nodes
-					svgNodes._groups[0].push(this);
+					htmlNodes._groups[0].push(this);
 					return d.id
 				}
-				)
+			)
 			// .call(
 			// 	d3.drag(simulation)
 			// 	.on("start", dragstarted)
@@ -343,6 +289,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	.on("end", dragended)
 			// 	)
 			.on("click", bubleClick);
+
+			// console.dir(tempNode);exit
+			// console.dir(htmlNodes);
 
 
 			tt.append("div")
@@ -360,13 +309,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			tempNode.exit()
 			.attr('node-id',function(d, i){
 					//remove nodes
-					delete svgNodes._groups[0][i];
+					delete htmlNodes._groups[0][i];
 					return 1;
 				})
 			.remove();
 
-			setNodeStyle();
 		}
+	}
+
+	function toggleShowClass(d){}
+
+	function getNewHtmlNodeById(id){
+		//перебрать весь обьект кроме екзит
+		console.dir(htmlNodes.nodes());
+		return id;
 	}
 
 	function buildLinks(links){
@@ -414,163 +370,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	}
 
-	function buildNodeTitles(svgNodes){
-		svgNodes
-		.selectAll('title')
-		.remove();
-		svgNodes
-		.append("title")
-		.text(d => d.id);
-	}
-
-	function buildNodeLables(nodes){
-		if(!svgNodeLables){
-			svgNodeLables = viewPort.append("div")
-			.attr("class", "nodesLabel")
-			.selectAll("div")
-			.data(nodes)
-			.enter().append("div")
-			.attr('class', d => 'c'+d.id+' text')
-			.classed('active', d => d.active)
-			// .attr('translate', translateText)
-			// .html(formatNodeLablesText)
-			.html(d => d.label)
-
-			//отдельно
-			// console.dir(svgNodeLables);
-			// svgNodeLables
-			// .append("tspan")
-			// .text(formatNodeLablesText);
-			//отдельно
-
-			// svgNodeLables = svg.append("g")
-			// .attr("class", "nodesLabel")
-			// .selectAll("foreignObject")
-			// .data(nodes)
-			// .enter().append("foreignObject")
-			// .attr('width', width*0.5)
-			// .attr('height', height*0.5)
-			// .classed('active', d => d.active);
-			// svgNodeLables
-			// // .append("body")
-			// .append("xhtml:div")
-			// .attr('xmlns', "http://www.w3.org/1999/xhtml")
-			// .html(function(d, i) { return d.label });
-
-		}else{
-			var tempNodeLables = svgNodeLables
-			.data(nodes, d => d.id);
-
-			tempNodeLables
-			.attr('class', d => 'c'+d.id+' text')
-			.classed('active', d => d.active)
-			// .attr('translate', translateText);
-
-			tempNodeLables.enter().append("div")
-			.attr('class', d => 'c'+d.id+' text')
-			.html(function(d, i) {
-				//add lables
-				svgNodeLables._groups[0].push(this);
-				return d.label
-
-			})
-			// .html(function(d, i) {
-			// 	//add lables
-			// 	svgNodeLables._groups[0].push(this);
-			// 	//временно подставил сюда функцию formatNodeLablesText
-			// 	var textArr = d.label.split("\n"); 
-			// 	var result = '';
-			// 	if(textArr.length > 1){
-			// 		textArr.forEach((element, i) => {
-			// 			if(i == 0){
-			// 				result += '<tspan>';
-			// 			}else{
-			// 				result += '<tspan dy="'+i+'em">';
-			// 			}
-			// 			result += element;
-			// 			result += '</tspan>';
-			// 		}
-			// 		);
-			// 	}else{
-			// 		result += '<tspan>';
-			// 		result += d.label;
-			// 		result += '</tspan>';
-			// 	}
-			// 	return result; 
-			// });
-
-			tempNodeLables.exit()
-			.attr('node-id',function(d, i){
-					//remove lables
-					delete svgNodeLables._groups[0][i];
-					return 1;
-				})
-			.remove();
-		}
-	}
-
-	function formatNodeLablesText(d, i) { 
-		var textArr = d.label.split("\n"); 
-		var result = '';
-		if(textArr.length > 1){
-			textArr.forEach((element, i) => {
-				if(i == 0){
-					result += '<tspan>';
-				}else{
-					result += '<tspan dy="'+i+'em">';
-				}
-				result += element;
-				result += '</tspan>';
-			}
-			);
-		}else{
-			result += '<tspan>';
-			result += d.label;
-			result += '</tspan>';
-		}
-		return result;
-	}
-
-	function translateText(d){
-		if(d.active){
-			var bbox = this.getBBox();
-			//if text size no init yet
-			if(bbox.width == 0) {
-				setTimeout(function(self){
-					var bbox = self.getBBox();
-
-					self.style.setProperty('transform', 'translateX(-'+bbox.width+'px)');
-				}, 100, this);
-			}else{
-				setTimeout(function(self){
-					var bbox = self.getBBox();
-					
-					//посмотреть можно ли сделать анимацию через d3, force
-
-					self.style.setProperty('transform', 'translateX(-'+bbox.width+'px)');
-				}, 300, this);
-			}
-			// this.style.setProperty('transform', 'translateX(-'+bbox.width*2+'px)');
-			return 'active'
-		}else{
-			this.style.removeProperty('transform');
-			return 'unset'
-		}
-	}
 
 	function setDashedLineStyle(node){
 		return node.dashed ? '8 11' : 'unset'
 	}
 
-	function setNodeStyle(){
-		// nodeRadius = getNodeRadius();
-		// activeRadius = getActiveNodeRadius();
-		// svgNodes
-		// .transition()
-		// .duration(animationTime)
-		// .attr("r", d => d.active ? activeRadius : nodeRadius)
-		// .attr("stroke-width", d => d.active ? activeRadius*(5/3) : nodeRadius*(5/3));
-	}
 
 	function getNodeRadius(node){
 		// console.dir(getNodeElementById(node.id));
@@ -579,7 +383,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	// function getNodeElementById(id){
-	// 		console.dir(svgNodes);
+	// 		console.dir(htmlNodes);
 	// 	// for (var i = 0; i < nodes.length; i++) {
 	// 	// }
 	// 	return id;
@@ -956,6 +760,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.cliсkOnNode = cliсkOnNode;
 		this.jsonPath = jsonPath;
 		this.admin = Admin(document.location.search == '?admin');
+		this.fps = fps();
 		//для использования нужно сделать очистку activePath с учётом возможности прижка между нодами
 		this.showAllTree = showAllTree;
 		this.backButton = backButton;
@@ -982,6 +787,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	target: int || obj of node,
 		*	dashed: bool,
 		*	value: int=2,
+		*	isAnimation: bool,
+		*	animation: {
+		*		speed: int,
+		*		cx: int,
+		*		cy: int,
+		*	},
 		* }
 		*/
 		this.links = [];
@@ -1396,6 +1207,44 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 			return activePath.sort( (a, b) => a.depth*1 - b.depth*1 );
+		}
+
+		function fps(){
+			var isActive = false;
+			var startTime = 0;
+			var frame = 0;
+
+			var wrapperFPS = document.createElement("div");
+			wrapperFPS.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
+			wrapperFPS.innerHTML = ' FPS';
+			var fps = document.createElement("span");
+			fps.innerHTML = '--';
+			wrapperFPS.prepend(fps);
+
+			var parent = document.querySelector('#my_data');
+
+			return{
+				start: function(){
+					isActive = true;
+					startTime = Date.now();
+					frame = 0;
+					if(parent){
+						parent.append(wrapperFPS);
+					}
+				},
+				tick: function(){
+					if(isActive){
+						var time = Date.now();
+						frame++;
+						if (time - startTime > 1000) {
+							fps.innerHTML = (frame / ((time - startTime) / 1000)).toFixed(1);
+							startTime = time;
+							frame = 0;
+						}
+					}
+				}
+			}
+
 		}
 
 
