@@ -168,15 +168,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
-		if(d.goTo !== false){
-			var goToNode = tree.getNodeById(d.goTo);
-			if(goToNode){
-				setTimeout(function(d){
-					bubleClick(d)
-				},700,goToNode);
-			}
-		}
-
 		if(d.iframe){
 			var iframe = document.querySelector('.iframe iframe');
 			var iframeSrc = iframe.getAttribute("src");
@@ -196,7 +187,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
 		simulation.alphaTarget(0.8).restart();
-		// simulation.alpha(0.2).restart();
+		// simulation.alpha(3.2).restart();
 
 		return;
 	}
@@ -850,22 +841,28 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].display = false;
 				nodes[i].goTo = nodes[i].goTo*1 || false;
 			}
+			makeNodeActive(nodes[0]);
 			updateNodes();
 		}
 
-		function setNodesDepth(depth, widthChildrens = true){
+		function setNodesDepth(widthChildrens = true){
 			let curentDepth = 1;
 			let parentIds = [];
 			let oldparentIds = [];
 			let currActivePath = getActivePath();
 			let nodes = myThis.nodes;
+			let depth = myThis.activeNode.depth;
 
-			//возможно стоить брать depth не от текущей нажатой ноды а от глобального значения
+			// //don't show childrens when goTo
+			// if(myThis.activeNode.goTo !== false){
+			// 	widthChildrens = false;
+			// }
 
-			if(widthChildrens && 'all' != depth) depth++;
-			if(isShowAllTree || 'all' == depth){
+			if(isShowAllTree || !depth){
 				//calculate all depht if need to show whole tree
 				depth = nodes.length;
+			}else{
+				if(widthChildrens) depth++;
 			}
 
 			for (;curentDepth <= depth; curentDepth++ ){
@@ -934,12 +931,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			myThis.activeNode = currNode;
 		}
 
-		function setNodesDisplay(depth, widthChildrens = true){
+		function setNodesDisplay(widthChildrens = true){
 			let nodes = myThis.nodes;
 			let activeNode = myThis.activeNode;
+			let depth = myThis.activeNode.depth;
 
-			if(widthChildrens && 'all' != depth) depth++;
-			if('all' == depth) depth = nodes.length;
+			// //don't show childrens when goTo
+			// if(myThis.activeNode.goTo !== false){
+			// 	widthChildrens = false;
+			// }
+
+			if(!depth) {
+				depth = nodes.length;
+			}else{
+				if(widthChildrens) depth++;
+			}
 
 			for (var i = 0; i < nodes.length; i++) {
 				if(showNode(nodes[i], depth)){
@@ -1068,17 +1074,23 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function cliсkOnNode(node){
-			updateNodes(node);
+			if(node.goTo !== false){
+				var goToNode = getNodeById(node.goTo);
+				if(goToNode){
+					node = goToNode;
+				}
+			}
+			makeNodeActive(node);
+			updateNodes();
 		}
 
 		
-		function updateNodes(node = 'first'){
-			makeNodeActive(node);// перенести в cliсkOnNode
+		function updateNodes(){
 			addFunctionalButtons();
 			myThis.admin.updateNodes();
 			setNodesChildrens();
-			setNodesDepth(node.depth || 'all'); // убрать глубину и сделать зависимой от активной ноды
-			setNodesDisplay(node.depth || 'all'); // убрать глубину и сделать зависимой от активной ноды
+			setNodesDepth();
+			setNodesDisplay();
 			updateNodesToDisplay();
 			updateLinks();
 		}
@@ -1207,12 +1219,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//или это не тут а при клике на ноду нужно делать
 			myThis.activeNode.activePath = false;
 
-			// console.log(currActivePath);
-			for (var i = 0; i < currActivePath.length; i++) {
-				if(currActivePath[i].depth == activeDepth){
-					cliсkOnNode(currActivePath[i]);
-				}
-			}
+			//emuleta click on stepBack node
+			cliсkOnNode(currActivePath[currActivePath.length-2]);
 		}
 
 		function getActivePath(){
