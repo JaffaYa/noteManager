@@ -168,6 +168,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
+		if(d.goTo !== false){
+			var goToNode = tree.getNodeById(d.goTo);
+			if(goToNode){
+				setTimeout(function(d){
+					bubleClick(d)
+				},700,goToNode);
+			}
+		}
+
 		if(d.iframe){
 			var iframe = document.querySelector('.iframe iframe');
 			var iframeSrc = iframe.getAttribute("src");
@@ -761,6 +770,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.jsonPath = jsonPath;
 		this.admin = Admin(document.location.search == '?admin');
 		this.fps = fps();
+		this.getNodeById = getNodeById;
 		//для использования нужно сделать очистку activePath с учётом возможности прижка между нодами
 		this.showAllTree = showAllTree;
 		this.backButton = backButton;
@@ -777,6 +787,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	function: str,
 		*	addNew: bool,
 		*	display: bool,
+		*	goTo: int,
 		* }
 		*/
 		this.nodes = [];
@@ -836,6 +847,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].function = '';
 				nodes[i].addNew = false;
 				nodes[i].display = false;
+				nodes[i].goTo = nodes[i].goTo*1 || false;
 			}
 			updateNodes();
 		}
@@ -849,9 +861,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			//возможно стоить брать depth не от текущей нажатой ноды а от глобального значения
 
-			if('first' == depth) depth = 1;
-			if(widthChildrens) depth++;
-			if(isShowAllTree){
+			if(widthChildrens && 'all' != depth) depth++;
+			if(isShowAllTree || 'all' == depth){
 				//calculate all depht if need to show whole tree
 				depth = nodes.length;
 			}
@@ -862,8 +873,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				for (var i = 0; i < nodes.length; i++){
 					let hasId = false;
 					for (var j = 0; j < oldparentIds.length; j++) {
-						if(!isInArrayId(oldparentIds[j], currActivePath)) continue;
 						for (var k = 0; k < nodes[i].parents.length; k++) {
+							if(!isInArrayId(oldparentIds[j], currActivePath) && 
+								nodes[i].depth !== undefined){
+									continue;
+							}
 							if( nodes[i].parents[k] == oldparentIds[j]){
 								hasId = true;
 							}
@@ -923,8 +937,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let nodes = myThis.nodes;
 			let activeNode = myThis.activeNode;
 
-			if('first' == depth) depth = 1;
-			if(widthChildrens) depth++;
+			if(widthChildrens && 'all' != depth) depth++;
+			if('all' == depth) depth = nodes.length;
 
 			for (var i = 0; i < nodes.length; i++) {
 				if(showNode(nodes[i], depth)){
@@ -1062,8 +1076,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			addFunctionalButtons();
 			myThis.admin.updateNodes();
 			setNodesChildrens();
-			setNodesDepth(node.depth || 'first'); // убрать глубину и сделать зависимой от активной ноды
-			setNodesDisplay(node.depth || 'first'); // убрать глубину и сделать зависимой от активной ноды
+			setNodesDepth(node.depth || 'all'); // убрать глубину и сделать зависимой от активной ноды
+			setNodesDisplay(node.depth || 'all'); // убрать глубину и сделать зависимой от активной ноды
 			updateNodesToDisplay();
 			updateLinks();
 		}
@@ -1139,6 +1153,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									function: '',
 									addNew: true,
 									display: false,
+									goTo: false
 								});
 							}
 						}
@@ -1172,7 +1187,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					functional: true,
 					function: function1,
 					addNew: false,
-					display: false
+					display: false,
+					goTo: false
 				});
 			}
 		}
