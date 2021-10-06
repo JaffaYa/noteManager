@@ -78,7 +78,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					break;
 				case 'menu':
 						// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-						return (width - width/4) - width/2;
+						return (width - width/5) - width/2;
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -373,7 +373,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.selectAll("line")
 			.data(links)
 			.enter().append("line")
-			.attr("stroke-width", d => d.value)
+			// .attr("stroke-width", d => d.value)
+			.attr("stroke-width", 3)
 			.attr("stroke-dasharray", setDashedLineStyle);
 		}else{
 			var tempLink = svgLinks
@@ -394,7 +395,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					//add links
 					svgLinks._groups[0].push(this);
 					
-					return d.value ;
+					// return d.value ;
+					return 3 ;
 				}
 				)
 			.attr("stroke-dasharray", setDashedLineStyle);
