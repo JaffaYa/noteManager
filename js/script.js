@@ -174,7 +174,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function bubleClick(d) {
-		playBubble();
+
+		if(!d.active){
+			playBubble();
+		}
 
 		tree.cliсkOnNode(d);
 
