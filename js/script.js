@@ -284,6 +284,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.classed('node', true)
 			.classed('btn-back', d => d.function == 'back')
 			.classed('btn-menu', d => d.function == 'menu')
+			.classed('active', d => d.active)
 			.attr("node-id", // d => d.id 
 				function(d){
 					//add nodes
