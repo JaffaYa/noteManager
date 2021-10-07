@@ -398,3 +398,34 @@ body {
     background-position: 100% 100%; }
   100% {
     background-position: 0% 0%; } }
+
+@media only screen and (max-width: 500px) {
+  .nodes .text {
+    font-size: 50px;
+    line-height: 40px;
+  }
+  .nodes .text {
+    transform: scale(0.75);
+  }
+  .node .c1, 
+  .node .c2 {
+    transform: translate(-50%, -50%) scale(0.35);
+  }
+  .active .c1, .active .c2, 
+  .active:hover .c1, .active:hover .c2 {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  .btn-back { 
+    transform: translate(50px, 80px) scale(1);
+  }
+  .btn-menu {
+    transform: translate(-60px, 80px) scale(1);
+  }
+  .node:hover .c1{
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+  .node:hover .c2{
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+
+}

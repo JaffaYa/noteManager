@@ -124,8 +124,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							console.dir(d.activePath);
 							console.dir(d.id);
 							return  d.id/90;
+							// return  d.id/90;
 						}else{
-							return 0.1;
+							return 0.035;
 						}
 					}
 				)
