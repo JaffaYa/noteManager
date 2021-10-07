@@ -53,16 +53,26 @@ body {
   height: auto;
 }
 
-/*temp*/
+.links line{
+  opacity: 0.1;
+  transition: opacity 0.5s;
+}
+.links line.show{
+  opacity: 1;
+}
+
+
 .nodes .node{
   position: absolute;
   cursor: pointer;
-/*  opacity: 0.5;
-  transition: opacity 0.5s;*/
+  opacity: 0.1;
+  transition: opacity 0.5s;
 }
-/*.nodes .node.show{
+.nodes .node.show,
+.nodes .node.active,
+.nodes .node.btn-functional{
   opacity: 1;
-}*/
+}
 .nodes .text{
   position: absolute;
   top: -15px;
@@ -189,7 +199,7 @@ body {
 }
 
 
-/*temp*/
+
 
 
   /*.nodesLabel text:nth-child(1) {

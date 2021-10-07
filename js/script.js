@@ -156,6 +156,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		buildLinks(links);
 		buildNodes(nodes);
+		smoothAnimation();
 
 		simulationTime = Date.now();
 
@@ -203,11 +204,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	
 		buildLinks(links);
 		buildNodes(nodes);
+		smoothAnimation();
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
 		simulation.alpha(1).restart();
 		tickCount = 0;
+		simulationTime = Date.now();
 		// simulation.alphaTarget(0.8).restart();
 		// simulation.alpha(3.2).restart();
 
@@ -247,7 +250,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	}
 
-	var showDalay = 500;
+
 
 	function buildNodes(nodes){
 		var d3nodes = null;
@@ -263,19 +266,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//enter
 		d3newNodes = d3nodes.enter().append('div')
 		.classed('node', true)
+		.classed('btn-functional', d => d.functional)
 		.classed('btn-back', d => d.function == 'back')
 		.classed('btn-menu', d => d.function == 'menu')
 		.classed('active', d => d.active)
-		// .classed('show', (d) => {
-		// 	var showIds = tree.activeNode.children;
-		// 	console.dir(getHtmlNodeById(d.id));
-		// 	for (var i = 1; i <= showIds.length; i++) {
-		// 		// if(showIds[i] == d.id){
-		// 		// 	setTimeout
-		// 		// }
-		// 	}
-		// 	return true
-		// })
+		
 		.attr("node-id", d => d.id)
 		// .call(
 		// 	d3.drag(simulation)
@@ -302,14 +297,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//update nodes list var
 		htmlNodes = nodesCont.selectAll("div.node");
 
-	}
-
-	function toggleShowClass(d){}
-
-	function getNewHtmlNodeById(id){
-		//перебрать весь обьект кроме екзит
-		console.dir(nodesCont.nodes());
-		return id;
 	}
 
 	function buildLinks(links){
@@ -341,6 +328,39 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//update links list var
 		svgLinks = linksCont.selectAll("line");
 	}
+
+
+	function smoothAnimation(){
+		//graphic variables
+		var showDalay = 500;
+
+		//show
+		var showIds = tree.activeNode.children;
+
+		//nodes
+		htmlNodes
+		.classed('show', false)
+		.filter( d => showIds.includes(d.id) )
+		.transition()
+		.delay(function(d, i) { return ++i * showDalay + showDalay; })
+		.on("start", function repeat() {
+			this.classList.add('show');
+		});
+
+		svgLinks
+		.classed('show', false)
+		.filter( d => showIds.includes(d.target.id) )
+		.transition()
+		.delay(function(d, i) { return ++i * showDalay; })
+		.on("start", function repeat() {
+			this.classList.add('show');
+		});
+	}
+
+
+
+
+
 
 
 	function getNodeRadius(node){
