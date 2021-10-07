@@ -57,7 +57,12 @@ body {
 .nodes .node{
   position: absolute;
   cursor: pointer;
+/*  opacity: 0.5;
+  transition: opacity 0.5s;*/
 }
+/*.nodes .node.show{
+  opacity: 1;
+}*/
 .nodes .text{
   position: absolute;
   top: -15px;
