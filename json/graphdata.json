@@ -28,24 +28,18 @@
     },
     {
       "id": "6",
-      "label": "хочешь ли ты<br>улучшить<br>паказатели<br>бизнеса?",
+      "label": "тебе удобно<br>когда так...<div class='longread'><br>сокращается<br>много<br>текста?</div><div class='btn-longread'><div class='c1'></div><div class='c2'></div></div>",
       "parents": [3,5]
     },
     {
       "id": "7",
-      "label": "знаешь ли ты<br>как это<br>сделать?",
+      "label": "да",
       "parents": [6]
     },
     {
       "id": "8",
-      "label": "да",
-      "parents": [7]
-    },
-    {
-      "id": "9",
       "label": "нет",
-      "parents": [7]
+      "parents": [6]
     }
-
   ]
 }
