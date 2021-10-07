@@ -17,6 +17,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
+	
 
 	//graphics var
 	var width = window.innerWidth;
@@ -47,8 +48,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.style('width', width+'px')
 		.style('height', height+'px');
 
-	var svgLinks = false;
-	var htmlNodes = false;
+	var linksCont = svg.append("g")
+			.attr("class", "links");
+	var nodesCont = viewPort.append("div")
+		.attr("class", "nodes")
+		.attr("style", "position: absolute;left: 50vw;top: 50vh;");
+
+	var htmlNodes = nodesCont.selectAll("div.node");
+	var svgLinks = linksCont.selectAll("line");
 
 	var scrollNext = true;
 	const slideForse = function (d){
@@ -202,14 +209,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.attr("y2", d => d.target.y);
 
 		htmlNodes
-		// .attr("cx", 
-		// 	// d => d.x
-		// 	function(d){
-		// 		// console.log(d)
-		// 		return d.x;
-		// 	}
-		// 	)
-		// .attr("cy", d => d.y);
 		.attr("style", function (d){ 
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
@@ -219,161 +218,96 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showDalay = 500;
 
 	function buildNodes(nodes){
-		if(!htmlNodes){
-			htmlNodes = viewPort.append("div")
-			.attr("class", "nodes")
-			.attr("style", "position: absolute;left: 50vw;top: 50vh;")
-			.selectAll("div.node")
-			
-			.data(nodes);
+		var d3nodes = null;
+		var d3newNodes = null;
 
-			htmlNodes = htmlNodes.enter().append("div")
-			.classed('node', true)
-			.classed('btn-back', d => d.function == 'back')
-			.classed('btn-menu', d => d.function == 'menu')
-			.classed('active', d => d.active)
-			// .classed('show', (d) => {
-			// 	var showIds = tree.activeNode.children;
-			// 	console.dir(getHtmlNodeById(d.id));
-			// 	for (var i = 1; i <= showIds.length; i++) {
-			// 		// if(showIds[i] == d.id){
-			// 		// 	setTimeout
-			// 		// }
-			// 	}
-			// 	return true
-			// })
-			.attr("node-id", d => d.id)
-			// .call(
-			// 	d3.drag(simulation)
-			// 	.on("start", dragstarted)
-			// 	.on("drag", dragged)
-			// 	.on("end", dragended)
-			// 	)
-			.on("click", bubleClick);
+		//update
+		d3nodes = nodesCont
+		.selectAll("div.node")
+		.data(nodes, d => d.id)
+		.classed('active', d => d.active);
+		
 
-			htmlNodes.append("div")
-			.classed('text', true)
-			.html(d => d.label);
+		//enter
+		d3newNodes = d3nodes.enter().append('div')
+		.classed('node', true)
+		.classed('btn-back', d => d.function == 'back')
+		.classed('btn-menu', d => d.function == 'menu')
+		.classed('active', d => d.active)
+		// .classed('show', (d) => {
+		// 	var showIds = tree.activeNode.children;
+		// 	console.dir(getHtmlNodeById(d.id));
+		// 	for (var i = 1; i <= showIds.length; i++) {
+		// 		// if(showIds[i] == d.id){
+		// 		// 	setTimeout
+		// 		// }
+		// 	}
+		// 	return true
+		// })
+		.attr("node-id", d => d.id)
+		// .call(
+		// 	d3.drag(simulation)
+		// 	.on("start", dragstarted)
+		// 	.on("drag", dragged)
+		// 	.on("end", dragended)
+		// 	)
+		.on("click", bubleClick);
 
-			htmlNodes.append("div")
-			.classed('c1', true);
+		d3newNodes.append("div")
+		.classed('text', true)
+		.html(d => d.label);
 
-			htmlNodes.append("div")
-			.classed('c2', true);
+		d3newNodes.append("div")
+		.classed('c1', true);
 
-		}else{
-			var tempNode = htmlNodes
-			// .selectAll("div.node")
-			.data(nodes, d => d.id);
-
-			// console.dir(tempNode);exit
-
-			tempNode
-			.classed('active', d => d.active);
-
-			var tt = tempNode.enter().append("div")
-			.classed('node', true)
-			.classed('btn-back', d => d.function == 'back')
-			.classed('btn-menu', d => d.function == 'menu')
-			.classed('active', d => d.active)
-			.attr("node-id", // d => d.id 
-				function(d){
-					//add nodes
-					htmlNodes._groups[0].push(this);
-					return d.id
-				}
-			)
-			// .call(
-			// 	d3.drag(simulation)
-			// 	.on("start", dragstarted)
-			// 	.on("drag", dragged)
-			// 	.on("end", dragended)
-			// 	)
-			.on("click", bubleClick);
-
-			// console.dir(tempNode);exit
-			// console.dir(htmlNodes);
+		d3newNodes.append("div")
+		.classed('c2', true);
 
 
-			tt.append("div")
-			.classed('text', true)
-			.html(d => d.label);
+		//exit
+		d3nodes.exit().remove();
 
+		//update nodes list var
+		htmlNodes = nodesCont.selectAll("div.node");
 
-			tt.append("div")
-			.classed('c1', true);
-
-			tt.append("div")
-			.classed('c2', true);
-
-
-			tempNode.exit()
-			.attr('node-id',function(d, i){
-					//remove nodes
-					delete htmlNodes._groups[0][i];
-					return 1;
-				})
-			.remove();
-
-		}
 	}
 
 	function toggleShowClass(d){}
 
 	function getNewHtmlNodeById(id){
 		//перебрать весь обьект кроме екзит
-		console.dir(htmlNodes.nodes());
+		console.dir(nodesCont.nodes());
 		return id;
 	}
 
 	function buildLinks(links){
-		if(!svgLinks){
-			svgLinks = svg.append("g")
-			.attr("class", "links")
-			.selectAll("line")
-			.data(links)
-			.enter().append("line")
-			// .attr("stroke-width", d => d.value)
-			.attr("stroke-width", 3)
-			.attr("stroke-dasharray", setDashedLineStyle);
-		}else{
-			var tempLink = svgLinks
-			.data(links, 
-				function(d){
-					if(typeof d.source === 'object' ){
-						return [d.source.id, d.target.id];
-					}else{
-						return [d.source, d.target];
-					}
+		var d3links = null;
+
+		//update
+		d3links = linksCont
+		.selectAll("line")
+		.data(links, 
+			function(d){
+				if(typeof d.source === 'object' ){
+					return [d.source.id, d.target.id];
+				}else{
+					return [d.source, d.target];
 				}
-				);
+			}
+		);
 
-			tempLink.enter().append("line")
-			.attr("stroke-width", 
-				// d => d.value
-				function(d){
-					//add links
-					svgLinks._groups[0].push(this);
-					
-					// return d.value ;
-					return 3 ;
-				}
-				)
-			.attr("stroke-dasharray", setDashedLineStyle);
+		//enter
+		d3links
+		.enter().append("line")
+		// .attr("stroke-width", d => d.value)
+		.attr("stroke-width", 3)
+		.attr("stroke-dasharray", d => d.dashed ? '8 11' : 'unset');
 
-			tempLink.exit()
-			.attr('node-id',function(d, i){
-					//remove links
-					delete svgLinks._groups[0][i];
-					return 1;
-				})
-			.remove();
-		}
-	}
+		//exit
+		d3links.exit().remove();
 
-
-	function setDashedLineStyle(node){
-		return node.dashed ? '8 11' : 'unset'
+		//update links list var
+		svgLinks = linksCont.selectAll("line");
 	}
 
 
@@ -384,7 +318,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	// function getNodeElementById(id){
-	// 		console.dir(htmlNodes);
+	// 		console.dir(nodesCont);
 	// 	// for (var i = 0; i < nodes.length; i++) {
 	// 	// }
 	// 	return id;
