@@ -19,6 +19,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	
 	var tickCount = 0;
+	var simulationTime = 0;
 
 	//graphics var
 	var width = window.innerWidth;
@@ -113,15 +114,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
-      	// .velocityDecay(0.3) // 0,4
+      	// .velocityDecay(0.1) // 0,4
 		// .alphaTarget(0.5);
 
 
-		console.log('alpha:'+simulation.alpha());//1
-		console.log('alphaMin:'+simulation.alphaMin());//0,001
-		console.log('alphaTarget:'+simulation.alphaTarget());//0
-		console.log('alphaDecay:'+simulation.alphaDecay());//0,0228
-		console.log('velocityDecay:'+simulation.velocityDecay());//0,4
+		// console.log('alpha:'+simulation.alpha());//1
+		// console.log('alphaMin:'+simulation.alphaMin());//0,001
+		// console.log('alphaTarget:'+simulation.alphaTarget());//0
+		// console.log('alphaDecay:'+simulation.alphaDecay());//0,0228
+		// console.log('velocityDecay:'+simulation.velocityDecay());//0,4
 
 
 		if(verticalScreen){
@@ -155,6 +156,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		buildLinks(links);
 		buildNodes(nodes);
+
+		simulationTime = Date.now();
 
 		simulation.on("tick", simulationTick);
 	}
@@ -215,10 +218,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function simulationTick(){
 		tree.fps.tick();
-		
+
 		tickCount++;
 		document.querySelector("#couter").innerHTML = tickCount
-		console.log(tickCount);
+		// console.log(tickCount);
+		// console.log((Date.now() - simulationTime)/1000);
+
+		if(tickCount == 300){
+			document.querySelector("#couter").innerHTML = (Date.now() - simulationTime)/1000;
+		}
 
 		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
