@@ -427,5 +427,8 @@ body {
   .node:hover .c2{
     transform: translate(-50%, -50%) scale(0.55);
   }
-
+  .logo-main {
+    width: 30%;
+    bottom: 13%;
+  }
 }
