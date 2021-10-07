@@ -23,7 +23,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var width = window.innerWidth;
 	var height = window.innerHeight;
 	var verticalScreen = height/width > width/height ? true : false;
-	var activeDepth = 1;
+	window.activeDepth = 1;
 	// // var nodeRadius = width/48;
 	// var nodeRadius = 20;
 	// // var activeRadius = nodeRadius*2;
@@ -59,6 +59,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var scrollNext = true;
 	const slideForse = function (d){
+		let activeDepth = tree.activeNode.depth;
 		if(!d.functional){
 			if(scrollNext){
 				if(d.active){
@@ -102,6 +103,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
 
+		buildLinks(links);
+		buildNodes(nodes);
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
@@ -110,12 +113,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("slideForse", d3.forceX(slideForse).strength(0.035))
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
-		.alphaTarget(0.5);
+		// .alphaTarget(0.3) // stay hot
+      	// .velocityDecay(0.1) // low friction
+		// .alphaTarget(0.5);
+
 
 		if(verticalScreen){
 			window.simulation
 			.force("mobileVertical", d3.forceY(
 				function(d){
+					let activeDepth = tree.activeNode.depth;
 					if(scrollNext){
 						return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
 					}else{
@@ -139,9 +146,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				)
 			)
 		}
-
-		buildLinks(links);
-		buildNodes(nodes);
 
 		simulation.on("tick", simulationTick);
 	}
@@ -185,16 +189,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			popupActive('iframe');
 		}
 	
-
-		//draw
-		activeDepth = d.depth;
-		
 		buildLinks(links);
 		buildNodes(nodes);
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
-		simulation.alphaTarget(0.8).restart();
+		simulation.alpha(1).restart();
+		// simulation.alphaTarget(0.8).restart();
 		// simulation.alpha(3.2).restart();
 
 		return;
@@ -202,6 +203,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function simulationTick(){
 		tree.fps.tick();
+
+		console.log('alpha:'+simulation.alpha());
+		// console.log('alphaMin:'+simulation.alphaMin());
+		// console.log('alphaTarget:'+simulation.alphaTarget());
+		// console.log('alphaDecay:'+simulation.alphaDecay());
+		// console.log('velocityDecay:'+simulation.velocityDecay());
 
 		svgLinks
 		.attr("x1", d => d.source.x)
