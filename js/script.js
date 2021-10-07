@@ -18,6 +18,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	});
 
 	
+	var tickCount = 0;
 
 	//graphics var
 	var width = window.innerWidth;
@@ -97,14 +98,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// tree.admin.set(true);
 	// tree.showAllTree();
 
+
 	function simInit(){
 
 		//init first data
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
-
-		buildLinks(links);
-		buildNodes(nodes);
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
@@ -114,8 +113,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
-      	// .velocityDecay(0.1) // low friction
+      	// .velocityDecay(0.3) // 0,4
 		// .alphaTarget(0.5);
+
+
+		console.log('alpha:'+simulation.alpha());//1
+		console.log('alphaMin:'+simulation.alphaMin());//0,001
+		console.log('alphaTarget:'+simulation.alphaTarget());//0
+		console.log('alphaDecay:'+simulation.alphaDecay());//0,0228
+		console.log('velocityDecay:'+simulation.velocityDecay());//0,4
 
 
 		if(verticalScreen){
@@ -146,6 +152,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				)
 			)
 		}
+
+		buildLinks(links);
+		buildNodes(nodes);
 
 		simulation.on("tick", simulationTick);
 	}
@@ -195,16 +204,23 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
 		simulation.alpha(1).restart();
+		tickCount = 0;
 		// simulation.alphaTarget(0.8).restart();
 		// simulation.alpha(3.2).restart();
 
 		return;
 	}
 
+
+
 	function simulationTick(){
 		tree.fps.tick();
+		
+		tickCount++;
+		document.querySelector("#couter").innerHTML = tickCount
+		console.log(tickCount);
 
-		console.log('alpha:'+simulation.alpha());
+		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
