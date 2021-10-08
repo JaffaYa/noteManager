@@ -21,17 +21,38 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var tickCount = 0;
 	var simulationTime = 0;
 
-	//graphics var
+	//graphic variables
 	var width = window.innerWidth;
 	var height = window.innerHeight;
 	var verticalScreen = height/width > width/height ? true : false;
-	window.activeDepth = 1;
 	// // var nodeRadius = width/48;
 	// var nodeRadius = 20;
 	// // var activeRadius = nodeRadius*2;
 	// var activeRadius = 20;
 	var animationTime = 250;//ms
 	var svgViewPort = [-width / 2, -height / 2, width, height];
+
+	//smooth animations
+	//общая настройка
+	var showDelay = 500;
+	var hideDalayBack = 500;
+	var hideDalay = 500;
+
+	//тонкая настройка
+	var showNodeDelay = showDelay; //задерка перед появлением ноды
+	var showLinkDelay = showDelay; //задерка перед появлением линка
+	var showSlideDelay = hideDalayBack; //задерка сдвига перед появлением
+	var hideSlideDelay = hideDalay; //задерка сдвига перед прятанием
+	var showCssDuration = 500; //длина анимации появления в css
+	var hideNodeCssDuration = 500; //длина анимации прятания ноды в css
+	var hideLinkCssDuration = 500; //длина анимации прятания линка в css
+
+	var deleteDelay = hideSlideDelay; //задержка до реального удаления
+	var firstScrean = true;
+	//еще есть возможность добавить фукциональные клавиши(назад, меню)
+	//в последовательность этой анимации - они будут отбражаться в последнею очередь
+
+	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 
 	window.simulationResize = function (){};
@@ -156,8 +177,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		buildLinks(links);
 		buildNodes(nodes);
-		smoothAnimation();
 
+		firstScrean = false;
 		simulationTime = Date.now();
 
 		simulation.on("tick", simulationTick);
@@ -166,13 +187,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	function bubleClick(d) {
+	function bubleClick(d, i, arr, delDelayFlag = true) {
 
 		if(!d.active){
 			playBubble();
 		}
 
-		tree.cliсkOnNode(d);
+		// console.dir(arguments);
+		if(d.functional) delDelayFlag = false;
+
+		if(delDelayFlag){
+			tree.cliсkOnNode(d, deleteDelay, bubleClick);
+		}else{
+			tree.cliсkOnNode(d);
+		}
 
 		nodes = tree.nodesToDisplay;
 		links = tree.links;
@@ -181,7 +209,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					tree.backButton();
+					tree.backButton(deleteDelay, bubleClick);
 					nodes = tree.nodesToDisplay;
 					links = tree.links;
 					break;
@@ -204,7 +232,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	
 		buildLinks(links);
 		buildNodes(nodes);
-		smoothAnimation();
 
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
@@ -255,6 +282,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function buildNodes(nodes){
 		var d3nodes = null;
 		var d3newNodes = null;
+		var d3exitNodes = null;
 
 		//update
 		d3nodes = nodesCont
@@ -270,7 +298,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('btn-back', d => d.function == 'back')
 		.classed('btn-menu', d => d.function == 'menu')
 		.classed('active', d => d.active)
-		
 		.attr("node-id", d => d.id)
 		// .call(
 		// 	d3.drag(simulation)
@@ -279,6 +306,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	.on("end", dragended)
 		// 	)
 		.on("click", bubleClick);
+
+		d3newNodes
+		.classed('show',  d => d.functional )
+		.filter( d => !d.functional )
+		.transition()
+		.delay(makenodeDelay())
+		.on("start", function repeat() {
+			this.classList.add('show');
+		});
+
 
 		d3newNodes.append("div")
 		.classed('text', true)
@@ -292,15 +329,55 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 		//exit
-		d3nodes.exit().remove();
+		d3exitNodes = d3nodes.exit();
+
+		d3exitNodes
+		.filter( d => d.functional )
+		.classed('show',  d => !d.functional )
+		.remove();
+
+		d3exitNodes
+		.filter( d => !d.functional )
+		.transition()
+		.delay(hideSlideDelay)
+		.duration(hideNodeCssDuration)
+		.on('start', function(){
+			this.classList.remove('show');
+		})
+		.on('end', function(){
+			this.remove();
+		});
+
 
 		//update nodes list var
 		htmlNodes = nodesCont.selectAll("div.node");
+
+		function makenodeDelay(){
+			var counter = 0;
+
+			return function(d){
+				var result = 0;
+
+				if(!firstScrean){
+					result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
+				}else{
+					result = counter * showNodeDelay + counter * showLinkDelay;
+				}
+
+				// console.log('node-counter',counter);
+				// console.log('node-result',result);
+
+				counter++;
+
+				return result;
+			}
+		}
 
 	}
 
 	function buildLinks(links){
 		var d3links = null;
+		var d3newLinks = null;
 
 		//update
 		d3links = linksCont
@@ -316,47 +393,61 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		);
 
 		//enter
-		d3links
+		d3newLinks = d3links
 		.enter().append("line")
 		// .attr("stroke-width", d => d.value)
 		.attr("stroke-width", 3)
 		.attr("stroke-dasharray", d => d.dashed ? '8 11' : 'unset');
 
+		//add smooth animation
+		d3newLinks
+		// .filter( d => showIds.includes(d.target.id) )
+		.transition()
+		.delay(makelinkDelay())
+		.on("start", function repeat() {
+			this.classList.add('show');
+		});
+
+
 		//exit
-		d3links.exit().remove();
+		d3links.exit()
+		.transition()
+		.delay(hideSlideDelay)
+		// .delay(makelinkDelay())
+		.duration(hideLinkCssDuration)
+		.on('start', function(){
+			this.classList.remove('show');
+		})
+		.on('end', function(){
+			this.remove();
+		});
+
 
 		//update links list var
 		svgLinks = linksCont.selectAll("line");
+
+		
+		function makelinkDelay(){
+			var counter = 0;
+
+			return function(d){
+				var result = 0;
+
+				if(!firstScrean){
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
+				}else{
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration;//showCssDuration тут по идеи ноды
+				}
+
+				// console.log('link-counter',counter);
+				// console.log('link-result',result);
+
+				counter++;
+
+				return result; 
+			}
+		}
 	}
-
-
-	function smoothAnimation(){
-		//graphic variables
-		var showDalay = 500;
-
-		//show
-		var showIds = tree.activeNode.children;
-
-		//nodes
-		htmlNodes
-		.classed('show', false)
-		.filter( d => showIds.includes(d.id) )
-		.transition()
-		.delay(function(d, i) { return ++i * showDalay + showDalay; })
-		.on("start", function repeat() {
-			this.classList.add('show');
-		});
-
-		svgLinks
-		.classed('show', false)
-		.filter( d => showIds.includes(d.target.id) )
-		.transition()
-		.delay(function(d, i) { return ++i * showDalay; })
-		.on("start", function repeat() {
-			this.classList.add('show');
-		});
-	}
-
 
 
 
@@ -967,14 +1058,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function showNode(node, depth){
-			if(node.depth <= depth && node.activePath == true || isShowAllTree){
+			// if(node.depth <= depth && node.activePath == true || isShowAllTree){
+			if(node.active || isShowAllTree){
 				return true;
 			}else{
 				return false;
 			}
 		}
 
-		function updateNodesToDisplay(){
+		function updateNodesToDisplay(deleteDelay = false){
 			let nodes = myThis.nodes.map((node) => node);
 			let nodesToDisplay = myThis.nodesToDisplay.map((node) => node);
 			let nodeToHide = true;
@@ -989,7 +1081,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						nodeToHide = false;
 					}
 				}
-				if(nodeToHide){
+				if( (nodeToHide && !deleteDelay) || (nodeToHide && nodesToDisplay[i].functional) ){
 					for (var k = 0; k < myThis.nodesToDisplay.length; k++) {
 						if(myThis.nodesToDisplay[k].id == nodesToDisplay[i].id)
 						myThis.nodesToDisplay.splice(k, 1);
@@ -1059,7 +1151,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return false;
 		}
 
-		function cliсkOnNode(node){
+		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
 				if(goToNode){
@@ -1067,17 +1159,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 			makeNodeActive(node);
-			updateNodes();
+			updateNodes(deleteDelay);
+
+
+			if(deleteDelay){
+				setTimeout(function(node) {
+					callback(node, node.index, myThis.nodesToDisplay, false);//replace nodesToDisplay to html list of nodes
+				}, deleteDelay, node);
+			}
 		}
 
 		
-		function updateNodes(){
+		function updateNodes(deleteDelay = false){
 			addFunctionalButtons();
 			myThis.admin.updateNodes();
 			setNodesChildrens();
 			setNodesDepth();
 			setNodesDisplay();
-			updateNodesToDisplay();
+			updateNodesToDisplay(deleteDelay);
 			updateLinks();
 		}
 
@@ -1193,11 +1292,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 
-		function backButton(){
-			let activeDepth = myThis.activeNode.depth;
+		function backButton(deleteDelay = false, callback = function(){}){
 			let currActivePath = getActivePath();
 
-			activeDepth--;
+			//if firs node active
+			if(currActivePath.length < 2) return;
 
 			//clear previos activePath
 			//spep back activePath
@@ -1205,8 +1304,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//или это не тут а при клике на ноду нужно делать
 			myThis.activeNode.activePath = false;
 
-			//emuleta click on stepBack node
-			cliсkOnNode(currActivePath[currActivePath.length-2]);
+			//simulate click on stepback node
+			cliсkOnNode(currActivePath[currActivePath.length-2], deleteDelay, callback);
 		}
 
 		function getActivePath(){

@@ -53,10 +53,14 @@ body {
   height: auto;
 }
 
+.nodes .node,
 .links line{
-  opacity: 0.1;
+  opacity: 0.3;
   transition: opacity 0.5s;
 }
+.nodes .node.show,
+/*.nodes .node.active,
+.nodes .node.btn-functional*/
 .links line.show{
   opacity: 1;
 }
@@ -65,14 +69,8 @@ body {
 .nodes .node{
   position: absolute;
   cursor: pointer;
-  opacity: 0.1;
-  transition: opacity 0.5s;
 }
-.nodes .node.show,
-.nodes .node.active,
-.nodes .node.btn-functional{
-  opacity: 1;
-}
+
 .nodes .text{
   position: absolute;
   top: -15px;
