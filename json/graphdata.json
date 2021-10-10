@@ -9,7 +9,7 @@
       "id": "2",
       "label": "кто ты?",
       "parents": [1],
-      "goTo": 6
+      "goTo": 9
     },
     {
       "id": "3",
@@ -40,6 +40,12 @@
       "id": "8",
       "label": "нет",
       "parents": [6]
+    },
+    {
+      "id": "9",
+      "label": "не знаю",
+      "parents": [6],
+      "iframe": "https://joyberry.ru"
     }
   ]
 }

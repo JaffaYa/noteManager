@@ -29,25 +29,33 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var nodeRadius = 20;
 	// // var activeRadius = nodeRadius*2;
 	// var activeRadius = 20;
-	var animationTime = 250;//ms
+	var animationTime = 750;//ms
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 
 	//smooth animations
 	//общая настройка
-	var showDelay = 500;
+	var showDelay = 100;
+	var showDelay2 = 250;
 	var hideDalayBack = 500;
 	var hideDalay = 500;
 
 	//тонкая настройка
-	var showNodeDelay = showDelay; //задерка перед появлением ноды
-	var showLinkDelay = showDelay; //задерка перед появлением линка
-	var showSlideDelay = hideDalayBack; //задерка сдвига перед появлением
-	var hideSlideDelay = hideDalay; //задерка сдвига перед прятанием
-	var showCssDuration = 500; //длина анимации появления в css
-	var hideNodeCssDuration = 500; //длина анимации прятания ноды в css
-	var hideLinkCssDuration = 500; //длина анимации прятания линка в css
+	// var showNodeDelay = showDelay; //задерка перед появлением ноды
+	// var showLinkDelay = showDelay2; //задерка перед появлением линка
+	// var showSlideDelay = hideDalayBack; //задерка сдвига перед появлением
+	// var hideSlideDelay = hideDalay; //задерка сдвига перед прятанием
+	// var showCssDuration = 700; //длина анимации появления в css
+	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
+	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
+	var showNodeDelay = 100; //задерка перед появлением ноды
+	var showLinkDelay = 50; //задерка перед появлением линка
+	var showSlideDelay = 350; //задерка сдвига перед появлением
+	var hideSlideDelay = 100; //задерка сдвига перед прятанием
+	var showCssDuration = 700; //длина анимации появления в css
+	var hideNodeCssDuration = 1000; //длина анимации прятания ноды в css
+	var hideLinkCssDuration = 1000; //длина анимации прятания линка в css
 
-	var deleteDelay = hideSlideDelay; //задержка до реального удаления
+	var deleteDelay = 500; //задержка до реального удаления
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -88,7 +96,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(d.active){
 					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
 				}else{
-					return (width/4 + width/2*(d.depth - activeDepth)) - width/2;
+					return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
 				}
 			}else{
 				return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
@@ -109,10 +117,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	}
 
-	var manyBodyForce = -width + (1200/width)*50;
-	// var manyBodyForce = -1200;
+	// var manyBodyForce = -width + (1200/width)*50;
+	var manyBodyForce = -2000;
 	if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
-
 
 	window.tree = new Tree("json/graphdata.json", simInit);
 
@@ -131,7 +138,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
 		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("center", d3.forceCenter(0,0))
-		.force("slideForse", d3.forceX(slideForse).strength(0.035))
+		.force("slideForse", d3.forceX(slideForse).strength(0.05))
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
@@ -215,6 +222,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					break;
 				case 'menu':
 					popupActive('menu');
+					var body = document.querySelector('body');
+					body.classList.toggle('menu-show');
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -299,6 +308,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('btn-menu', d => d.function == 'menu')
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
+
 		// .call(
 		// 	d3.drag(simulation)
 		// 	.on("start", dragstarted)
@@ -318,7 +328,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 		d3newNodes.append("div")
-		.classed('text', true)
+		.classed('v-content', true)
 		.html(d => d.label);
 
 		d3newNodes.append("div")
@@ -339,8 +349,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		d3exitNodes
 		.filter( d => !d.functional )
 		.transition()
-		.delay(hideSlideDelay)
-		.duration(hideNodeCssDuration)
+		.delay(hideSlideDelay) // delay before hide
+		.duration(hideNodeCssDuration) // time before delete
 		.on('start', function(){
 			this.classList.remove('show');
 		})
@@ -353,19 +363,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		htmlNodes = nodesCont.selectAll("div.node");
 
 		function makenodeDelay(){
-			var counter = 0;
+			var counter = 2;
 
 			return function(d){
 				var result = 0;
 
 				if(!firstScrean){
-					result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
 				}else{
-					result = counter * showNodeDelay + counter * showLinkDelay;
+					result = counter * showNodeDelay + counter * showLinkDelay-300;
 				}
 
-				// console.log('node-counter',counter);
-				// console.log('node-result',result);
+				console.log('node-counter',counter);
+				console.log('node-result',result);
 
 				counter++;
 
@@ -381,7 +391,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//update
 		d3links = linksCont
-		.selectAll("line")
+		.selectAll('line')
 		.data(links, 
 			function(d){
 				if(typeof d.source === 'object' ){
@@ -394,17 +404,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//enter
 		d3newLinks = d3links
-		.enter().append("line")
+		.enter().append('line')
 		// .attr("stroke-width", d => d.value)
-		.attr("stroke-width", 3)
-		.attr("stroke-dasharray", d => d.dashed ? '8 11' : 'unset');
+		.attr('stroke-width', 3)
+		.attr('stroke-dasharray', d => d.dashed ? '8 11' : 'unset');
 
 		//add smooth animation
 		d3newLinks
 		// .filter( d => showIds.includes(d.target.id) )
 		.transition()
 		.delay(makelinkDelay())
-		.on("start", function repeat() {
+		.on('start', function repeat() {
 			this.classList.add('show');
 		});
 
@@ -428,19 +438,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		
 		function makelinkDelay(){
-			var counter = 0;
+			var counter = 2;
 
 			return function(d){
 				var result = 0;
 
 				if(!firstScrean){
-					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
 				}else{
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500;//showCssDuration тут по идеи ноды
 				}
 
-				// console.log('link-counter',counter);
-				// console.log('link-result',result);
+				console.log('link-counter',counter);
+				console.log('link-result',result);
 
 				counter++;
 
@@ -715,7 +725,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// width = window.innerWidth;
 		// height = window.innerHeight;
 
-		setNodeStyle();
+		// setNodeStyle();
 
 		// simulation.force("link").links(links);
 		simulation
@@ -1306,6 +1316,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			//simulate click on stepback node
 			cliсkOnNode(currActivePath[currActivePath.length-2], deleteDelay, callback);
+			console.log(deleteDelay);
 		}
 
 		function getActivePath(){
