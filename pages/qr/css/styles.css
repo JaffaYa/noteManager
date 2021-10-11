@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+html {
+  background: transparent;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 100px;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; /
+}
+
+.qrv-list {
+}
+.qrv-list-item {
+  width: 100%;
+  display: block;
+  padding: 1% 0;
+}
+.qrv-list-item img {
+  width: 100%;
+  height: auto;
+  font-size: 0;
+}
+
+
+
+
