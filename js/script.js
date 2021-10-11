@@ -1,5 +1,6 @@
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
+	var bodyClass = document.querySelector('body'); // temp
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
@@ -10,6 +11,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		document.querySelector('.popup.' + popupClass).classList.add('active');
 	}
 	document.querySelector('.paranja').addEventListener('click', function(event){
+		bodyClass.classList.remove('menu-show', 'page-show'); // temp
 		this.classList.remove('active');
 		let popup = document.querySelectorAll('.popup');
 		for (var i = 0; i < popup.length; i++) {
@@ -222,8 +224,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					break;
 				case 'menu':
 					popupActive('menu');
-					var body = document.querySelector('body');
-					body.classList.toggle('menu-show');
+					bodyClass.classList.toggle('menu-show'); // temp
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -237,6 +238,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				iframe.setAttribute("src", d.iframe);
 			}
 			popupActive('iframe');
+			bodyClass.classList.add('page-show'); // temp
 		}
 	
 		buildLinks(links);

@@ -9,12 +9,13 @@
       "id": "2",
       "label": "кто ты?",
       "parents": [1],
-      "goTo": 9
+      "goTo": 4
     },
     {
       "id": "3",
       "label": "сказать <br>привет",
-      "parents": [1]
+      "parents": [1],
+      "goTo": 6
     },
     {
       "id": "4",
@@ -23,29 +24,55 @@
     },
     {
       "id": "5",
-      "label": "сказать <br>привет",
-      "parents": [4]
+      "label": "что<br>ты<br>умеешь?",
+      "parents": [4],
+      "goTo": 7
     },
     {
       "id": "6",
-      "label": "тебе удобно<br>когда так...<div class='longread'><br>сокращается<br>много<br>текста?</div><div class='btn-longread'><div class='c1'></div><div class='c2'></div></div>",
-      "parents": [3,5]
+      "label": "что ты<br>хочешь<br>человек?",
+      "parents": [3]
     },
     {
       "id": "7",
-      "label": "да",
-      "parents": [6]
+      "label": "я умею",
+      "parents": [5]
     },
     {
       "id": "8",
-      "label": "нет",
-      "parents": [6]
+      "label": "создать QR",
+      "parents": [6, 7],
+      "iframe": "pages/qr/"
     },
     {
       "id": "9",
-      "label": "не знаю",
-      "parents": [6],
-      "iframe": "https://joyberry.ru"
+      "label": "создать<br>супер<br>кошелёк",
+      "parents": [6, 7],
+      "iframe": "pages/sw/"
+    },
+    {
+      "id": "13",
+      "label": "продукты<br>variant.name",
+      "parents": [6, 7],
+      "iframe": "pages/p/"
+    },
+    {
+      "id": "10",
+      "label": "как<br>твоё<br>имя?",
+      "parents": [4],
+      "goTo": 11
+    },
+    {
+      "id": "11",
+      "label": "моё<br>имя<br>variant",
+      "parents": [10]
+    },
+    {
+      "id": "12",
+      "label": "сказать <br>привет",
+      "parents": [11],
+      "goTo": 6
     }
   ]
 }
+
