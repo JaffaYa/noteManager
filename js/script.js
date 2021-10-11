@@ -467,227 +467,227 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// 	return id;
 	// }
 
-	function makeDataArray(depth, d = jsonData.nodes[0]){
+	// function makeDataArray(depth, d = jsonData.nodes[0]){
 
-		if(depth <= 0) return;
-		//add node to active path
-		var nodesToDelFormActive = [];
-		for (var i = 0; i < activePath.length; i++) {
-			if(activePath[i].depth >= depth){
-				for (var j = 0; j < jsonData.nodes.length; j++) {
-					if(jsonData.nodes[j].id == activePath[i].id){
-						jsonData.nodes[j].activePath = false;
-						nodesToDelFormActive.push(activePath[i].id);
-					}
-				}
-			}
-		}
-		for (var i = 0; i < nodesToDelFormActive.length; i++) {
-			for (var j = 0; j < activePath.length; j++) {
-				if(activePath[j].id == nodesToDelFormActive[i]){
-					activePath.splice(j, 1);
-				}
-			}
+	// 	if(depth <= 0) return;
+	// 	//add node to active path
+	// 	var nodesToDelFormActive = [];
+	// 	for (var i = 0; i < activePath.length; i++) {
+	// 		if(activePath[i].depth >= depth){
+	// 			for (var j = 0; j < jsonData.nodes.length; j++) {
+	// 				if(jsonData.nodes[j].id == activePath[i].id){
+	// 					jsonData.nodes[j].activePath = false;
+	// 					nodesToDelFormActive.push(activePath[i].id);
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	for (var i = 0; i < nodesToDelFormActive.length; i++) {
+	// 		for (var j = 0; j < activePath.length; j++) {
+	// 			if(activePath[j].id == nodesToDelFormActive[i]){
+	// 				activePath.splice(j, 1);
+	// 			}
+	// 		}
 			
-		}
+	// 	}
 		
-		for (var i = 0; i < jsonData.nodes.length; i++) {
-			if(jsonData.nodes[i].id == d.id){
-				jsonData.nodes[i].activePath = true;
-				activePath.push({
-					"id" :jsonData.nodes[i].id,
-					"depth": depth
-					});
-			}
+	// 	for (var i = 0; i < jsonData.nodes.length; i++) {
+	// 		if(jsonData.nodes[i].id == d.id){
+	// 			jsonData.nodes[i].activePath = true;
+	// 			activePath.push({
+	// 				"id" :jsonData.nodes[i].id,
+	// 				"depth": depth
+	// 				});
+	// 		}
 			
-		}
+	// 	}
 
 
-		let nodes = jsonData.nodes;
-		var newNodes = [];
-		var newLinks = [];
-		var maxNodeId = nodes[nodes.length-1].id;
+	// 	let nodes = jsonData.nodes;
+	// 	var newNodes = [];
+	// 	var newLinks = [];
+	// 	var maxNodeId = nodes[nodes.length-1].id;
 
 
 
-		scrollNext = isHasChild(d);
-		var hasChild = isHasChild(d,false);
+	// 	scrollNext = isHasChild(d);
+	// 	var hasChild = isHasChild(d,false);
 
-		if(hasChild){
-			setDepth(depth+1);
-			buildData(depth+1);
-		}else{
-			setDepth(depth);
-			buildData(depth);
-		}
+	// 	if(hasChild){
+	// 		setDepth(depth+1);
+	// 		buildData(depth+1);
+	// 	}else{
+	// 		setDepth(depth);
+	// 		buildData(depth);
+	// 	}
 
-		// add to full screen button
-		newNodes.push({
-			"id": "fullscreen",
-			// "label": "🖵",
-			"label": "Full\nscreen",
-			"parents": [0],
-			"depth": depth,
-			"fullscreen": true,
-			"functional": true
-		});
+	// 	// add to full screen button
+	// 	newNodes.push({
+	// 		"id": "fullscreen",
+	// 		// "label": "🖵",
+	// 		"label": "Full\nscreen",
+	// 		"parents": [0],
+	// 		"depth": depth,
+	// 		"fullscreen": true,
+	// 		"functional": true
+	// 	});
 
-		//click by "+" node to make it active need to add it to
-		//newNodes manually
-		if(isAdmin && (d.id >= maxNodeId || d.addNew) ){
-			newNodes.push(d);
-			newLinks.push(links.find(t => t.target.id == d.id));
-		}
+	// 	//click by "+" node to make it active need to add it to
+	// 	//newNodes manually
+	// 	if(isAdmin && (d.id >= maxNodeId || d.addNew) ){
+	// 		newNodes.push(d);
+	// 		newLinks.push(links.find(t => t.target.id == d.id));
+	// 	}
 		
 
-		if(!isAdmin){
-			newNodes = newNodes.filter(d => !d.addNew);
-		}
+	// 	if(!isAdmin){
+	// 		newNodes = newNodes.filter(d => !d.addNew);
+	// 	}
 
-		//check if all links has they nodes
-		checkLinks: for (var i = 0; i < newLinks.length; i++) {
-			for (var k = 0; k < newNodes.length; k++) {
-				if(typeof newLinks[i].source === 'object' ){
-					if(newLinks[i].source.id == newNodes[k].id){
-						continue checkLinks;
-					}
-				}else{
-					if(newLinks[i].source == newNodes[k].id){
-						continue checkLinks;
-					}
-				}
-			}
-			newLinks.splice(i, 1);
-		}
+	// 	//check if all links has they nodes
+	// 	checkLinks: for (var i = 0; i < newLinks.length; i++) {
+	// 		for (var k = 0; k < newNodes.length; k++) {
+	// 			if(typeof newLinks[i].source === 'object' ){
+	// 				if(newLinks[i].source.id == newNodes[k].id){
+	// 					continue checkLinks;
+	// 				}
+	// 			}else{
+	// 				if(newLinks[i].source == newNodes[k].id){
+	// 					continue checkLinks;
+	// 				}
+	// 			}
+	// 		}
+	// 		newLinks.splice(i, 1);
+	// 	}
 
-		//delete not chosen way
+	// 	//delete not chosen way
 
-		//сравнение нод
-		// forNewNodes: for (var i = 0; i < newNodes.length; i++) {
-		// 	for (var k = window.nodes.length - 1; k >= 0; k--) {
-		// 		if(window.nodes[k].id == newNodes[i].id){
-		// 			window.nodes[k].depth = newNodes[i].depth;
-		// 			continue forNewNodes;
-		// 		}
-		// 	}
-		// 	window.nodes.push(newNodes[i]);
-		// }
-		window.nodes = newNodes.map( d => Object.assign( window.nodes.find(t => t.id == d.id) || {}, d) );
-		links = newLinks.map( d => Object.assign({}, d));
+	// 	//сравнение нод
+	// 	// forNewNodes: for (var i = 0; i < newNodes.length; i++) {
+	// 	// 	for (var k = window.nodes.length - 1; k >= 0; k--) {
+	// 	// 		if(window.nodes[k].id == newNodes[i].id){
+	// 	// 			window.nodes[k].depth = newNodes[i].depth;
+	// 	// 			continue forNewNodes;
+	// 	// 		}
+	// 	// 	}
+	// 	// 	window.nodes.push(newNodes[i]);
+	// 	// }
+	// 	window.nodes = newNodes.map( d => Object.assign( window.nodes.find(t => t.id == d.id) || {}, d) );
+	// 	links = newLinks.map( d => Object.assign({}, d));
 
 
-		// console.log(nodes);
-		// console.log(newNodes);
-		// console.log(window.nodes);
-		// console.log(newLinks);
-		// exit();
+	// 	// console.log(nodes);
+	// 	// console.log(newNodes);
+	// 	// console.log(window.nodes);
+	// 	// console.log(newLinks);
+	// 	// exit();
 
-		function isHasChild(d, testForAdminChild = true){
-			if(isAdmin && !d.addNew && testForAdminChild) return true;
-			for (var i = 0; i < nodes.length; i++) {
-				for (var k = 0; k < nodes[i].parents.length; k++) {
-					if(nodes[i].parents[k] == d.id){
-						return true;
-					}
-				}
-			}
-			return false;
-		}
+	// 	function isHasChild(d, testForAdminChild = true){
+	// 		if(isAdmin && !d.addNew && testForAdminChild) return true;
+	// 		for (var i = 0; i < nodes.length; i++) {
+	// 			for (var k = 0; k < nodes[i].parents.length; k++) {
+	// 				if(nodes[i].parents[k] == d.id){
+	// 					return true;
+	// 				}
+	// 			}
+	// 		}
+	// 		return false;
+	// 	}
 
-		function setDepth(depth){
-			let curentDepth = 1;
-			let parentIds = [];
-			let oldparentIds = [];
-			for (;curentDepth <= depth; curentDepth++ ){
-				oldparentIds = parentIds;
-				parentIds = [];
-				for (var i = 0; i < nodes.length; i++){
-					let hasId = false;
-					for (var j = 0; j < oldparentIds.length; j++) {
-						for (var k = 0; k < nodes[i].parents.length; k++) {
-							if( nodes[i].parents[k] == oldparentIds[j] ){
-								hasId = true;
-							}
-						}
-					}
-					if(nodes[i].parents[0] == 0 && curentDepth == 1){
-						nodes[i].depth = 1;
-						parentIds.push(nodes[i].id);
-					}else if( hasId ){
-						nodes[i].depth = curentDepth;
-						parentIds.push(nodes[i].id);
-					}
-				}
-			}
-		}
+	// 	function setDepth(depth){
+	// 		let curentDepth = 1;
+	// 		let parentIds = [];
+	// 		let oldparentIds = [];
+	// 		for (;curentDepth <= depth; curentDepth++ ){
+	// 			oldparentIds = parentIds;
+	// 			parentIds = [];
+	// 			for (var i = 0; i < nodes.length; i++){
+	// 				let hasId = false;
+	// 				for (var j = 0; j < oldparentIds.length; j++) {
+	// 					for (var k = 0; k < nodes[i].parents.length; k++) {
+	// 						if( nodes[i].parents[k] == oldparentIds[j] ){
+	// 							hasId = true;
+	// 						}
+	// 					}
+	// 				}
+	// 				if(nodes[i].parents[0] == 0 && curentDepth == 1){
+	// 					nodes[i].depth = 1;
+	// 					parentIds.push(nodes[i].id);
+	// 				}else if( hasId ){
+	// 					nodes[i].depth = curentDepth;
+	// 					parentIds.push(nodes[i].id);
+	// 				}
+	// 			}
+	// 		}
+	// 	}
 
-		function buildData(depth){
-			buildDataNodes: for (var i = 0; i < nodes.length; i++) {
-				if( nodes[i].depth && nodes[i].depth <= depth){
+	// 	function buildData(depth){
+	// 		buildDataNodes: for (var i = 0; i < nodes.length; i++) {
+	// 			if( nodes[i].depth && nodes[i].depth <= depth){
 					
-					//Do node on active path?
-					var activePathChild = false;
-					for (var j = 0; j < activePath.length; j++) {
-						for (var k = 0; k < nodes[i].parents.length; k++) {
-							if( nodes[i].parents[k] == activePath[j].id ){
-								activePathChild = true;
-							}
-						}
-					}
-					if(nodes[i].activePath === true){
-						nodes[i].activePath = true;
-					}else if(activePathChild && nodes[i].depth <= (depth-1)){
-						nodes[i].activePath = 'fade';
-					}else if(activePathChild && nodes[i].depth > (depth-1)){
-						nodes[i].activePath = 'child';
-					}else{
-						nodes[i].activePath = false;
-						continue buildDataNodes;
-					}
-					// if(nodes[i].depth >= depth){
-					// 	var parentFlag = true;
-					// 	for (var k = 0; k < nodes[i].parents.length; k++) {
-					// 		if(nodes[i].parents[k] == d.id) parentFlag = false;
-					// 	}
-					// 	if(parentFlag) continue buildDataNodes;
-					// }
+	// 				//Do node on active path?
+	// 				var activePathChild = false;
+	// 				for (var j = 0; j < activePath.length; j++) {
+	// 					for (var k = 0; k < nodes[i].parents.length; k++) {
+	// 						if( nodes[i].parents[k] == activePath[j].id ){
+	// 							activePathChild = true;
+	// 						}
+	// 					}
+	// 				}
+	// 				if(nodes[i].activePath === true){
+	// 					nodes[i].activePath = true;
+	// 				}else if(activePathChild && nodes[i].depth <= (depth-1)){
+	// 					nodes[i].activePath = 'fade';
+	// 				}else if(activePathChild && nodes[i].depth > (depth-1)){
+	// 					nodes[i].activePath = 'child';
+	// 				}else{
+	// 					nodes[i].activePath = false;
+	// 					continue buildDataNodes;
+	// 				}
+	// 				// if(nodes[i].depth >= depth){
+	// 				// 	var parentFlag = true;
+	// 				// 	for (var k = 0; k < nodes[i].parents.length; k++) {
+	// 				// 		if(nodes[i].parents[k] == d.id) parentFlag = false;
+	// 				// 	}
+	// 				// 	if(parentFlag) continue buildDataNodes;
+	// 				// }
 
-					nodes[i].id = 1*nodes[i].id;
-					newNodes.push(nodes[i]);
-					if(isAdmin && d.id == nodes[i].id){
-						maxNodeId = 1*maxNodeId + 1;
-						newNodes.push(
-						{
-							"depth": nodes[i].depth+1,
-							"id": maxNodeId,
-							"label": "+",
-							"parents": [nodes[i].id],
-							"addNew": true
-						}
-						);
-						newLinks.push({
-							source: parseInt(nodes[i].id),
-							target: maxNodeId,
-							dashed: true,
-							value: 2
-						});
-					}
+	// 				nodes[i].id = 1*nodes[i].id;
+	// 				newNodes.push(nodes[i]);
+	// 				if(isAdmin && d.id == nodes[i].id){
+	// 					maxNodeId = 1*maxNodeId + 1;
+	// 					newNodes.push(
+	// 					{
+	// 						"depth": nodes[i].depth+1,
+	// 						"id": maxNodeId,
+	// 						"label": "+",
+	// 						"parents": [nodes[i].id],
+	// 						"addNew": true
+	// 					}
+	// 					);
+	// 					newLinks.push({
+	// 						source: parseInt(nodes[i].id),
+	// 						target: maxNodeId,
+	// 						dashed: true,
+	// 						value: 2
+	// 					});
+	// 				}
 
-					nodes[i].parents.forEach(function(parent) {
-						//core node hasn't links
-						if(parent == 0) return;
+	// 				nodes[i].parents.forEach(function(parent) {
+	// 					//core node hasn't links
+	// 					if(parent == 0) return;
 
-						newLinks.push({
-							source: 1*parent,
-							target: parseInt(nodes[i].id),
-							value: 2
-						});
-					});
+	// 					newLinks.push({
+	// 						source: 1*parent,
+	// 						target: parseInt(nodes[i].id),
+	// 						value: 2
+	// 					});
+	// 				});
 
-				}
-			}
-		}
-	}
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	function dragstarted(d) {
 		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -714,8 +714,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	window.simulationResize = function (){
 		// width = window.innerWidth;
 		// height = window.innerHeight;
-
-		setNodeStyle();
 
 		// simulation.force("link").links(links);
 		simulation
@@ -1151,6 +1149,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return false;
 		}
 
+		var timerId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
@@ -1163,7 +1162,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 			if(deleteDelay){
-				setTimeout(function(node) {
+				clearTimeout(timerId);
+				timerId = setTimeout(function(node) {
 					callback(node, node.index, myThis.nodesToDisplay, false);//replace nodesToDisplay to html list of nodes
 				}, deleteDelay, node);
 			}
