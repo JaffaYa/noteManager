@@ -835,6 +835,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.getChildrenNodes = function(node){};
 		this.getClosestParent = function(node){};
 		this.getActivePath = getActivePath;
+		this.getFullActivePath = getFullActivePath;
 		this.makeNodeActive = makeNodeActive;
 		this.cliсkOnNode = cliсkOnNode;
 		this.jsonPath = jsonPath;
@@ -928,7 +929,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let curentDepth = 1;
 			let parentIds = [];
 			let oldparentIds = [];
-			let currActivePath = getActivePath();
+			let currFullActivePath = getFullActivePath();
 			let nodes = myThis.nodes;
 			let depth = myThis.activeNode.depth;
 
@@ -939,7 +940,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			if(isShowAllTree || !depth){
 				//calculate all depht if need to show whole tree
-				depth = nodes.length;
+				depth = nodes.length-1;
 			}else{
 				if(widthChildrens) depth++;
 			}
@@ -951,7 +952,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let hasId = false;
 					for (var j = 0; j < oldparentIds.length; j++) {
 						for (var k = 0; k < nodes[i].parents.length; k++) {
-							if(!isInArrayId(oldparentIds[j], currActivePath) && 
+							//тут надо проверить oldparentIds[j] или nodes[i].parents[k]
+							if(!isInArrayId(oldparentIds[j], currFullActivePath) && 
 								nodes[i].depth !== undefined){
 									continue;
 							}
@@ -1025,7 +1027,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// }
 
 			if(!depth) {
-				depth = nodes.length;
+				depth = nodes.length-1;
 			}else{
 				if(widthChildrens) depth++;
 			}
@@ -1327,6 +1329,102 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	}
 			// }
 			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
+		}
+
+		function getFullActivePath(){
+			let currActivePath = getActivePath();
+			let fullActivePath = [];
+
+			if( (currActivePath.length - 1) == 0 ){
+				fullActivePath = currActivePath;
+			}else{
+				for (var i = currActivePath.length - 1; i > 0; i--) {
+					var fullChain = makeFullChain();
+					fullChain(currActivePath[i], currActivePath[(i-1)]);
+				}
+			}
+
+			return fullActivePath;
+
+			function makeFullChain(){
+				var limmiter = 20;
+
+				function findMissNods(parentsIds, parentId){
+					limmiter--;
+					if(limmiter <= 0) {
+						// throw new Error('Невозможно найти fullActivePath.')
+						console.error('Невозможно найти fullActivePath.')
+						return false;
+					}
+					var result = [];
+					for (var i = 0; i < parentsIds.length; i++) {
+
+						//it is first node
+						if(parentsIds[i] == 0 && parentId != 0){
+							//wrong way
+							return false;
+						}
+						//find node
+						if(parentsIds[i] == parentId){
+							let node = getNodeById(parentId);
+							return node.id;
+						}else{
+							//search deeper
+							let node = getNodeById(parentsIds[i]);
+							// result.push( {parentId:parentsIds[i],node:node, child:findMissNods(node.parents, parentId)} );
+							result.push([node.id,findMissNods(node.parents, parentId)].flat());
+						}
+					}
+					//finde best way
+					if(result.length > 0){
+						let lessLengs = 9999;
+						let lessLengsIndex = null;
+						shortWay:for(let i=0; i<result.length; i++){
+							//skip if in results false
+							for (let j = 0; j < result[i].length; j++) {
+								if(result[i][j] === false){
+									continue shortWay;
+								}
+							}
+							if(result[i].length < lessLengs){
+								lessLengs = result[i].length;
+								lessLengsIndex = i;
+							}
+						}
+						if(lessLengsIndex === null){
+							result = [false];
+						}else{
+							result = result[lessLengsIndex];
+						}
+					}
+					return result;
+				}
+
+				return function fullChain(b, a){
+					if( !isInArrayId(b.id, fullActivePath) ){
+						fullActivePath.push(b);
+					}
+					let directDescendant = false
+					for (let i = 0; i < b.parents.length; i++) {
+						if(b.parents[i] == a.id){
+							directDescendant = true;
+						}
+					}
+					if(directDescendant){
+						fullActivePath.push(a);
+					}else{
+						let missingNodes = findMissNods(b.parents, a.id);
+
+						if(missingNodes){
+							for (var i = 0; i < missingNodes.length; i++) {
+								let node = getNodeById(missingNodes[i]);
+								fullActivePath.push(node);
+							}
+						};
+					}
+
+				}
+			}
 		}
 
 		function stats(){
