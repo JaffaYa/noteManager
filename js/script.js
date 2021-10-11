@@ -19,9 +19,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
-	
-	var tickCount = 0;
-	var simulationTime = 0;
 
 	//graphic variables
 	var width = window.innerWidth;
@@ -125,7 +122,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.tree = new Tree("json/graphdata.json", simInit);
 
-	tree.fps.start();
+	tree.stats.enable();
 	// tree.admin.set(true);
 	// tree.showAllTree();
 
@@ -188,7 +185,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		buildNodes(nodes);
 
 		firstScrean = false;
-		simulationTime = Date.now();
+		tree.stats.start();
 
 		simulation.on("tick", simulationTick);
 	}
@@ -201,6 +198,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(!d.active){
 			playBubble();
 		}
+
+		// console.dir(d);
 
 		// console.dir(arguments);
 		if(d.functional) delDelayFlag = false;
@@ -247,8 +246,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(nodes);
 		simulation.force("link").links(links);
 		simulation.alpha(1).restart();
-		tickCount = 0;
-		simulationTime = Date.now();
+
+		tree.stats.start();
 		// simulation.alphaTarget(0.8).restart();
 		// simulation.alpha(3.2).restart();
 
@@ -258,16 +257,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function simulationTick(){
-		tree.fps.tick();
-
-		tickCount++;
-		document.querySelector("#couter").innerHTML = tickCount
-		// console.log(tickCount);
-		// console.log((Date.now() - simulationTime)/1000);
-
-		if(tickCount == 300){
-			document.querySelector("#couter").innerHTML = (Date.now() - simulationTime)/1000;
-		}
+		tree.stats.tick();
 
 		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
@@ -376,8 +366,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					result = counter * showNodeDelay + counter * showLinkDelay-300;
 				}
 
-				console.log('node-counter',counter);
-				console.log('node-result',result);
+				// console.log('node-counter',counter);
+				// console.log('node-result',result);
 
 				counter++;
 
@@ -451,8 +441,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500;//showCssDuration тут по идеи ноды
 				}
 
-				console.log('link-counter',counter);
-				console.log('link-result',result);
+				// console.log('link-counter',counter);
+				// console.log('link-result',result);
 
 				counter++;
 
@@ -844,11 +834,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.activeNode = null;
 		this.getChildrenNodes = function(node){};
 		this.getClosestParent = function(node){};
+		this.getActivePath = getActivePath;
 		this.makeNodeActive = makeNodeActive;
 		this.cliсkOnNode = cliсkOnNode;
 		this.jsonPath = jsonPath;
 		this.admin = Admin(document.location.search == '?admin');
-		this.fps = fps();
+		this.stats = stats();
 		this.getNodeById = getNodeById;
 		//для использования нужно сделать очистку activePath с учётом возможности прижка между нодами
 		this.showAllTree = showAllTree;
@@ -888,6 +879,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.links = [];
 
 		var isShowAllTree = false;
+		var activePath = [];
 
 
 
@@ -1004,17 +996,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function makeNodeActive(currNode){
-			if('first' == currNode) currNode = myThis.nodes[0];
+			// if('first' == currNode) currNode = myThis.nodes[0];
 			if(currNode.functional) return;
 			myThis.nodes.forEach( function(item){
 				item.active = false;
-				if(item.depth && item.depth == currNode.depth){
-					item.activePath = false;
-				}
+				// if(item.depth && item.depth == currNode.depth){
+				// 	item.activePath = false;
+				// }
 			});
 			currNode = getNodeById(currNode.id)
 			currNode.active = true;
 			currNode.activePath = true;
+			//add to active path if this not deleteDelay run
+			if(activePath.length == 0 || activePath[activePath.length-1].id !== currNode.id){
+				activePath.push(currNode);
+			}
 			myThis.activeNode = currNode;
 		}
 
@@ -1161,7 +1157,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return false;
 		}
 
-		var timerId = null;
+		var timerDDId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
@@ -1174,8 +1170,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 			if(deleteDelay){
-				clearTimeout(timerId);
-				timerId = setTimeout(function(node) {
+				clearTimeout(timerDDId);
+				timerDDId = setTimeout(function(node) {
 					callback(node, node.index, myThis.nodesToDisplay, false);//replace nodesToDisplay to html list of nodes
 				}, deleteDelay, node);
 			}
@@ -1314,49 +1310,74 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//spep back activePath
 			//тут надо функцию которя буде удалять activePath во всех нодах в которых depth <= activeDepth
 			//или это не тут а при клике на ноду нужно делать
-			myThis.activeNode.activePath = false;
+			var backStepNode = currActivePath.pop();
+			backStepNode.activePath = false;
 
 			//simulate click on stepback node
-			cliсkOnNode(currActivePath[currActivePath.length-2], deleteDelay, callback);
-			console.log(deleteDelay);
+			// console.dir(currActivePath);
+			cliсkOnNode(currActivePath[currActivePath.length-1], deleteDelay, callback);
 		}
 
 		function getActivePath(){
-			let nodes = myThis.nodes;
-			let activePath = [];
-			for (var i = 0; i < nodes.length; i++) {
-				if(nodes[i].activePath){
-					activePath.push(nodes[i]);
-				}
-			}
-			return activePath.sort( (a, b) => a.depth*1 - b.depth*1 );
+			// let nodes = myThis.nodes;
+			// let activePath = [];
+			// for (var i = 0; i < nodes.length; i++) {
+			// 	if(nodes[i].activePath){
+			// 		activePath.push(nodes[i]);
+			// 	}
+			// }
+			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
 		}
 
-		function fps(){
+		function stats(){
 			var isActive = false;
+			//fps
 			var startTime = 0;
 			var frame = 0;
 
-			var wrapperFPS = document.createElement("div");
-			wrapperFPS.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
-			wrapperFPS.innerHTML = ' FPS';
-			var fps = document.createElement("span");
-			fps.innerHTML = '--';
-			wrapperFPS.prepend(fps);
+			var tickCount = 0;
+			var simulationTime = 0;
+
+			var wrapperStats = document.createElement("div");
+			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
+
+			//fps
+			var fps = createStat('FPS: ');
+			//counter
+			var couter = createStat('FramesCount: ');
+			//simTime
+			var simTime = createStat('SimTime: ');
+
 
 			var parent = document.querySelector('#my_data');
 
+			function createStat(html, default1 = '--'){
+				var wrapper = document.createElement("div");
+				wrapper.innerHTML = html;
+				var value = document.createElement("span");
+				value.innerHTML = default1;
+				wrapper.append(value);
+				wrapperStats.append(wrapper);
+
+				return value;
+			}
+
 			return{
-				start: function(){
+				enable: function(){
 					isActive = true;
 					startTime = Date.now();
 					frame = 0;
 					if(parent){
-						parent.append(wrapperFPS);
+						parent.append(wrapperStats);
 					}
+				},
+				start: function(){
+					tickCount = 0;
+					simulationTime = Date.now();
 				},
 				tick: function(){
 					if(isActive){
+						//fps
 						var time = Date.now();
 						frame++;
 						if (time - startTime > 1000) {
@@ -1364,6 +1385,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							startTime = time;
 							frame = 0;
 						}
+
+						//counter
+						tickCount++;
+						couter.innerHTML = tickCount
+
+						simTime.innerHTML = (Date.now() - simulationTime)/1000;
 					}
 				}
 			}
