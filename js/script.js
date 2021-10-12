@@ -19,7 +19,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
-	var debug = true;
+	var debug = false;
 
 
 	//graphic variables
@@ -116,11 +116,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-		// .force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional) )
+		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional) )
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
-		.force("collide", d3.forceCollide().radius(getColideRadius))
+		// .force("collide", d3.forceCollide().radius(getColideRadius))
+		// еще радиальную силу добавить
 		// .force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
       	// .velocityDecay(0.1) // 0,4
@@ -284,12 +285,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
-		.call(
-			d3.drag(simulation)
-			.on("start", dragstarted)
-			.on("drag", dragged)
-			.on("end", dragended)
-			)
+		// .call(
+		// 	d3.drag(simulation)
+		// 	.on("start", dragstarted)
+		// 	.on("drag", dragged)
+		// 	.on("end", dragended)
+		// 	)
 		.on("click", bubleClick);
 
 		d3newNodes
@@ -1537,7 +1538,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						break;
 					case 'menu':
 							// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-							console.log( width/2 - (width/10 + getNodeRadius(d)) );
+							// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 							return width/2 - (width/10 + getNodeRadius(d));
 						break;
 					default:
@@ -1589,6 +1590,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// .force("y", d3.forceY().strength(0.015))
 			simulation.alpha(1).restart();
 			model.stats.restart();
+		}
+
+		function forceSettings(force, d){
+			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
+			if(verticalScreen){
+
+			}else{//для горизонтальной ориентации екрана
+
+			}
 		}
 
 		function isolateForce(force, filter) {
