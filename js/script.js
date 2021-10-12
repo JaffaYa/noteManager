@@ -55,7 +55,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var hideLinkCssDuration = 1000; //длина анимации прятания линка в css
 	var startDelay = 500; //доп задерка при старте
 
-	var deleteDelay = 500; //задержка до удаления из симуляции
+	var deleteDelay = 500; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -88,44 +88,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var htmlNodes = nodesCont.selectAll("div.node");
 	var svgLinks = linksCont.selectAll("line");
 
-	var scrollNext = true;
-	const slideForse = function (d){
-		let activeDepth = tree.activeNode.depth;
-		if(!d.functional){
-			if(scrollNext){
-				if(d.active){
-					return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
-				}else{
-					return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
-				}
-			}else{
-				return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
-			}
-		}else{
-			switch (d.function){
-				case 'back':
-						// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
-						return (width/10) - width/2;
-					break;
-				case 'menu':
-						// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-						return (width - width/5) - width/2;
-					break;
-				default:
-					throw new Error('Неизвестная нода.')
-			}
-		}
-	}
 
-	// var manyBodyForce = -width + (1200/width)*50;
-	var manyBodyForce = -2000;
-	if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
+
+
 
 	window.tree = new Tree("json/graphdata.json", simInit);
 
 	tree.stats.enable();
 	// tree.admin.set(true);
 	// tree.showAllTree();
+
+	window.view = new makeView(tree);
 
 
 	function simInit(){
@@ -135,14 +108,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		links = tree.links;
 
 		window.simulation = d3.forceSimulation(nodes)
-		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
-		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
+		.force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
+		.force("charge", d3.forceManyBody().strength(view.manyBodyStr))
 		// .force("center", d3.forceCenter(0,0))
-		//сила задаеть горизонтальную координату для каждой ноды
-		.force("slideForse", d3.forceX(slideForse).strength(0.05))
-		//сила задаеть вертикальную координату для каждой ноды
-		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
-		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
+		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
+		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
+		// .force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
       	// .velocityDecay(0.1) // 0,4
 		// .alphaTarget(0.5);
@@ -155,40 +126,40 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// console.log('velocityDecay:'+simulation.velocityDecay());//0,4
 
 
-		if(verticalScreen){
-			window.simulation
-			.force("mobileVertical", d3.forceY(
-				function(d){
-					let activeDepth = tree.activeNode.depth;
-					if(scrollNext){
-						return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
-					}else{
-						return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
-					}
-				}
-				).strength(
-					// d => d.functional ? 0.00 : 0.1
-					function(d){
-						if(d.functional){
-							return 0;
-						}else if(d.activePath == 'child'){
-							console.dir(d.activePath);
-							console.dir(d.id);
-							return  d.id/90;
-							// return  d.id/90;
-						}else{
-							return 0.035;
-						}
-					}
-				)
-			)
-		}
+		// if(verticalScreen){
+		// 	window.simulation
+		// 	.force("mobileVertical", d3.forceY(
+		// 		function(d){
+		// 			let activeDepth = tree.activeNode.depth;
+		// 			if(scrollNext){
+		// 				return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+		// 			}else{
+		// 				return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
+		// 			}
+		// 		}
+		// 		).strength(
+		// 			// d => d.functional ? 0.00 : 0.1
+		// 			function(d){
+		// 				if(d.functional){
+		// 					return 0;
+		// 				}else if(d.activePath == 'child'){
+		// 					console.dir(d.activePath);
+		// 					console.dir(d.id);
+		// 					return  d.id/90;
+		// 					// return  d.id/90;
+		// 				}else{
+		// 					return 0.035;
+		// 				}
+		// 			}
+		// 		)
+		// 	)
+		// }
 
 		buildLinks(links);
 		buildNodes(nodes);
 
 		firstScrean = false;
-		tree.stats.start();
+		tree.stats.restart();
 
 		simulation.on("tick", simulationTick);
 	}
@@ -205,6 +176,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// console.dir(d);
 
 		// console.dir(arguments);
+		//for back button
 		if(d.functional) delDelayFlag = false;
 
 		if(delDelayFlag){
@@ -250,9 +222,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.force("link").links(links);
 		simulation.alpha(1).restart();
 
-		tree.stats.start();
-		// simulation.alphaTarget(0.8).restart();
-		// simulation.alpha(3.2).restart();
+		tree.stats.restart();
 
 		return;
 	}
@@ -371,8 +341,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					// result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
 				}
 
-				console.log('node-counter',counter);
-				console.log('node-result',result);
+				// console.log('node-counter',counter);
+				// console.log('node-result',result);
 
 				counter++;
 
@@ -448,8 +418,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
 				}
 
-				console.log('link-counter',counter);
-				console.log('link-result',result);
+				// console.log('link-counter',counter);
+				// console.log('link-result',result);
 
 				counter++;
 
@@ -720,39 +690,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// 	currNode.active = true;
 	// }
 
-	window.simulationResize = function (){
-		// width = window.innerWidth;
-		// height = window.innerHeight;
-
-		// simulation.force("link").links(links);
-		simulation
-		// .force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
-		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
-		.force("slideForse", d3.forceX(slideForse).strength(0.1))
-		// .force("y", d3.forceY().strength(0.015))
-		.alphaTarget(0.2)
-		.restart();
-	}
-	window.simulationResize = throttle(simulationResize, 50);
-
 
 	//resize
-	window.addEventListener('resize', function(event){
-
-		width = window.innerWidth;
-		height = window.innerHeight;
-		verticalScreen = height/width > width/height ? true : false;
-		svgViewPort = [-width / 2, -height / 2, width, height];
-
-		svg
-		.attr("viewBox", svgViewPort);
-
-		viewPort
-		.style('width', width+'px')
-		.style('height', height+'px');
-
-		simulationResize();
-	});
+	window.addEventListener('resize', view.simulationResize);
 
 	document.addEventListener('keypress', keyFunc, false);
 
@@ -1476,7 +1416,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						parent.append(wrapperStats);
 					}
 				},
-				start: function(){
+				restart: function(){
 					tickCount = 0;
 					simulationTime = Date.now();
 				},
@@ -1502,7 +1442,114 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		}
 
+	}
 
+	function makeView(model){
+		var self = this;
+		this.linkStr = linkStr;
+		this.linkDistance = linkDistance;
+		this.manyBodyStr = manyBodyStr;
+		this.slideForce = slideForce;
+		this.slideForceStr = slideForceStr;
+		this.verticalForce = verticalForce;
+		this.verticalForceStr = verticalForceStr;
+		// this.simulationResize = throttle(simulationResize,100);
+		this.simulationResize = simulationResize;
+
+		var width = window.innerWidth;
+		var height = window.innerHeight;
+		var verticalScreen = height/width > width/height ? true : false;
+
+		//потужность силы линка(если линк это пружина то это сила ее натяжения)
+		function linkStr(d){
+			return 0.015;
+		}
+		//длина линки насколько понимаю в пикселях
+		function linkDistance(d){
+			return 1;
+			// return verticalScreen ? 1 : 250;
+		}
+		//потужность силы отталкивания(если значение негатвное) или притягивания(елси значение позитивное) нод друг от друга
+		function manyBodyStr(d){
+			// var manyBodyForce = -width + (1200/width)*50;
+			var manyBodyForce = -2000;
+			if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
+
+			// return manyBodyForce;
+			return verticalScreen ? 1 : -2000;
+		}
+
+		//сила задаеть горизонтальную координату для каждой ноды
+		var scrollNext = true;
+		function slideForce (d){
+			let activeDepth = tree.activeNode.depth;
+			if(!d.functional){
+				if(scrollNext){
+					if(d.active){
+						return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+					}else{
+						return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+					}
+				}else{
+					return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+				}
+			}else{
+				switch (d.function){
+					case 'back':
+							// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+							return (width/10) - width/2;
+						break;
+					case 'menu':
+							// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+							return (width - width/5) - width/2;
+						break;
+					default:
+						throw new Error('Неизвестная нода.')
+				}
+			}
+		}
+		//потужность силы которая задаеть горизонтальную координату для каждой ноды
+		function slideForceStr (d){
+			return 0.05
+		}
+
+
+		//сила задает вертикальную координату для каждой ноды
+		function verticalForce(d){
+			if(!d.functional){
+				return d.active ? -(height*2/15) : 0;
+			}else{
+				return height/2 - getNodeRadius(d);
+			}
+		}
+		//потужность силы которая задает вертикальную координату для каждой ноды
+		function verticalForceStr(d){
+			return d.functional ? 0.1 : 0.03
+		}
+
+		function simulationResize(resizeEvent){
+			width = window.innerWidth;
+			height = window.innerHeight;
+			verticalScreen = height/width > width/height ? true : false;
+			svgViewPort = [-width / 2, -height / 2, width, height];
+
+			svg
+			.attr("viewBox", svgViewPort);
+
+			viewPort
+			.style('width', width+'px')
+			.style('height', height+'px');
+
+			simulation.force("link").links(links);
+			simulation.force("charge").strength( self.manyBodyStr );
+			// simulation
+			// .force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
+			// .force("charge", d3.forceManyBody().strength( view.manyBodyStr ))
+			// .force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
+			// .force("y", d3.forceY().strength(0.015))
+			simulation.alpha(1).restart();
+			model.stats.restart();
+		}
 
 	}
 

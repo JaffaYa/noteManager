@@ -162,6 +162,8 @@ body {
 }
 .node.active.show .v-content{
   opacity: 1;
+}
+.node.active .v-content{
   transform: scale(1) translateX(-100%) translateY(-100px);
 }
 .node.hide .v-content{
