@@ -35,7 +35,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	//smooth animations
 	//общая настройка
-	var showDelay = 100;
+	var showDelay = 0;
 	var showDelay2 = 250;
 	var hideDalayBack = 500;
 	var hideDalay = 500;
@@ -51,7 +51,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showNodeDelay = 100; //задерка перед появлением ноды
 	var showLinkDelay = 100; //задерка перед появлением линка
 	var showSlideDelay = 50; //задерка сдвига перед появлением
-	var hideSlideDelay = 100; //задерка сдвига перед прятанием
+	var hideSlideDelay = 400; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 400; //длина анимации появления в css
 	var hideNodeCssDuration = 400; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
@@ -285,12 +285,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
-		// .call(
-		// 	d3.drag(simulation)
-		// 	.on("start", dragstarted)
-		// 	.on("drag", dragged)
-		// 	.on("end", dragended)
-		// 	)
+		.call(
+			d3.drag(simulation)
+			.on("start", dragstarted)
+			.on("drag", dragged)
+			.on("end", dragended)
+			)
 		.on("click", bubleClick);
 
 		d3newNodes
@@ -361,14 +361,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
-					result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay-400;//showCssDuration тут по идеи линка
 				}else{
 					// result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
-					result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
+					result = counter * showNodeDelay + counter * showLinkDelay + startDelay-400;
 				}
 
-				// console.log('node-counter',counter);
-				// console.log('node-result',result);
+				console.log('node-counter',counter);
+				console.log('node-result',result);
 
 				counter++;
 
@@ -431,17 +431,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		
 		function makelinkDelay(){
-			var counter = 2;
+			var counter = 0;
 
 			return function(d){
 				var result = 0;
 
 				if(!firstScrean){
 					// result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
-					result = counter * showLinkDelay + counter * showNodeDelay;
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
 				}else{
 					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
 				}
 
 				// console.log('link-counter',counter);
@@ -695,7 +695,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// }
 
 	function dragstarted(d) {
-		if (!d3.event.active) simulation.alphaTarget(1).restart();
+		if (!d3.event.active) simulation.alphaTarget(2).restart();
 		d.fx = d.x;
 		d.fy = d.y;
 	}
@@ -1490,7 +1490,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//потужность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
 			if(!d.functional){
-				return 0.015;
+				return 0.035;
 			}else{
 				return 0;
 			}
@@ -1499,7 +1499,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		//длина линки насколько понимаю в пикселях
 		function linkDistance(d){
-			return 1;
+			return 4;
 			// return verticalScreen ? 1 : 250;
 		}
 		//потужность силы отталкивания(если значение негатвное) или притягивания(елси значение позитивное) нод друг от друга
@@ -1563,7 +1563,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		//потужность силы которая задает вертикальную координату для каждой ноды
 		function verticalForceStr(d){
-			return d.functional ? 0.1 : 0.03
+			return d.functional ? 0.1 : 0.025
 		}
 
 		function simulationResize(resizeEvent){
