@@ -1463,6 +1463,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//потужность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
 			return 0.015;
+			// return  verticalScreen ? 1 : 0.015;
 		}
 		//длина линки насколько понимаю в пикселях
 		function linkDistance(d){
@@ -1475,8 +1476,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var manyBodyForce = -2000;
 			if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
 
-			// return manyBodyForce;
-			return verticalScreen ? 1 : -2000;
+			if(!d.functional){
+				return manyBodyForce;
+			}else{
+				return 0;
+			}
 		}
 
 		//сила задаеть горизонтальную координату для каждой ноды
@@ -1497,11 +1501,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				switch (d.function){
 					case 'back':
 							// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
-							return (width/10) - width/2;
+							return (width/10 + getNodeRadius(d)) - width/2;
 						break;
 					case 'menu':
 							// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-							return (width - width/5) - width/2;
+							return width/2 - (width/10 + getNodeRadius(d));
 						break;
 					default:
 						throw new Error('Неизвестная нода.')
@@ -1519,7 +1523,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			if(!d.functional){
 				return d.active ? -(height*2/15) : 0;
 			}else{
-				return height/2 - getNodeRadius(d);
+				// return height/2 - getNodeRadius(d);
+				return height/2 - (height/10 + getNodeRadius(d));
 			}
 		}
 		//потужность силы которая задает вертикальную координату для каждой ноды
@@ -1541,7 +1546,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.style('height', height+'px');
 
 			simulation.force("link").links(links);
-			simulation.force("charge").strength( self.manyBodyStr );
+			simulation.force("charge").strength(self.manyBodyStr);
+			simulation.force("slideForce").strength(self.slideForceStr);
+			simulation.force("verticalForce").strength(self.verticalForceStr);
 			// simulation
 			// .force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
 			// .force("charge", d3.forceManyBody().strength( view.manyBodyStr ))
