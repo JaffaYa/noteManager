@@ -19,6 +19,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
+	var debug = true;
+
 
 	//graphic variables
 	var width = window.innerWidth;
@@ -101,6 +103,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	window.view = new makeView(tree);
 
 
+	function getColideRadius(d){
+		return 90;
+	}
+
+
 	function simInit(){
 
 		//init first data
@@ -109,14 +116,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		window.simulation = d3.forceSimulation(nodes)
 		.force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-		.force("charge", d3.forceManyBody().strength(view.manyBodyStr))
+		// .force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional) )
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
+		.force("collide", d3.forceCollide().radius(getColideRadius))
 		// .force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
       	// .velocityDecay(0.1) // 0,4
 		// .alphaTarget(0.5);
+
+
 
 
 		// console.log('alpha:'+simulation.alpha());//1
@@ -274,12 +284,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
-		// .call(
-		// 	d3.drag(simulation)
-		// 	.on("start", dragstarted)
-		// 	.on("drag", dragged)
-		// 	.on("end", dragended)
-		// 	)
+		.call(
+			d3.drag(simulation)
+			.on("start", dragstarted)
+			.on("drag", dragged)
+			.on("end", dragended)
+			)
 		.on("click", bubleClick);
 
 		d3newNodes
@@ -301,6 +311,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		d3newNodes.append("div")
 		.classed('c2', true);
+
+		if(debug){
+			let colideRadius = getColideRadius();
+			d3newNodes.append("div")
+			.classed('c3', true)
+			.style('width', colideRadius*2+'px')
+			.style('height', colideRadius*2+'px')
+			.style('top', 0)
+			.style('left', 0)
+			.style('border-radius', '50%')
+			.style('position', 'absolute')
+			.style('transform', 'translate(-50%, -50%)')
+			.style('background-color', '#ffeb3b57')
+			.style('z-index', '5')
+		}
 
 
 		//exit
@@ -669,7 +694,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// }
 
 	function dragstarted(d) {
-		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+		if (!d3.event.active) simulation.alphaTarget(1).restart();
 		d.fx = d.x;
 		d.fy = d.y;
 	}
@@ -1455,6 +1480,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.verticalForceStr = verticalForceStr;
 		// this.simulationResize = throttle(simulationResize,100);
 		this.simulationResize = simulationResize;
+		this.isolateForce = isolateForce;
 
 		var width = window.innerWidth;
 		var height = window.innerHeight;
@@ -1462,7 +1488,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//потужность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
-			return 0.015;
+			if(!d.functional){
+				return 0.015;
+			}else{
+				return 0;
+			}
+			// return 0.015;
 			// return  verticalScreen ? 1 : 0.015;
 		}
 		//длина линки насколько понимаю в пикселях
@@ -1501,10 +1532,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				switch (d.function){
 					case 'back':
 							// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+							// console.log( (width/10 + getNodeRadius(d)) - width/2 );
 							return (width/10 + getNodeRadius(d)) - width/2;
 						break;
 					case 'menu':
 							// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+							console.log( width/2 - (width/10 + getNodeRadius(d)) );
 							return width/2 - (width/10 + getNodeRadius(d));
 						break;
 					default:
@@ -1556,6 +1589,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// .force("y", d3.forceY().strength(0.015))
 			simulation.alpha(1).restart();
 			model.stats.restart();
+		}
+
+		function isolateForce(force, filter) {
+			var initialize = force.initialize;
+			force.initialize = function() { initialize.call(force, nodes.filter(filter)); };
+			return force;
 		}
 
 	}
