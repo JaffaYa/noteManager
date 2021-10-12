@@ -313,8 +313,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.on("click", bubleClick);
 
 		d3newNodes
-		.classed('show',  d => d.functional )
-		.filter( d => !d.functional )
+		// .classed('show',  d => d.functional )
+		// .filter( d => !d.functional )
 		.transition()
 		.delay(makenodeDelay())
 		.on("start", function repeat() {
@@ -336,13 +336,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//exit
 		d3exitNodes = d3nodes.exit();
 
-		d3exitNodes
-		.filter( d => d.functional )
-		.classed('show',  d => !d.functional )
-		.remove();
+		// d3exitNodes
+		// .filter( d => d.functional )
+		// .classed('show',  d => !d.functional )
+		// .remove();
 
 		d3exitNodes
-		.filter( d => !d.functional )
+		// .filter( d => !d.functional )
 		.transition()
 		.delay(hideSlideDelay) // delay before hide
 		.duration(hideNodeCssDuration) // time before delete
