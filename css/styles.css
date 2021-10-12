@@ -123,6 +123,12 @@ body {
   transform: translate(-50%, -50%) scale(1);
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
 }
+.node.active.show .c1{
+  transition-delay: 0s;
+}
+.node.active.show .c2{
+  transition-delay: 0.085s;
+}
 
 
 

@@ -47,13 +47,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var showNodeDelay = 100; //задерка перед появлением ноды
-	var showLinkDelay = 50; //задерка перед появлением линка
-	var showSlideDelay = 350; //задерка сдвига перед появлением
+	var showLinkDelay = 100; //задерка перед появлением линка
+	var showSlideDelay = 50; //задерка сдвига перед появлением
 	var hideSlideDelay = 100; //задерка сдвига перед прятанием
-	var showCssDuration = 700; //длина анимации появления в css
-	var hideNodeCssDuration = 1000; //длина анимации прятания ноды в css
-	var hideLinkCssDuration = 1000; //длина анимации прятания линка в css
-	var startDelay = 500; //доп задерка при старте
+	var showCssDuration = 400; //длина анимации появления в css
+	var hideNodeCssDuration = 400; //длина анимации прятания ноды в css
+	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
+	var startDelay = 250; //доп задерка при старте
 
 	var deleteDelay = 500; //задержка до удаления из симуляции
 	var firstScrean = true;
@@ -364,11 +364,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				var result = 0;
 
 				if(!firstScrean){
-					result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
-					// result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
+					// result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
 				}else{
-					result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
-					// result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
+					// result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
+					result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
 				}
 
 				console.log('node-counter',counter);
@@ -442,10 +442,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
-					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
+					result = counter * showLinkDelay + counter * showNodeDelay;
 				}else{
 					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration;//showCssDuration тут по идеи ноды
 				}
 
 				console.log('link-counter',counter);
