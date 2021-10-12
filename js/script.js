@@ -364,13 +364,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				var result = 0;
 
 				if(!firstScrean){
-					result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
+					// result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
 				}else{
-					result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
+					result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
+					// result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
 				}
 
-				// console.log('node-counter',counter);
-				// console.log('node-result',result);
+				console.log('node-counter',counter);
+				console.log('node-result',result);
 
 				counter++;
 
@@ -439,13 +441,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				var result = 0;
 
 				if(!firstScrean){
-					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
+					// result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
 				}else{
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
+					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
 				}
 
-				// console.log('link-counter',counter);
-				// console.log('link-result',result);
+				console.log('link-counter',counter);
+				console.log('link-result',result);
 
 				counter++;
 
