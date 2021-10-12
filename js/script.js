@@ -49,9 +49,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var showNodeDelay = 100; //задерка перед появлением ноды
-	var showLinkDelay = 100; //задерка перед появлением линка
-	var showSlideDelay = 50; //задерка сдвига перед появлением
+	var showLinkDelay = 0; //задерка перед появлением линка
+	var showSlideDelay = 0; //задерка сдвига перед появлением
 	var hideSlideDelay = 400; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = 800; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 400; //длина анимации появления в css
 	var hideNodeCssDuration = 400; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
@@ -415,7 +416,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//exit
 		d3links.exit()
 		.transition()
-		.delay(hideSlideDelay)
+		.delay(hideLinkDelay)
 		// .delay(makelinkDelay())
 		.duration(hideLinkCssDuration)
 		.on('start', function(){
@@ -1534,7 +1535,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					case 'back':
 							// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 							// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-							return (width/10 + getNodeRadius(d)) - width/2;
+							return (width/20 + getNodeRadius(d)) - width/2;
 						break;
 					case 'menu':
 							// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
@@ -1558,7 +1559,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				return d.active ? -(height*2/15) : 0;
 			}else{
 				// return height/2 - getNodeRadius(d);
-				return height/2 - (height/10 + getNodeRadius(d));
+				return height/2 - (height/100 + getNodeRadius(d));
 			}
 		}
 		//потужность силы которая задает вертикальную координату для каждой ноды
