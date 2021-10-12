@@ -492,7 +492,7 @@ body {
 
 @media only screen and (max-width: 768px) {
 .nodes .node {
-  transform: scale(0.55) translateY(-50px);
+  transform: scale(0.55);
 }
 .node .c1, 
 .node .c2 {
