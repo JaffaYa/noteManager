@@ -116,10 +116,10 @@ body {
   transform: translate(-50%, -50%) scale(0.75);
   transition-delay: 0.085s;
 }
-.node.active .c1,
-.node.active .c2,
-.node.active:hover .c1,
-.node.active:hover .c2{
+.node.active.show .c1,
+.node.active.show .c2,
+.node.active.show:hover .c1,
+.node.active.show:hover .c2{
   transform: translate(-50%, -50%) scale(1);
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
 }

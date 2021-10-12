@@ -53,8 +53,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 1000; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 1000; //длина анимации прятания линка в css
+	var startDelay = 500; //доп задерка при старте
 
-	var deleteDelay = 500; //задержка до реального удаления
+	var deleteDelay = 500; //задержка до удаления из симуляции
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -137,7 +138,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("link", d3.forceLink(links).id(d => d.id).strength(0.015).distance(1))
 		.force("charge", d3.forceManyBody().strength( manyBodyForce ))
 		// .force("center", d3.forceCenter(0,0))
+		//сила задаеть горизонтальную координату для каждой ноды
 		.force("slideForse", d3.forceX(slideForse).strength(0.05))
+		//сила задаеть вертикальную координату для каждой ноды
 		.force("y", d3.forceY(d => d.active ? -(height*2/15) : 0).strength(d => d.functional ? 0.03 : 0.03))
 		.force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
@@ -363,7 +366,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(!firstScrean){
 					result = counter * showNodeDelay + counter * showLinkDelay-300;//showCssDuration тут по идеи линка
 				}else{
-					result = counter * showNodeDelay + counter * showLinkDelay-300;
+					result = counter * showNodeDelay + counter * showLinkDelay-300 + startDelay;
 				}
 
 				// console.log('node-counter',counter);
@@ -438,7 +441,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(!firstScrean){
 					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
 				}else{
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
 				}
 
 				// console.log('link-counter',counter);
