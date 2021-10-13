@@ -618,7 +618,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let curentDepth = 1;
 			let parentIds = [];
 			let oldparentIds = [];
-			let currFullActivePath = getFullActivePath();
+			let currFullActivePath = getFullActivePath(myThis.activeNode);
+			console.dir(currFullActivePath);
 			let nodes = myThis.nodes;
 			let depth = myThis.activeNode.depth;
 
@@ -627,7 +628,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	widthChildrens = false;
 			// }
 
-			if(isShowAllTree || !depth){
+			if(isShowAllTree || !depth || 1){
 				//calculate all depht if need to show whole tree
 				depth = nodes.length-1;
 			}else{
@@ -1020,9 +1021,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
 		}
 
-		function getFullActivePath(){
+		function getFullActivePath(node = null){
 			let currActivePath = getActivePath();
 			let fullActivePath = [];
+
+			if(node !== null){
+				var fullChain = makeFullChain();
+				fullChain(node, myThis.nodes[0]);
+				return fullActivePath;
+			}
 
 			if( (currActivePath.length - 1) == 0 ){
 				fullActivePath = currActivePath;
@@ -1032,6 +1039,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					fullChain(currActivePath[i], currActivePath[(i-1)]);
 				}
 			}
+
+			this.makeFullChain = makeFullChain;
 
 			return fullActivePath;
 
@@ -1228,7 +1237,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return forceSettings('slideForceStr', d);
 		}
 
-
 		//сила задает вертикальную координату для каждой ноды
 		function verticalForce(d){
 			return forceSettings('verticalForce', d);
@@ -1360,8 +1368,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							if(scrollNext){
 								if(d.active){
+									console.log('active-x:',(width/2 + width/2*(d.depth - activeDepth)) - width/2);
 									return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
 								}else{
+									console.log('child-x:',(width/5 + width/2*(d.depth - activeDepth)) - width/2);
 									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
 								}
 							}else{
