@@ -136,7 +136,7 @@ body {
 
 
 /* text */
-.node .v-conten,
+.node .v-content,
 .node.hide .v-content{
   position: absolute;
   top: -15px;
