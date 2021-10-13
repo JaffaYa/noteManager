@@ -197,7 +197,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
-		simulation.alphaTarget(1.3).restart();
+		simulation.alphaTarget(0.1).restart();
 		// simulation.alpha(1).restart();
 
 		model.stats.restart();
@@ -210,7 +210,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simulationTick(){
 		model.stats.tick();
 
-		// console.log('alpha:'+simulation.alpha());
+		console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -1200,9 +1200,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							frame = 0;
 						}
 
-						if(tickCount == 300){
-
-							simulation.alphaTarget(0).restart();
+						if(tickCount == 150){
+							simulation.alphaTarget(0);
 						}
 
 						//counter
