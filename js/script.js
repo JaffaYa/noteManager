@@ -114,10 +114,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
 		// .force("collide", d3.forceCollide().radius(getColideRadius))
 		// еще радиальную силу добавить
-		// .force("backButton", d3.forceY(d => height/2 - view.getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
-		// .alphaTarget(0.3) // stay hot
-      	.velocityDecay(0.7) // 0,4
-		// .alphaTarget(0.5);
+
+		// simulation
+		// .alpha(0.4)
+		// .alphaMin(0.1)
+		// .alphaTarget(0)
+      	// .velocityDecay(0.4) // 0,4
+
+		//300 кадров в секунду
+		// simulation
+		// .alphaDecay(1 - Math.pow(simulation.alphaMin(), simulation.alpha() / 300));
+		// console.log(1 - Math.pow(simulation.alphaMin(), 1 / 300));
 
 
 
@@ -188,7 +195,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
-		simulation.alpha(1).restart();
+		simulation.alphaTarget(1.3).restart();
+		// simulation.alpha(1).restart();
 
 		model.stats.restart();
 
@@ -200,7 +208,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simulationTick(){
 		model.stats.tick();
 
-		// console.log('alpha:'+simulation.alpha());
+		console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -324,8 +332,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					result = counter * showNodeDelay + counter * showLinkDelay + startDelay-400;
 				}
 
-				console.log('node-counter',counter);
-				console.log('node-result',result);
+				// console.log('node-counter',counter);
+				// console.log('node-result',result);
 
 				counter++;
 
@@ -619,7 +627,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let parentIds = [];
 			let oldparentIds = [];
 			let currFullActivePath = getFullActivePath(myThis.activeNode);
-			console.dir(currFullActivePath);
 			let nodes = myThis.nodes;
 			let depth = myThis.activeNode.depth;
 
@@ -1182,6 +1189,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							frame = 0;
 						}
 
+						if(tickCount == 300){
+
+							simulation.alphaTarget(0).restart();
+						}
+
 						//counter
 						tickCount++;
 						couter.innerHTML = tickCount
@@ -1368,10 +1380,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							if(scrollNext){
 								if(d.active){
-									console.log('active-x:',(width/2 + width/2*(d.depth - activeDepth)) - width/2);
+									// console.log('active-x:',(width/2 + width/2*(d.depth - activeDepth)) - width/2);
 									return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
 								}else{
-									console.log('child-x:',(width/5 + width/2*(d.depth - activeDepth)) - width/2);
+									// console.log('child-x:',(width/5 + width/2*(d.depth - activeDepth)) - width/2);
 									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
 								}
 							}else{
@@ -1380,7 +1392,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.1;
+							return 0.05;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
