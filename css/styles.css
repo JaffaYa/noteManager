@@ -373,28 +373,36 @@ body {
 }
 
 
-
+#bg-wrapper{
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;  
+  background-color: #1f74db;
+  background: linear-gradient(145deg, #1f74db, #ec308c, #FFA900, #A3A847, #1f74db);
+  background-size: 1000% 1000%;
+  animation: gradient 30s ease infinite;
+}
 /* background */
-.particles-js-1 {
+.particles-js-1{
   position: fixed;
   z-index: 0;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #1f74db;
-  background: linear-gradient(145deg, #1f74db, #ec308c, #FFA900, #A3A847, #1f74db);
-  background-size: 1000% 1000%;
-  animation: gradient 30s ease infinite;
 }
 
-.particles-js-2 {
+.particles-js-2{
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none
 }
 
 .canvas .particles-js-canvas-el {
