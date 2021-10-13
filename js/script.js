@@ -1307,7 +1307,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
 							if(scrollNext){
-								return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+								if(d.active){
+									return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+								}else{
+									return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+								}
 							}else{
 								return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
 							}
@@ -1500,7 +1504,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = 0.29;
+			let sizeCoeficient = verticalScreen ? 0.4 : 0.29;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв
