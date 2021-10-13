@@ -116,7 +116,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// еще радиальную силу добавить
 		// .force("backButton", d3.forceY(d => height/2 - view.getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
-      	.velocityDecay(0.7) // 0,4
+      	.velocityDecay(0.4) // 0,4
 		// .alphaTarget(0.5);
 
 
@@ -289,6 +289,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//exit
 		d3exitNodes = d3nodes.exit();
 
+		d3exitNodes
+		.classed('hide', true)
 		// d3exitNodes
 		// .filter( d => d.functional )
 		// .classed('show',  d => !d.functional )
@@ -1478,7 +1480,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = 0.42;
+			let sizeCoeficient = 0.29;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв
