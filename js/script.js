@@ -26,11 +26,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var width = window.innerWidth;
 	var height = window.innerHeight;
 	var verticalScreen = height/width > width/height ? true : false;
-	// // var nodeRadius = width/48;
-	// var nodeRadius = 20;
-	// // var activeRadius = nodeRadius*2;
-	// var activeRadius = 20;
-	var animationTime = 750;//ms
+
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 
 	//smooth animations
@@ -69,9 +65,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	window.simulationResize = function (){};
 
 	//data init
-	window.nodes = [];
-	var links = [];
-	// var jsonData = null;
 	var activePath = [];
 
 	//viewPort init
@@ -95,13 +88,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	window.tree = new Tree("json/graphdata.json", simInit);
+	window.model = new makeModel("json/graphdata.json", simInit);
 
-	tree.stats.enable();
-	// tree.admin.set(true);
-	// tree.showAllTree();
+	model.stats.enable();
+	// model.admin.set(true);
+	// model.showAllTree();
 
-	window.view = new makeView(tree);
+	window.view = new makeView(model);
 
 
 	function getColideRadius(d){
@@ -112,11 +105,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simInit(){
 
 		//init first data
-		nodes = tree.nodesToDisplay;
-		links = tree.links;
 
-		window.simulation = d3.forceSimulation(nodes)
-		.force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
+		window.simulation = d3.forceSimulation(model.nodesToDisplay)
+		.force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
 		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional) )
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
@@ -142,7 +133,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	window.simulation
 		// 	.force("mobileVertical", d3.forceY(
 		// 		function(d){
-		// 			let activeDepth = tree.activeNode.depth;
+		// 			let activeDepth = model.activeNode.depth;
 		// 			if(scrollNext){
 		// 				return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
 		// 			}else{
@@ -167,11 +158,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	)
 		// }
 
-		buildLinks(links);
-		buildNodes(nodes);
+		svgLinks = buildLinks(model.links);
+		htmlNodes = buildNodes(model.nodesToDisplay);
 
 		firstScrean = false;
-		tree.stats.restart();
+		model.stats.restart();
 
 		simulation.on("tick", simulationTick);
 	}
@@ -192,21 +183,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional) delDelayFlag = false;
 
 		if(delDelayFlag){
-			tree.cliсkOnNode(d, deleteDelay, bubleClick);
+			model.cliсkOnNode(d, deleteDelay, bubleClick);
 		}else{
-			tree.cliсkOnNode(d);
+			model.cliсkOnNode(d);
 		}
-
-		nodes = tree.nodesToDisplay;
-		links = tree.links;
 
 		//apply click function
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					tree.backButton(deleteDelay, bubleClick);
-					nodes = tree.nodesToDisplay;
-					links = tree.links;
+					model.backButton(deleteDelay, bubleClick);
 					break;
 				case 'menu':
 					popupActive('menu');
@@ -227,14 +213,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			bodyClass.classList.add('page-show'); // temp
 		}
 	
-		buildLinks(links);
-		buildNodes(nodes);
+		svgLinks = buildLinks(model.links);
+		htmlNodes = buildNodes(model.nodesToDisplay);
 
-		simulation.nodes(nodes);
-		simulation.force("link").links(links);
+		simulation.nodes(model.nodesToDisplay);
+		simulation.force("link").links(model.links);
 		simulation.alpha(1).restart();
 
-		tree.stats.restart();
+		model.stats.restart();
 
 		return;
 	}
@@ -242,7 +228,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function simulationTick(){
-		tree.stats.tick();
+		model.stats.tick();
 
 		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
@@ -351,8 +337,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		});
 
 
-		//update nodes list var
-		htmlNodes = nodesCont.selectAll("div.node");
+		//return updated nodes list
+		return nodesCont.selectAll("div.node");
 
 		function makenodeDelay(){
 			var counter = 2;
@@ -427,8 +413,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		});
 
 
-		//update links list var
-		svgLinks = linksCont.selectAll("line");
+		//return updated links list
+		return linksCont.selectAll("line");
 
 		
 		function makelinkDelay(){
@@ -466,234 +452,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		return 70;
 	}
 
-	// function getNodeElementById(id){
-	// 		console.dir(nodesCont);
-	// 	// for (var i = 0; i < nodes.length; i++) {
-	// 	// }
-	// 	return id;
-	// }
-
-	// function makeDataArray(depth, d = jsonData.nodes[0]){
-
-	// 	if(depth <= 0) return;
-	// 	//add node to active path
-	// 	var nodesToDelFormActive = [];
-	// 	for (var i = 0; i < activePath.length; i++) {
-	// 		if(activePath[i].depth >= depth){
-	// 			for (var j = 0; j < jsonData.nodes.length; j++) {
-	// 				if(jsonData.nodes[j].id == activePath[i].id){
-	// 					jsonData.nodes[j].activePath = false;
-	// 					nodesToDelFormActive.push(activePath[i].id);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	for (var i = 0; i < nodesToDelFormActive.length; i++) {
-	// 		for (var j = 0; j < activePath.length; j++) {
-	// 			if(activePath[j].id == nodesToDelFormActive[i]){
-	// 				activePath.splice(j, 1);
-	// 			}
-	// 		}
-			
-	// 	}
-		
-	// 	for (var i = 0; i < jsonData.nodes.length; i++) {
-	// 		if(jsonData.nodes[i].id == d.id){
-	// 			jsonData.nodes[i].activePath = true;
-	// 			activePath.push({
-	// 				"id" :jsonData.nodes[i].id,
-	// 				"depth": depth
-	// 				});
-	// 		}
-			
-	// 	}
-
-
-	// 	let nodes = jsonData.nodes;
-	// 	var newNodes = [];
-	// 	var newLinks = [];
-	// 	var maxNodeId = nodes[nodes.length-1].id;
-
-
-
-	// 	scrollNext = isHasChild(d);
-	// 	var hasChild = isHasChild(d,false);
-
-	// 	if(hasChild){
-	// 		setDepth(depth+1);
-	// 		buildData(depth+1);
-	// 	}else{
-	// 		setDepth(depth);
-	// 		buildData(depth);
-	// 	}
-
-	// 	// add to full screen button
-	// 	newNodes.push({
-	// 		"id": "fullscreen",
-	// 		// "label": "🖵",
-	// 		"label": "Full\nscreen",
-	// 		"parents": [0],
-	// 		"depth": depth,
-	// 		"fullscreen": true,
-	// 		"functional": true
-	// 	});
-
-	// 	//click by "+" node to make it active need to add it to
-	// 	//newNodes manually
-	// 	if(isAdmin && (d.id >= maxNodeId || d.addNew) ){
-	// 		newNodes.push(d);
-	// 		newLinks.push(links.find(t => t.target.id == d.id));
-	// 	}
-		
-
-	// 	if(!isAdmin){
-	// 		newNodes = newNodes.filter(d => !d.addNew);
-	// 	}
-
-	// 	//check if all links has they nodes
-	// 	checkLinks: for (var i = 0; i < newLinks.length; i++) {
-	// 		for (var k = 0; k < newNodes.length; k++) {
-	// 			if(typeof newLinks[i].source === 'object' ){
-	// 				if(newLinks[i].source.id == newNodes[k].id){
-	// 					continue checkLinks;
-	// 				}
-	// 			}else{
-	// 				if(newLinks[i].source == newNodes[k].id){
-	// 					continue checkLinks;
-	// 				}
-	// 			}
-	// 		}
-	// 		newLinks.splice(i, 1);
-	// 	}
-
-	// 	//delete not chosen way
-
-	// 	//сравнение нод
-	// 	// forNewNodes: for (var i = 0; i < newNodes.length; i++) {
-	// 	// 	for (var k = window.nodes.length - 1; k >= 0; k--) {
-	// 	// 		if(window.nodes[k].id == newNodes[i].id){
-	// 	// 			window.nodes[k].depth = newNodes[i].depth;
-	// 	// 			continue forNewNodes;
-	// 	// 		}
-	// 	// 	}
-	// 	// 	window.nodes.push(newNodes[i]);
-	// 	// }
-	// 	window.nodes = newNodes.map( d => Object.assign( window.nodes.find(t => t.id == d.id) || {}, d) );
-	// 	links = newLinks.map( d => Object.assign({}, d));
-
-
-	// 	// console.log(nodes);
-	// 	// console.log(newNodes);
-	// 	// console.log(window.nodes);
-	// 	// console.log(newLinks);
-	// 	// exit();
-
-	// 	function isHasChild(d, testForAdminChild = true){
-	// 		if(isAdmin && !d.addNew && testForAdminChild) return true;
-	// 		for (var i = 0; i < nodes.length; i++) {
-	// 			for (var k = 0; k < nodes[i].parents.length; k++) {
-	// 				if(nodes[i].parents[k] == d.id){
-	// 					return true;
-	// 				}
-	// 			}
-	// 		}
-	// 		return false;
-	// 	}
-
-	// 	function setDepth(depth){
-	// 		let curentDepth = 1;
-	// 		let parentIds = [];
-	// 		let oldparentIds = [];
-	// 		for (;curentDepth <= depth; curentDepth++ ){
-	// 			oldparentIds = parentIds;
-	// 			parentIds = [];
-	// 			for (var i = 0; i < nodes.length; i++){
-	// 				let hasId = false;
-	// 				for (var j = 0; j < oldparentIds.length; j++) {
-	// 					for (var k = 0; k < nodes[i].parents.length; k++) {
-	// 						if( nodes[i].parents[k] == oldparentIds[j] ){
-	// 							hasId = true;
-	// 						}
-	// 					}
-	// 				}
-	// 				if(nodes[i].parents[0] == 0 && curentDepth == 1){
-	// 					nodes[i].depth = 1;
-	// 					parentIds.push(nodes[i].id);
-	// 				}else if( hasId ){
-	// 					nodes[i].depth = curentDepth;
-	// 					parentIds.push(nodes[i].id);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-
-	// 	function buildData(depth){
-	// 		buildDataNodes: for (var i = 0; i < nodes.length; i++) {
-	// 			if( nodes[i].depth && nodes[i].depth <= depth){
-					
-	// 				//Do node on active path?
-	// 				var activePathChild = false;
-	// 				for (var j = 0; j < activePath.length; j++) {
-	// 					for (var k = 0; k < nodes[i].parents.length; k++) {
-	// 						if( nodes[i].parents[k] == activePath[j].id ){
-	// 							activePathChild = true;
-	// 						}
-	// 					}
-	// 				}
-	// 				if(nodes[i].activePath === true){
-	// 					nodes[i].activePath = true;
-	// 				}else if(activePathChild && nodes[i].depth <= (depth-1)){
-	// 					nodes[i].activePath = 'fade';
-	// 				}else if(activePathChild && nodes[i].depth > (depth-1)){
-	// 					nodes[i].activePath = 'child';
-	// 				}else{
-	// 					nodes[i].activePath = false;
-	// 					continue buildDataNodes;
-	// 				}
-	// 				// if(nodes[i].depth >= depth){
-	// 				// 	var parentFlag = true;
-	// 				// 	for (var k = 0; k < nodes[i].parents.length; k++) {
-	// 				// 		if(nodes[i].parents[k] == d.id) parentFlag = false;
-	// 				// 	}
-	// 				// 	if(parentFlag) continue buildDataNodes;
-	// 				// }
-
-	// 				nodes[i].id = 1*nodes[i].id;
-	// 				newNodes.push(nodes[i]);
-	// 				if(isAdmin && d.id == nodes[i].id){
-	// 					maxNodeId = 1*maxNodeId + 1;
-	// 					newNodes.push(
-	// 					{
-	// 						"depth": nodes[i].depth+1,
-	// 						"id": maxNodeId,
-	// 						"label": "+",
-	// 						"parents": [nodes[i].id],
-	// 						"addNew": true
-	// 					}
-	// 					);
-	// 					newLinks.push({
-	// 						source: parseInt(nodes[i].id),
-	// 						target: maxNodeId,
-	// 						dashed: true,
-	// 						value: 2
-	// 					});
-	// 				}
-
-	// 				nodes[i].parents.forEach(function(parent) {
-	// 					//core node hasn't links
-	// 					if(parent == 0) return;
-
-	// 					newLinks.push({
-	// 						source: 1*parent,
-	// 						target: parseInt(nodes[i].id),
-	// 						value: 2
-	// 					});
-	// 				});
-
-	// 			}
-	// 		}
-	// 	}
-	// }
+	
 
 	function dragstarted(d) {
 		if (!d3.event.active) simulation.alphaTarget(2).restart();
@@ -711,11 +470,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		d.fx = null;
 		d.fy = null;
 	}
-
-	// function makeNodeActive(currNode){
-	// 	nodes.forEach( item => item.active = false );
-	// 	currNode.active = true;
-	// }
 
 
 	//resize
@@ -803,7 +557,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 	
 	//prepare data to simulation
-	function Tree(jsonPath, callback){
+	function makeModel(jsonPath, callback){
 		var myThis = this;
 		this.activeNode = null;
 		this.getChildrenNodes = function(node){};
@@ -1480,15 +1234,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.slideForceStr = slideForceStr;
 		this.verticalForce = verticalForce;
 		this.verticalForceStr = verticalForceStr;
-		// this.simulationResize = throttle(simulationResize,100);
-		this.simulationResize = simulationResize;
+		this.simulationResize = throttle(simulationResize,100);
 		this.isolateForce = isolateForce;
 
 		var width = window.innerWidth;
 		var height = window.innerHeight;
 		var verticalScreen = height/width > width/height ? true : false;
 
-		//потужность силы линка(если линк это пружина то это сила ее натяжения)
+		//init
+
+		//Мощность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
 			if(!d.functional){
 				return 0.035;
@@ -1503,7 +1258,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 4;
 			// return verticalScreen ? 1 : 250;
 		}
-		//потужность силы отталкивания(если значение негатвное) или притягивания(елси значение позитивное) нод друг от друга
+		//Мощность силы отталкивания(если значение негатвное) или притягивания(елси значение позитивное) нод друг от друга
 		function manyBodyStr(d){
 			// var manyBodyForce = -width + (1200/width)*50;
 			var manyBodyForce = -2000;
@@ -1519,7 +1274,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//сила задаеть горизонтальную координату для каждой ноды
 		var scrollNext = true;
 		function slideForce (d){
-			let activeDepth = tree.activeNode.depth;
+			let activeDepth = model.activeNode.depth;
 			if(!d.functional){
 				if(scrollNext){
 					if(d.active){
@@ -1547,7 +1302,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 		}
-		//потужность силы которая задаеть горизонтальную координату для каждой ноды
+		//Мощность силы которая задаеть горизонтальную координату для каждой ноды
 		function slideForceStr (d){
 			return 0.05
 		}
@@ -1562,7 +1317,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				return height/2 - (height/100 + getNodeRadius(d));
 			}
 		}
-		//потужность силы которая задает вертикальную координату для каждой ноды
+		//Мощность силы которая задает вертикальную координату для каждой ноды
 		function verticalForceStr(d){
 			return d.functional ? 0.1 : 0.025
 		}
@@ -1580,7 +1335,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.style('width', width+'px')
 			.style('height', height+'px');
 
-			simulation.force("link").links(links);
+			simulation.force("link").links(model.links);
 			simulation.force("charge").strength(self.manyBodyStr);
 			simulation.force("slideForce").strength(self.slideForceStr);
 			simulation.force("verticalForce").strength(self.verticalForceStr);
@@ -1604,7 +1359,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function isolateForce(force, filter) {
 			var initialize = force.initialize;
-			force.initialize = function() { initialize.call(force, nodes.filter(filter)); };
+			force.initialize = function() { initialize.call(force, model.nodesToDisplay.filter(filter)); };
 			return force;
 		}
 
