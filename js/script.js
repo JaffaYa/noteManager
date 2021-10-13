@@ -116,7 +116,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// еще радиальную силу добавить
 		// .force("backButton", d3.forceY(d => height/2 - view.getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
-      	// .velocityDecay(0.1) // 0,4
+      	.velocityDecay(0.7) // 0,4
 		// .alphaTarget(0.5);
 
 
@@ -1380,7 +1380,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.05;
+							return 0.1;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
