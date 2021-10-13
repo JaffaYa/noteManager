@@ -208,7 +208,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simulationTick(){
 		model.stats.tick();
 
-		console.log('alpha:'+simulation.alpha());
+		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -238,7 +238,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		d3nodes = nodesCont
 		.selectAll("div.node")
 		.data(nodes, d => d.id)
-		.classed('active', d => d.active);
+		.classed('active', d => d.active)
+		.classed('hide', d => {
+			let activeNodeCildrens = model.activeNode.children
+			if( d.active ) return false;
+			if( d.functional ) return false;
+			if( activeNodeCildrens.includes(d.id) ) return false;
+			return true;
+		});
 		
 
 		//enter
@@ -1490,7 +1497,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = 0.42;
+			let sizeCoeficient = 0.29;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв
