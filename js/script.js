@@ -114,7 +114,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
 		// .force("collide", d3.forceCollide().radius(getColideRadius))
 		// еще радиальную силу добавить
-		// .force("backButton", d3.forceY(d => height/2 - getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
+		// .force("backButton", d3.forceY(d => height/2 - view.getNodeRadius(d)).strength(d => d.functional ? 0.1 : 0))
 		// .alphaTarget(0.3) // stay hot
       	// .velocityDecay(0.1) // 0,4
 		// .alphaTarget(0.5);
@@ -127,36 +127,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// console.log('alphaTarget:'+simulation.alphaTarget());//0
 		// console.log('alphaDecay:'+simulation.alphaDecay());//0,0228
 		// console.log('velocityDecay:'+simulation.velocityDecay());//0,4
-
-
-		// if(verticalScreen){
-		// 	window.simulation
-		// 	.force("mobileVertical", d3.forceY(
-		// 		function(d){
-		// 			let activeDepth = model.activeNode.depth;
-		// 			if(scrollNext){
-		// 				return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
-		// 			}else{
-		// 				return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
-		// 			}
-		// 		}
-		// 		).strength(
-		// 			// d => d.functional ? 0.00 : 0.1
-		// 			function(d){
-		// 				if(d.functional){
-		// 					return 0;
-		// 				}else if(d.activePath == 'child'){
-		// 					console.dir(d.activePath);
-		// 					console.dir(d.id);
-		// 					return  d.id/90;
-		// 					// return  d.id/90;
-		// 				}else{
-		// 					return 0.035;
-		// 				}
-		// 			}
-		// 		)
-		// 	)
-		// }
 
 		svgLinks = buildLinks(model.links);
 		htmlNodes = buildNodes(model.nodesToDisplay);
@@ -444,18 +414,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-
-
-	function getNodeRadius(node){
-		// console.dir(getNodeElementById(node.id));
-		// return width/48;
-		return 70;
-	}
-
-	
-
 	function dragstarted(d) {
 		if (!d3.event.active) simulation.alphaTarget(2).restart();
+		model.stats.restart();
 		d.fx = d.x;
 		d.fy = d.y;
 	}
@@ -1235,6 +1196,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.verticalForce = verticalForce;
 		this.verticalForceStr = verticalForceStr;
 		this.simulationResize = throttle(simulationResize,100);
+		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
 
 		var width = window.innerWidth;
@@ -1243,84 +1205,38 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//init
 
-		//Мощность силы линка(если линк это пружина то это сила ее натяжения)
+		//мощность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
-			if(!d.functional){
-				return 0.035;
-			}else{
-				return 0;
-			}
-			// return 0.015;
-			// return  verticalScreen ? 1 : 0.015;
+			return forceSettings('linkStr', d);
 		}
 		//длина линки насколько понимаю в пикселях
 		function linkDistance(d){
-			return 4;
-			// return verticalScreen ? 1 : 250;
+			return forceSettings('linkDistance', d);
 		}
-		//Мощность силы отталкивания(если значение негатвное) или притягивания(елси значение позитивное) нод друг от друга
+		//мощность силы отталкивания(если значение негатвное) или притягивания(елси значение позитивное) нод друг от друга
 		function manyBodyStr(d){
-			// var manyBodyForce = -width + (1200/width)*50;
-			var manyBodyForce = -2000;
-			if (manyBodyForce > 0) manyBodyForce = -manyBodyForce;
-
-			if(!d.functional){
-				return manyBodyForce;
-			}else{
-				return 0;
-			}
+			return forceSettings('manyBodyStr', d);
 		}
 
 		//сила задаеть горизонтальную координату для каждой ноды
-		var scrollNext = true;
 		function slideForce (d){
-			let activeDepth = model.activeNode.depth;
-			if(!d.functional){
-				if(scrollNext){
-					if(d.active){
-						return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
-					}else{
-						return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
-					}
-				}else{
-					return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
-				}
-			}else{
-				switch (d.function){
-					case 'back':
-							// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
-							// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-							return (width/20 + getNodeRadius(d)) - width/2;
-						break;
-					case 'menu':
-							// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
-							// console.log( width/2 - (width/10 + getNodeRadius(d)) );
-							return width/2 - (width/10 + getNodeRadius(d));
-						break;
-					default:
-						throw new Error('Неизвестная нода.')
-				}
-			}
+			return forceSettings('slideForce', d);
 		}
-		//Мощность силы которая задаеть горизонтальную координату для каждой ноды
+		//мощность силы которая задаеть горизонтальную координату для каждой ноды
 		function slideForceStr (d){
-			return 0.05
+			return forceSettings('slideForceStr', d);
 		}
 
 
 		//сила задает вертикальную координату для каждой ноды
 		function verticalForce(d){
-			if(!d.functional){
-				return d.active ? -(height*2/15) : 0;
-			}else{
-				// return height/2 - getNodeRadius(d);
-				return height/2 - (height/100 + getNodeRadius(d));
-			}
+			return forceSettings('verticalForce', d);
 		}
-		//Мощность силы которая задает вертикальную координату для каждой ноды
+		//мощность силы которая задает вертикальную координату для каждой ноды
 		function verticalForceStr(d){
-			return d.functional ? 0.1 : 0.025
+			return forceSettings('verticalForceStr', d);
 		}
+
 
 		function simulationResize(resizeEvent){
 			width = window.innerWidth;
@@ -1349,12 +1265,209 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function forceSettings(force, d){
+			let activeDepth = model.activeNode.depth;
+			let scrollNext = true;
 			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
 			if(verticalScreen){
-
+				if(!d.functional){
+					//вертикальная о.э. - для обычных нод
+					switch(force){
+						//мощность силы линка
+						case 'linkStr':
+							return 0.035;
+							break;
+						//длина линки в пикселях
+						case 'linkDistance':
+							return 4;
+							break;
+						//мощность силы отталкивания(заряда)
+						case 'manyBodyStr':
+							return -2000;
+							break;
+						//задаеть горизонтальную координату для каждой ноды
+						case 'slideForce':
+							if(scrollNext){
+								if(d.active){
+									return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+								}else{
+									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+								}
+							}else{
+								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+							}
+							break;
+						//мощность силы которая задаеть горизонтальную координату
+						case 'slideForceStr':
+							return 0.05;
+							break;
+						//сила задает вертикальную координату для каждой ноды
+						case 'verticalForce':
+							if(scrollNext){
+								return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+							}else{
+								return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
+							}
+							break;
+						//мощность силы которая задает вертикальную координату
+						case 'verticalForceStr':
+							return 0.035;
+							break;
+						default:
+							throw new Error('Неизвестная cила.');
+							break;
+					}
+				}else{
+					//вертикальная о.э. - для функциональныхи кнопок
+					switch(force){
+						//мощность силы линка
+						case 'linkStr':
+							return 0;
+							break;
+						//длина линки в пикселях
+						case 'linkDistance':
+							return 4;
+							break;
+						//мощность силы отталкивания(заряда)
+						case 'manyBodyStr':
+							return 0;
+							break;
+						//задаеть горизонтальную координату для каждой ноды
+						case 'slideForce':
+							switch (d.function){
+								case 'back':
+									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
+									return (width/20 + getNodeRadius(d)) - width/2;
+									break;
+								case 'menu':
+									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
+									return width/2 - (width/10 + getNodeRadius(d));
+									break;
+								default:
+									throw new Error('Неизвестная кнопка.')
+									break;
+							}
+							break;
+						//мощность силы которая задаеть горизонтальную координату
+						case 'slideForceStr':
+							return 0.05;
+							break;
+						//сила задает вертикальную координату для каждой ноды
+						case 'verticalForce':
+							return height/2 - (height/100 + getNodeRadius(d));
+							break;
+						//мощность силы которая задает вертикальную координату
+						case 'verticalForceStr':
+							return 0.1;
+							break;
+						default:
+							throw new Error('Неизвестная cила.');
+							break;
+					}
+				}
 			}else{//для горизонтальной ориентации екрана
-
+				if(!d.functional){
+					//горизонтальная о.э. - для обычных нод
+					switch(force){
+						//мощность силы линка
+						case 'linkStr':
+							return 0.035;
+							break;
+						//длина линки в пикселях
+						case 'linkDistance':
+							return 4;
+							break;
+						//мощность силы отталкивания(заряда)
+						case 'manyBodyStr':
+							return -2000;
+							break;
+						//задаеть горизонтальную координату для каждой ноды
+						case 'slideForce':
+							if(scrollNext){
+								if(d.active){
+									return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+								}else{
+									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+								}
+							}else{
+								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+							}
+							break;
+						//мощность силы которая задаеть горизонтальную координату
+						case 'slideForceStr':
+							return 0.05;
+							break;
+						//сила задает вертикальную координату для каждой ноды
+						case 'verticalForce':
+							return d.active ? -(height*2/15) : 0;
+							break;
+						//мощность силы которая задает вертикальную координату
+						case 'verticalForceStr':
+							return 0.025;
+							break;
+						default:
+							throw new Error('Неизвестная cила.');
+							break;
+					}
+				}else{
+					//горизонтальная о.э. - для функциональныхи кнопок
+					switch(force){
+						//мощность силы линка
+						case 'linkStr':
+							return 0;
+							break;
+						//длина линки в пикселях
+						case 'linkDistance':
+							return 4;
+							break;
+						//мощность силы отталкивания(заряда)
+						case 'manyBodyStr':
+							return 0;
+							break;
+						//задаеть горизонтальную координату для каждой ноды
+						case 'slideForce':
+							switch (d.function){
+								case 'back':
+									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
+									return (width/20 + getNodeRadius(d)) - width/2;
+									break;
+								case 'menu':
+									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
+									return width/2 - (width/10 + getNodeRadius(d));
+									break;
+								default:
+									throw new Error('Неизвестная кнопка.')
+									break;
+							}
+							break;
+						//мощность силы которая задаеть горизонтальную координату
+						case 'slideForceStr':
+							return 0.05;
+							break;
+						//сила задает вертикальную координату для каждой ноды
+						case 'verticalForce':
+							return height/2 - (height/100 + getNodeRadius(d));
+							break;
+						//мощность силы которая задает вертикальную координату
+						case 'verticalForceStr':
+							return 0.1;
+							break;
+						default:
+							throw new Error('Неизвестная cила.');
+							break;
+					}
+				}
 			}
+		}
+
+
+		function getNodeRadius(node){
+			// console.dir(getNodeElementById(node.id));
+			// return width/48;
+			return 70;
 		}
 
 		function isolateForce(force, filter) {
