@@ -1195,7 +1195,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.slideForceStr = slideForceStr;
 		this.verticalForce = verticalForce;
 		this.verticalForceStr = verticalForceStr;
-		this.simulationResize = throttle(simulationResize,100);
+		this.simulationResize = throttle(simulationResize,50);
 		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
 
@@ -1204,6 +1204,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		var verticalScreen = height/width > width/height ? true : false;
 
 		//init
+		setHtmlFontSize();
 
 		//мощность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
@@ -1235,33 +1236,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//мощность силы которая задает вертикальную координату для каждой ноды
 		function verticalForceStr(d){
 			return forceSettings('verticalForceStr', d);
-		}
-
-
-		function simulationResize(resizeEvent){
-			width = window.innerWidth;
-			height = window.innerHeight;
-			verticalScreen = height/width > width/height ? true : false;
-			svgViewPort = [-width / 2, -height / 2, width, height];
-
-			svg
-			.attr("viewBox", svgViewPort);
-
-			viewPort
-			.style('width', width+'px')
-			.style('height', height+'px');
-
-			simulation.force("link").links(model.links);
-			simulation.force("charge").strength(self.manyBodyStr);
-			simulation.force("slideForce").strength(self.slideForceStr);
-			simulation.force("verticalForce").strength(self.verticalForceStr);
-			// simulation
-			// .force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-			// .force("charge", d3.forceManyBody().strength( view.manyBodyStr ))
-			// .force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
-			// .force("y", d3.forceY().strength(0.015))
-			simulation.alpha(1).restart();
-			model.stats.restart();
 		}
 
 		function forceSettings(force, d){
@@ -1461,6 +1435,52 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					}
 				}
 			}
+		}
+
+		function simulationResize(resizeEvent){
+			width = window.innerWidth;
+			height = window.innerHeight;
+			verticalScreen = height/width > width/height ? true : false;
+			svgViewPort = [-width / 2, -height / 2, width, height];
+
+			setHtmlFontSize();
+
+			svg
+			.attr("viewBox", svgViewPort);
+
+			viewPort
+			.style('width', width+'px')
+			.style('height', height+'px');
+
+			simulation.force("link").links(model.links);
+			simulation.force("charge").strength(self.manyBodyStr);
+			simulation.force("slideForce").strength(self.slideForceStr);
+			simulation.force("verticalForce").strength(self.verticalForceStr);
+			// simulation
+			// .force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
+			// .force("charge", d3.forceManyBody().strength( view.manyBodyStr ))
+			// .force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
+			// .force("y", d3.forceY().strength(0.015))
+			simulation.alpha(1).restart();
+			model.stats.restart();
+		}
+
+		function setHtmlFontSize(){
+
+			//коефициент сколько екранного пространства должена занимать активаная надпись
+			let sizeCoeficient = 0.42;
+			//значение в px сколько екранного пространства должена занимать активаная надпись
+			let allTextWidth = width*sizeCoeficient;
+			//примерное количесто букв
+			let lettersNumber = 10;
+			//коефициент буквы до размера шрифта
+			let letters2fzCoeficient = 0.53;
+			//значение в пикселях для 1 буквы
+			let letter_fz = lettersNumber*letters2fzCoeficient;
+			
+			fz = allTextWidth/letter_fz;
+
+			document.documentElement.style.fontSize = fz+'px';
 		}
 
 
