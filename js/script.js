@@ -115,6 +115,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// .force("collide", d3.forceCollide().radius(getColideRadius))
 		// еще радиальную силу добавить
 
+
 		// simulation
 		// .alpha(0.4)
 		// .alphaMin(0.1)
@@ -125,6 +126,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// simulation
 		// .alphaDecay(1 - Math.pow(simulation.alphaMin(), simulation.alpha() / 300));
 		// console.log(1 - Math.pow(simulation.alphaMin(), 1 / 300));
+
 
 
 
@@ -304,6 +306,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//exit
 		d3exitNodes = d3nodes.exit();
 
+		d3exitNodes
+		.classed('hide', true)
 		// d3exitNodes
 		// .filter( d => d.functional )
 		// .classed('show',  d => !d.functional )
