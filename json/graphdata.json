@@ -62,6 +62,12 @@
       "iframe": "pages/p/"
     },
     {
+      "id": "27",
+      "label": "сладости",
+      "parents": [6, 7],
+      "iframe": "http://sweet.variant.name/"
+    },
+    {
       "id": "10",
       "label": "как твоё<br>имя?",
       "parents": [4],
