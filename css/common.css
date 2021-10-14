@@ -114,12 +114,12 @@ a:hover {
 .live-avatar{
 }
 .live-avatar img{
-  width: 120%;
+  width: 5rem;
   height: auto;
   border-radius: 50%;
   box-sizing: content-box;
   border: 0.5rem solid rgb(255,255,255,0.5);
-  margin-left: -0.75rem;
+  margin-left: -0.5rem;
 }
 .live-name{
   margin-top: -1rem;
