@@ -1277,6 +1277,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var couter = createStat('FramesCount: ');
 			//simTime
 			var simTime = createStat('SimTime: ');
+			//alpha
+			var alpha = createStat('Alpha: ', 'alpha');
 
 
 			var parent = document.querySelector('#my_data');
@@ -1285,9 +1287,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				var wrapper = document.createElement("div");
 				wrapper.innerHTML = html;
 				var value = document.createElement("span");
-				value.innerHTML = default1;
+				
 				wrapper.append(value);
 				wrapperStats.append(wrapper);
+
+				if('alpha' == default1){
+					value.style.display = 'inline-block';
+					value.style.background = 'steelblue';
+					value.style.width = '1px';
+					value.style.height = '1em';
+				}else{
+					value.innerHTML = default1;
+				}
 
 				return value;
 			}
@@ -1327,6 +1338,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						couter.innerHTML = tickCount
 
 						simTime.innerHTML = (Date.now() - simulationTime)/1000;
+
+						//alpha
+						let simAlpha = simulation.alpha()
+						alpha.innerHTML = Math.round(simAlpha*1000)/1000;
+						alpha.style.width = simAlpha*100+'px';
 					}
 				},
 				getTickCount: getTickCount
