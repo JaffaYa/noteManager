@@ -96,6 +96,38 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.view = new makeView(model);
 
+	var browserNavButtons = false;
+	//on change url
+	window.onpopstate = function(historyPopEvent) {
+		browserNavButtons = true;
+
+		let id = null;
+		if(historyPopEvent.state){
+			id = historyPopEvent.state.id;
+		}
+		if(id){
+			let currActivePath = model.getActivePath();
+			if(model.isInArrayId(id,currActivePath)){
+				model.backButton(deleteDelay, deleteDelayCallback);
+			}else{
+				model.forwardButton(id, deleteDelay, deleteDelayCallback);
+			}
+
+
+			svgLinks = buildLinks(model.links);
+			htmlNodes = buildNodes(model.nodesToDisplay);
+
+			simulation.nodes(model.nodesToDisplay);
+			simulation.force("link").links(model.links);
+			// simulation.alphaTarget(0.1).restart();
+			simulation.alpha(1).restart();
+
+			model.stats.restart();
+		}
+
+
+	};
+
 
 	function getColideRadius(d){
 		return 250;
@@ -149,7 +181,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	function bubleClick(d, i, arr, delDelayFlag = true) {
+	function bubleClick(d, i, arr) {
+		let  delDelayFlag = true;
 
 		if(!d.active){
 			playBubble();
@@ -162,7 +195,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional) delDelayFlag = false;
 
 		if(delDelayFlag){
-			model.cliсkOnNode(d, deleteDelay, bubleClick);
+			model.cliсkOnNode(d, deleteDelay, deleteDelayCallback);
 		}else{
 			model.cliсkOnNode(d);
 		}
@@ -171,7 +204,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					model.backButton(deleteDelay, bubleClick);
+					model.backButton(deleteDelay, deleteDelayCallback);
 					break;
 				case 'menu':
 					popupActive('menu');
@@ -197,8 +230,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
+
 		simulation.alphaTarget(0.45).restart();
 		// simulation.alpha(1).restart();
+
 
 		model.stats.restart();
 
@@ -210,7 +245,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simulationTick(){
 		model.stats.tick();
 
-		console.log('alpha:'+simulation.alpha());
+		let tickCount = model.stats.getTickCount();
+		if(tickCount == 300){
+			simulation.alphaTarget(0);
+		}
+
+		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -227,6 +267,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
+	}
+
+	function deleteDelayCallback(model){
+		svgLinks = buildLinks(model.links);
+		htmlNodes = buildNodes(model.nodesToDisplay);
+
+		simulation.nodes(model.nodesToDisplay);
+		simulation.force("link").links(model.links);
 	}
 
 
@@ -247,7 +295,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			if( d.functional ) return false;
 			if( activeNodeCildrens.includes(d.id) ) return false;
 			return true;
-		});
+		});	
+
+		// d3nodes
+		// .transition()
+	 //    .duration(5000)
+	 //    .easeVarying(d => d3.easePolyIn.exponent(d.exponent))
 		
 
 		//enter
@@ -552,13 +605,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.getNodeById = getNodeById;
 		//для использования нужно сделать очистку activePath с учётом возможности прижка между нодами
 		this.showAllTree = showAllTree;
+		this.forwardButton = forwardButton;
 		this.backButton = backButton;
+		this.updateNodesToDisplay = updateNodesToDisplay;
+		this.updateLinks = updateLinks;
+		this.isInArrayId = isInArrayId;
 		/*
 		* node = {
 		*	id: int,
 		*	active: bool,
 		*	activePath: bool,
 		*	depth: int,
+		*	leftDepth: int, //for left animation
 		*	label: str,
 		*	parents: arr,
 		*	children: arr,
@@ -622,6 +680,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].active = false;
 				nodes[i].activePath = false;
 				nodes[i].depth = undefined;
+				nodes[i].leftDepth = false;
 				nodes[i].children = [];
 				nodes[i].functional = false;
 				nodes[i].function = '';
@@ -629,8 +688,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].display = false;
 				nodes[i].goTo = nodes[i].goTo*1 || false;
 			}
-			makeNodeActive(nodes[0]);
+			let startNode = setInitNode();
+			makeNodeActive(startNode);
 			updateNodes();
+
+			function setInitNode(){
+				// console.dir(window.location);
+				let get = window.location.search;
+				let id = null;
+				if(get){
+					id = get.split('=')[1];
+				}
+				if(id === null){
+					id = 1;
+				}
+				return getNodeById(id);
+			}
 		}
 
 		function setNodesDepth(widthChildrens = true){
@@ -722,6 +795,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				activePath.push(currNode);
 			}
 			myThis.activeNode = currNode;
+			if(!browserNavButtons){
+				// window.location = "#id:"+currNode.id;
+				history.pushState({id:currNode.id}, '', '?node='+currNode.id);
+			}else{
+				browserNavButtons = false;
+			}
 		}
 
 		function setNodesDisplay(widthChildrens = true){
@@ -867,11 +946,31 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return false;
 		}
 
-		var timerDDId = null;
+		function setLeftDepth(node, goToNode) {
+			//unset left depth for all nodes
+			let nodes = myThis.nodes;
+
+			for (var i = 0; i < nodes.length; i++) {
+				nodes[i].leftDepth = false;
+			}
+
+			//set left depth
+			let previosDepth = node.depth;
+
+			goToNode.leftDepth = (previosDepth + 1);
+			goToNode.parents.push(node.id);
+			for (var i = 0; i < goToNode.children.length; i++) {
+				let child = getNodeById(goToNode.children[i]);
+				child.leftDepth = (previosDepth + 2);
+			}
+		}
+
+		// var timerDDId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
 				if(goToNode){
+					setLeftDepth(node, goToNode);
 					node = goToNode;
 				}
 			}
@@ -880,10 +979,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 			if(deleteDelay){
-				clearTimeout(timerDDId);
-				timerDDId = setTimeout(function(node) {
-					callback(node, node.index, myThis.nodesToDisplay, false);//replace nodesToDisplay to html list of nodes
-				}, deleteDelay, node);
+				// clearTimeout(timerDDId);
+				timerDDId = setTimeout(function(model) {
+					model.updateNodesToDisplay(false);
+					model.updateLinks();
+					callback(model);
+				}, deleteDelay, myThis);
 			}
 		}
 
@@ -962,6 +1063,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									active: false,
 									activePath: false,
 									depth: undefined,//nodes[i].depth+1
+									leftDepth: false,
 									label: "+",
 									parents: [nodes[i].id],
 									children: [],
@@ -997,6 +1099,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					active: false,
 					activePath: false,
 					depth: undefined,
+					leftDepth: false,
 					label: name,
 					parents: [],
 					children: [],
@@ -1009,12 +1112,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
-
 		function backButton(deleteDelay = false, callback = function(){}){
 			let currActivePath = getActivePath();
 
 			//if firs node active
-			if(currActivePath.length < 2) return;
+			if(currActivePath.length < 2 && isInArrayId(1,currActivePath)) return;
 
 			//clear previos activePath
 			//spep back activePath
@@ -1028,6 +1130,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			cliсkOnNode(currActivePath[currActivePath.length-1], deleteDelay, callback);
 		}
 
+		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
+			let node = getNodeById(nodeId);
+			cliсkOnNode(node, deleteDelay, callback);
+		}
+
 		function getActivePath(){
 			// let nodes = myThis.nodes;
 			// let activePath = [];
@@ -1036,18 +1143,27 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 		activePath.push(nodes[i]);
 			// 	}
 			// }
+
+			//if come to page with not firt node
+			if( activePath.length > 0 && !isInArrayId(1,activePath) ){
+				activePath = getFullActivePath(activePath[activePath.length-1]);
+				activePath = activePath.filter(d => d.goTo === false);
+			}
+
 			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
 		}
 
+
 		function getFullActivePath(node = null){
-			let currActivePath = getActivePath();
 			let fullActivePath = [];
 
 			if(node !== null){
 				var fullChain = makeFullChain();
 				fullChain(node, myThis.nodes[0]);
-				return fullActivePath;
+				return fullActivePath.reverse();
 			}
+
+			let currActivePath = getActivePath();
 
 			if( (currActivePath.length - 1) == 0 ){
 				fullActivePath = currActivePath;
@@ -1058,9 +1174,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 
-			this.makeFullChain = makeFullChain;
 
-			return fullActivePath;
+			return fullActivePath.reverse();
 
 			function makeFullChain(){
 				var limmiter = 20;
@@ -1069,6 +1184,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					limmiter--;
 					if(limmiter <= 0) {
 						// throw new Error('Невозможно найти fullActivePath.')
+						//можно дописать что бы искало еще и по goTo параметрамы
 						console.error('Невозможно найти fullActivePath.')
 						return false;
 					}
@@ -1130,7 +1246,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						fullActivePath.push(a);
 					}else{
 						let missingNodes = findMissNods(b.parents, a.id);
-
 						if(missingNodes){
 							for (var i = 0; i < missingNodes.length; i++) {
 								let node = getNodeById(missingNodes[i]);
@@ -1154,7 +1269,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			var wrapperStats = document.createElement("div");
 			// wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
-			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;display: none;");
+			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
 
 			//fps
 			var fps = createStat('FPS: ');
@@ -1162,6 +1277,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var couter = createStat('FramesCount: ');
 			//simTime
 			var simTime = createStat('SimTime: ');
+			//alpha
+			var alpha = createStat('Alpha: ', 'alpha');
 
 
 			var parent = document.querySelector('#my_data');
@@ -1170,11 +1287,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				var wrapper = document.createElement("div");
 				wrapper.innerHTML = html;
 				var value = document.createElement("span");
-				value.innerHTML = default1;
+				
 				wrapper.append(value);
 				wrapperStats.append(wrapper);
 
+				if('alpha' == default1){
+					value.style.display = 'inline-block';
+					value.style.background = 'steelblue';
+					value.style.width = '1px';
+					value.style.height = '1em';
+				}else{
+					value.innerHTML = default1;
+				}
+
 				return value;
+			}
+
+			function getTickCount(){
+				return tickCount;
 			}
 
 			return{
@@ -1201,17 +1331,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							frame = 0;
 						}
 
-						if(tickCount == 150){
-							simulation.alphaTarget(0);
-						}
+
 
 						//counter
 						tickCount++;
 						couter.innerHTML = tickCount
 
 						simTime.innerHTML = (Date.now() - simulationTime)/1000;
+
+						//alpha
+						let simAlpha = simulation.alpha()
+						alpha.innerHTML = Math.round(simAlpha*1000)/1000;
+						alpha.style.width = simAlpha*100+'px';
 					}
-				}
+				},
+				getTickCount: getTickCount
 			}
 
 		}
@@ -1270,8 +1404,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function forceSettings(force, d){
-			let activeDepth = model.activeNode.depth;
+			let activeNode = model.activeNode;
+			// let activeDepth = activeNode.depth;
+			let activeDepth = activeNode.leftDepth ? activeNode.leftDepth : activeNode.depth;
 			let scrollNext = true;
+			// let nodeDepth = d.depth;
+			let nodeDepth = d.leftDepth ? d.leftDepth : d.depth;
 			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
 			if(verticalScreen){
 				if(!d.functional){
@@ -1293,15 +1431,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							if(scrollNext){
 								if(d.active){
-									// return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
-									return (width/2 + width/2*(d.depth - activeDepth)) - width/1.2;
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) - width/2;
+									return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.2;
 								}else{
-									// return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
-									return (width/5 + width/2*(d.depth - activeDepth)) - width/1.3;
+									// return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
+									return (width/5 + width/2*(nodeDepth - activeDepth)) - width/1.3;
 								}
 							}else{
-								// return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
-								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/1.2;
+								// return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/2;
+								return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/1.2;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
@@ -1312,12 +1450,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'verticalForce':
 							if(scrollNext){
 								if(d.active){
-									return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+									return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
 								}else{
-									return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+									return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
 								}
 							}else{
-								return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth+1)) - height/2;
 							}
 							break;
 						//мощность силы которая задает вертикальную координату
@@ -1347,12 +1485,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							switch (d.function){
 								case 'back':
-									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
 									return (width/10 + getNodeRadius(d)) - width/1.5;
 									break;
 								case 'menu':
-									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
 									break;
@@ -1393,19 +1531,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
 							return -2000;
+							// return -50;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
 							if(scrollNext){
+								// console.log('id',d.id);
+								// console.log('nodeDepth',nodeDepth);
+								// console.log('activeDepth',activeDepth);
 								if(d.active){
-									// console.log('active-x:',(width/2 + width/2*(d.depth - activeDepth)) - width/2);
-									return (width/2 + width/2*(d.depth - activeDepth)) - width/1.7;
+									// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
+									return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+									// return 0;
 								}else{
-									// console.log('child-x:',(width/5 + width/2*(d.depth - activeDepth)) - width/2);
-									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
+									return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
+									// return 0;
 								}
 							}else{
-								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+								return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/2;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
@@ -1443,12 +1587,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							switch (d.function){
 								case 'back':
-									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
 									return (width/20 + getNodeRadius(d)) - width/2;
 									break;
 								case 'menu':
-									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
 									break;
