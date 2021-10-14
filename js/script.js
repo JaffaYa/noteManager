@@ -1153,7 +1153,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var simulationTime = 0;
 
 			var wrapperStats = document.createElement("div");
-			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
+			// wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
+			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;display: none;");
 
 			//fps
 			var fps = createStat('FPS: ');

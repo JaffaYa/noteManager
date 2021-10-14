@@ -107,3 +107,20 @@ a:hover {
 
 
 
+/* live card */
+.live-card{
+  margin-top: -2.25rem;
+}
+.live-avatar{
+}
+.live-avatar img{
+  width: 120%;
+  height: auto;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 0.5rem solid rgb(255,255,255,0.5);
+  margin-left: -0.75rem;
+}
+.live-name{
+  margin-top: -1rem;
+}
