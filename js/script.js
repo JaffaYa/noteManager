@@ -111,7 +111,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				model.backButton(deleteDelay, deleteDelayCallback);
 			}else{
 				model.forwardButton(id, deleteDelay, deleteDelayCallback);
-
 			}
 
 
@@ -246,10 +245,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simulationTick(){
 		model.stats.tick();
 
-		// let tickCount = model.stats.getTickCount();
-		// if(tickCount == 150){
-		// 	simulation.alphaTarget(0);
-		// }
+		let tickCount = model.stats.getTickCount();
+		if(tickCount == 300){
+			simulation.alphaTarget(0);
+		}
 
 		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
@@ -617,6 +616,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	active: bool,
 		*	activePath: bool,
 		*	depth: int,
+		*	leftDepth: int, //for left animation
 		*	label: str,
 		*	parents: arr,
 		*	children: arr,
@@ -680,6 +680,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].active = false;
 				nodes[i].activePath = false;
 				nodes[i].depth = undefined;
+				nodes[i].leftDepth = false;
 				nodes[i].children = [];
 				nodes[i].functional = false;
 				nodes[i].function = '';
@@ -945,11 +946,31 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return false;
 		}
 
+		function setLeftDepth(node, goToNode) {
+			//unset left depth for all nodes
+			let nodes = myThis.nodes;
+
+			for (var i = 0; i < nodes.length; i++) {
+				nodes[i].leftDepth = false;
+			}
+
+			//set left depth
+			let previosDepth = node.depth;
+
+			goToNode.leftDepth = (previosDepth + 1);
+			goToNode.parents.push(node.id);
+			for (var i = 0; i < goToNode.children.length; i++) {
+				let child = getNodeById(goToNode.children[i]);
+				child.leftDepth = (previosDepth + 2);
+			}
+		}
+
 		// var timerDDId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
 				if(goToNode){
+					setLeftDepth(node, goToNode);
 					node = goToNode;
 				}
 			}
@@ -1042,6 +1063,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									active: false,
 									activePath: false,
 									depth: undefined,//nodes[i].depth+1
+									leftDepth: false,
 									label: "+",
 									parents: [nodes[i].id],
 									children: [],
@@ -1077,6 +1099,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					active: false,
 					activePath: false,
 					depth: undefined,
+					leftDepth: false,
 					label: name,
 					parents: [],
 					children: [],
@@ -1161,6 +1184,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					limmiter--;
 					if(limmiter <= 0) {
 						// throw new Error('Невозможно найти fullActivePath.')
+						//можно дописать что бы искало еще и по goTo параметрамы
 						console.error('Невозможно найти fullActivePath.')
 						return false;
 					}
@@ -1245,7 +1269,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			var wrapperStats = document.createElement("div");
 			// wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
-			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;display: none;");
+			wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
 
 			//fps
 			var fps = createStat('FPS: ');
@@ -1364,8 +1388,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function forceSettings(force, d){
-			let activeDepth = model.activeNode.depth;
+			let activeNode = model.activeNode;
+			// let activeDepth = activeNode.depth;
+			let activeDepth = activeNode.leftDepth ? activeNode.leftDepth : activeNode.depth;
 			let scrollNext = true;
+			// let nodeDepth = d.depth;
+			let nodeDepth = d.leftDepth ? d.leftDepth : d.depth;
 			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
 			if(verticalScreen){
 				if(!d.functional){
@@ -1387,15 +1415,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							if(scrollNext){
 								if(d.active){
-									// return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
-									return (width/2 + width/2*(d.depth - activeDepth)) - width/1.2;
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) - width/2;
+									return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.2;
 								}else{
-									// return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
-									return (width/5 + width/2*(d.depth - activeDepth)) - width/1.3;
+									// return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
+									return (width/5 + width/2*(nodeDepth - activeDepth)) - width/1.3;
 								}
 							}else{
-								// return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
-								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/1.2;
+								// return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/2;
+								return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/1.2;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
@@ -1406,12 +1434,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'verticalForce':
 							if(scrollNext){
 								if(d.active){
-									return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+									return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
 								}else{
-									return (height/18 + (height*4/5)*(d.depth - activeDepth)) - height/2;
+									return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
 								}
 							}else{
-								return (height/18 + (height*4/5)*(d.depth - activeDepth+1)) - height/2;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth+1)) - height/2;
 							}
 							break;
 						//мощность силы которая задает вертикальную координату
@@ -1441,12 +1469,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							switch (d.function){
 								case 'back':
-									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
 									return (width/10 + getNodeRadius(d)) - width/1.5;
 									break;
 								case 'menu':
-									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
 									break;
@@ -1487,19 +1515,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
 							return -2000;
+							// return -50;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
 							if(scrollNext){
+								// console.log('id',d.id);
+								// console.log('nodeDepth',nodeDepth);
+								// console.log('activeDepth',activeDepth);
 								if(d.active){
-									// console.log('active-x:',(width/2 + width/2*(d.depth - activeDepth)) - width/2);
-									return (width/2 + width/2*(d.depth - activeDepth)) - width/1.7;
+									// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
+									return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+									// return 0;
 								}else{
-									// console.log('child-x:',(width/5 + width/2*(d.depth - activeDepth)) - width/2);
-									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
+									return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
+									// return 0;
 								}
 							}else{
-								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+								return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/2;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
@@ -1537,12 +1571,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							switch (d.function){
 								case 'back':
-									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
 									return (width/20 + getNodeRadius(d)) - width/2;
 									break;
 								case 'menu':
-									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
+									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
 									break;
