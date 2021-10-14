@@ -45,10 +45,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var showNodeDelay = 100; //задерка перед появлением ноды
-	var showLinkDelay = 0; //задерка перед появлением линка
+	var showLinkDelay = 100; //задерка перед появлением линка
 	var showSlideDelay = 0; //задерка сдвига перед появлением
-	var hideSlideDelay = 400; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = 800; //задерка сдвига перед прятанием ** delay before link hide
+	var hideSlideDelay = 100; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = 0; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 400; //длина анимации появления в css
 	var hideNodeCssDuration = 400; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
@@ -98,7 +98,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function getColideRadius(d){
-		return 90;
+		return 250;
 	}
 
 
@@ -197,7 +197,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
-		simulation.alphaTarget(0.1).restart();
+		simulation.alphaTarget(0.45).restart();
 		// simulation.alpha(1).restart();
 
 		model.stats.restart();
@@ -337,7 +337,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
-					result = counter * showNodeDelay + counter * showLinkDelay-400;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay -400;//showCssDuration тут по идеи линка
 				}else{
 					// result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
 					result = counter * showNodeDelay + counter * showLinkDelay + startDelay-400;
@@ -417,7 +417,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
 				}else{
 					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + showSlideDelay + startDelay;//showCssDuration тут по идеи ноды
 				}
 
 				// console.log('link-counter',counter);
@@ -434,7 +434,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function dragstarted(d) {
-		if (!d3.event.active) simulation.alphaTarget(2).restart();
+		if (!d3.event.active) simulation.alphaTarget(1.7).restart();
 		model.stats.restart();
 		d.fx = d.x;
 		d.fy = d.y;
@@ -1278,31 +1278,34 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.035;
+							return 0.065;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
-							return 4;
+							return 2;
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
-							return -2000;
+							return -1200;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
 							if(scrollNext){
 								if(d.active){
-									return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+									// return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+									return (width/2 + width/2*(d.depth - activeDepth)) - width/1.2;
 								}else{
-									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+									// return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
+									return (width/5 + width/2*(d.depth - activeDepth)) - width/1.3;
 								}
 							}else{
-								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+								// return (width/4 + width/2*(d.depth - activeDepth+1)) - width/2;
+								return (width/4 + width/2*(d.depth - activeDepth+1)) - width/1.2;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.05;
+							return 0.12;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1318,7 +1321,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return 0.035;
+							return 0.05;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
@@ -1345,7 +1348,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								case 'back':
 									// return (width/2 + width/2*(d.depth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-									return (width/20 + getNodeRadius(d)) - width/2;
+									return (width/10 + getNodeRadius(d)) - width/1.5;
 									break;
 								case 'menu':
 									// return (width/2 + width/2*(d.depth - activeDepth)) -  (getNodeRadius()*4 + 150);
@@ -1359,7 +1362,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.05;
+							return 0.3;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1367,7 +1370,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return 0.1;
+							return 0.3;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
@@ -1380,11 +1383,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.035;
+							return 0.3;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
-							return 4;
+							return 400;
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
@@ -1395,7 +1398,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							if(scrollNext){
 								if(d.active){
 									// console.log('active-x:',(width/2 + width/2*(d.depth - activeDepth)) - width/2);
-									return (width/2 + width/2*(d.depth - activeDepth)) - width/2;
+									return (width/2 + width/2*(d.depth - activeDepth)) - width/1.7;
 								}else{
 									// console.log('child-x:',(width/5 + width/2*(d.depth - activeDepth)) - width/2);
 									return (width/5 + width/2*(d.depth - activeDepth)) - width/2;
@@ -1414,7 +1417,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return 0.025;
+							return 0.035;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
@@ -1504,7 +1507,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = verticalScreen ? 0.4 : 0.29;
+			let sizeCoeficient = verticalScreen ? 1.3 : 0.29;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв

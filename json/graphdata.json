@@ -24,7 +24,7 @@
     },
     {
       "id": "5",
-      "label": "что<br>ты<br>умеешь?",
+      "label": "что ты<br>умеешь?",
       "parents": [4],
       "goTo": 7
     },
@@ -40,15 +40,20 @@
     },
     {
       "id": "8",
-      "label": "создать QR",
+      "label": "QR визитка",
       "parents": [6, 7],
       "iframe": "pages/qr/"
     },
     {
       "id": "9",
-      "label": "создать<br>супер<br>кошелёк",
+      "label": "супер<br>кошелёк",
       "parents": [6, 7],
       "iframe": "pages/sw/"
+    },
+    {
+      "id": "14",
+      "label": "живая<br>визитка",
+      "parents": [6, 7]
     },
     {
       "id": "13",
@@ -58,13 +63,13 @@
     },
     {
       "id": "10",
-      "label": "как<br>твоё<br>имя?",
+      "label": "как твоё<br>имя?",
       "parents": [4],
       "goTo": 11
     },
     {
       "id": "11",
-      "label": "моё<br>имя<br>variant",
+      "label": "моё имя<br>variant",
       "parents": [10]
     },
     {
