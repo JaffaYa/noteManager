@@ -80,8 +80,8 @@ body {
 /* nede spheres */
 .node .c1 {
   z-index: -2;
-  width: 150px;
-  height: 150px;
+  width: 1.35rem;
+  height: 1.35rem;
   border-radius: 50%;
   background-color: rgb(255,255,255,0.5);
   transition: 0.55s cubic-bezier(.75,-0.5,0,1.75);
@@ -89,8 +89,8 @@ body {
 }
 .node .c2{
   z-index: -1;
-  width: 95px;
-  height: 95px;
+  width: 0.85rem;
+  height: 0.85rem;
   background-color: rgb(255,255,255,1);
   transition: 0.55s cubic-bezier(.75,-0.5,0,1.75);
   transition-delay: 0s;
@@ -136,15 +136,14 @@ body {
 
 
 /* text */
-.node .v-content,
-.node.hide .v-content{
+.node .v-content{
   position: absolute;
   top: -15px;
   left: 0;
   font-size: 1rem;
   font-weight: 900;
   color: #212121;
-  line-height: 0.875rem;
+  line-height: 0.85rem;
   font-family: 'Fira Sans', sans-serif;
   word-break: normal;
   white-space: nowrap;
@@ -157,9 +156,13 @@ body {
   -ms-filter: blur(5px);
   filter: blur(5px);
   opacity: 0;
-  transform: scale(0.6) translateX(30%) translateY(0px);
+  transform: scale(0.6) translateX(30%) translateY(0rem);
   transition: 0.7s ease-in-out;
   /*transition-delay: 0.085s;*/
+}
+.node.hide .v-content{
+  transform: scale(0.3) translateX(-150%) translateY(0rem);
+  transition: 0.5s ease-in-out 0s;
 }
 .node.show .v-content{
   -webkit-filter: blur(0px);
@@ -168,17 +171,18 @@ body {
   -ms-filter: blur(0px);
   filter: blur(0px);
   opacity: 1;
-  transform: scale(0.75) translateX(0%) translateY(0px);
+  transform: scale(0.75) translateX(0%) translateY(0rem);
+  transition-delay: 0.25s;
 }
 .node.active.show .v-content{
   opacity: 1;
 }
 .node.active .v-content{
-  transform: scale(1) translateX(-100%) translateY(-100px);
+  transform: scale(1) translateX(-100%) translateY(-0.8rem);
 }
 .node.hide .v-content{
   opacity: 0;
-  transform: scale(0.5) translateX(-100%) translateY(-100px);
+  transform: scale(0.5) translateX(-150%) translateY(-0.8rem);
 }
 
 
@@ -211,6 +215,10 @@ body {
 .btn-back,
 .btn-menu{
   transform: scale(0.65);
+}
+.btn-back.hide .v-content{
+  transform: scale(0.65) translateX(0%) translateY(0rem);
+  transition-delay: 0s;
 }
 .hider .node-btn{
   position: absolute;
@@ -499,7 +507,7 @@ body {
 }
 .node .c1, 
 .node .c2 {
-  transform: translate(-50%, -50%) scale(0.35);
+  transform: translate(-50%, -50%) scale(0);
 }
 .active .c1, .active .c2, 
 .active:hover .c1, .active:hover .c2 {
@@ -517,9 +525,12 @@ body {
 .node:hover .c2{
   transform: translate(-50%, -50%) scale(0.55);
 }
+.node.active .v-content {
+    transform: scale(1) translateX(0%) translateY(-1.2rem);
+}
 .logo-main {
-  width: 30%;
-  bottom: 2%;
+  width: 25%;
+  bottom: 1%;
 }
 .hider {
   top: 105%;
