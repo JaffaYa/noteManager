@@ -96,6 +96,39 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.view = new makeView(model);
 
+	var browserNavButtons = false;
+	//on change url
+	window.onpopstate = function(historyPopEvent) {
+		browserNavButtons = true;
+
+		let id = null;
+		if(historyPopEvent.state){
+			id = historyPopEvent.state.id;
+		}
+		if(id){
+			let currActivePath = model.getActivePath();
+			if(model.isInArrayId(id,currActivePath)){
+				model.backButton(deleteDelay, deleteDelayCallback);
+			}else{
+				model.forwardButton(id, deleteDelay, deleteDelayCallback);
+
+			}
+
+
+			svgLinks = buildLinks(model.links);
+			htmlNodes = buildNodes(model.nodesToDisplay);
+
+			simulation.nodes(model.nodesToDisplay);
+			simulation.force("link").links(model.links);
+			// simulation.alphaTarget(0.1).restart();
+			simulation.alpha(1).restart();
+
+			model.stats.restart();
+		}
+
+
+	};
+
 
 	function getColideRadius(d){
 		return 90;
@@ -149,7 +182,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	function bubleClick(d, i, arr, delDelayFlag = true) {
+	function bubleClick(d, i, arr) {
+		let  delDelayFlag = true;
 
 		if(!d.active){
 			playBubble();
@@ -162,7 +196,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional) delDelayFlag = false;
 
 		if(delDelayFlag){
-			model.cliсkOnNode(d, deleteDelay, bubleClick);
+			model.cliсkOnNode(d, deleteDelay, deleteDelayCallback);
 		}else{
 			model.cliсkOnNode(d);
 		}
@@ -171,7 +205,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					model.backButton(deleteDelay, bubleClick);
+					model.backButton(deleteDelay, deleteDelayCallback);
 					break;
 				case 'menu':
 					popupActive('menu');
@@ -197,8 +231,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
-		simulation.alphaTarget(0.1).restart();
-		// simulation.alpha(1).restart();
+		// simulation.alphaTarget(0.1).restart();
+		simulation.alpha(1).restart();
 
 		model.stats.restart();
 
@@ -210,7 +244,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function simulationTick(){
 		model.stats.tick();
 
-		console.log('alpha:'+simulation.alpha());
+		// let tickCount = model.stats.getTickCount();
+		// if(tickCount == 150){
+		// 	simulation.alphaTarget(0);
+		// }
+
+		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -227,6 +266,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
+	}
+
+	function deleteDelayCallback(model){
+		svgLinks = buildLinks(model.links);
+		htmlNodes = buildNodes(model.nodesToDisplay);
+
+		simulation.nodes(model.nodesToDisplay);
+		simulation.force("link").links(model.links);
 	}
 
 
@@ -247,7 +294,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			if( d.functional ) return false;
 			if( activeNodeCildrens.includes(d.id) ) return false;
 			return true;
-		});
+		});	
+
+		// d3nodes
+		// .transition()
+	 //    .duration(5000)
+	 //    .easeVarying(d => d3.easePolyIn.exponent(d.exponent))
 		
 
 		//enter
@@ -552,7 +604,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.getNodeById = getNodeById;
 		//для использования нужно сделать очистку activePath с учётом возможности прижка между нодами
 		this.showAllTree = showAllTree;
+		this.forwardButton = forwardButton;
 		this.backButton = backButton;
+		this.updateNodesToDisplay = updateNodesToDisplay;
+		this.updateLinks = updateLinks;
+		this.isInArrayId = isInArrayId;
 		/*
 		* node = {
 		*	id: int,
@@ -629,8 +685,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].display = false;
 				nodes[i].goTo = nodes[i].goTo*1 || false;
 			}
-			makeNodeActive(nodes[0]);
+			let startNode = setInitNode();
+			makeNodeActive(startNode);
 			updateNodes();
+
+			function setInitNode(){
+				// console.dir(window.location);
+				let get = window.location.search;
+				let id = null;
+				if(get){
+					id = get.split('=')[1];
+				}
+				if(id === null){
+					id = 1;
+				}
+				return getNodeById(id);
+			}
 		}
 
 		function setNodesDepth(widthChildrens = true){
@@ -722,6 +792,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				activePath.push(currNode);
 			}
 			myThis.activeNode = currNode;
+			if(!browserNavButtons){
+				// window.location = "#id:"+currNode.id;
+				history.pushState({id:currNode.id}, '', '?node='+currNode.id);
+			}else{
+				browserNavButtons = false;
+			}
 		}
 
 		function setNodesDisplay(widthChildrens = true){
@@ -867,7 +943,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return false;
 		}
 
-		var timerDDId = null;
+		// var timerDDId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
@@ -880,10 +956,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 			if(deleteDelay){
-				clearTimeout(timerDDId);
-				timerDDId = setTimeout(function(node) {
-					callback(node, node.index, myThis.nodesToDisplay, false);//replace nodesToDisplay to html list of nodes
-				}, deleteDelay, node);
+				// clearTimeout(timerDDId);
+				timerDDId = setTimeout(function(model) {
+					model.updateNodesToDisplay(false);
+					model.updateLinks();
+					callback(model);
+				}, deleteDelay, myThis);
 			}
 		}
 
@@ -1009,12 +1087,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
-
 		function backButton(deleteDelay = false, callback = function(){}){
 			let currActivePath = getActivePath();
 
 			//if firs node active
-			if(currActivePath.length < 2) return;
+			if(currActivePath.length < 2 && isInArrayId(1,currActivePath)) return;
 
 			//clear previos activePath
 			//spep back activePath
@@ -1028,6 +1105,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			cliсkOnNode(currActivePath[currActivePath.length-1], deleteDelay, callback);
 		}
 
+		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
+			let node = getNodeById(nodeId);
+			cliсkOnNode(node, deleteDelay, callback);
+		}
+
 		function getActivePath(){
 			// let nodes = myThis.nodes;
 			// let activePath = [];
@@ -1036,18 +1118,27 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 		activePath.push(nodes[i]);
 			// 	}
 			// }
+
+			//if come to page with not firt node
+			if( activePath.length > 0 && !isInArrayId(1,activePath) ){
+				activePath = getFullActivePath(activePath[activePath.length-1]);
+				activePath = activePath.filter(d => d.goTo === false);
+			}
+
 			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
 		}
 
+
 		function getFullActivePath(node = null){
-			let currActivePath = getActivePath();
 			let fullActivePath = [];
 
 			if(node !== null){
 				var fullChain = makeFullChain();
 				fullChain(node, myThis.nodes[0]);
-				return fullActivePath;
+				return fullActivePath.reverse();
 			}
+
+			let currActivePath = getActivePath();
 
 			if( (currActivePath.length - 1) == 0 ){
 				fullActivePath = currActivePath;
@@ -1058,9 +1149,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 
-			this.makeFullChain = makeFullChain;
 
-			return fullActivePath;
+			return fullActivePath.reverse();
 
 			function makeFullChain(){
 				var limmiter = 20;
@@ -1130,7 +1220,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						fullActivePath.push(a);
 					}else{
 						let missingNodes = findMissNods(b.parents, a.id);
-
 						if(missingNodes){
 							for (var i = 0; i < missingNodes.length; i++) {
 								let node = getNodeById(missingNodes[i]);
@@ -1176,6 +1265,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				return value;
 			}
 
+			function getTickCount(){
+				return tickCount;
+			}
+
 			return{
 				enable: function(){
 					isActive = true;
@@ -1200,9 +1293,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							frame = 0;
 						}
 
-						if(tickCount == 150){
-							simulation.alphaTarget(0);
-						}
+
 
 						//counter
 						tickCount++;
@@ -1210,7 +1301,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 						simTime.innerHTML = (Date.now() - simulationTime)/1000;
 					}
-				}
+				},
+				getTickCount: getTickCount
 			}
 
 		}
