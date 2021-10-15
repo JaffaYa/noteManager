@@ -54,7 +54,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
 	var startDelay = 250; //доп задерка при старте
 
-	var deleteDelay = 500; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = 1000; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -236,8 +236,36 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
 
-		simulation.alphaTarget(0.45).restart();
+		simulation.alphaDecay(0.2);//0.022
+		simulation.alphaTarget(0.5).restart();
 		// simulation.alpha(1).restart();
+
+		// setTimeout(function(simulation){
+		// 	console.log('stop');
+		// 	simulation.alphaTarget(0);
+		// 	simulation.alphaDecay(0.0228);
+		// }, deleteDelay+100, simulation);
+
+		let time = 400;
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0.2);
+			simulation.alphaDecay(0.02)
+		}, time+100, simulation);
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0.3);
+			simulation.alphaDecay(0.01)
+		}, time+200, simulation);
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0.5);
+		}, time+300, simulation);
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0);
+			simulation.alphaDecay(0.022)
+		}, time+500, simulation);
 
 
 		model.stats.restart();
@@ -251,9 +279,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		model.stats.tick();
 
 		let tickCount = model.stats.getTickCount();
-		if(tickCount == 300){
-			simulation.alphaTarget(0);
-		}
+
+		// simulation.alphaDecay(simulation.alphaDecay() + 0.002);
+		// if(tickCount == 150){
+		// 	simulation.alphaTarget(0);
+		// }
+		// if(tickCount == 500){
+		// 	simulation.alphaDecay(0.0228).restart();
+		// }
 
 		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
