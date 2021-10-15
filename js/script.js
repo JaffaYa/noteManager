@@ -237,8 +237,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
 
-		simulation.alphaDecay(0.2);//0.022
-		simulation.alphaTarget(0.5).restart();
+		simulation.alphaDecay(0.2);//0.022 // скорость затухания alpha
+		simulation.alphaTarget(0.1).restart(); // чем меньше, тем меньше сила
 		// simulation.alpha(1).restart();
 
 		// setTimeout(function(simulation){
@@ -247,21 +247,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	simulation.alphaDecay(0.0228);
 		// }, deleteDelay+100, simulation);
 
-		let time = 400;
+		let time = 0;
 
 		setTimeout(function(simulation){
-			simulation.alphaTarget(0.2);
-			simulation.alphaDecay(0.02)
+			simulation.alphaTarget(1);
+			simulation.alphaDecay(0.05)
 		}, time+100, simulation);
 
 		setTimeout(function(simulation){
-			simulation.alphaTarget(0.3);
-			simulation.alphaDecay(0.01)
-		}, time+200, simulation);
-
-		setTimeout(function(simulation){
 			simulation.alphaTarget(0.5);
+			simulation.alphaDecay(0.3)
 		}, time+300, simulation);
+
+		// setTimeout(function(simulation){
+		// 	simulation.alphaTarget(0.5);
+		// 	simulation.alphaDecay(0.3)
+		// }, time+300, simulation);
 
 		setTimeout(function(simulation){
 			simulation.alphaTarget(0);
