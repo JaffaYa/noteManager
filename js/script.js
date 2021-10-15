@@ -54,7 +54,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
 	var startDelay = 250; //доп задерка при старте
 
-	var deleteDelay = 700; //задержка до удаления из симуляции, но не с экрана
+
+	var deleteDelay = 1000; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -140,7 +141,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		window.simulation = d3.forceSimulation(model.nodesToDisplay)
 		.force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional) )
+		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional ) )// || d.function == 'logo'
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
@@ -182,22 +183,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function bubleClick(d, i, arr) {
-		let  delDelayFlag = true;
+		let  backButton = false;
 
 		if(!d.active){
 			playBubble();
-		}
-
-		// console.dir(d);
-
-		// console.dir(arguments);
-		//for back button
-		if(d.functional) delDelayFlag = false;
-
-		if(delDelayFlag){
-			model.cliсkOnNode(d, deleteDelay, deleteDelayCallback);
-		}else{
-			model.cliсkOnNode(d);
 		}
 
 		//apply click function
@@ -205,16 +194,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			switch (d.function){
 				case 'back':
 					model.backButton(deleteDelay, deleteDelayCallback);
+					backButton = true;
 					break;
 				case 'menu':
 					popupActive('menu');
 					bodyClass.classList.toggle('menu-show'); // temp
 					break;
+				case 'logo':
+					bodyClass.classList.toggle('v-active');
+					break;
 				default:
 					throw new Error('Неизвестная нода.')
 			}
 		}
-
+		//open iframe
 		if(d.iframe){
 			var iframe = document.querySelector('.iframe iframe');
 			var iframeSrc = iframe.getAttribute("src");
@@ -224,6 +217,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			popupActive('iframe');
 			bodyClass.classList.add('page-show'); // temp
 		}
+
+		let doActive = model.isSlide(d);
+		//if has no child
+		if(!doActive){
+			return;
+		}
+
+		//calculate new model
+		if(!backButton){
+			model.cliсkOnNode(d, deleteDelay, deleteDelayCallback);
+		}
+
+		view.scrollNext = model.isSlide(model.activeNode);
 	
 		svgLinks = buildLinks(model.links);
 		htmlNodes = buildNodes(model.nodesToDisplay);
@@ -231,8 +237,36 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
 
+		simulation.alphaDecay(0.2);//0.022
 		simulation.alphaTarget(0.5).restart();
 		// simulation.alpha(1).restart();
+
+		// setTimeout(function(simulation){
+		// 	console.log('stop');
+		// 	simulation.alphaTarget(0);
+		// 	simulation.alphaDecay(0.0228);
+		// }, deleteDelay+100, simulation);
+
+		let time = 400;
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0.2);
+			simulation.alphaDecay(0.02)
+		}, time+100, simulation);
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0.3);
+			simulation.alphaDecay(0.01)
+		}, time+200, simulation);
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0.5);
+		}, time+300, simulation);
+
+		setTimeout(function(simulation){
+			simulation.alphaTarget(0);
+			simulation.alphaDecay(0.022)
+		}, time+500, simulation);
 
 
 		model.stats.restart();
@@ -246,9 +280,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		model.stats.tick();
 
 		let tickCount = model.stats.getTickCount();
-		if(tickCount == 300){
-			simulation.alphaTarget(0);
-		}
+
+		// simulation.alphaDecay(simulation.alphaDecay() + 0.002);
+		// if(tickCount == 150){
+		// 	simulation.alphaTarget(0);
+		// }
+		// if(tickCount == 500){
+		// 	simulation.alphaDecay(0.0228).restart();
+		// }
 
 		// console.log('alpha:'+simulation.alpha());
 		// console.log('alphaMin:'+simulation.alphaMin());
@@ -309,6 +348,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('btn-functional', d => d.functional)
 		.classed('btn-back', d => d.function == 'back')
 		.classed('btn-menu', d => d.function == 'menu')
+		.classed('btn-logo', d => d.function == 'logo')
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
@@ -610,6 +650,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.updateNodesToDisplay = updateNodesToDisplay;
 		this.updateLinks = updateLinks;
 		this.isInArrayId = isInArrayId;
+		this.isSlide = isSlide;
 		/*
 		* node = {
 		*	id: int,
@@ -647,6 +688,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		var isShowAllTree = false;
 		var activePath = [];
+		var backButtonFlag = false;
 
 
 
@@ -948,14 +990,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function setLeftDepth(node, goToNode) {
 			//unset left depth for all nodes
-			let nodes = myThis.nodes;
+			// let nodes = myThis.nodes;
 
-			for (var i = 0; i < nodes.length; i++) {
-				nodes[i].leftDepth = false;
-			}
+			// for (var i = 0; i < nodes.length; i++) {
+			// 	nodes[i].leftDepth = false;
+			// }
 
 			//set left depth
-			let previosDepth = node.depth;
+			let previosDepth = node.leftDepth || node.depth;
+			// console.log('previosNode',previosDepth);
 
 			goToNode.leftDepth = (previosDepth + 1);
 			goToNode.parents.push(node.id);
@@ -967,13 +1010,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		// var timerDDId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
+			let previosNode = myThis.activeNode;
+			let goToFlag = false;
 			if(node.goTo !== false){
 				var goToNode = getNodeById(node.goTo);
 				if(goToNode){
-					setLeftDepth(node, goToNode);
+					goToFlag = true;
+					previosNode = node;
 					node = goToNode;
 				}
 			}
+			if(!backButtonFlag || goToFlag){
+				setLeftDepth(previosNode, node);
+			}
+			if(backButtonFlag){
+				backButtonFlag = false;
+			}
+
+			// console.log(node.leftDepth || node.depth  );
+
 			makeNodeActive(node);
 			updateNodes(deleteDelay);
 
@@ -997,6 +1052,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			setNodesDisplay();
 			updateNodesToDisplay(deleteDelay);
 			updateLinks();
+		}
+
+		function isSlide(node){
+			if(node.functional) return true;
+			let hasChild = node.children.length > 0
+			let hasgoTo = node.goTo !== false;
+			return hasChild || hasgoTo;
 		}
 
 		function Admin(admin = false){
@@ -1090,6 +1152,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function addFunctionalButtons(){
 			addFunctionalButton(10000, 'назад', 'back');
 			addFunctionalButton(10001, 'меню', 'menu');
+			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-v.svg"></div>', 'logo');
 		}
 
 		function addFunctionalButton(id, name, function1){
@@ -1124,6 +1187,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//или это не тут а при клике на ноду нужно делать
 			var backStepNode = currActivePath.pop();
 			backStepNode.activePath = false;
+
+			backButtonFlag = true;
 
 			//simulate click on stepback node
 			// console.dir(currActivePath);
@@ -1364,6 +1429,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.simulationResize = throttle(simulationResize,50);
 		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
+		this.scrollNext = true;
 
 		var width = window.innerWidth;
 		var height = window.innerHeight;
@@ -1405,11 +1471,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function forceSettings(force, d){
 			let activeNode = model.activeNode;
-			// let activeDepth = activeNode.depth;
 			let activeDepth = activeNode.leftDepth ? activeNode.leftDepth : activeNode.depth;
-			let scrollNext = true;
-			// let nodeDepth = d.depth;
+			let scrollNext = true; 
 			let nodeDepth = d.leftDepth ? d.leftDepth : d.depth;
+
+			if(!self.scrollNext) activeDepth--;
+
 			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
 			if(verticalScreen){
 				if(!d.functional){
@@ -1429,17 +1496,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
-							if(scrollNext){
-								if(d.active){
-									// return (width/2 + width/2*(nodeDepth - activeDepth)) - width/2;
-									return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.2;
-								}else{
-									// return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
-									return (width/5 + width/2*(nodeDepth - activeDepth)) - width/1.3;
-								}
+							if(d.active){
+								// return (width/2 + width/2*(nodeDepth - activeDepth)) - width/2;
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.2;
 							}else{
-								// return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/2;
-								return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/1.2;
+								// return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
+								return (width/5 + width/2*(nodeDepth - activeDepth)) - width/1.3;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
@@ -1448,14 +1510,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							if(scrollNext){
-								if(d.active){
-									return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
-								}else{
-									return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
-								}
+							if(d.active){
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
 							}else{
-								return (height/18 + (height*4/5)*(nodeDepth - activeDepth+1)) - height/2;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
 							}
 							break;
 						//мощность силы которая задает вертикальную координату
@@ -1493,6 +1551,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
+									break;
+								case 'logo':
+									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')
@@ -1535,22 +1596,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
-							if(scrollNext){
-								// console.log('id',d.id);
-								// console.log('nodeDepth',nodeDepth);
-								// console.log('activeDepth',activeDepth);
-								if(d.active){
-									// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-									return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.7;
-									// return 0;
-								}else{
-									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-									return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
-									// return 0;
-								}
+
+							// console.log('id',d.id);
+							// console.log('nodeDepth',nodeDepth);
+							// console.log('activeDepth',activeDepth);
+							if(d.active){
+								// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+								// return 0;
 							}else{
-								return (width/4 + width/2*(nodeDepth - activeDepth+1)) - width/2;
+								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
+								return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
+								// return 0;
 							}
+
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
@@ -1595,6 +1654,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
+									break;
+								case 'logo':
+									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')

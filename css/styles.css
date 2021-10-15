@@ -42,7 +42,7 @@ body {
   position: absolute;
   bottom: 5%;
   left: 50%;
-  width: 10%;
+  width: 2rem;
   transform: translateX(-50%); 
   opacity: 1;
   transition: opacity 1s cubic-bezier(.4,.34,.16,.92);
@@ -277,6 +277,12 @@ body {
   opacity: 1;
   transform: scale(0.75) translateX(0%) translateY(0px);
   transition: 0.5s ease-in-out 0.35s;
+}
+
+.node.btn-logo .c1,
+.node.btn-logo .c2
+{
+  display: none;
 }
 
 
@@ -529,7 +535,7 @@ body {
     transform: scale(1) translateX(0%) translateY(-1.2rem);
 }
 .logo-main {
-  width: 25%;
+  width: 2.5rem;
   bottom: 1%;
 }
 .hider {
