@@ -140,7 +140,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		window.simulation = d3.forceSimulation(model.nodesToDisplay)
 		.force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional) )
+		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional ) )// || d.function == 'logo'
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
@@ -198,6 +198,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				case 'menu':
 					popupActive('menu');
 					bodyClass.classList.toggle('menu-show'); // temp
+					break;
+				case 'logo':
+					bodyClass.classList.toggle('v-active');
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -311,6 +314,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('btn-functional', d => d.functional)
 		.classed('btn-back', d => d.function == 'back')
 		.classed('btn-menu', d => d.function == 'menu')
+		.classed('btn-logo', d => d.function == 'logo')
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
@@ -960,7 +964,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			//set left depth
 			let previosDepth = node.leftDepth || node.depth;
-			console.log('previosNode',previosDepth);
+			// console.log('previosNode',previosDepth);
 
 			goToNode.leftDepth = (previosDepth + 1);
 			goToNode.parents.push(node.id);
@@ -989,7 +993,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				backButtonFlag = false;
 			}
 
-			console.log(node.leftDepth || node.depth  );
+			// console.log(node.leftDepth || node.depth  );
 
 			makeNodeActive(node);
 			updateNodes(deleteDelay);
@@ -1114,6 +1118,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function addFunctionalButtons(){
 			addFunctionalButton(10000, 'назад', 'back');
 			addFunctionalButton(10001, 'меню', 'menu');
+			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-v.svg"></div>', 'logo');
 		}
 
 		function addFunctionalButton(id, name, function1){
@@ -1513,6 +1518,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
 									break;
+								case 'logo':
+									return 0;
+									break;
 								default:
 									throw new Error('Неизвестная кнопка.')
 									break;
@@ -1612,6 +1620,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
+									break;
+								case 'logo':
+									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')
