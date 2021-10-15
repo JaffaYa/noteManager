@@ -54,7 +54,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
 	var startDelay = 250; //доп задерка при старте
 
-	var deleteDelay = 500; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = 700; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -231,7 +231,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
 
-		simulation.alphaTarget(0.45).restart();
+		simulation.alphaTarget(0.5).restart();
 		// simulation.alpha(1).restart();
 
 
@@ -390,10 +390,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
-					result = counter * showNodeDelay + counter * showLinkDelay -400;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay;//showCssDuration тут по идеи линка
 				}else{
 					// result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
-					result = counter * showNodeDelay + counter * showLinkDelay + startDelay-400;
+					result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
 				}
 
 				// console.log('node-counter',counter);
