@@ -131,7 +131,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function getColideRadius(d){
-		return 250;
+		return 120;
 	}
 
 
@@ -141,11 +141,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		window.simulation = d3.forceSimulation(model.nodesToDisplay)
 		.force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr), d => !d.functional ) )// || d.function == 'logo'
+		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr).distanceMax(Infinity), d => !d.functional ) )// || d.function == 'logo'
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
 		// .force("collide", d3.forceCollide().radius(getColideRadius))
+		.force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
+
 		// еще радиальную силу добавить
 
 
@@ -172,6 +174,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		svgLinks = buildLinks(model.links);
 		htmlNodes = buildNodes(model.nodesToDisplay);
+
+		simulation
 
 		firstScrean = false;
 		model.stats.restart();
@@ -236,7 +240,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
-
 		simulation.alphaDecay(0.2);//0.022 // скорость затухания alpha
 		simulation.alphaTarget(0.1).restart(); // чем меньше, тем меньше сила
 		// simulation.alpha(1).restart();
@@ -258,11 +261,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.alphaTarget(0.5);
 			simulation.alphaDecay(0.3)
 		}, time+300, simulation);
-
-		// setTimeout(function(simulation){
-		// 	simulation.alphaTarget(0.5);
-		// 	simulation.alphaDecay(0.3)
-		// }, time+300, simulation);
 
 		setTimeout(function(simulation){
 			simulation.alphaTarget(0);
@@ -1427,6 +1425,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.slideForceStr = slideForceStr;
 		this.verticalForce = verticalForce;
 		this.verticalForceStr = verticalForceStr;
+		this.radial = radial;
+		this.radialStr = radialStr;
+		this.radialX = radialX;
+		this.radialY = radialY;
 		this.simulationResize = throttle(simulationResize,50);
 		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
@@ -1451,6 +1453,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function manyBodyStr(d){
 			return forceSettings('manyBodyStr', d);
 		}
+		//максимальная сила реагирования manyBody
+		function manyBodyDistanceMax(d){
+			return forceSettings('manyBodyDistanceMax', d);
+		}
 
 		//сила задаеть горизонтальную координату для каждой ноды
 		function slideForce (d){
@@ -1468,6 +1474,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//мощность силы которая задает вертикальную координату для каждой ноды
 		function verticalForceStr(d){
 			return forceSettings('verticalForceStr', d);
+		}
+
+		//радиус радиальной силы
+		function radial(d){
+			return forceSettings('radial', d);
+		}
+		//мощность радиальной силы
+		function radialStr(d){
+			return forceSettings('radialStr', d);
+		}
+		//координата X для центра радиальной силы
+		function radialX(d){
+			// console.log(forceSettings('slideForce', model.activeNode));
+			return forceSettings('slideForce', model.activeNode);
+		}
+		//координата X для центра радиальной силы
+		function radialY(d){
+			return forceSettings('verticalForce', model.activeNode);
 		}
 
 		function forceSettings(force, d){
@@ -1493,7 +1517,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
-							return -1200;
+							return -2000;
+							break;
+						//максимальная сила реагирования manyBody
+						case 'manyBodyDistanceMax':
+							return Infinity;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
@@ -1521,6 +1549,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'verticalForceStr':
 							return 0.05;
 							break;
+						//радиус радиальной силы
+						case 'radial':
+							return 200;
+							break;
+						//мощность радиальной силы
+						case 'radialStr':
+							if(!d.active){
+								return 0.1;
+							}else{
+								return 0;
+							}
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -1538,6 +1578,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
+							return 0;
+							break;
+						//максимальная сила реагирования manyBody
+						case 'manyBodyDistanceMax':
 							return 0;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
@@ -1573,6 +1617,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'verticalForceStr':
 							return 0.3;
 							break;
+						//радиус радиальной силы
+						case 'radial':
+							return 500;
+							break;
+						//мощность радиальной силы
+						case 'radialStr':
+							return 0;
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -1584,16 +1636,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.3;
+							return 0.025;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
-							return 400;
+							return 1;
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
-							return -2000;
+							return -1000;
 							// return -50;
+							break;
+						//максимальная сила реагирования manyBody
+						case 'manyBodyDistanceMax':
+							return Infinity;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
@@ -1614,7 +1670,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.05;
+							return d.active ? 0.3 : 0.035;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1622,7 +1678,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return 0.035;
+							return d.active ? 0.3 : 0.035;
+							break;
+						//радиус радиальной силы
+						case 'radial':
+							return 400;
+							break;
+						//мощность радиальной силы
+						case 'radialStr':
+							if(!d.active){
+								return 0.1;
+							}else{
+								return 0;
+							}
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
@@ -1641,6 +1709,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
+							return 0;
+							break;
+						//максимальная сила реагирования manyBody
+						case 'manyBodyDistanceMax':
 							return 0;
 							break;
 						//задаеть горизонтальную координату для каждой ноды
@@ -1675,6 +1747,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
 							return 0.1;
+							break;
+						//радиус радиальной силы
+						case 'radial':
+							return 500;
+							break;
+						//мощность радиальной силы
+						case 'radialStr':
+							return 0;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
