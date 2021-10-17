@@ -80,7 +80,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			.attr("class", "links");
 	var nodesCont = viewPort.append("div")
 		.attr("class", "nodes")
-		.attr("style", "position: absolute;left: 50vw;top: 50vh;");
+		.attr("style", "position: absolute;left: 50%;top: 50%;");
 
 	var htmlNodes = nodesCont.selectAll("div.node");
 	var svgLinks = linksCont.selectAll("line");
