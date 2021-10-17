@@ -133,7 +133,7 @@ body {
   font-size: 1rem;
   font-weight: 900;
   color: #212121;
-  line-height: 0.85rem;
+  line-height: 0.8rem;
   font-family: 'Fira Sans', sans-serif;
   word-break: normal;
   white-space: nowrap;
@@ -147,7 +147,7 @@ body {
   filter: blur(5px);
   opacity: 0;
   transform: scale(0.6) translateX(30%) translateY(0rem);
-  transition: 0.7s ease-in-out;
+  transition: 0.5s ease-in-out;
   /*transition-delay: 0.085s;*/
 }
 .node.hide .v-content{
@@ -391,7 +391,7 @@ body {
   background-color: #1f74db;
   background: linear-gradient(145deg, #1f74db, #ec308c, #FFA900, #A3A847, #1f74db);
   background-size: 1000% 1000%;
-  animation: gradient 30s ease infinite;
+  animation: gradient 40s ease infinite;
 }
 
 .particles-js-2{
@@ -509,12 +509,6 @@ body {
 .active:hover .c1, .active:hover .c2 {
   transform: translate(-50%, -50%) scale(0.5);
 }
-.btn-back { 
-  transform: translate(50px, 50px) scale(1);
-}
-.btn-menu {
-  transform: translate(-60px, 50px) scale(1);
-}
 .node:hover .c1{
   transform: translate(-50%, -50%) scale(0.55);
 }
@@ -587,6 +581,9 @@ body {
 }
 .nodes .node.btn-functional {
   transform: scale(0.45);
+}
+.btn-menu .v-content{
+    transform: scale(0.75) translateX(-100%)!important;
 }
 
 }

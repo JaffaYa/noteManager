@@ -47,15 +47,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showNodeDelay = 50; //задерка перед появлением ноды
 	var showLinkDelay = 50; //задерка перед появлением линка
 	var showSlideDelay = 250; //задерка сдвига перед появлением
-	var hideSlideDelay = 250; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = 0; //задерка сдвига перед прятанием ** delay before link hide
+	var hideSlideDelay = 100; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = 150; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 400; //длина анимации появления в css
 	var hideNodeCssDuration = 400; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
-	var startDelay = 250; //доп задерка при старте
+	var startDelay = 350; //доп задерка при старте
 
 
-	var deleteDelay = 700; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = 750; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -91,7 +91,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json", simInit);
 
-	model.stats.enable();
+	// model.stats.enable(); // stats enable
 	// model.admin.set(true);
 	// model.showAllTree();
 
@@ -131,7 +131,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function getColideRadius(d){
-		return 120;
+		// return 120;
+		if(verticalScreen){
+			if(!d.functional){
+				return 50; // задача: параметр должен изменяться пропорционально разрешению экрана
+			}else{
+				return 0; // задача: параметр должен изменяться пропорционально разрешению экрана				
+			}
+		}else{
+			return 120; // задача: параметр должен изменяться пропорционально разрешению экрана
+		}
 	}
 
 
@@ -145,8 +154,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
-		// .force("collide", d3.forceCollide().radius(getColideRadius))
-		// .force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
+		.force("collide", d3.forceCollide().radius(getColideRadius))
+		.force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
 
 		// еще радиальную силу добавить
 
@@ -240,8 +249,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		simulation.nodes(model.nodesToDisplay);
 		simulation.force("link").links(model.links);
-		simulation.alphaDecay(0.1);//0.022 // скорость затухания alpha
-		simulation.alphaTarget(0.1).restart(); // чем меньше, тем меньше сила
+		// simulation.alphaDecay(0.022); //0.022 // скорость затухания alpha
+		// simulation.alphaTarget(0.05).restart(); // чем меньше, тем меньше сила
 		// simulation.alpha(1).restart();
 
 		// setTimeout(function(simulation){
@@ -253,21 +262,34 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		let time = 0;
 
 		setTimeout(function(simulation){
-			simulation.alphaTarget(0.3);
-			simulation.alphaDecay(0.05);
-			simulation.velocityDecay(0.2) 
+			simulation.alphaTarget(0.25);
+			// simulation.alphaDecay(0.022);
+			simulation.velocityDecay(0.4) 
 		}, time+0, simulation);
 
 		// setTimeout(function(simulation){
-		// 	simulation.alphaTarget(1);
-		// 	simulation.alphaDecay(0.022)
-		// }, time+250, simulation);
+		// 	simulation.alphaTarget(0.1);
+		// 	simulation.alphaDecay(0.022);
+		// 	simulation.velocityDecay(0.1) 
+		// }, time+500, simulation);
+
+		// setTimeout(function(simulation){
+		// 	simulation.alphaTarget(0.55);
+		// 	// simulation.alphaDecay(0.05)
+		// 	simulation.velocityDecay(0.25) 
+		// }, time+350, simulation);
+
+		// setTimeout(function(simulation){
+		// 	simulation.alphaTarget(0.9);
+		// 	// simulation.alphaDecay(0.05)
+		// 	simulation.velocityDecay(0.3) 
+		// }, time+350, simulation);
 
 		setTimeout(function(simulation){
 			simulation.alphaTarget(0);
-			simulation.alphaDecay(0.022);
+			simulation.alphaDecay(0.05);
 			simulation.velocityDecay(0.2) 
-		}, time+750, simulation);
+		}, time+1000, simulation);
 
 
 		model.stats.restart();
@@ -430,8 +452,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				var result = 0;
 
 				if(!firstScrean){
-					result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay + showCssDuration;//showCssDuration тут по идеи линка
-					// result = counter * showNodeDelay + counter * showLinkDelay;//showCssDuration тут по идеи линка
+					result = counter * showNodeDelay + counter * showLinkDelay + showSlideDelay;//showCssDuration тут по идеи линка
+					// result = counter * showNodeDelay + counter * showSlideDelay;//showCssDuration тут по идеи линка
 				}else{
 					result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
 					// result = counter * showNodeDelay + counter * showLinkDelay + startDelay;
@@ -508,10 +530,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
-					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration;
 				}else{
 					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + showSlideDelay + startDelay;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
 				}
 
 				// console.log('link-counter',counter);
@@ -528,7 +550,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function dragstarted(d) {
-		if (!d3.event.active) simulation.alphaTarget(1.7).restart();
+		// if (!d3.event.active) simulation.alphaTarget(1.7).restart();
+		if (!d3.event.active) simulation.alphaTarget(1).restart(); // less alphaTarget
 		model.stats.restart();
 		d.fx = d.x;
 		d.fy = d.y;
@@ -1511,15 +1534,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.065;
+							return 0.035;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
-							return 2;
+							return 100;
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
-							return -2000;
+							return -50;
 							break;
 						//максимальная сила реагирования manyBody
 						case 'manyBodyDistanceMax':
@@ -1529,7 +1552,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'slideForce':
 							if(d.active){
 								// return (width/2 + width/2*(nodeDepth - activeDepth)) - width/2;
-								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.2;
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.15;
 							}else{
 								// return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
 								return (width/5 + width/2*(nodeDepth - activeDepth)) - width/1.3;
@@ -1537,23 +1560,23 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.12;
+							return d.active ? 0.1 : 0.25;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
 							if(d.active){
-								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/3;
 							}else{
-								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/2;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/1.5;
 							}
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return 0.05;
+							return d.active ? 0.25 : 0.05;
 							break;
 						//радиус радиальной силы
 						case 'radial':
-							return 200;
+							return 350;
 							break;
 						//мощность радиальной силы
 						case 'radialStr':
@@ -1597,7 +1620,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								case 'menu':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
-									return width/2 - (width/10 + getNodeRadius(d));
+									return width/2 - (width/10 + getNodeRadius(d)) + width/6;
 									break;
 								case 'logo':
 									return 0;
@@ -1638,15 +1661,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.025;
+							return 0.005;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
-							return 1;
+							return 0;
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
-							return -1000;
+							return -50;
 							// return -50;
 							break;
 						//максимальная сила реагирования manyBody
@@ -1676,7 +1699,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							return d.active ? -(height*2/15) : 5;
+							return d.active ? -(height*2/15) : 0.1;
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
@@ -1740,7 +1763,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return 0.05;
+							return 0.25;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1748,7 +1771,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return 0.1;
+							return 0.25;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -1797,7 +1820,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = verticalScreen ? 1.3 : 0.25;
+			let sizeCoeficient = verticalScreen ? 1.3 : 0.28;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв
