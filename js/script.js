@@ -1560,7 +1560,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.1 : 0.25;
+							return d.active ? 0.1 : 0.15;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1581,7 +1581,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(!d.active){
-								return 0.1;
+								return 0.01;
 							}else{
 								return 0;
 							}
