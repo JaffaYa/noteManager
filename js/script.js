@@ -46,16 +46,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var showNodeDelay = 50; //задерка перед появлением ноды
 	var showLinkDelay = 50; //задерка перед появлением линка
-	var showSlideDelay = 250; //задерка сдвига перед появлением
-	var hideSlideDelay = 100; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = 150; //задерка сдвига перед прятанием ** delay before link hide
-	var showCssDuration = 400; //длина анимации появления в css
-	var hideNodeCssDuration = 400; //длина анимации прятания ноды в css
-	var hideLinkCssDuration = 400; //длина анимации прятания линка в css
+	var showSlideDelay = 550; //задерка сдвига перед появлением
+	var hideSlideDelay = 150; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = 0; //задерка сдвига перед прятанием ** delay before link hide
+	var showCssDuration = 700; //длина анимации появления в css
+	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
+	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var startDelay = 350; //доп задерка при старте
 
 
-	var deleteDelay = 750; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = 1100; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
