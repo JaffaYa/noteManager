@@ -1549,7 +1549,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(!d.functional){
 					return true;
 				}else{
-					return true;
+					return false;
 				}
 			}
 		}
