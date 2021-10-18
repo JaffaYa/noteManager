@@ -588,7 +588,7 @@ body {
     transform: scale(0.75) translateX(-100%)!important;
 }
 .nodes .node.btn-functional.btn-logo{
-    transform: scale(0.85);
+    transform: scale(0.75);
 }
 
 }
