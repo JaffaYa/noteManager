@@ -91,7 +91,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json", simInit);
 
-	model.stats.enable(); // stats enable
+	// model.stats.enable(); // stats enable
 	// model.admin.set(true);
 	// model.showAllTree();
 
@@ -1022,7 +1022,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// console.log('previosNode',previosDepth);
 
 			goToNode.leftDepth = (previosDepth + 1);
-			goToNode.parents.push(node.id);
+			if(!goToNode.parents.includes(node.id)){
+				goToNode.parents.push(node.id);
+			}
 			for (var i = 0; i < goToNode.children.length; i++) {
 				let child = getNodeById(goToNode.children[i]);
 				child.leftDepth = (previosDepth + 2);
