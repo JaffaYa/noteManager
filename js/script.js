@@ -1543,6 +1543,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function forceSettings(force, d){
 			let activeNode = model.activeNode;
+			let childrens = activeNode.children;
 			let activeDepth = activeNode.leftDepth ? activeNode.leftDepth : activeNode.depth;
 			let scrollNext = true; 
 			let nodeDepth = d.leftDepth ? d.leftDepth : d.depth;
@@ -1603,7 +1604,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность радиальной силы
 						case 'radialStr':
-							if(!d.active){
+							if(childrens.includes(d.id)){
 								return 0.01;
 							}else{
 								return 0;
@@ -1744,7 +1745,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность радиальной силы
 						case 'radialStr':
-							if(!d.active){
+							if(childrens.includes(d.id)){
 								return 0.1;
 							}else{
 								return 0;
