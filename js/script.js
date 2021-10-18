@@ -19,7 +19,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
-	var debug = true;
+	var debug = false;
 
 
 	//graphic variables
@@ -91,7 +91,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json", simInit);
 
-	// model.stats.enable(); // stats enable
+	model.stats.enable(); // stats enable
 	// model.admin.set(true);
 	// model.showAllTree();
 
@@ -223,6 +223,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(!doActive){
 			return;
 		}
+
+		//any way drag start simulation
+		// // prevent simulation if click on the same node
+		// let currActive = model.activeNode;
+		// if(currActive.id == d.id) return;
 
 		//calculate new model
 		if(!backButton){
@@ -999,11 +1004,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 		function setLeftDepth(node, goToNode) {
-			//unset left depth for all nodes
-			// let nodes = myThis.nodes;
+			//click on the same node
+			if(node.id == goToNode.id) return;
 
-			// for (var i = 0; i < nodes.length; i++) {
-			// 	nodes[i].leftDepth = false;
+			// // unset left depth for all nodes
+			// if(1 == goToNode.id){
+			// 	let nodes = myThis.nodes;
+
+			// 	for (var i = 0; i < nodes.length; i++) {
+			// 		nodes[i].leftDepth = false;
+			// 	}
+			// 	return;
 			// }
 
 			//set left depth
