@@ -19,7 +19,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
-	var debug = false;
+	var debug = true;
 
 
 	//graphic variables
@@ -130,18 +130,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	};
 
 
-	function getColideRadius(d){
-		// return 120;
-		if(verticalScreen){
-			if(!d.functional){
-				return 50; // задача: параметр должен изменяться пропорционально разрешению экрана
-			}else{
-				return 0; // задача: параметр должен изменяться пропорционально разрешению экрана				
-			}
-		}else{
-			return 120; // задача: параметр должен изменяться пропорционально разрешению экрана
-		}
-	}
+
 
 
 	function simInit(){
@@ -154,10 +143,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
-		.force("collide", d3.forceCollide().radius(getColideRadius))
 		.force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
-
-		// еще радиальную силу добавить
+		.force("collide", view.isolateForce(d3.forceCollide().radius(view.getColideRadius).strength(view.colideRadiusStr()).iterations(view.getColideRadiusIterations()),view.collideForceIsolate))
 
 
 		// simulation
@@ -404,11 +391,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('c2', true);
 
 		if(debug){
-			let colideRadius = getColideRadius();
 			d3newNodes.append("div")
 			.classed('c3', true)
-			.style('width', colideRadius*2+'px')
-			.style('height', colideRadius*2+'px')
+			.style('width', d => view.getColideRadius(d)*2+'px')
+			.style('height', d => view.getColideRadius(d)*2+'px')
 			.style('top', 0)
 			.style('left', 0)
 			.style('border-radius', '50%')
@@ -1457,6 +1443,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.simulationResize = throttle(simulationResize,50);
 		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
+		this.getColideRadius = getColideRadius;
+		this.colideRadiusStr = colideRadiusStr;
+		this.getColideRadiusIterations = getColideRadiusIterations;
+		this.collideForceIsolate = collideForceIsolate;
 		this.scrollNext = true;
 
 		var width = window.innerWidth;
@@ -1511,12 +1501,44 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		//координата X для центра радиальной силы
 		function radialX(d){
-			// console.log(forceSettings('slideForce', model.activeNode));
 			return forceSettings('slideForce', model.activeNode);
 		}
 		//координата X для центра радиальной силы
 		function radialY(d){
 			return forceSettings('verticalForce', model.activeNode);
+		}
+
+		//радиус сферы столкновения
+		function getColideRadius(d){
+			return forceSettings('getColideRadius', d);
+		}
+
+		//сила с которой столкнутые сферы будут выталкивать друг друга
+		function colideRadiusStr(){
+			return 1;
+		}
+
+		//при увеличение этого праметра уменьшеться площать перекрытия 2 сфер при столкновении
+		//но также увеличеться сложность просчетов
+		function getColideRadiusIterations(){
+			return 1;
+		}
+
+		//где будет работать сила столкновения
+		function collideForceIsolate(d){
+			if(verticalScreen){
+				if(!d.functional){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				if(!d.functional){
+					return true;
+				}else{
+					return true;
+				}
+			}
 		}
 
 		function forceSettings(force, d){
@@ -1576,7 +1598,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//радиус радиальной силы
 						case 'radial':
-							return 350;
+							let radialRadCoef = 375/350;
+							return width/radialRadCoef;
 							break;
 						//мощность радиальной силы
 						case 'radialStr':
@@ -1585,6 +1608,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}else{
 								return 0;
 							}
+							break;
+						//радиус силы столкновения
+						case 'getColideRadius':
+							let collRadCoef = 375/30;
+							return width/collRadCoef;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
@@ -1650,6 +1678,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'radialStr':
 							return 0;
 							break;
+						//радиус силы столкновения
+						case 'getColideRadius':
+							return 0;
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -1707,7 +1739,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//радиус радиальной силы
 						case 'radial':
-							return 300;
+							let radialRadCoef = 1400/450;
+							return width/radialRadCoef;
 							break;
 						//мощность радиальной силы
 						case 'radialStr':
@@ -1716,6 +1749,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}else{
 								return 0;
 							}
+							break;
+						//радиус силы столкновения
+						case 'getColideRadius':
+							let collRadCoef = 2040/120;
+							return width/collRadCoef;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
@@ -1781,6 +1819,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'radialStr':
 							return 0;
 							break;
+						//радиус силы столкновения
+						case 'getColideRadius':
+							let collRadCoef = 2040/100;
+							return width/collRadCoef;
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -1808,11 +1851,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.force("charge").strength(self.manyBodyStr);
 			simulation.force("slideForce").strength(self.slideForceStr);
 			simulation.force("verticalForce").strength(self.verticalForceStr);
-			// simulation
-			// .force("link", d3.forceLink(links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-			// .force("charge", d3.forceManyBody().strength( view.manyBodyStr ))
-			// .force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
-			// .force("y", d3.forceY().strength(0.015))
+			simulation.force("collide").radius(self.getColideRadius);
+			simulation.force("radial").strength(self.radialStr).x(self.radialX()).y(self.radialY());
+
+
+
 			simulation.alpha(1).restart();
 			model.stats.restart();
 		}
