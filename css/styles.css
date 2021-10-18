@@ -161,7 +161,7 @@ body {
   filter: blur(0px);
   opacity: 1;
   transform: scale(0.6) translateX(0%) translateY(0rem);
-  transition-delay: 0.25s;
+  transition-delay: 0s;
 }
 .node.active.show .v-content{
   opacity: 1;
