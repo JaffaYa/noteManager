@@ -131,14 +131,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	};
 
+
+
 	// init plexus
 	function plexusBgMobile(){
 		if(verticalScreen){
-	        particlesJS("plexus-1", {"particles":{"number":{"value":100,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":1,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":22,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
-	        particlesJS("plexus-2", {"particles":{"number":{"value":100,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+	        particlesJS("plexus-1", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":25,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+	        particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
 		}else{
-	        particlesJS("plexus-1", {"particles":{"number":{"value":333,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
-	        particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+	        particlesJS("plexus-1", {"particles":{"number":{"value":333,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+	        particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
 		}
 	}
 	plexusBgMobile();
@@ -146,12 +148,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// init parallax
 	function parallaxBg(){
 		var scene = document.getElementById('parallax');
-		var parallax = new Parallax(scene, {
-	    	selector: '.plexusbg',
-	    	pointerEvents: 'all'
-		});
+		if(verticalScreen){
+			var parallax = new Parallax(scene, {
+		    	selector: '.plexusbg',
+		    	pointerEvents: 'all',
+		    	frictionX: 0.05,
+		    	frictionY: 0.05	    	
+			});
+		}else{
+			var parallax = new Parallax(scene, {
+		    	selector: '.plexusbg',
+		    	pointerEvents: 'all',
+		    	frictionX: 0.01,
+		    	frictionY: 0.01	    	
+			});
+		}
 	}
 	parallaxBg();
+
+
 
 	function simInit(){
 
@@ -1618,7 +1633,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.1 : 0.15;
+							return d.active ? 0.2 : 0.15;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1640,7 +1655,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.75;
+								return 0.05;
 							}else{
 								return 0;
 							}
@@ -1648,7 +1663,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//радиус силы столкновения
 						case 'getColideRadius':
 							// let collRadCoef = 375/30;
-							let collRadCoef = 375/50;
+							let collRadCoef = 375/70;
 							return width/collRadCoef;
 							break;
 						default:
@@ -1777,7 +1792,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//радиус радиальной силы
 						case 'radial':
 							// let radialRadCoef = 1400/450;
-							let radialRadCoef = 1400/350;
+							let radialRadCoef = 1400/300;
 							return width/radialRadCoef;
 							break;
 						//мощность радиальной силы
@@ -1791,7 +1806,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//радиус силы столкновения
 						case 'getColideRadius':
 							// let collRadCoef = 2040/120;
-							let collRadCoef = 2040/80;
+							let collRadCoef = 2040/100;
 							return width/collRadCoef;
 							break;
 						default:
