@@ -51,7 +51,7 @@ body {
   height: auto;
 }
 .btn-functional.btn-logo .v-content{
-  transform: scale(0.6) translateX(-50%) translateY(-50%)!important; 
+  transform: scale(0.6) translateX(-50%) translateY(-60%)!important; 
 }
 
 
@@ -609,6 +609,9 @@ body {
 }
 .nodes .node.btn-functional.btn-logo{
     transform: scale(0.75);
+}
+.btn-functional.btn-logo .v-content{
+  transform: translateY(-50%); 
 }
 
 }
