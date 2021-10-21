@@ -93,7 +93,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json", simInit);
 
-	model.stats.enable(); // stats enable
+	// model.stats.enable(); // stats enable
 	// model.admin.set(true);
 	// model.showAllTree();
 
@@ -513,11 +513,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		);
 
+		var strokeWidth = verticalScreen ? 2 : 4;
 		//enter
 		d3newLinks = d3links
 		.enter().append('line')
 		// .attr("stroke-width", d => d.value)
-		.attr('stroke-width', 3)
+		.attr('stroke-width', strokeWidth)
 		.attr('stroke-dasharray', d => d.dashed ? '8 11' : 'unset');
 
 		//add smooth animation
