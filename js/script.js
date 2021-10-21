@@ -50,14 +50,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showLinkDelay = 50; //задерка перед появлением линка
 	var showSlideDelay = verticalScreen ? 750 : 750; //задерка сдвига перед появлением
 	var hideSlideDelay = 0; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = verticalScreen ? 750 : 750; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = verticalScreen ? 250 : 250; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var startDelay = 500; //доп задерка при старте
 
 
-	var deleteDelay = verticalScreen ? 700 : 900; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 900 : 900; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -513,7 +513,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		);
 
-		var strokeWidth = verticalScreen ? 2 : 4;
+		var strokeWidth = verticalScreen ? 2 : 4; // задача добавить resize 
 		//enter
 		d3newLinks = d3links
 		.enter().append('line')

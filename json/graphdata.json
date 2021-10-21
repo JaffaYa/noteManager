@@ -45,12 +45,6 @@
       "iframe": "pages/qr/"
     },
     {
-      "id": "9",
-      "label": "супер<br>кошелёк",
-      "parents": [6, 7],
-      "iframe": "pages/sw/"
-    },
-    {
       "id": "14",
       "label": "живая<br>визитка",
       "parents": [6, 7]
