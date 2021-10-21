@@ -2,7 +2,7 @@
   "nodes": [
     {
       "id": "1",
-      "label": "здравствуй <br> человек",
+      "label": "здравствуй <br>человек",
       "parents": [0]
     },
     {
@@ -19,57 +19,56 @@
     },
     {
       "id": "4",
-      "label": "я искусст<br>венный<br>разум",
+      "label": "я искусст<br>венный <br>разум",
       "parents": [2]
     },
     {
       "id": "5",
-      "label": "что ты<br>умеешь?",
+      "label": "что ты <br>можешь?",
       "parents": [4],
       "goTo": 7
     },
     {
       "id": "6",
-      "label": "что ты<br>хочешь<br>человек?",
+      "label": "что ты <br>хочешь <br>человек?",
       "parents": [3]
     },
     {
       "id": "7",
-      "label": "я умею",
+      "label": "я могу <br>помочь",
       "parents": [5]
     },
     {
       "id": "8",
-      "label": "QR визитка",
+      "label": "увеличить <br>продажи",
       "parents": [6, 7],
       "iframe": "pages/qr/"
     },
     {
-      "id": "14",
-      "label": "живая<br>визитка",
-      "parents": [6, 7]
+      "id": "9",
+      "label": "получить <br>совет",
+      "parents": [6],
+      "iframe": "pages/qr/"
     },
     {
       "id": "13",
-      "label": "продукты<br>variant.name",
-      "parents": [6, 7],
-      "iframe": "pages/p/"
+      "label": "ещё",
+      "parents": [6, 7]
     },
     {
-      "id": "27",
-      "label": "сладости",
-      "parents": [6, 7],
-      "iframe": "https://sweet.variant.name/"
+      "id": "14",
+      "label": "дать <br>совет",
+      "parents": [7]
     },
     {
       "id": "10",
-      "label": "как твоё<br>имя?",
+      "label": "как твоё <br>имя?",
       "parents": [4],
       "goTo": 11
     },
     {
       "id": "11",
-      "label": "моё имя<br>variant",
+      "label": "моё имя <br>variant",
       "parents": [10]
     },
     {
@@ -77,67 +76,6 @@
       "label": "сказать <br>привет",
       "parents": [11],
       "goTo": 6
-    },
-    {
-      "id": "15",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='img/live-avatar.png'></div><div class='live-name'>Андрей</div></div>",     
-      "parents": [14]
-    },
-    {
-      "id": "16",
-      "label": "кто я?",
-      "parents": [15]
-    },
-    {
-      "id": "17",
-      "label": "что я<br>умею?",
-      "parents": [15]
-    },
-    {
-      "id": "18",
-      "label": "связаться<br>со мной",
-      "parents": [15]
-    },
-    {
-      "id": "19",
-      "label": "позвонить",
-      "parents": [18]
-    },
-    {
-      "id": "20",
-      "label": "написать",
-      "parents": [18]
-    },
-    {
-      "id": "21",
-      "label": "соцсети",
-      "parents": [18]
-    },
-    {
-      "id": "22",
-      "label": "я хороший<br>человек",
-      "parents": [16]
-    },
-    {
-      "id": "23",
-      "label": "вернуться<br>в начало",
-      "parents": [16],
-      "goTo": 1
-    },
-    {
-      "id": "24",
-      "label": "делать сайты",
-      "parents": [17]
-    },
-    {
-      "id": "25",
-      "label": "продвигать<br>сайты",
-      "parents": [17]
-    },
-    {
-      "id": "26",
-      "label": "рисовать<br>логотипы",
-      "parents": [17]
     }
   ]
 }

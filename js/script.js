@@ -21,9 +21,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var debug = false;
 
-
-
-
 	//graphic variables
 	var width = window.innerWidth;
 	var height = window.innerHeight;
@@ -46,18 +43,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showCssDuration = 700; //длина анимации появления в css
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var showNodeDelay = 50; //задерка перед появлением ноды
-	var showLinkDelay = 50; //задерка перед появлением линка
-	var showSlideDelay = verticalScreen ? 750 : 750; //задерка сдвига перед появлением
-	var hideSlideDelay = 0; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = verticalScreen ? 250 : 250; //задерка сдвига перед прятанием ** delay before link hide
+	var showNodeDelay = 75; //задерка перед появлением ноды
+	var showLinkDelay = 75; //задерка перед появлением линка
+	var showSlideDelay = verticalScreen ? 350 : 150; //задерка сдвига перед появлением
+	var hideSlideDelay = verticalScreen ? 250 : 350; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var startDelay = 500; //доп задерка при старте
 
 
-	var deleteDelay = verticalScreen ? 900 : 900; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -91,11 +88,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	window.model = new makeModel("json/graphdata.json", simInit);
+	window.model = new makeModel("json/graphdata.json?v=2", simInit);
 
-	// model.stats.enable(); // stats enable
-	// model.admin.set(true);
-	// model.showAllTree();
+	model.stats.enable(); // statistics eneble
+	// model.admin.set(true); // admin eneble
+	// model.showAllTree(); // all tree eneble
 
 	window.view = new makeView(model);
 
@@ -288,17 +285,55 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		let time = 0;
 
-		setTimeout(function(simulation){
-			simulation.alphaTarget(0.15);
-			simulation.alphaDecay(0.022);
-			// simulation.velocityDecay(0.3) 
-		}, time+0, simulation);
+		if(verticalScreen){
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.2);
+				simulation.velocityDecay(0.4) 
+			}, time+0, simulation);
 
-		setTimeout(function(simulation){
-			simulation.alphaTarget(1);
-			// simulation.alphaDecay(0.022);
-			// simulation.velocityDecay(0.2) 
-		}, time+250, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.4);
+				simulation.velocityDecay(0.3) 
+			}, time+350, simulation);
+
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0);
+				simulation.alphaDecay(0.05);
+				simulation.velocityDecay(0.2) 
+			}, time+750, simulation);
+		}else{
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.2);
+				simulation.velocityDecay(0.4) 
+			}, time+0, simulation);
+
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.6);
+			}, time+250, simulation);
+
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.3);
+				simulation.alphaDecay(0.1);
+				simulation.velocityDecay(0.2) 
+			}, time+500, simulation);
+
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0);
+				simulation.alphaDecay(0.05);
+				simulation.velocityDecay(0.2) 
+			}, time+750, simulation);
+		}
+
+		// setTimeout(function(simulation){
+		// 	simulation.alphaTarget(0.2);
+		// 	simulation.velocityDecay(0.4) 
+		// }, time+700, simulation);
+
+		// setTimeout(function(simulation){
+		// 	simulation.alphaTarget(1);
+		// 	// simulation.alphaDecay(0.022);
+		// 	// simulation.velocityDecay(0.2) 
+		// }, time+500, simulation);
 
 		// setTimeout(function(simulation){
 		// 	simulation.alphaTarget(0.55);
@@ -312,11 +347,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	simulation.velocityDecay(0.35) 
 		// }, time+500, simulation);
 
-		setTimeout(function(simulation){
-			simulation.alphaTarget(0);
-			simulation.alphaDecay(0.025);
-			simulation.velocityDecay(0.2) 
-		}, time+500, simulation);
 
 
 		model.stats.restart();
@@ -379,10 +409,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.data(nodes, d => d.id)
 		.classed('active', d => d.active)
 		.classed('hide', d => {
-			let activeNodeCildrens = model.activeNode.children
+			let activeNodeCildren = model.activeNode.children
 			if( d.active ) return false;
 			if( d.functional ) return false;
-			if( activeNodeCildrens.includes(d.id) ) return false;
+			if( activeNodeCildren.includes(d.id) ) return false;
 			return true;
 		});	
 
@@ -557,10 +587,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration;
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
 				}else{
 					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
-					result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration + startDelay;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay + startDelay;//showCssDuration тут по идеи ноды
 				}
 
 				// console.log('link-counter',counter);
@@ -579,8 +609,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function dragstarted(d) {
 		// if (!d3.event.active) simulation.alphaTarget(1.7).restart();
 		if (!d3.event.active) 
-		simulation.alphaTarget(0.5).restart(); // less alphaTarget
-		// simulation.velocityDecay(0.4);
+		simulation.alphaTarget(1).restart(); // less alphaTarget
+		simulation.velocityDecay(0.3);
 		model.stats.restart();
 		d.fx = d.x;
 		d.fy = d.y;
@@ -1664,9 +1694,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//радиус силы столкновения
 						case 'getColideRadius':
 							// let collRadCoef = 375/30;
-							let collRadCoef = 375/70;
-							return width/collRadCoef;
-							break;
+							// let collRadCoef = 375/70;
+							// return width/collRadCoef;
+							// break;
+							if(childrens.includes(d.id)){
+								let collRadCoef = 375/70;
+								return width/collRadCoef;
+							}else{
+								return 0;
+							}
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -1690,7 +1726,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'manyBodyDistanceMax':
 							return 0;
 							break;
-						//задаеть горизонтальную координату для каждой ноды
+						//задает горизонтальную координату для каждой ноды
 						case 'slideForce':
 							switch (d.function){
 								case 'back':
@@ -1740,15 +1776,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 					}
 				}
-			}else{//для горизонтальной ориентации екрана
+			}else{//для горизонтальной ориентации экрана
 				if(!d.functional){
 					//горизонтальная о.э. - для обычных нод
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.015;
+							return 0.025;
 							break;
-						//длина линки в пикселях
+						//длина линка в пикселях
 						case 'linkDistance':
 							return 0;
 							break;
@@ -1780,7 +1816,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.15 : 0.05;
+							return d.active ? 0.05 : 0.05;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1788,7 +1824,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.15 : 0.05;
+							return d.active ? 0.05 : 0.05;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -1799,7 +1835,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.75;
+								return 0.15;
 							}else{
 								return 0;
 							}
@@ -1807,8 +1843,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//радиус силы столкновения
 						case 'getColideRadius':
 							// let collRadCoef = 2040/120;
-							let collRadCoef = 2040/100;
-							return width/collRadCoef;
+							// let collRadCoef = 2040/100;
+							// return width/collRadCoef;
+							// break;
+							if(childrens.includes(d.id)){
+								let collRadCoef = 2040/100;
+								return width/collRadCoef;
+							}else{
+								return 0;
+							}
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
