@@ -140,7 +140,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 120,
+			  fpsLimit: 30,
 			  particles: {
 			    groups: {
 			      z5000: { number: { value: 100 }, zIndex: { value: 4 } },
@@ -201,7 +201,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 60,
+			  fpsLimit: 30,
 			  particles: {
 			    groups: {
 			      z50000: { number: { value: 100 }, zIndex: { value: 40 } },
@@ -264,7 +264,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 120,
+			  fpsLimit: 30,
 			  particles: {
 			    groups: {
 			      z5000: { number: { value: 100 }, zIndex: { value: 4 } },
@@ -325,7 +325,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 60,
+			  fpsLimit: 30,
 			  particles: {
 			    groups: {
 			      z50000: { number: { value: 100 }, zIndex: { value: 40 } },
