@@ -423,7 +423,7 @@ body {
   pointer-events: none;
 }
 
-.canvas .particles-js-canvas-el {
+canvas.tsparticles-canvas-el {
   all: unset;
   display: block;
   vertical-align: bottom;
@@ -435,7 +435,7 @@ body {
   animation: appear 1.4s 1;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  pointer-events: none;
+  pointer-events: none!important;
 }
 
 
