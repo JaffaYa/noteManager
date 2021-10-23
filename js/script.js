@@ -133,256 +133,254 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// init plexus
 	function plexusBgMobile(){
 		if(verticalScreen){
-	        // particlesJS("plexus-1", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":25,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
+	        particlesJS("plexus-1", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":25,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
+	        particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
 
-			tsParticles.load("plexus-1", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 30,
-			  particles: {
-			    groups: {
-			      z5000: { number: { value: 100 }, zIndex: { value: 4 } },
-			      z7500: { number: { value: 100 }, zIndex: { value: 3 } },
-			      z2500: { number: { value: 100 }, zIndex: { value: 2 } },
-			      z1000: { number: { value: 100 }, zIndex: { value: 1 } }
-			    },
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 25,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 111
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1 },
-			      value: 1,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 1,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
-			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: 0, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true,
-			  zLayers:100
-			});
+			// tsParticles.load("plexus-1", {
+			//   autoPlay: true,
+			//   fullScreen: { enable: true, zIndex: 1 },
+			//   detectRetina: true,
+			//   fpsLimit: 30,
+			//   particles: {
+			//     groups: {
+			//       z5000: { number: { value: 100 }, zIndex: { value: 4 } },
+			//       z7500: { number: { value: 100 }, zIndex: { value: 3 } },
+			//       z2500: { number: { value: 100 }, zIndex: { value: 2 } },
+			//       z1000: { number: { value: 100 }, zIndex: { value: 1 } }
+			//     },
+			//     links: {
+			//       color: { value: "#ffffff" },
+			//       distance: 25,
+			//       enable: true,
+			//       opacity: 1,
+			//       width: 1
+			//     },
+			//     move: {
+			//       angle: { offset: 0, value: 35 },
+			//       direction: "left",
+			//       enable: true,
+			//       random: true,
+			//       size: true,
+			//       speed: 1,
+			//       straight: false,
+			//       warp: true
+			//     },
+			//     number: {
+			//       value: 111
+			//     },
+			//     opacity: {
+			//       value: 1
+			//     },
+			//     size: {
+			//       random: { enable: true, minimumValue: 1 },
+			//       value: 1,
+			//       animation: {
+			//         count: 100,
+			//         enable: true,
+			//         speed: 1,
+			//         sync: false,
+			//         destroy: "none",
+			//         startValue: "random"
+			//       }
+			//     },
+			//     stroke: { width: 0 },
+			//     zIndex: {
+			//       random: { enable: false, minimumValue: 0 },
+			//       value: { min: 0, max: 5 },
+			//       opacityRate: 0,
+			//       sizeRate: 1,
+			//       velocityRate: 0
+			//     }
+			//   },
+			//   pauseOnBlur: true,
+			//   pauseOnOutsideViewport: true,
+			//   zLayers:100
+			// });
 
-			tsParticles.load("plexus-2", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 30,
-			  particles: {
-			    groups: {
-			      z50000: { number: { value: 100 }, zIndex: { value: 40 } },
-			      z75000: { number: { value: 100 }, zIndex: { value: 30 } },
-			      z25000: { number: { value: 100 }, zIndex: { value: 20 } },
-			      z10000: { number: { value: 100 }, zIndex: { value: 10 } }
-			    },
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 33,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1.5,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 111
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1 },
-			      value: 3,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 1,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
-			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: -10, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true,
-			  zLayers: 100
-			});
+			// tsParticles.load("plexus-2", {
+			//   autoPlay: true,
+			//   fullScreen: { enable: true, zIndex: 1 },
+			//   detectRetina: true,
+			//   fpsLimit: 30,
+			//   particles: {
+			//     groups: {
+			//       z50000: { number: { value: 100 }, zIndex: { value: 40 } },
+			//       z75000: { number: { value: 100 }, zIndex: { value: 30 } },
+			//       z25000: { number: { value: 100 }, zIndex: { value: 20 } },
+			//       z10000: { number: { value: 100 }, zIndex: { value: 10 } }
+			//     },
+			//     links: {
+			//       color: { value: "#ffffff" },
+			//       distance: 33,
+			//       enable: true,
+			//       opacity: 1,
+			//       width: 1
+			//     },
+			//     move: {
+			//       angle: { offset: 0, value: 35 },
+			//       direction: "left",
+			//       enable: true,
+			//       random: true,
+			//       size: true,
+			//       speed: 1.5,
+			//       straight: false,
+			//       warp: true
+			//     },
+			//     number: {
+			//       value: 111
+			//     },
+			//     opacity: {
+			//       value: 1
+			//     },
+			//     size: {
+			//       random: { enable: true, minimumValue: 1 },
+			//       value: 3,
+			//       animation: {
+			//         count: 100,
+			//         enable: true,
+			//         speed: 1,
+			//         sync: false,
+			//         destroy: "none",
+			//         startValue: "random"
+			//       }
+			//     },
+			//     stroke: { width: 0 },
+			//     zIndex: {
+			//       random: { enable: false, minimumValue: 0 },
+			//       value: { min: -10, max: 5 },
+			//       opacityRate: 0,
+			//       sizeRate: 1,
+			//       velocityRate: 0
+			//     }
+			//   },
+			//   pauseOnBlur: true,
+			//   pauseOnOutsideViewport: true,
+			//   zLayers: 100
+			// });
 		}else{
-	        // particlesJS("plexus-1", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-			tsParticles.load("plexus-1", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 30,
-			  particles: {
-			    groups: {
-			      z5000: { number: { value: 100 }, zIndex: { value: 4 } },
-			      z7500: { number: { value: 100 }, zIndex: { value: 3 } },
-			      z2500: { number: { value: 100 }, zIndex: { value: 2 } },
-			      z1000: { number: { value: 100 }, zIndex: { value: 1 } }
-			    },
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 44,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 333
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1 },
-			      value: 2,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 0.5,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
-			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: 0, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true,
-			  zLayers:100
-			});
+	        particlesJS("plexus-1", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
+	        particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
+			// tsParticles.load("plexus-1", {
+			//   autoPlay: true,
+			//   fullScreen: { enable: true, zIndex: 1 },
+			//   detectRetina: true,
+			//   fpsLimit: 30,
+			//   particles: {
+			//     groups: {
+			//       z5000: { number: { value: 100 }, zIndex: { value: 4 } },
+			//       z7500: { number: { value: 100 }, zIndex: { value: 3 } },
+			//       z2500: { number: { value: 100 }, zIndex: { value: 2 } },
+			//       z1000: { number: { value: 100 }, zIndex: { value: 1 } }
+			//     },
+			//     links: {
+			//       color: { value: "#ffffff" },
+			//       distance: 44,
+			//       enable: true,
+			//       opacity: 1,
+			//       width: 1
+			//     },
+			//     move: {
+			//       angle: { offset: 0, value: 35 },
+			//       direction: "left",
+			//       enable: true,
+			//       random: true,
+			//       size: true,
+			//       speed: 1,
+			//       straight: false,
+			//       warp: true
+			//     },
+			//     number: {
+			//       value: 333
+			//     },
+			//     opacity: {
+			//       value: 1
+			//     },
+			//     size: {
+			//       random: { enable: true, minimumValue: 1 },
+			//       value: 2,
+			//       animation: {
+			//         count: 100,
+			//         enable: true,
+			//         speed: 0.5,
+			//         sync: false,
+			//         destroy: "none",
+			//         startValue: "random"
+			//       }
+			//     },
+			//     stroke: { width: 0 },
+			//     zIndex: {
+			//       random: { enable: false, minimumValue: 0 },
+			//       value: { min: 0, max: 5 },
+			//       opacityRate: 0,
+			//       sizeRate: 1,
+			//       velocityRate: 0
+			//     }
+			//   },
+			//   pauseOnBlur: true,
+			//   pauseOnOutsideViewport: true,
+			//   zLayers:100
+			// });
 
-			tsParticles.load("plexus-2", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 30,
-			  particles: {
-			    groups: {
-			      z50000: { number: { value: 100 }, zIndex: { value: 40 } },
-			      z75000: { number: { value: 100 }, zIndex: { value: 30 } },
-			      z25000: { number: { value: 100 }, zIndex: { value: 20 } },
-			      z10000: { number: { value: 100 }, zIndex: { value: 10 } }
-			    },
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 55,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 111
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1 },
-			      value: 3,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 1,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
-			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: -10, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true,
-			  zLayers: 100
-			});
-
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
+			// tsParticles.load("plexus-2", {
+			//   autoPlay: true,
+			//   fullScreen: { enable: true, zIndex: 1 },
+			//   detectRetina: true,
+			//   fpsLimit: 30,
+			//   particles: {
+			//     groups: {
+			//       z50000: { number: { value: 100 }, zIndex: { value: 40 } },
+			//       z75000: { number: { value: 100 }, zIndex: { value: 30 } },
+			//       z25000: { number: { value: 100 }, zIndex: { value: 20 } },
+			//       z10000: { number: { value: 100 }, zIndex: { value: 10 } }
+			//     },
+			//     links: {
+			//       color: { value: "#ffffff" },
+			//       distance: 55,
+			//       enable: true,
+			//       opacity: 1,
+			//       width: 1
+			//     },
+			//     move: {
+			//       angle: { offset: 0, value: 35 },
+			//       direction: "left",
+			//       enable: true,
+			//       random: true,
+			//       size: true,
+			//       speed: 1,
+			//       straight: false,
+			//       warp: true
+			//     },
+			//     number: {
+			//       value: 111
+			//     },
+			//     opacity: {
+			//       value: 1
+			//     },
+			//     size: {
+			//       random: { enable: true, minimumValue: 1 },
+			//       value: 3,
+			//       animation: {
+			//         count: 100,
+			//         enable: true,
+			//         speed: 1,
+			//         sync: false,
+			//         destroy: "none",
+			//         startValue: "random"
+			//       }
+			//     },
+			//     stroke: { width: 0 },
+			//     zIndex: {
+			//       random: { enable: false, minimumValue: 0 },
+			//       value: { min: -10, max: 5 },
+			//       opacityRate: 0,
+			//       sizeRate: 1,
+			//       velocityRate: 0
+			//     }
+			//   },
+			//   pauseOnBlur: true,
+			//   pauseOnOutsideViewport: true,
+			//   zLayers: 100
+			// });
 		}
 	}
 	plexusBgMobile();
