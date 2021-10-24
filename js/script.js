@@ -43,10 +43,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showCssDuration = 700; //длина анимации появления в css
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var showNodeDelay = 75; //задерка перед появлением ноды
-	var showLinkDelay = 75; //задерка перед появлением линка
-	var showSlideDelay = verticalScreen ? 350 : 150; //задерка сдвига перед появлением
-	var hideSlideDelay = verticalScreen ? 250 : 350; //задерка сдвига перед прятанием ** delay before link hide
+	var showNodeDelay = 100; //задерка перед появлением ноды
+	var showLinkDelay = 100; //задерка перед появлением линка
+	var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
+	var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
@@ -90,7 +90,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json?v=2", simInit);
 
-	model.stats.enable(); // statistics eneble
+	// model.stats.enable(); // statistics eneble
 	// model.admin.set(true); // admin eneble
 	// model.showAllTree(); // all tree eneble
 
@@ -259,7 +259,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// });
 		}else{
 	        particlesJS("plexus-1", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        particlesJS("plexus-2", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
+	        particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
 			// tsParticles.load("plexus-1", {
 			//   autoPlay: true,
 			//   fullScreen: { enable: true, zIndex: 1 },
@@ -404,7 +404,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			});
 		}
 	}
-	parallaxBg();
+	// parallaxBg();
 
 
 
@@ -535,9 +535,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+0, simulation);
 
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.4);
-				simulation.velocityDecay(0.3) 
-			}, time+350, simulation);
+				simulation.alphaTarget(0.6);
+				simulation.velocityDecay(0.4) 
+			}, time+250, simulation);
+
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.3);
+				simulation.alphaDecay(0.1);
+				simulation.velocityDecay(0.2) 
+			}, time+500, simulation);
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
@@ -552,6 +558,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0.6);
+				simulation.velocityDecay(0.4) 
 			}, time+250, simulation);
 
 			setTimeout(function(simulation){
@@ -1881,7 +1888,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.035;
+							return 0.015;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
@@ -1907,7 +1914,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.2 : 0.15;
+							return d.active ? 0.05 : 0.05;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1919,7 +1926,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.25 : 0.05;
+							return d.active ? 0.05 : 0.05;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2025,7 +2032,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.025;
+							return 0.015;
 							break;
 						//длина линка в пикселях
 						case 'linkDistance':
@@ -2052,14 +2059,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/2;
+								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;
 								// return 0;
 							}
 
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.05 : 0.05;
+							return d.active ? 0.15 : 0.15;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':

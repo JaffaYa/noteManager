@@ -169,6 +169,7 @@ body {
   transition-delay: 0.35s;
 }
 .node.hide .v-content{
+  opacity: 0;
   transform: scale(0.3) translateX(-150%) translateY(0rem);
   transition: 0.7s cubic-bezier(.55,.34,.17,.98);
   transition-delay: 0s;
@@ -180,7 +181,7 @@ body {
   -ms-filter: blur(0px);
   filter: blur(0px);
   opacity: 1;
-  transform: scale(0.5) translateX(0%) translateY(0rem);
+  transform: scale(0.65) translateX(0%) translateY(0rem);
   transition-delay: 0.35s;
 }
 .node.active.show .v-content{

@@ -15,7 +15,7 @@
       "id": "3",
       "label": "сказать <br>привет",
       "parents": [1],
-      "goTo": 6
+      "goTo": 9
     },
     {
       "id": "4",
@@ -30,52 +30,88 @@
     },
     {
       "id": "6",
-      "label": "что ты <br>хочешь <br>человек?",
-      "parents": [3]
+      "label": "как твоё <br>имя?",
+      "parents": [4],
+      "goTo": 7
     },
     {
       "id": "7",
-      "label": "я могу <br>помочь",
-      "parents": [5]
+      "label": "моё имя <br>variant",
+      "parents": [6]
     },
     {
       "id": "8",
-      "label": "увеличить <br>продажи",
-      "parents": [6, 7],
-      "iframe": "pages/qr/"
+      "label": "сказать <br>привет",
+      "parents": [7],
+      "goTo": 9
     },
     {
       "id": "9",
-      "label": "получить <br>совет",
-      "parents": [6],
-      "iframe": "pages/qr/"
-    },
-    {
-      "id": "13",
-      "label": "ещё",
-      "parents": [6, 7]
-    },
-    {
-      "id": "14",
-      "label": "дать <br>совет",
-      "parents": [7]
-    },
-    {
-      "id": "10",
-      "label": "как твоё <br>имя?",
-      "parents": [4],
-      "goTo": 11
+      "label": "ты продаёшь<br>на маркет<br>плейсах?",
+      "parents": [8]
     },
     {
       "id": "11",
-      "label": "моё имя <br>variant",
-      "parents": [10]
+      "label": "<div class='icon icon-thumb-down'><img src='img/icons/thumb_down.png'></div></div>нет",
+      "parents": [9],
+      "goTo": 12
+    },
+     {
+      "id": "10",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>да",
+      "parents": [9],
+      "goTo": 19
     },
     {
       "id": "12",
-      "label": "сказать <br>привет",
-      "parents": [11],
-      "goTo": 6
+      "label": "я знаю <br>почти всё <br>про маркет<br>плейсы",
+      "parents": [11]
+    },
+    {
+      "id": "13",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>лайк",
+      "parents": [12]
+    },
+    {
+      "id": "14",
+      "label": "<div class='icon icon-thumb-down'><img src='img/icons/thumb_down.png'></div></div>диз",
+      "parents": [12]
+    },
+    {
+      "id": "15",
+      "label": "расскажи <br>подробнее",
+      "parents": [12],
+      "goTo": 16
+    },
+    {
+      "id": "16",
+      "label": "как с тобой<br>связаться?",
+      "parents": [15]
+    },
+    {
+      "id": "17",
+      "label": "WhatsApp",
+      "parents": [16]
+    },
+    {
+      "id": "18",
+      "label": "Telegram",
+      "parents": [16]
+    },
+    {
+      "id": "19",
+      "label": "хочешь <br>повысить<br>продажи?",
+      "parents": [10]
+    },
+    {
+      "id": "20",
+      "label": "да",
+      "parents": [19]
+    },
+    {
+      "id": "21",
+      "label": "нет",
+      "parents": [19]
     }
   ]
 }
