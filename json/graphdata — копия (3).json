@@ -1,0 +1,202 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "label": "здравствуй <br>человек",
+      "parents": [0]
+    },
+    {
+      "id": "2",
+      "label": "кто ты?",
+      "parents": [1],
+      "goTo": 4
+    },
+    {
+      "id": "3",
+      "label": "сказать <br>привет",
+      "parents": [1],
+      "goTo": 9
+    },
+    {
+      "id": "4",
+      "label": "я искусст<br>венный <br>разум",
+      "parents": [2]
+    },
+    {
+      "id": "5",
+      "label": "что ты <br>можешь?",
+      "parents": [4],
+      "goTo": 24
+    },
+    {
+      "id": "6",
+      "label": "как твоё <br>имя?",
+      "parents": [4],
+      "goTo": 7
+    },
+    {
+      "id": "7",
+      "label": "моё имя <br>variant",
+      "parents": [6]
+    },
+    {
+      "id": "8",
+      "label": "сказать <br>привет",
+      "parents": [7],
+      "goTo": 9
+    },
+    {
+      "id": "9",
+      "label": "ты продаёшь<br>на маркет<br>плейсах?",
+      "parents": [8]
+    },
+    {
+      "id": "11",
+      "label": "<div class='icon icon-thumb-down'><img src='img/icons/thumb_down.png'></div></div>нет",
+      "parents": [9],
+      "goTo": 12
+    },
+     {
+      "id": "10",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>да",
+      "parents": [9],
+      "goTo": 19
+    },
+    {
+      "id": "12",
+      "label": "я знаю <br>почти всё <br>про маркет<br>плейсы",
+      "parents": [11]
+    },
+    {
+      "id": "13",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>лайк",
+      "parents": [12]
+    },
+    {
+      "id": "14",
+      "label": "<div class='icon icon-thumb-down'><img src='img/icons/thumb_down.png'></div></div>диз",
+      "parents": [12]
+    },
+    {
+      "id": "15",
+      "label": "расскажи <br>подробнее",
+      "parents": [12],
+      "goTo": 16
+    },
+    {
+      "id": "16",
+      "label": "как с тобой<br>связаться?",
+      "parents": [15]
+    },
+    {
+      "id": "17",
+      "label": "WhatsApp",
+      "parents": [16]
+    },
+    {
+      "id": "18",
+      "label": "Telegram",
+      "parents": [16]
+    },
+    {
+      "id": "19",
+      "label": "хочешь <br>повысить<br>продажи?",
+      "parents": [10]
+    },
+    {
+      "id": "20",
+      "label": "да",
+      "parents": [19]
+    },
+    {
+      "id": "21",
+      "label": "нет",
+      "parents": [19]
+    },
+    {
+      "id": "24",
+      "label": "я могу",
+      "parents": [5]
+    },
+    {
+      "id": "25",
+      "label": "QR визитка",
+      "parents": [24],
+      "iframe": "pages/qr/"
+    },
+    {
+      "id": "26",
+      "label": "живая<br>визитка",
+      "parents": [24],
+      "goTo": 28
+    },
+    {
+      "id": "27",
+      "label": "продукты<br>variant.name",
+      "parents": [24],
+      "iframe": "pages/p/"
+    },
+    {
+      "id": "28",
+      "label": "<div class='live-card'><div class='live-avatar'><img src='img/live-avatar.png'></div><div class='live-name'>Андрей</div></div>",     
+      "parents": [26]
+    },
+    {
+      "id": "29",
+      "label": "кто я?",
+      "parents": [28]
+    },
+    {
+      "id": "30",
+      "label": "что я<br>умею?",
+      "parents": [28]
+    },
+    {
+      "id": "31",
+      "label": "связаться<br>со мной",
+      "parents": [28]
+    },
+    {
+      "id": "32",
+      "label": "позвонить",
+      "parents": [31]
+    },
+    {
+      "id": "33",
+      "label": "написать",
+      "parents": [31]
+    },
+    {
+      "id": "34",
+      "label": "соцсети",
+      "parents": [31]
+    },
+    {
+      "id": "35",
+      "label": "я хороший<br>человек",
+      "parents": [29]
+    },
+    {
+      "id": "36",
+      "label": "вернуться<br>в начало",
+      "parents": [29],
+      "goTo": 1
+    },
+    {
+      "id": "37",
+      "label": "делать сайты",
+      "parents": [30]
+    },
+    {
+      "id": "38",
+      "label": "продвигать<br>сайты",
+      "parents": [30]
+    },
+    {
+      "id": "39",
+      "label": "рисовать<br>логотипы",
+      "parents": [30]
+    }  
+  ]
+}
+

@@ -88,7 +88,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	window.model = new makeModel("json/graphdata.json?v=2", simInit);
+	window.model = new makeModel("json/graphdata.json?v=22", simInit);
 
 	// model.stats.enable(); // statistics eneble
 	// model.admin.set(true); // admin eneble
@@ -461,7 +461,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		let  backButton = false;
 
 		if(!d.active){
-			playBubble();
+			// playBubble(); // sound off
 		}
 
 		//apply click function
@@ -2097,7 +2097,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/100;
+								let collRadCoef = 2040/120;
 								return width/collRadCoef;
 							}else{
 								return 0;

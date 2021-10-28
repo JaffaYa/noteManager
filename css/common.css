@@ -1,3 +1,6 @@
+html {
+  font-size: 12px;
+}
 *{
   -webkit-touch-callout:none;
   -webkit-user-select:none;
@@ -18,8 +21,8 @@ a:hover {
 }
 .node-btn .c1 {
   z-index: -2;
-  width: 150px;
-  height: 150px;
+  width: 1.35rem;
+  height: 1.35rem;
   border-radius: 50%;
   background-color: rgb(255, 255, 255, 0.5);
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
@@ -27,8 +30,8 @@ a:hover {
 }
 .node-btn .c2{
   z-index: -1;
-  width: 95px;
-  height: 95px;
+  width: 0.85rem;
+  height: 0.85rem;
   background-color: rgb(255, 255, 255, 1);
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
   transition-delay: 0s;
@@ -52,8 +55,6 @@ a:hover {
   transition-delay: 0.085s;
 }
 .node-btn .v-content{
-  position: relative;
-  top: -0.1rem;
   left: 0;
   font-size: 1rem;
   font-weight: 900;
@@ -63,15 +64,15 @@ a:hover {
   word-break: normal;
   white-space: nowrap;
   transform-origin: top left;
-  transform: scale(0.5);
+  transform: scale(0.5) translateX(0%) translateY(-0.1rem);
 }
-.node-btn .icon {
+/*.node-btn .icon {
   z-index: 1;
   width: 50px;
   height: 50px;
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
   transition-delay: 0.085s;
-}
+}*/
 
 
 
@@ -118,17 +119,17 @@ a:hover {
 
 /* live card */
 .live-card{
-  margin-top: -2.25rem;
+  transform: translateY(-15%);
 }
 .live-avatar{
+  text-align: center;
 }
 .live-avatar img{
-  width: 3.5rem;
+  width: 4rem;
   height: auto;
   border-radius: 50%;
-  box-sizing: content-box;
+  box-sizing: border-box;
   border: 0.5rem solid rgb(255,255,255,0.5);
-  margin-left: -0.5rem;
 }
 .live-name{
   margin-top: -1rem;
@@ -138,12 +139,19 @@ a:hover {
 /* icons */
 .icon{
   position: absolute;
+  top: 0;
+  left: 0;
   transform: translate(-100%, -50%) scale(0);
   transform-origin: center;
   transition-delay: 0.15s;
 }
-.show .icon{
+.node.show .icon{
   transform: translate(-100%, -50%) scale(1);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
+  transition-delay: 0.75s;
+}
+.node-btn.show .icon{
+  transform: translate(-100%, -75%) scale(1);
   transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
   transition-delay: 0.75s;
 }
@@ -152,7 +160,18 @@ a:hover {
   transition: 0.5s cubic-bezier(.5,.41,.05,1.5);
   transition-delay: 0.025s;
 }
-*/.icon img{
+*/
+.icon img{
   width: 0.80rem;
   height: auto;
+}
+.node-btn .icon img{
+  width: 0.40rem;
+  height: auto;
+}
+.tag{
+  margin: 0.4rem 0;
+}
+.tags-container{
+  /*position: absolute;*/
 }
