@@ -227,15 +227,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			    },
 			    size: {
 			      random: { enable: true, minimumValue: 1 },
-			      value: 2,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 1,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
+			      value: 2
+			      // animation: {
+			      //   count: 100,
+			      //   enable: true,
+			      //   speed: 1,
+			      //   sync: false,
+			      //   destroy: "none",
+			      //   startValue: "random"
+			      // }
 			    },
 			    stroke: { width: 0 },
 			    zIndex: {
@@ -290,24 +290,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			    },
 			    size: {
 			      random: { enable: true, minimumValue: 1 },
-			      value: 2,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 0.5,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
+			      value: 2
+			      // animation: {
+			      //   count: 100,
+			      //   enable: true,
+			      //   speed: 0.5,
+			      //   sync: false,
+			      //   destroy: "none",
+			      //   startValue: "random"
+			      // }
 			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: 0, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
+			    stroke: { width: 0 }
+			    // zIndex: {
+			    //   random: { enable: false, minimumValue: 0 },
+			    //   value: { min: 0, max: 5 },
+			    //   opacityRate: 0,
+			    //   sizeRate: 1,
+			    //   velocityRate: 0
+			    // }
 			  },
 			  pauseOnBlur: true,
 			  pauseOnOutsideViewport: true
@@ -351,24 +351,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			    },
 			    size: {
 			      random: { enable: true, minimumValue: 1 },
-			      value: 3,
-			      animation: {
-			        count: 100,
-			        enable: true,
-			        speed: 1,
-			        sync: false,
-			        destroy: "none",
-			        startValue: "random"
-			      }
+			      value: 3
+			      // animation: {
+			      //   count: 100,
+			      //   enable: true,
+			      //   speed: 1,
+			      //   sync: false,
+			      //   destroy: "none",
+			      //   startValue: "random"
+			      // }
 			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: -10, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
+			    stroke: { width: 0 }
+			    // zIndex: {
+			    //   random: { enable: false, minimumValue: 0 },
+			    //   value: { min: -10, max: 5 },
+			    //   opacityRate: 0,
+			    //   sizeRate: 1,
+			    //   velocityRate: 0
+			    // }
 			  },
 			  pauseOnBlur: true,
 			  pauseOnOutsideViewport: true
