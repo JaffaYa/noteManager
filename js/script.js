@@ -136,44 +136,44 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	        // particlesJS("plexus-1", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":25,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
 	        // particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
 
-			tsParticles.load("plexus-1", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 30,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 25,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 0.5,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 111
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 0.5 },
-			      value: 1
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
+			// tsParticles.load("plexus-1", {
+			//   autoPlay: true,
+			//   fullScreen: { enable: true, zIndex: 1 },
+			//   detectRetina: true,
+			//   fpsLimit: 30,
+			//   particles: {
+			//     links: {
+			//       color: { value: "#ffffff" },
+			//       distance: 25,
+			//       enable: true,
+			//       opacity: 1,
+			//       width: 1
+			//     },
+			//     move: {
+			//       angle: { offset: 0, value: 35 },
+			//       direction: "left",
+			//       enable: true,
+			//       random: true,
+			//       size: true,
+			//       speed: 0.5,
+			//       straight: false,
+			//       warp: true
+			//     },
+			//     number: {
+			//       value: 111
+			//     },
+			//     opacity: {
+			//       value: 1
+			//     },
+			//     size: {
+			//       random: { enable: true, minimumValue: 0.5 },
+			//       value: 1
+			//     },
+			//     stroke: { width: 0 }
+			//   },
+			//   pauseOnBlur: true,
+			//   pauseOnOutsideViewport: true
+			// });
 
 			tsParticles.load("plexus-2", {
 			  autoPlay: true,
@@ -183,7 +183,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
-			      distance: 33,
+			      distance: 27,
 			      enable: true,
 			      opacity: 1,
 			      width: 1
@@ -199,23 +199,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			      warp: true
 			    },
 			    number: {
-			      value: 111
+			      value: 222
 			    },
 			    opacity: {
 			      value: 1
 			    },
 			    size: {
 			      random: { enable: true, minimumValue: 1 },
-			      value: 2
+			      value: 1.5
 			    },
-			    stroke: { width: 0 },
-			    zIndex: {
-			      random: { enable: false, minimumValue: 0 },
-			      value: { min: -10, max: 5 },
-			      opacityRate: 0,
-			      sizeRate: 1,
-			      velocityRate: 0
-			    }
+			    stroke: { width: 0 }
 			  },
 			  pauseOnBlur: true,
 			  pauseOnOutsideViewport: true
