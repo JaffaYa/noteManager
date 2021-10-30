@@ -405,22 +405,22 @@ body {
   z-index: 0;
   top: 0%;
   left: 0%;
-  width: 120%;
-  height: 120%;
-  margin-top: -5%;
+  width: 100%;
+  height: 100%;
+/*  margin-top: -5%;
   margin-left: -10%;
-}
+*/}
 
 .plexus-2{
   position: fixed;
   z-index: 10;
   top: 0%;
   left: 0%;
-  width: 120%;
-  height: 120%;
-  margin-top: -5%;
+  width: 100%;
+  height: 100%;
+/*  margin-top: -5%;
   margin-left: -10%;
-  pointer-events: none;
+*/  pointer-events: none;
 }
 
 canvas.tsparticles-canvas-el {
