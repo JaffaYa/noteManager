@@ -178,8 +178,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			tsParticles.load("plexus-2", {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 10,
+			  detectRetina: false,
+			  fpsLimit: 25,
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
