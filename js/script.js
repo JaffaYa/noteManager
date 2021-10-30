@@ -189,7 +189,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			      width: 1
 			    },
 			    move: {
-			      angle: { offset: 0, value: 35 },
+			      angle: { offset: 35, value: 35 },
 			      direction: "left",
 			      enable: true,
 			      random: true,
@@ -199,7 +199,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			      warp: true
 			    },
 			    number: {
-			      value: 222
+			      value: 155
 			    },
 			    opacity: {
 			      value: 1
