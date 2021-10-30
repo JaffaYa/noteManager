@@ -179,7 +179,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 30,
+			  fpsLimit: 10,
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
@@ -205,7 +205,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			      value: 1
 			    },
 			    size: {
-			      random: { enable: true, minimumValue: 1 },
+			      random: { enable: true, minimumValue: 0.5 },
 			      value: 1.5
 			    },
 			    stroke: { width: 0 }
