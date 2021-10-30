@@ -71,13 +71,13 @@
       "id": "13",
       "label": "найди",
       "parents": [12],
-      "iframe": "pages/s/"
+      "iframe": "/pages/s/"
     },
     {
       "id": "14",
       "label": "покажи",
       "parents": [12],
-      "iframe": "pages/p/"
+      "iframe": "/pages/p/"
     },
     {
       "id": "15",
@@ -88,19 +88,19 @@
       "id": "16",
       "label": "кто он?",
       "parents": [15],
-      "iframe": "pages/who/"
+      "iframe": "/pages/who/"
     },
     {
       "id": "17",
       "label": "что он <br>умеет?",
       "parents": [15],
-      "iframe": "pages/what/"
+      "iframe": "/pages/what/"
     },
     {
       "id": "18",
       "label": "что ему <br>интересно?",
       "parents": [15],
-      "iframe": "pages/interest/"
+      "iframe": "/pages/interest/"
     }
   ]
 }

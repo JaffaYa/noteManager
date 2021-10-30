@@ -194,9 +194,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			      enable: true,
 			      random: true,
 			      size: true,
-			      speed: 0.75,
-			      straight: false,
-			      warp: true
+			      speed: 0.75
 			    },
 			    number: {
 			      value: 155
