@@ -140,7 +140,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 60,
+			  fpsLimit: 30,
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
@@ -179,7 +179,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 60,
+			  fpsLimit: 30,
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
@@ -227,7 +227,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 60,
+			  fpsLimit: 30,
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
@@ -266,7 +266,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  autoPlay: true,
 			  fullScreen: { enable: true, zIndex: 1 },
 			  detectRetina: true,
-			  fpsLimit: 60,
+			  fpsLimit: 30,
 			  particles: {
 			    links: {
 			      color: { value: "#ffffff" },
