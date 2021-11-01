@@ -1840,7 +1840,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//радиус радиальной силы
 						case 'radial':
-							let radialRadCoef = 375/350;
+							let radialRadCoef = 375/250;
 							return width/radialRadCoef;
 							break;
 						//мощность радиальной силы
@@ -1858,7 +1858,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/70;
+								let collRadCoef = 375/60;
 								return width/collRadCoef;
 							}else{
 								return 0;
