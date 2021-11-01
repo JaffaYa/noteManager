@@ -445,14 +445,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+0, simulation);
 
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.6);
+				simulation.alphaTarget(0.4);
 				simulation.velocityDecay(0.4) 
 			}, time+250, simulation);
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0.3);
 				simulation.alphaDecay(0.1);
-				simulation.velocityDecay(0.2) 
+				simulation.velocityDecay(0.3) 
 			}, time+500, simulation);
 
 			setTimeout(function(simulation){
@@ -1824,7 +1824,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.05 : 0.7;
+							return d.active ? 0.15 : 0.7;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
