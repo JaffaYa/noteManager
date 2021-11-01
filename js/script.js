@@ -293,7 +293,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			});
 		}
 	}
-	// plexusBg();
+	plexusBg();
 
 	// init parallax
 	function parallaxBg(){
