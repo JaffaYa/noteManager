@@ -4,7 +4,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
-	document.getElementById('fullscreenButton').addEventListener('click', e => bodyFullScreanTogle() );
 
 	function popupActive(popupClass){
 		document.querySelector('.paranja').classList.add('active');
@@ -293,7 +292,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			});
 		}
 	}
-	// plexusBg();
+	plexusBg();
 
 	// init parallax
 	function parallaxBg(){
@@ -384,9 +383,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				case 'menu':
 					popupActive('menu');
 					bodyClass.classList.toggle('menu-show'); // temp
-					break;
-				case 'logo':
-					bodyClass.classList.toggle('v-active');
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -588,7 +584,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('btn-functional', d => d.functional)
 		.classed('btn-back', d => d.function == 'back')
 		.classed('btn-menu', d => d.function == 'menu')
-		.classed('btn-logo', d => d.function == 'logo')
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
@@ -1402,8 +1397,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function addFunctionalButtons(){
 			addFunctionalButton(10000, 'назад', 'back');
-			addFunctionalButton(10001, 'меню', 'menu');
-			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-v.svg"></div>', 'logo');
+			addFunctionalButton(10001, 'ещё...', 'menu');
 		}
 
 		function addFunctionalButton(id, name, function1){
@@ -1798,7 +1792,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.005;
+							return 0.015;
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
@@ -1812,31 +1806,31 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'manyBodyDistanceMax':
 							return Infinity;
 							break;
-						//задаёт горизонтальную координату для каждой ноды
+						//задаеть горизонтальную координату для каждой ноды
 						case 'slideForce':
 							if(d.active){
 								// return (width/2 + width/2*(nodeDepth - activeDepth)) - width/2;
 								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.15;
 							}else{
 								// return (width/5 + width/2*(nodeDepth - activeDepth)) - width/2;
-								return (width/5 + width/3*(nodeDepth - activeDepth)) - width/1.3;
+								return (width/5 + width/2*(nodeDepth - activeDepth)) - width/1.3;
 							}
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.05 : 0.7;
+							return d.active ? 0.05 : 0.05;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
 							if(d.active){
-								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/4.5;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/3;
 							}else{
-								return (height/18 + (height*4/4.7)*(nodeDepth - activeDepth)) - height/1.15;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/1.5;
 							}
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.1 : 0.1;
+							return d.active ? 0.05 : 0.05;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -1898,9 +1892,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d)) + width/6;
-									break;
-								case 'logo':
-									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')
@@ -2048,9 +2039,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
-									break;
-								case 'logo':
-									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')

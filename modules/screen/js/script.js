@@ -1,10 +1,9 @@
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var bodyClass = document.querySelector('body'); // temp
-	var playBubble = make_sound("sounds/bubble.mp3");
+	var playBubble = make_sound("");
 	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
-	document.getElementById('fullscreenButton').addEventListener('click', e => bodyFullScreanTogle() );
 
 	function popupActive(popupClass){
 		document.querySelector('.paranja').classList.add('active');
@@ -55,7 +54,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var firstScrean = true;
+	var firstScrean = false;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
 
@@ -85,10 +84,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var svgLinks = linksCont.selectAll("line");
 
 
-
-
-
-	window.model = new makeModel("json/graphdata.json?v=44", simInit);
+	window.model = new makeModel("../../modules/sphere/db/graphdata.json?v=1", simInit);
 
 	model.stats.enable(); // statistics enable
 	// model.admin.set(true); // admin enable
@@ -128,193 +124,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	};
 
-
-
-	// init plexus
-	function plexusBg(){
-		if(verticalScreen){
-	        // particlesJS("plexus-1", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":25,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-
-			// tsParticles.load("plexus-1", {
-			//   autoPlay: true,
-			//   fullScreen: { enable: true, zIndex: 1 },
-			//   detectRetina: true,
-			//   fpsLimit: 30,
-			//   particles: {
-			//     links: {
-			//       color: { value: "#ffffff" },
-			//       distance: 25,
-			//       enable: true,
-			//       opacity: 1,
-			//       width: 1
-			//     },
-			//     move: {
-			//       angle: { offset: 0, value: 35 },
-			//       direction: "left",
-			//       enable: true,
-			//       random: true,
-			//       size: true,
-			//       speed: 0.5,
-			//       straight: false,
-			//       warp: true
-			//     },
-			//     number: {
-			//       value: 111
-			//     },
-			//     opacity: {
-			//       value: 1
-			//     },
-			//     size: {
-			//       random: { enable: true, minimumValue: 0.5 },
-			//       value: 1
-			//     },
-			//     stroke: { width: 0 }
-			//   },
-			//   pauseOnBlur: true,
-			//   pauseOnOutsideViewport: true
-			// });
-
-			tsParticles.load("plexus-2", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: false,
-			  fpsLimit: 25,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 27,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 35, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 0.75
-			    },
-			    number: {
-			      value: 155
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 0.5 },
-			      value: 1.5
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
-		}else{
-	        // particlesJS("plexus-1", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-			tsParticles.load("plexus-1", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 25,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 44,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 222
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1 },
-			      value: 2
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
-
-			tsParticles.load("plexus-2", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 25,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 44,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 111
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1.5 },
-			      value: 3
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
-		}
-	}
-	// plexusBg();
-
-	// init parallax
-	function parallaxBg(){
-		var scene = document.getElementById('parallax');
-		if(verticalScreen){
-			var parallax = new Parallax(scene, {
-		    	selector: '.plexusbg',
-		    	pointerEvents: 'all',
-		    	frictionX: 0.05,
-		    	frictionY: 0.05	    	
-			});
-		}else{
-			var parallax = new Parallax(scene, {
-		    	selector: '.plexusbg',
-		    	pointerEvents: 'all',
-		    	frictionX: 0.01,
-		    	frictionY: 0.01	    	
-			});
-		}
-	}
-	// parallaxBg();
 
 
 
@@ -384,9 +193,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				case 'menu':
 					popupActive('menu');
 					bodyClass.classList.toggle('menu-show'); // temp
-					break;
-				case 'logo':
-					bodyClass.classList.toggle('v-active');
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -588,7 +394,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('btn-functional', d => d.functional)
 		.classed('btn-back', d => d.function == 'back')
 		.classed('btn-menu', d => d.function == 'menu')
-		.classed('btn-logo', d => d.function == 'logo')
 		.classed('active', d => d.active)
 		.attr("node-id", d => d.id)
 
@@ -1402,8 +1207,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function addFunctionalButtons(){
 			addFunctionalButton(10000, 'назад', 'back');
-			addFunctionalButton(10001, 'меню', 'menu');
-			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-v.svg"></div>', 'logo');
+			//addFunctionalButton(10001, 'ещё...', 'menu');
 		}
 
 		function addFunctionalButton(id, name, function1){
@@ -1829,7 +1633,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
 							if(d.active){
-								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/4.5;
+								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/6;
 							}else{
 								return (height/18 + (height*4/4.7)*(nodeDepth - activeDepth)) - height/1.15;
 							}
@@ -1858,7 +1662,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/70;
+								let collRadCoef = 375/50;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -1898,9 +1702,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d)) + width/6;
-									break;
-								case 'logo':
-									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')
@@ -2048,9 +1849,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
 									return width/2 - (width/10 + getNodeRadius(d));
-									break;
-								case 'logo':
-									return 0;
 									break;
 								default:
 									throw new Error('Неизвестная кнопка.')

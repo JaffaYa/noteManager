@@ -25,9 +25,9 @@
     },
     {
       "id": "5",
-      "label": "что ты <br>умеешь?",
+      "label": "что ты <br>можешь?",
       "parents": [4],
-      "goTo": 12
+      "goTo": 9
     },
     {
       "id": "6",
@@ -44,66 +44,46 @@
       "id": "8",
       "label": "сказать <br>привет",
       "parents": [7],
-      "goTo": 12
+      "goTo": 9
     },
     {
-      "id": "12",
-      "label": "что тебе<br>интересно <br>человек?",
+      "id": "9",
+      "label": "я могу <br>найти",
       "parents": [8]
     },
     {
-      "id": "36",
-      "label": "предложи <br>тему",
-      "parents": [12]
+      "id": "10",
+      "label": "надёжного <br>инвестора",
+      "parents": [9],
+      "goTo": 15
     },
     {
-      "id": "37",
-      "label": "выбрать <br>тему",
-      "parents": [12],
-      "goTo": 38
+      "id": "11",
+      "label": "надёжный <br>инвест <br>проект",
+      "parents": [9],
+      "goTo": 25
     },
     {
-      "id": "38",
-      "label": "выбери <br>тему<br>человек",
-      "parents": [37]
-    },
-    {
-      "id": "41",
-      "label": "SMM <br>продвижение",
-      "parents": [38]
-    },
-    {
-      "id": "40",
-      "label": "инвестиции",
-      "parents": [38],
-      "goTo": 42
-    },
-    {
-      "id": "39",
-      "label": "продвижение <br>на маркет<br>плейсах",
-      "parents": [38]
-    },
-    {
-      "id": "42",
+      "id": "12",
       "label": "что ты <br>хочешь <br>человек?",
-      "parents": [40]
+      "parents": [11]
     },
     {
       "id": "13",
       "label": "найти <br>надёжного <br>инвестора",
-      "parents": [42],
+      "parents": [12],
       "goTo": 15
     },
     {
       "id": "14",
       "label": "инвестировать <br>в надёжный <br>проект",
-      "parents": [42],
+      "parents": [12],
       "goTo": 25
     },
     {
       "id": "15",
       "label": "у тебя <br>есть <br>проект<br>или идея?",
-      "parents": [13]
+      "parents": [10]
     },
     {
       "id": "17",
@@ -136,14 +116,14 @@
     },
     {
       "id": "22",
-      "label": "эксперты <br>бизнес <br>сообщества <br>Innovator",
+      "label": "эксперты <br>бизнес <br>сообщества <br>«Инноватор»",
       "parents": [21]
     },
     {
       "id": "23",
       "label": "кто эти <br>эксперты?",
-      "parents": [22,43],
-      "goTo": 45
+      "parents": [22],
+      "iframe": "/pages/circles/innovator/"
     },
     {
       "id": "24",
@@ -153,31 +133,20 @@
     },
     {
       "id": "25",
-      "label": "для начала <br>расскажи<br>о тебе",
-      "parents": [14]
+      "label": "сначала <br>эксперты <br>должны<br> узнать <br>о тебе",
+      "parents": [11]
     },
     {
       "id": "26",
-      "label": "кому <br>рассказать?",
+      "label": "кто эти <br>эксперты?",
       "parents": [25],
-      "goTo": 43
-    },
-    {
-      "id": "43",
-      "label": "экспертам <br>бизнес <br>сообщества <br>Innovator",
-      "parents": [26]
+      "iframe": "/pages/circles/innovator/"
     },
     {
       "id": "27",
       "label": "рассказать<br> о себе",
-      "parents": [25,43],
+      "parents": [25],
       "iframe": "/pages/circles/innovator/spheres/invest/invite/"
-    },
-    {
-      "id": "44",
-      "label": "покажи<br> сообщество",
-      "parents": [43],
-      "goTo": 32
     },
     {
       "id": "28",
@@ -187,14 +156,14 @@
     },
     {
       "id": "29",
-      "label": "чтобы <br>эксперты<br> убедились<br>что ты <br> надёжный<br> инвестор",
+      "label": "чтобы они<br> убедились<br>что ты <br>настоящий",
       "parents": [28]
     },
     {
       "id": "31",
       "label": "кто эти <br>эксперты?",
       "parents": [29],
-      "goTo": 45
+      "iframe": "/modules/circles/source/innovator/"
     },
     {
       "id": "30",
@@ -204,14 +173,14 @@
     },
     {
       "id": "32",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Innovator</div><div class='live-sphere'>бизнес <br>сообщество</div></div>",     
+      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/source/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Innovator</div><div class='live-sphere'>бизнес <br>сообщество</div></div>",     
       "parents": [24]
     },
     {
       "id": "33",
-      "label": "эксперты <br>сообщества",
+      "label": "кто мы",
       "parents": [32],
-      "goTo": 45
+      "iframe": "/modules/circles/source/innovator/"
     },
     {
       "id": "34",
@@ -224,21 +193,6 @@
       "label": "что нам <br>интересно",
       "parents": [32],
       "iframe": "/pages/circles/innovator/spheres/invest/invite/"
-    },
-    {
-      "id": "45",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Innovator</div><div class='live-sphere'>бизнес <br>сообщество</div></div>",     
-      "parents": [33]
-    },
-    {
-      "id": "46",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
-      "parents": [45]
-    },
-    {
-      "id": "47",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
-      "parents": [45]
     }
   ]
 }
