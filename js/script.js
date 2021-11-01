@@ -90,7 +90,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json?v=44", simInit);
 
-	model.stats.enable(); // statistics enable
+	// model.stats.enable(); // statistics enable
 	// model.admin.set(true); // admin enable
 	// model.showAllTree(); // all tree enable
 
