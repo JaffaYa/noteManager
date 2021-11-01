@@ -239,6 +239,24 @@
       "id": "47",
       "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-as.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
       "parents": [45]
+    },
+    {
+      "id": "48",
+      "label": "кто я",
+      "parents": [46],
+      "iframe": "/pages/circles/innovator/spheres/invest/invite/"
+    },
+    {
+      "id": "49",
+      "label": "что я <br>сделал",
+      "parents": [46],
+      "iframe": "/pages/circles/innovator/spheres/invest/invite/"
+    },
+    {
+      "id": "50",
+      "label": "контакты",
+      "parents": [46],
+      "iframe": "/pages/circles/innovator/spheres/invest/invite/"
     }
   ]
 }
