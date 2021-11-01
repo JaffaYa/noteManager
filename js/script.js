@@ -1858,7 +1858,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/60;
+								let collRadCoef = 375/50;
 								return width/collRadCoef;
 							}else{
 								return 0;

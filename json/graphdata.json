@@ -141,19 +141,19 @@
     },
     {
       "id": "23",
-      "label": "кто эти <br>эксперты?",
+      "label": "покажи <br>экспертов",
       "parents": [22,43],
       "goTo": 45
     },
     {
       "id": "24",
-      "label": "какое <br>сообщество?",
+      "label": "покажи<br> сообщество",
       "parents": [22],
       "goTo": 32
     },
     {
       "id": "25",
-      "label": "для начала <br>расскажи<br>о тебе",
+      "label": "для начала <br>расскажи<br>о себе",
       "parents": [14]
     },
     {
@@ -232,12 +232,12 @@
     },
     {
       "id": "46",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
+      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-aa.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
       "parents": [45]
     },
     {
       "id": "47",
-      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-innovator.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
+      "label": "<div class='live-card'><div class='live-avatar'><img src='modules/circles/db/innovator/content/img/live-avatar-as.png'></div><div class='live-name'>Артур</div><div class='live-sphere'>основатель</div></div>",     
       "parents": [45]
     }
   ]
