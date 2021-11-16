@@ -43,18 +43,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showCssDuration = 700; //длина анимации появления в css
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var showNodeDelay = 100; //задерка перед появлением ноды
-	var showLinkDelay = 100; //задерка перед появлением линка
-	var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
-	var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showCssDuration = 700; //длина анимации появления в css
-	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
-	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
+	var showNodeDelay = 60; //задерка перед появлением ноды
+	var showLinkDelay = 60; //задерка перед появлением линка
+	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
+	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
+	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
+	var showSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед появлением
+	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
+	var showCssDuration = 300; //длина анимации появления в css
+	var hideNodeCssDuration = 300; //длина анимации прятания ноды в css
+	var hideLinkCssDuration = 300; //длина анимации прятания линка в css
 	var startDelay = 500; //доп задерка при старте
 
 
-	var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
+	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 500 : 500; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -90,8 +94,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json?v=44", simInit);
 
-	// model.stats.enable(); // statistics enable
-	// model.admin.set(true); // admin enable
+	model.stats.enable(); // statistics enable
+	model.admin.set(false); // admin enable
 	// model.showAllTree(); // all tree enable
 
 	window.view = new makeView(model);
@@ -120,7 +124,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.nodes(model.nodesToDisplay);
 			simulation.force("link").links(model.links);
 			// simulation.alphaTarget(0.1).restart();
-			simulation.alpha(1).restart();
+			simulation.alpha(0.5).restart();
 
 			model.stats.restart();
 		}
@@ -293,7 +297,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			});
 		}
 	}
-	plexusBg();
+	// plexusBg();
 
 	// init parallax
 	function parallaxBg(){
@@ -444,10 +448,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.4);
-				simulation.velocityDecay(0.4) 
-			}, time+250, simulation);
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.4);
+			// 	simulation.velocityDecay(0.4) 
+			// }, time+250, simulation);
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0.3);
@@ -462,20 +466,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+750, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
+				simulation.alphaTarget(0.7);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.6);
-				simulation.velocityDecay(0.4) 
-			}, time+250, simulation);
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.6);
+			// 	simulation.velocityDecay(0.4) 
+			// }, time+250, simulation);
 
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.3);
-				simulation.alphaDecay(0.1);
-				simulation.velocityDecay(0.2) 
-			}, time+500, simulation);
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.3);
+			// 	simulation.alphaDecay(0.1);
+			// 	simulation.velocityDecay(0.2) 
+			// }, time+500, simulation);
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
@@ -651,7 +655,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.delay(hideSlideDelay) // delay before hide
 		.duration(hideNodeCssDuration) // time before delete
 		.on('start', function(){
-			this.classList.remove('show');
+			this.classList.remove('show'); // задача - class show должен отменяться сразу же, при клике
 		})
 		.on('end', function(){
 			this.remove();
@@ -769,7 +773,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function dragstarted(d) {
 		// if (!d3.event.active) simulation.alphaTarget(1.7).restart();
 		if (!d3.event.active) 
-		simulation.alphaTarget(1).restart(); // less alphaTarget
+		simulation.alphaTarget(0.75).restart(); // less alphaTarget
 		simulation.velocityDecay(0.3);
 		model.stats.restart();
 		d.fx = d.x;
@@ -2007,7 +2011,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/120;
+								let collRadCoef = 2040/110;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2121,7 +2125,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = verticalScreen ? 1.1 : 0.28;
+			let sizeCoeficient = verticalScreen ? 1.1 : 0.26;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв
