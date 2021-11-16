@@ -24,7 +24,7 @@ body {
   user-select: none;
   overflow: hidden;
 }
-.main-bg {
+.main-wrapper {
   width: 100%;
   height: 100%;
   top: 0;
@@ -407,15 +407,31 @@ body {
 }
 
 
-#plexus {
+/* background */
+.plexus-1{
   position: fixed;
-  z-index: 1;
+  z-index: 0;
   top: 0%;
   left: 0%;
   width: 100%;
   height: 100%;
+/*  margin-top: -5%;
+  margin-left: -10%;
+*/}
+
+.plexus-2{
+  position: fixed;
+  z-index: 10;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+/*  margin-top: -5%;
+  margin-left: -10%;
+*/  pointer-events: none;
 }
-#plexus canvas{
+
+canvas.tsparticles-canvas-el {
   all: unset;
   display: block;
   vertical-align: bottom;
@@ -425,6 +441,9 @@ body {
   opacity: 1;
   -webkit-animation: appear 1.4s 1;
   animation: appear 1.4s 1;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  pointer-events: none!important;
 }
 
 
