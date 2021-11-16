@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "label": "здравствуй <br>человек",
+      "parents": [0]
+    },
+    {
+      "id": "2",
+      "label": "кто ты?",
+      "parents": [1],
+      "goTo": 4,
+      "order": 1
+    },
+    {
+      "id": "3",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>сказать <br>привет",
+      "parents": [1],
+      "goTo": 12
+    },
+    {
+      "id": "4",
+      "label": "я искусст<br>венный <br>разум",
+      "parents": [2]
+    },
+    {
+      "id": "6",
+      "label": "как твоё <br>имя?",
+      "parents": [4],
+      "goTo": 7
+    },
+    {
+      "id": "7",
+      "label": "моё имя <br>variant",
+      "parents": [6]
+    },
+    {
+      "id": "8",
+      "label": "сказать <br>привет",
+      "parents": [7],
+      "goTo": 12
+    },
+    {
+      "id": "12",
+      "label": "что тебе<br>интересно <br>человек?",
+      "parents": [8]
+    }
+  ]
+}
+
