@@ -48,13 +48,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
 	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед появлением
+	var showSlideDelay = verticalScreen ? 150 : 150; //задерка сдвига перед появлением
+	var showLinkDelay = verticalScreen ? 50 : 50; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 300; //длина анимации появления в css
 	var hideNodeCssDuration = 300; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 300; //длина анимации прятания линка в css
-	var startDelay = 500; //доп задерка при старте
+	var startDelay = 1000; //доп задерка при старте
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
@@ -92,7 +93,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	window.model = new makeModel("json/graphdata.json?v=77", simInit);
+	window.model = new makeModel("json/graphdata.json?v=108", simInit);
 
 	model.stats.enable(); // statistics enable
 	model.admin.set(false); // admin enable
@@ -299,26 +300,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 	// plexusBg();
 
-	// init parallax
-	function parallaxBg(){
-		var scene = document.getElementById('parallax');
-		if(verticalScreen){
-			var parallax = new Parallax(scene, {
-		    	selector: '.plexusbg',
-		    	pointerEvents: 'all',
-		    	frictionX: 0.05,
-		    	frictionY: 0.05	    	
-			});
-		}else{
-			var parallax = new Parallax(scene, {
-		    	selector: '.plexusbg',
-		    	pointerEvents: 'all',
-		    	frictionX: 0.01,
-		    	frictionY: 0.01	    	
-			});
-		}
-	}
-	// parallaxBg();
 
 
 
@@ -463,10 +444,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.alphaTarget(0);
 				simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
-			}, time+750, simulation);
+			}, time+350, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.7);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 
@@ -485,7 +466,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.alphaTarget(0);
 				simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
-			}, time+750, simulation);
+			}, time+500, simulation);
 		}
 
 		// setTimeout(function(simulation){
@@ -717,12 +698,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//add smooth animation
 		d3newLinks
-		// .filter( d => showIds.includes(d.target.id) )
+		// // .filter( d => showIds.includes(d.target.id) )
 		.transition()
 		.delay(makelinkDelay())
 		.on('start', function repeat() {
 			this.classList.add('show');
 		});
+
 
 
 		//exit
@@ -751,10 +733,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				if(!firstScrean){
 					// result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay - 500;
-					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay;
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay + showLinkDelay;
 				}else{
 					// result = counter * showLinkDelay + counter * showNodeDelay + showCssDuration - 500 + startDelay;//showCssDuration тут по идеи ноды
-					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay + startDelay;//showCssDuration тут по идеи ноды
+					result = counter * showLinkDelay + counter * showNodeDelay + showSlideDelay + showLinkDelay + startDelay;//showCssDuration тут по идеи ноды
 				}
 
 				// console.log('link-counter',counter);
@@ -1862,7 +1844,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/50;
+								let collRadCoef = 375/40;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -1917,7 +1899,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							return height/2 - (height/100 + getNodeRadius(d));
+							// return height/2 - (height/100 + getNodeRadius(d));
+							return height - (height/2.1 + getNodeRadius(d));
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
@@ -1946,7 +1929,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					switch(force){
 						//мощность силы линка
 						case 'linkStr':
-							return 0.015;
+							return 0.005;
 							break;
 						//длина линка в пикселях
 						case 'linkDistance':
@@ -1980,7 +1963,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.15 : 0.15;
+							return d.active ? 0.25 : 0.25;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -1988,7 +1971,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.05 : 0.05;
+							return d.active ? 0.25 : 0.05;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2011,7 +1994,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/110;
+								let collRadCoef = 2040/100;
 								return width/collRadCoef;
 							}else{
 								return 0;
