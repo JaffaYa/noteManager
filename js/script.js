@@ -120,9 +120,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let currActivePath = model.getActivePath();
 			if(model.isInArrayId(id,currActivePath)){
 				model.userData.push(null, 'браузер назад');
+				console.dir('браузер назад');
 				model.backButton(deleteDelay, deleteDelayCallback);
 			}else{
 				model.userData.push(null, 'браузер вперед');
+				console.dir('браузер вперед');
 				model.forwardButton(id, deleteDelay, deleteDelayCallback);
 			}
 
@@ -1467,6 +1469,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
 			let node = getNodeById(nodeId);
+			backButtonFlag = true;
 			cliсkOnNode(node, deleteDelay, callback);
 		}
 
