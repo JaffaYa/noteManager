@@ -1,6 +1,7 @@
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	var bodyClass = document.querySelector('body'); // temp
+	var vLogo = document.querySelector('.v-logo'); // temp
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
@@ -17,6 +18,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		for (var i = 0; i < popup.length; i++) {
 			popup[i].classList.remove('active');
 		}
+	});
+
+	document.querySelector('.v-logo').addEventListener('click', function(event){
+		bodyClass.classList.toggle('v-active');
 	});
 
 	var debug = false;
@@ -1389,7 +1394,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function addFunctionalButtons(){
 			addFunctionalButton(10000, 'назад', 'back');
 			addFunctionalButton(10001, 'меню', 'menu');
-			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-v.svg"></div>', 'logo');
+			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-anim-500.gif"></div>', 'logo');
 		}
 
 		function addFunctionalButton(id, name, function1){
