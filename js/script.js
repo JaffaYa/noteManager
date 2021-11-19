@@ -74,6 +74,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.simulationResize = function (){};
 
+
 	//data init
 	var activePath = [];
 
@@ -118,8 +119,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(id){
 			let currActivePath = model.getActivePath();
 			if(model.isInArrayId(id,currActivePath)){
+				model.userData.push(null, 'браузер назад');
 				model.backButton(deleteDelay, deleteDelayCallback);
 			}else{
+				model.userData.push(null, 'браузер вперед');
 				model.forwardButton(id, deleteDelay, deleteDelayCallback);
 			}
 
@@ -358,7 +361,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	function bubleClick(d, i, arr) {
+		//prevent click by click in input tag
+		if(window.event.type == 'click'){
+			if( window.event.target.nodeName == 'INPUT' ){
+				return;
+			}
+		}
+		
 		let  backButton = false;
+
+		model.userData.push(d);
 
 		if(!d.active){
 			// playBubble(); // sound off
@@ -600,9 +612,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		});
 
 
-		d3newNodes.append("div")
+		let d3newNodesLabels = d3newNodes.append("div")
 		.classed('v-content', true)
 		.html(d => d.label);
+
+		//set handler for inputs
+		d3newNodesLabels
+		.select('input')
+		.on('change', e => {
+			let name = d3.event.target.getAttribute('name');
+			model.nodeInputs[name] = d3.event.target.value;	
+		});
+
 
 		d3newNodes.append("div")
 		.classed('c1', true);
@@ -785,7 +806,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	document.addEventListener('keypress', keyFunc, false);
 
 	function keyFunc(event){
-		console.dir(event);
+		// console.dir(event);
 		switch (event.code){
 			case 'KeyF':
 			bodyFullScreanTogle();;
@@ -885,6 +906,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.updateLinks = updateLinks;
 		this.isInArrayId = isInArrayId;
 		this.isSlide = isSlide;
+		this.userData = new makeUserDataPath();
+		this.nodeInputs = {};
 		/*
 		* node = {
 		*	id: int,
@@ -966,6 +989,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 			let startNode = setInitNode();
 			makeNodeActive(startNode);
+			myThis.userData.push(startNode);
 			updateNodes();
 
 			function setInitNode(){
@@ -1252,6 +1276,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		// var timerDDId = null;
 		function cliсkOnNode(node, deleteDelay = false, callback = function(){}){
+
 			let previosNode = myThis.activeNode;
 			let goToFlag = false;
 			if(node.goTo !== false){
@@ -1262,6 +1287,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					node = goToNode;
 				}
 			}
+
+			myThis.userData.push(node);
+
 			if(!backButtonFlag || goToFlag){
 				setLeftDepth(previosNode, node);
 			}
@@ -1657,6 +1685,46 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		}
 
+		function makeUserDataPath() {
+			let userData = [];
+
+			this.push = function(node, message = ''){
+				let textToPush = '';
+				if(node){
+					let nodeList = document.querySelectorAll("div.node");
+					if(nodeList.length){
+						nodeList.forEach( elem => {
+							if( elem.__data__.id == node.id ){
+								let input = elem.querySelector('input');
+								if(input){
+									let placeHolder = input.getAttribute('placeholder');
+									let value = input.value;
+									textToPush = placeHolder +' '+ value +' '+ elem.innerText.trim();
+								}else{
+									textToPush = elem.innerText;
+								}
+							}
+						});
+					}else{//если нод еще не существует
+						let div = document.createElement('div');
+						div.innerHTML = node.label
+						textToPush = div.innerText;
+					}
+				}
+				if(message){
+					textToPush = message;
+				}
+				if(textToPush){
+					console.log(textToPush);
+					userData.push(textToPush);
+				}	
+			}
+
+			this.get = function(){
+				return userData;
+			}
+		}
+
 	}
 
 	function makeView(model){
@@ -1679,6 +1747,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.colideRadiusStr = colideRadiusStr;
 		this.getColideRadiusIterations = getColideRadiusIterations;
 		this.collideForceIsolate = collideForceIsolate;
+		this.getHtmlNodeById = getHtmlNodeById;
 		this.scrollNext = true;
 
 		var width = window.innerWidth;
@@ -2126,6 +2195,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			fz = allTextWidth/letter_fz;
 
 			document.documentElement.style.fontSize = fz+'px';
+		}
+
+		function getHtmlNodeById(id){
+			// nodes = nodesCont.selectAll("div.node");
+			// console.dir(nodes);
+			// // return nodes.filter( d => d.id == id );
+			// return ;
 		}
 
 

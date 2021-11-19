@@ -47,7 +47,7 @@
     },
     {
       "id": "9",
-      "label": "сказать",
+      "label": "<input name=\"specialization\" placeholder=\"специализаця\" type=\"text\"><br> сказать",
       "parents": [8],
       "goTo": 16
     },
