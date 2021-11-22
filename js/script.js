@@ -813,7 +813,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// console.dir(event);
 		switch (event.code){
 			case 'KeyF':
-			bodyFullScreanTogle();;
+			bodyFullScreanTogle();
 			break;
 			default:
 			break;
@@ -1958,12 +1958,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								case 'back':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-									return (width/10 + getNodeRadius(d)) - width/1.5;
+									return (width/10 + getNodeRadius(d)) - width/2;
 									break;
 								case 'menu':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
-									return width/2 - (width/10 + getNodeRadius(d)) + width/6;
+									return width/2 - (width/10 + getNodeRadius(d));
 									break;
 								case 'logo':
 									return 0;
@@ -1980,7 +1980,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
 							// return height/2 - (height/100 + getNodeRadius(d));
-							return height - (height/2.1 + getNodeRadius(d));
+							return height/2 - (height/20 + getNodeRadius(d));
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
@@ -2109,12 +2109,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								case 'back':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-									return (width/20 + getNodeRadius(d)) - width/2;
+									return (width/11.8 + getNodeRadius(d)) - width/2;
 									break;
 								case 'menu':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
-									return width/2 - (width/10 + getNodeRadius(d));
+									return width/2 - (width/7.4 + getNodeRadius(d));
 									break;
 								case 'logo':
 									return 0;
@@ -2130,7 +2130,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							return height/2 - (height/100 + getNodeRadius(d));
+							return height/2 - (height/17 + getNodeRadius(d));
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
@@ -2192,7 +2192,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return verticalScreen ? 2 : 4
 		}
 
-		function setHtmlFontSize(){
+		function setHtmlFontSize(get){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
 			let sizeCoeficient = verticalScreen ? 1 : 0.26;
@@ -2207,10 +2207,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			
 			fz = allTextWidth/letter_fz;
 
-			document.documentElement.style.fontSize = fz+'px';
+			if(get == 'get'){
+				return fz;
+			}else{
+				document.documentElement.style.fontSize = fz+'px';
+			}
 		}
 
 		function getHtmlNodeById(id){
+			let nodeList = document.querySelectorAll("div.node");
+			if(nodeList.length){
+				for (var i = 0; i < nodeList.length; i++) {
+					if( nodeList[i].__data__.id == id ){
+						return nodeList[i];
+					}
+				}
+			}else{//если нод не существует
+				return 'false';
+			}
 			// nodes = nodesCont.selectAll("div.node");
 			// console.dir(nodes);
 			// // return nodes.filter( d => d.id == id );
@@ -2219,9 +2233,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 		function getNodeRadius(node){
-			// console.dir(getNodeElementById(node.id));
-			// return width/48;
-			return 70;
+			// if(node.id){
+			// 	console.log( getHtmlNodeById(node.id) );
+			// }
+			var rem = setHtmlFontSize('get');
+			// var diameter = node.active ? rem*1.35 : rem*1.35*0.55;
+			var func = node.functional ? 0.65 : 1;
+			var diameter = node.active ? rem*1.35 : (rem*1.35)*0.55*func;
+			// console.log( node.active ? rem*1.35 : rem*0.55 );
+			return diameter/2;
+			// return 70;
 		}
 
 		function isolateForce(force, filter) {

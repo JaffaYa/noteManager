@@ -529,7 +529,7 @@ canvas.tsparticles-canvas-el {
 
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
 .nodes .node {
   transform: scale(0.5);
 }
