@@ -666,7 +666,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.delay(hideSlideDelay) // delay before hide
 		.duration(hideNodeCssDuration) // time before delete
 		.on('start', function(){
-			this.classList.remove('show'); // задача - class show должен отменяться сразу же, при клике
+			this.classList.remove('show');
 		})
 		.on('end', function(){
 			this.remove();
@@ -718,7 +718,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		);
 
-		var strokeWidth = verticalScreen ? 2 : 4; // задача добавить resize 
+		var strokeWidth = view.getLinkWidth();
 		//enter
 		d3newLinks = d3links
 		.enter().append('line')
@@ -1753,6 +1753,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.getColideRadiusIterations = getColideRadiusIterations;
 		this.collideForceIsolate = collideForceIsolate;
 		this.getHtmlNodeById = getHtmlNodeById;
+		this.getLinkWidth = getLinkWidth;
 		this.scrollNext = true;
 
 		var width = window.innerWidth;
@@ -2178,10 +2179,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.force("collide").radius(self.getColideRadius);
 			simulation.force("radial").strength(self.radialStr).x(self.radialX()).y(self.radialY());
 
-
+			//change lick width
+			var strokeWidth = self.getLinkWidth();
+			linksCont.selectAll("line")
+			.attr('stroke-width', strokeWidth)
 
 			simulation.alpha(1).restart();
 			model.stats.restart();
+		}
+
+		function getLinkWidth(){
+			return verticalScreen ? 2 : 4
 		}
 
 		function setHtmlFontSize(){
