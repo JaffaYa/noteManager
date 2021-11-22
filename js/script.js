@@ -572,6 +572,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.selectAll("div.node")
 		.data(nodes, d => d.id)
 		.classed('active', d => d.active)
+		.classed('show', d => d.display)
 		.classed('hide', d => {
 			let activeNodeCildren = model.activeNode.children
 			if( d.active ) return false;
@@ -598,6 +599,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		.call(
 			d3.drag(simulation)
+			.clickDistance(80)
 			.on("start", dragstarted)
 			.on("drag", dragged)
 			.on("end", dragended)
@@ -1181,7 +1183,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if( (nodeToHide && !deleteDelay) || (nodeToHide && nodesToDisplay[i].functional) ){
 					for (var k = 0; k < myThis.nodesToDisplay.length; k++) {
 						if(myThis.nodesToDisplay[k].id == nodesToDisplay[i].id)
-						myThis.nodesToDisplay.splice(k, 1);
+							myThis.nodesToDisplay.splice(k, 1);
 					}
 				}
 			}
