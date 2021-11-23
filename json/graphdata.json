@@ -42,12 +42,12 @@
     },
     {
       "id": "8",
-      "label": "в какой нише <br>и какая у тебя<br> специализаця?",
+      "label": "<input name=\"specialization\" placeholder=\"специализаця\" type=\"text\">",
       "parents": [6,7,11,12,14,15]
     },
     {
       "id": "9",
-      "label": "<input name=\"specialization\" placeholder=\"специализаця\" type=\"text\"><br> сказать",
+      "label": "сказать",
       "parents": [8],
       "goTo": 16
     },

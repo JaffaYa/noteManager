@@ -623,6 +623,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//set handler for inputs
 		d3newNodesLabels
 		.select('input')
+		.attr("value", d => {
+			let div = document.createElement('div');
+			div.innerHTML = d.label;
+			let input = div.querySelector('input');
+			if(input){
+				let name = input.getAttribute('name');
+				if(model.nodeInputs[name]){
+					return model.nodeInputs[name]
+				}
+			}
+			return '';
+		})
 		.on('change', e => {
 			let name = d3.event.target.getAttribute('name');
 			model.nodeInputs[name] = d3.event.target.value;	
@@ -807,7 +819,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//resize
 	window.addEventListener('resize', view.simulationResize);
 
-	document.addEventListener('keypress', keyFunc, false);
+	// document.addEventListener('keypress', keyFunc, false);
 
 	function keyFunc(event){
 		// console.dir(event);
