@@ -2254,7 +2254,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setBodyVertical(){
 			if(verticalScreen){
 				document.body.classList.add('vertical');
+				document.body.classList.remove('horizontal');
 			}else{
+				document.body.classList.add('horizontal');
 				document.body.classList.remove('vertical');
 			}
 		}

@@ -121,8 +121,8 @@ body {
   transition: 0.3s cubic-bezier(.33,.38,.3,1.6);
   transition-delay: 0.3s;
 }
-#body .node.show .c1, 
-#body .node.show .c2{
+.node.show .c1, 
+.node.show .c2{
   transform: translate(-50%, -50%) scale(0.55);
 }
 .node.show:hover .c1{
@@ -530,31 +530,33 @@ canvas.tsparticles-canvas-el {
 
 
 @media only screen and (max-width: 1024px) {
-  .vertical   .nodes .node {
+  .nodes .node {
     transform: scale(0.5);
   }
-  .vertical .node .c1, 
-  .vertical .node .c2 {
+  .node .c1, 
+  .node .c2 {
     transform: translate(-50%, -50%) scale(0);
   }
-  .vertical .active .c1, .active .c2, 
-  .vertical .active:hover .c1, .active:hover .c2 {
-    transform: translate(-50%, -50%) scale(0.5);
+  .node.active.show .c1, 
+  .node.active.show .c2, 
+  .node.active.show:hover .c1, 
+  .node.active.show:hover .c2 {
+    transform: translate(-50%, -50%) scale(1);
   }
-  .vertical .node:hover .c1{
+  .node:hover .c1{
     transform: translate(-50%, -50%) scale(0.55);
   }
-  .vertical .node:hover .c2{
+  .node:hover .c2{
     transform: translate(-50%, -50%) scale(0.55);
   }
-  .vertical .node.show .v-content{
+  .node.show .v-content{
     transform: scale(0.65) translateX(0%) translateY(-0.1rem);
   }
-  .vertical .node.active .v-content {
+  .node.active .v-content {
       /*transform: scale(1) translateX(0%) translateY(-1.2rem);*/
       transform: scale(1) translateX(0%) translateY(-100%);
   }
-  .vertical .logo-main {
+  .logo-main {
     width: 2.5rem;
     bottom: 1%;
   }
@@ -612,23 +614,50 @@ canvas.tsparticles-canvas-el {
     top: 50%;
     transform: translateY(-30%) scale(0.35);
   }
-  .vertical .node-btn {
+  .node-btn {
     transform: scale(0.65);
   }
-  .vertical .nodes .node.btn-functional {
+  .nodes .node.btn-functional {
     transform: scale(0.45);
   }
-  .vertical .btn-back .v-content{
+  .btn-back .v-content{
     transform: scale(0.75) translateX(0%) translateY(-0.1rem)!important;
   }
-  .vertical .btn-menu .v-content{
+  .btn-menu .v-content{
       transform: scale(0.75) translateX(-100%) translateY(-0.1rem)!important;
   }
-  .vertical .nodes .node.btn-functional.btn-logo{
+  .nodes .node.btn-functional.btn-logo{
       transform: scale(0.75);
   }
-  .vertical .btn-functional.btn-logo .v-content{
+  .btn-functional.btn-logo .v-content{
     transform: translateY(-50%); 
+  }
+
+}
+
+@media only screen and (max-width: 1024px) {
+
+  .horizontal .node.active .v-content {
+    transform: scale(1) translateX(-100%) translateY(-45%);
+  }
+
+  .horizontal .node .v-content{
+    font-size: 2.2rem;
+    line-height: 2rem;
+  }
+
+  .horizontal .node .c1{
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .horizontal .node .c2{
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .horizontal .logo-main{
+    width: 6.5rem;
   }
 
 }
