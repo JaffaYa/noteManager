@@ -121,8 +121,8 @@ body {
   transition: 0.3s cubic-bezier(.33,.38,.3,1.6);
   transition-delay: 0.3s;
 }
-.node.show .c1, 
-.node.show .c2{
+#body .node.show .c1, 
+#body .node.show .c2{
   transform: translate(-50%, -50%) scale(0.55);
 }
 .node.show:hover .c1{
@@ -530,106 +530,106 @@ canvas.tsparticles-canvas-el {
 
 
 @media only screen and (max-width: 1024px) {
-.nodes .node {
-  transform: scale(0.5);
-}
-.node .c1, 
-.node .c2 {
-  transform: translate(-50%, -50%) scale(0);
-}
-.active .c1, .active .c2, 
-.active:hover .c1, .active:hover .c2 {
-  transform: translate(-50%, -50%) scale(0.5);
-}
-.node:hover .c1{
-  transform: translate(-50%, -50%) scale(0.55);
-}
-.node:hover .c2{
-  transform: translate(-50%, -50%) scale(0.55);
-}
-.node.show .v-content{
-  transform: scale(0.65) translateX(0%) translateY(-0.1rem);
-}
-.node.active .v-content {
-    /*transform: scale(1) translateX(0%) translateY(-1.2rem);*/
-    transform: scale(1) translateX(0%) translateY(-100%);
-}
-.logo-main {
-  width: 2.5rem;
-  bottom: 1%;
-}
-.hider {
-  top: 105%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  transition: background-color 0.5s cubic-bezier(.81,.08,.56,.96) 0.25s, 
-  opacity 0.5s cubic-bezier(.81,.08,.56,.96) 0.35s, 
-  height 0.5s cubic-bezier(.81,.08,.56,.96) 0s, 
-  top 0s ease 7s;
-}
-.page-show .hider, 
-.menu-show .hider {
-  top: 0%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 10%;
-  background-color: rgba(0,0,0,0.15);
-  transition: 
-  top 0s ease 0s, 
-  opacity 0.5s 
-  cubic-bezier(.27,.26,.2,1) 0s, 
-  height 0.5s cubic-bezier(.27,.26,.2,1) 0.25s, 
-  background-color 0.35s cubic-bezier(.27,.26,.2,1) 0s;
-}
-.popup {
-  top: 100%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  transition: opacity 0.75s cubic-bezier(.67,0,.15,1) 0s, top 0.75s cubic-bezier(.67,0,.15,1) 0s;
-}
-.menu {
-  padding: 20px;
-}
-.menu a {
-  display: block;
-  padding: 10px 0;
-}
-.page-show .popup.iframe, 
-.menu-show .popup.menu {
-  top: 10%;
-  left: 0;
-  right: 0;
-  opacity: 1;
-  transition: opacity 0.75s cubic-bezier(.67,0,.15,1) 0s, top 0.75s cubic-bezier(.67,0,.15,1) 0.15s;
-}
-.hider .node-btn {
-  position: absolute;
-  left: 10%;
-  top: 50%;
-  transform: translateY(-30%) scale(0.35);
-}
-.node-btn {
-  transform: scale(0.65);
-}
-.nodes .node.btn-functional {
-  transform: scale(0.45);
-}
-.btn-back .v-content{
-  transform: scale(0.75) translateX(0%) translateY(-0.1rem)!important;
-}
-.btn-menu .v-content{
-    transform: scale(0.75) translateX(-100%) translateY(-0.1rem)!important;
-}
-.nodes .node.btn-functional.btn-logo{
-    transform: scale(0.75);
-}
-.btn-functional.btn-logo .v-content{
-  transform: translateY(-50%); 
-}
+  .vertical   .nodes .node {
+    transform: scale(0.5);
+  }
+  .vertical .node .c1, 
+  .vertical .node .c2 {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  .vertical .active .c1, .active .c2, 
+  .vertical .active:hover .c1, .active:hover .c2 {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  .vertical .node:hover .c1{
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+  .vertical .node:hover .c2{
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+  .vertical .node.show .v-content{
+    transform: scale(0.65) translateX(0%) translateY(-0.1rem);
+  }
+  .vertical .node.active .v-content {
+      /*transform: scale(1) translateX(0%) translateY(-1.2rem);*/
+      transform: scale(1) translateX(0%) translateY(-100%);
+  }
+  .vertical .logo-main {
+    width: 2.5rem;
+    bottom: 1%;
+  }
+  .hider {
+    top: 105%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.5s cubic-bezier(.81,.08,.56,.96) 0.25s, 
+    opacity 0.5s cubic-bezier(.81,.08,.56,.96) 0.35s, 
+    height 0.5s cubic-bezier(.81,.08,.56,.96) 0s, 
+    top 0s ease 7s;
+  }
+  .page-show .hider, 
+  .menu-show .hider {
+    top: 0%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 10%;
+    background-color: rgba(0,0,0,0.15);
+    transition: 
+    top 0s ease 0s, 
+    opacity 0.5s 
+    cubic-bezier(.27,.26,.2,1) 0s, 
+    height 0.5s cubic-bezier(.27,.26,.2,1) 0.25s, 
+    background-color 0.35s cubic-bezier(.27,.26,.2,1) 0s;
+  }
+  .popup {
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    transition: opacity 0.75s cubic-bezier(.67,0,.15,1) 0s, top 0.75s cubic-bezier(.67,0,.15,1) 0s;
+  }
+  .menu {
+    padding: 20px;
+  }
+  .menu a {
+    display: block;
+    padding: 10px 0;
+  }
+  .page-show .popup.iframe, 
+  .menu-show .popup.menu {
+    top: 10%;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    transition: opacity 0.75s cubic-bezier(.67,0,.15,1) 0s, top 0.75s cubic-bezier(.67,0,.15,1) 0.15s;
+  }
+  .hider .node-btn {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-30%) scale(0.35);
+  }
+  .vertical .node-btn {
+    transform: scale(0.65);
+  }
+  .vertical .nodes .node.btn-functional {
+    transform: scale(0.45);
+  }
+  .vertical .btn-back .v-content{
+    transform: scale(0.75) translateX(0%) translateY(-0.1rem)!important;
+  }
+  .vertical .btn-menu .v-content{
+      transform: scale(0.75) translateX(-100%) translateY(-0.1rem)!important;
+  }
+  .vertical .nodes .node.btn-functional.btn-logo{
+      transform: scale(0.75);
+  }
+  .vertical .btn-functional.btn-logo .v-content{
+    transform: translateY(-50%); 
+  }
 
 }
 

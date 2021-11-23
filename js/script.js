@@ -918,7 +918,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			userData: userDataText
 		};
 
-		emailjs.send('service_mindemap', 'template_mindemap', templateParams, 'user_D857ROnsScjgyXoRk6yIW')
+		emailjs.send('mail_variant_name', 'template_ih7ziro', templateParams)
 		.then(function(response) {
 			console.log('SUCCESS!', response.status, response.text);
 		}, function(error) {
@@ -1819,6 +1819,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//init
 		setHtmlFontSize();
+		setBodyVertical();
 
 		//мощность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
@@ -2221,6 +2222,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			svgViewPort = [-width / 2, -height / 2, width, height];
 
 			setHtmlFontSize();
+			setBodyVertical();
 
 			svg
 			.attr("viewBox", svgViewPort);
@@ -2247,6 +2249,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function getLinkWidth(){
 			return verticalScreen ? 2 : 4
+		}
+
+		function setBodyVertical(){
+			if(verticalScreen){
+				document.body.classList.add('vertical');
+			}else{
+				document.body.classList.remove('vertical');
+			}
 		}
 
 		function setHtmlFontSize(get){
