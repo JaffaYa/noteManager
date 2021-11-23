@@ -92,7 +92,7 @@
     },
     {
       "id": "17",
-      "label": "до <br> 50 000 ₽",
+      "label": "до <br> 50 000 ₽<br> <input name=\"amount\" placeholder=\"количество\" type=\"text\">",
       "parents": [16],
       "goTo": 20
     },
@@ -161,8 +161,9 @@
     },
     {
       "id": "33",
-      "label": "лайк",
+      "label": "отправить на почту",
       "parents": [28],
+      "sendMail": true,
       "goTo" : 35
     },
     {

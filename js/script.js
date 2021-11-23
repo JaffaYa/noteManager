@@ -406,6 +406,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			popupActive('iframe');
 			bodyClass.classList.add('page-show'); // temp
 		}
+		//send email
+		if(d.sendMail){
+			let nodeInputsText = Object.keys(model.nodeInputs).map(function(key) {
+		  		return key+' - '+model.nodeInputs[key];
+			}).join('<br>');
+
+			let userDataText = model.userData.get().join('<br>');
+			// console.dir(userDataText);
+			sendMail(nodeInputsText, userDataText);
+		}
 
 		let doActive = model.isSlide(d);
 		//if has no child
@@ -638,6 +648,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.on('change', e => {
 			let name = d3.event.target.getAttribute('name');
 			model.nodeInputs[name] = d3.event.target.value;	
+			model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
 		});
 
 
@@ -899,6 +910,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 	}
+
+	//send email
+	function sendMail(nodeInputsText, userDataText){
+		var templateParams = {
+			nodeInputs: nodeInputsText,
+			userData: userDataText
+		};
+
+		emailjs.send('service_mindemap', 'template_mindemap', templateParams, 'user_D857ROnsScjgyXoRk6yIW')
+		.then(function(response) {
+			console.log('SUCCESS!', response.status, response.text);
+		}, function(error) {
+			console.log('FAILED...', error);
+		});
+	}
 	
 	//prepare data to simulation
 	function makeModel(jsonPath, callback){
@@ -938,6 +964,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	function: str,
 		*	addNew: bool,
 		*	display: bool,
+		*	sendMail: bool,
 		*	goTo: int,
 		* }
 		*/
@@ -1001,6 +1028,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].function = '';
 				nodes[i].addNew = false;
 				nodes[i].display = false;
+				nodes[i].sendMail = !!nodes[i].sendMail || false;
 				nodes[i].goTo = nodes[i].goTo*1 || false;
 			}
 			let startNode = setInitNode();
@@ -1419,6 +1447,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									function: '',
 									addNew: true,
 									display: false,
+									sendMail: false,
 									goTo: false
 								});
 							}
@@ -1456,6 +1485,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					function: function1,
 					addNew: false,
 					display: false,
+					sendMail: false,
 					goTo: false
 				});
 			}
@@ -1710,18 +1740,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if(node){
 					let nodeList = document.querySelectorAll("div.node");
 					if(nodeList.length){
+						let nodeExist = false;
 						nodeList.forEach( elem => {
 							if( elem.__data__.id == node.id ){
-								let input = elem.querySelector('input');
-								if(input){
-									let placeHolder = input.getAttribute('placeholder');
-									let value = input.value;
-									textToPush = placeHolder +' '+ value +' '+ elem.innerText.trim();
-								}else{
-									textToPush = elem.innerText;
-								}
+								nodeExist = true;
+								textToPush = getElementText(elem);
 							}
 						});
+						if(!nodeExist){//если ноды еще не существует
+							let div = document.createElement('div');
+							div.innerHTML = node.label;
+							textToPush = getElementText(div);
+						}
 					}else{//если нод еще не существует
 						let div = document.createElement('div');
 						div.innerHTML = node.label
@@ -1739,6 +1769,21 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			this.get = function(){
 				return userData;
+			}
+
+			function getElementText(elem){
+				let input = elem.querySelector('input');
+				if(input){
+					let name = input.getAttribute('name');
+					let placeHolder = input.getAttribute('placeholder');
+					let value = input.value;
+					if(!value && model.nodeInputs[name]){
+						value = model.nodeInputs[name];
+					}
+					return placeHolder +' '+ value +' '+ elem.innerText.trim();
+				}else{
+					return elem.innerText;
+				}
 			}
 		}
 
