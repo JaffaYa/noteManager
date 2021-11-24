@@ -366,7 +366,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//prevent click by click in input tag
 		if(window.event.type == 'click'){
 			if( window.event.target.nodeName == 'INPUT' || 
-				window.event.target.nodeName == 'TEXTAREA'){
+				window.event.target.nodeName == 'TEXTAREA'
+				){
+				if( view.isMobileWidth() ){
+					let nodeElem = view.findParenNodeElement(window.event.target);
+					nodeElem.classList.add('inputMobile');
+				}
 				return;
 			}
 		}
@@ -650,6 +655,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let name = d3.event.target.getAttribute('name');
 			model.nodeInputs[name] = d3.event.target.value;	
 			model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
+		})
+		.on('blur', e => {
+			//remove mobile class on unfocus
+			let nodeElem = view.findParenNodeElement(d3.event.target);
+			nodeElem.classList.remove('inputMobile');
 		});
 
 		//set handler for textarea
@@ -672,6 +682,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let name = d3.event.target.getAttribute('name');
 			model.nodeInputs[name] = d3.event.target.value;	
 			model.userData.push(null, 'ввод в textarea '+name+' значения '+d3.event.target.value);
+		})
+		.on('blur', e => {
+			//remove mobile class on unfocus
+			let nodeElem = view.findParenNodeElement(d3.event.target);
+			nodeElem.classList.remove('inputMobile');
 		});
 
 
@@ -1881,6 +1896,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.getHtmlNodeById = getHtmlNodeById;
 		this.getLinkWidth = getLinkWidth;
 		this.scrollNext = true;
+		this.isMobileWidth = isMobileWidth;
+		this.findParenNodeElement = findParenNodeElement;
 
 		var width = window.innerWidth;
 		var height = window.innerHeight;
@@ -1889,6 +1906,26 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//init
 		setHtmlFontSize();
 		setBodyVertical();
+
+		function isMobileWidth(){
+			if(width >= 1366){
+				return false;
+			}else{
+				return  true;
+			}
+		}
+
+		function findParenNodeElement(elem){
+			if(elem.parentElement){
+				if( elem.parentElement.classList.contains('node') ){
+					return elem.parentElement;
+				}else{
+					return findParenNodeElement(elem.parentElement);
+				}
+			}else{
+				return false;
+			}
+		}
 
 		//мощность силы линка(если линк это пружина то это сила ее натяжения)
 		function linkStr(d){
