@@ -42,7 +42,7 @@
     },
     {
       "id": "8",
-      "label": "<input name=\"specialization\" placeholder=\"специализаця\" type=\"text\">",
+      "label": "<textarea  name=\"specialization\"></textarea>",
       "parents": [6,7,11,12,14,15]
     },
     {

@@ -365,7 +365,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	function bubleClick(d, i, arr) {
 		//prevent click by click in input tag
 		if(window.event.type == 'click'){
-			if( window.event.target.nodeName == 'INPUT' ){
+			if( window.event.target.nodeName == 'INPUT' || 
+				window.event.target.nodeName == 'TEXTAREA'){
 				return;
 			}
 		}
@@ -649,6 +650,28 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let name = d3.event.target.getAttribute('name');
 			model.nodeInputs[name] = d3.event.target.value;	
 			model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
+		});
+
+		//set handler for textarea
+		d3newNodesLabels
+		.select('textarea')
+		// .attr("value", d => {
+		.html( d => {
+			let div = document.createElement('div');
+			div.innerHTML = d.label;
+			let textarea = div.querySelector('textarea');
+			if(textarea){
+				let name = textarea.getAttribute('name');
+				if(model.nodeInputs[name]){
+					return model.nodeInputs[name]
+				}
+			}
+			return '';
+		})
+		.on('change', e => {
+			let name = d3.event.target.getAttribute('name');
+			model.nodeInputs[name] = d3.event.target.value;	
+			model.userData.push(null, 'ввод в textarea '+name+' значения '+d3.event.target.value);
 		});
 
 
@@ -1773,6 +1796,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			function getElementText(elem){
 				let input = elem.querySelector('input');
+				let textArea = elem.querySelector('textarea');
 				if(input){
 					let name = input.getAttribute('name');
 					let placeHolder = input.getAttribute('placeholder');
@@ -1780,7 +1804,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					if(!value && model.nodeInputs[name]){
 						value = model.nodeInputs[name];
 					}
-					return placeHolder +' '+ value +' '+ elem.innerText.trim();
+					return placeHolder +' "'+ value +'" '+ elem.innerText.trim();
+				}else if(textArea){
+					let name = textArea.getAttribute('name');
+					let text = textArea.value.trim();
+					if(!text && model.nodeInputs[name]){
+						text = model.nodeInputs[name];
+					}
+					return name +' - "'+ text +'" '+ elem.innerText.trim();
 				}else{
 					return elem.innerText;
 				}
