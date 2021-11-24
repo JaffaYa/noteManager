@@ -120,11 +120,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let currActivePath = model.getActivePath();
 			if(model.isInArrayId(id,currActivePath)){
 				model.userData.push(null, 'браузер назад');
-				console.dir('браузер назад');
+				// console.dir('браузер назад');
 				model.backButton(deleteDelay, deleteDelayCallback);
 			}else{
 				model.userData.push(null, 'браузер вперед');
-				console.dir('браузер вперед');
+				// console.dir('браузер вперед');
 				model.forwardButton(id, deleteDelay, deleteDelayCallback);
 			}
 
@@ -1012,6 +1012,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		var isShowAllTree = false;
 		var activePath = [];
 		var backButtonFlag = false;
+		var oneLinkNode = null;
+		var oneLinkNodeFrom = null;
 
 
 
@@ -1283,6 +1285,24 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					//node don't show
 					if(!isInArrayId(parent, nodes)) return;
 
+					//only one link on slide
+					if(oneLinkNode){
+						if(oneLinkNode.id == nodes[i].id){
+							if(oneLinkNodeFrom){
+								if(parent == oneLinkNodeFrom.id){
+									myThis.links.push({
+										source: getNodeById(parent*1),
+										target: nodes[i],
+										dashed: nodes[i].addNew,
+										value: 2
+									});
+								}
+							}
+							return;	
+						}
+					}
+
+					//push new link
 					myThis.links.push({
 						source: getNodeById(parent*1),
 						target: nodes[i],
@@ -1352,22 +1372,32 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					goToFlag = true;
 					previosNode = node;
 					node = goToNode;
+					//one link slide
+					oneLinkNode = goToNode;
+					oneLinkNodeFrom = previosNode;
 				}
 			}
 
 			myThis.userData.push(node);
 
+
+			// backButtonFlag и goToFlag по сути выполняют одну логику
+			// из - за того что в backButtonFlag устанавлеваеться каждый раз
+			// а не только при goTo мб будут баги
 			if(!backButtonFlag || goToFlag){
 				setLeftDepth(previosNode, node);
 			}
-			if(backButtonFlag){
-				backButtonFlag = false;
-			}
+
 
 			// console.log(node.leftDepth || node.depth  );
 
 			makeNodeActive(node);
 			updateNodes(deleteDelay);
+
+			//reser goTo var
+			backButtonFlag = false;
+			oneLinkNode = null;
+			oneLinkNodeFrom = null;
 
 
 			if(deleteDelay){
@@ -1528,6 +1558,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			backStepNode.activePath = false;
 
 			backButtonFlag = true;
+			//one link slide
+			oneLinkNode = backStepNode;//нода у которой больше 1 связи
+			let fullPath = getFullActivePath(backStepNode)
+			oneLinkNodeFrom = fullPath[fullPath.length-2];//нода с которой должна связаться
+			// console.dir(oneLinkNodeFrom);
 
 			//simulate click on stepback node
 			// console.dir(currActivePath);
@@ -1559,7 +1594,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 
 
+		//переписать что бы в фулл актив паз писались все ноды
+		//а в актив паз просто фильтрировались goTo ноды
 		function getFullActivePath(node = null){
+			this.fullChain = makeFullChain();
 			let fullActivePath = [];
 
 			if(node !== null){
@@ -1785,7 +1823,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					textToPush = message;
 				}
 				if(textToPush){
-					console.log(textToPush);
+					// console.log(textToPush);
 					userData.push(textToPush);
 				}	
 			}
