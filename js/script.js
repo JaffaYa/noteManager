@@ -371,6 +371,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if( view.isMobileWidth() ){
 					let nodeElem = view.findParenNodeElement(window.event.target);
 					nodeElem.classList.add('inputMobile');
+					let node = model.getNodeById(nodeElem.__data__.id);
+					node.fx = 0;
+					node.fy = 0;
 				}
 				return;
 			}
@@ -660,6 +663,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//remove mobile class on unfocus
 			let nodeElem = view.findParenNodeElement(d3.event.target);
 			nodeElem.classList.remove('inputMobile');
+			let node = model.getNodeById(nodeElem.__data__.id);
+			node.fx = null;
+			node.fy = null;
 		});
 
 		//set handler for textarea
@@ -687,6 +693,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//remove mobile class on unfocus
 			let nodeElem = view.findParenNodeElement(d3.event.target);
 			nodeElem.classList.remove('inputMobile');
+			let node = model.getNodeById(nodeElem.__data__.id);
+			node.fx = null;
+			node.fy = null;
 		});
 
 
