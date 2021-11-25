@@ -1,5 +1,57 @@
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
+	function getScrollHeight(elm){
+	  var savedValue = elm.value
+	  elm.value = ''
+	  elm._baseScrollHeight = elm.scrollHeight
+	  elm.value = savedValue
+	}
+
+	function onExpandableTextareaInput({ target:elm }){
+	  if( !elm.classList.contains('textarea') || !elm.nodeName == 'TEXTAREA' ) return
+	  
+	  var minRows = elm.getAttribute('data-min-rows')|0, rows;
+	  !elm._baseScrollHeight && getScrollHeight(elm)
+
+	  elm.rows = minRows
+	  rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 64)
+	  elm.rows = minRows + rows
+	}
+
+	document.addEventListener('input', onExpandableTextareaInput)
+
+	// document.querySelector('.textarea').addEventListener('click', function(event){
+	// 	onExpandableTextareaInput();
+	// });
+
+
+
+
+	// Задача адаптировать код ниже. Верхний код убрать. 
+
+
+	// var textarea = document.querySelector('.textarea');
+
+	// function setHeight(elem) {
+	//   var style = getComputedStyle(elem, null);
+	//   var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
+	//   var maxHeight = parseFloat(style.maxHeight) || 300;
+	  
+	//   elem.style.height = 'auto';
+
+	//   var newHeight = elem.scrollHeight + verticalBorders;
+	  
+	//   elem.style.overflowY = newHeight > maxHeight ? 'auto' : 'hidden';
+	//   elem.style.height = Math.min(newHeight, maxHeight) + 'px';
+	// }
+
+	// textarea.addEventListener('input', (e) => {
+	//   setHeight(e.target);
+	// });
+
+	// setHeight(textarea);
+
+
 	var bodyClass = document.querySelector('body'); // temp
 	var vLogo = document.querySelector('.v-logo'); // temp
 	var playBubble = make_sound("sounds/bubble.mp3");
