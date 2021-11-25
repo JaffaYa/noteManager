@@ -720,6 +720,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fx = null;
 			node.fy = null;
 			model.mobileInpuntActive = false;
+			simulation.alpha(0.5).restart();
 		});
 
 		//set handler for textarea
@@ -751,6 +752,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fx = null;
 			node.fy = null;
 			model.mobileInpuntActive = false;
+			simulation.alpha(0.5).restart();
 		});
 
 
