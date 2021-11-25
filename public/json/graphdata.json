@@ -1,0 +1,283 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "label": "кто ты <br>человек?",
+      "parents": [0]
+    },
+    {
+      "id": "2",
+      "label": "фрилансер",
+      "parents": [1],
+      "goTo": 5
+    },
+    {
+      "id": "3",
+      "label": "предприниматель",
+      "parents": [1],
+      "goTo": 10
+    },
+    {
+      "id": "4",
+      "label": "другое",
+      "parents": [1],
+      "goTo": 13
+    },
+    {
+      "id": "5",
+      "label": "как давно <br>ты на <br>фрилансе?",
+      "parents": [2]
+    },
+    {
+      "id": "6",
+      "label": "только <br>начинаю",
+      "parents": [5],
+      "goTo": 50
+    },
+    {
+      "id": "7",
+      "label": "уже <br>работаю",
+      "parents": [5],
+      "goTo": 50
+    },
+    {
+      "id": "50",
+      "label": "в какой нише <br>и какая у тебя <br>специали<br>зация?",
+      "parents": [6,7,11,12,14,15]
+    },
+    {
+      "id": "51",
+      "label": "сказать",
+      "parents": [50],
+      "goTo": 8
+    },
+    {
+      "id": "8",
+      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"100\" name=\"specialization\" placeholder=\"кликни тут и пиши\"></textarea>",
+      "parents": [6,7,11,12,14,15]
+    },
+    {
+      "id": "9",
+      "label": "дальше",
+      "parents": [8],
+      "goTo": 16
+    },
+    {
+      "id": "10",
+      "label": "как давно ты <br>в бизнесе?",
+      "parents": [3]
+    },
+    {
+      "id": "11",
+      "label": "только <br>начинаю",
+      "parents": [10],
+      "goTo": 50
+    },
+    {
+      "id": "12",
+      "label": "давно <br>работаю",
+      "parents": [10],
+      "goTo": 50
+    },
+    {
+      "id": "13",
+      "label": "как давно <br>ты этим <br>занимаешься?",
+      "parents": [4]
+    },
+    {
+      "id": "14",
+      "label": "только <br>начинаю",
+      "parents": [13],
+      "goTo": 50
+    },
+    {
+      "id": "15",
+      "label": "давно <br>занимаюсь",
+      "parents": [13],
+      "goTo": 50
+    },
+    {
+      "id": "16",
+      "label": "сколько <br>ты сейчас <br> зараба<br>тываешь?",
+      "parents": [9]
+    },
+    {
+      "id": "17",
+      "label": "до <br> 50 000 ₽",
+      "parents": [16],
+      "goTo": 20
+    },
+    {
+      "id": "18",
+      "label": "до <br>150 000 ₽",
+      "parents": [16],
+      "goTo": 20
+    },
+    {
+      "id": "19",
+      "label": "больше <br>200 000 ₽",
+      "parents": [16],
+      "goTo": 20
+    },
+    {
+      "id": "20",
+      "label": "сколько ты <br>хочешь <br>зарабатывать <br>в ближайшие <br>3 месяца?",
+      "parents": [17,18,19]
+    }, 
+    {
+      "id": "21",
+      "label": "до <br> 100 000 ₽",
+      "parents": [20],
+      "goTo": 24
+    },
+    {
+      "id": "22",
+      "label": "до <br>300 000 ₽",
+      "parents": [20],
+      "goTo": 24
+    },
+    {
+      "id": "23",
+      "label": "больше <br> 1 000 000 ₽",
+      "parents": [20],
+      "goTo": 24
+    },
+    {
+      "id": "24",
+      "label": "почему <br>у тебя это <br> может не <br>получиться?",
+      "parents": [21,22,23]
+    },
+    {
+      "id": "25",
+      "label": "конкуренция",
+      "parents": [24],
+      "goTo": 28
+    },
+    {
+      "id": "26",
+      "label": "нет клиентов",
+      "parents": [24],
+      "goTo": 28
+    },
+    {
+      "id": "27",
+      "label": "мало опыта",
+      "parents": [24],
+      "goTo": 28
+    },
+    {
+      "id": "28",
+      "label": "верь в себя<br>человек всё <br>получится",
+      "parents": [25,26,27]
+    },
+    {
+      "id": "29",
+      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [28],
+      "goTo" : 35
+    }, 
+    {
+      "id": "34",
+      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [28],
+      "goTo" : 35
+    }, 
+    {
+      "id": "35",
+      "label": "я хочу <br>предложить <br>тебе курс <br>обучения",
+      "parents": [29,34]
+    },
+    {
+      "id": "36",
+      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [35],
+      "goTo" : 38
+    },
+    {
+      "id": "37",
+      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [35],
+      "goTo" : 38
+    },
+    {
+      "id": "38",
+      "label": "как твоё <br>имя <br>человек?",
+      "parents": [36,37]
+    },
+    {
+      "id": "39",
+      "label": "сказать",
+      "parents": [38],
+      "goTo" : 40
+    },
+    {
+      "id": "40",
+      "label": "<input type=\"text\" name=\"name\" placeholder=\"напиши тут имя\" >",
+      "parents": [39]
+    },
+    {
+      "id": "41",
+      "label": "дальше",
+      "parents": [40],
+      "goTo" : 60
+    },
+    {
+      "id": "60",
+      "label": "как с тобой <br>связаться?",
+      "parents": [41]
+    },
+    {
+      "id": "61",
+      "label": "позвони",
+      "parents": [60],
+      "goTo" : 64
+    },
+    {
+      "id": "62",
+      "label": "по whatsapp",
+      "parents": [60],
+      "goTo" : 64
+    },
+    {
+      "id": "63",
+      "label": "в telegram",
+      "parents": [60],
+      "goTo" : 64
+    },
+    {
+      "id": "64",
+      "label": "а номер <br>телефона?",
+      "parents": [61,62,63]
+    },
+    {
+      "id": "65",
+      "label": "сказать",
+      "parents": [64],
+      "goTo" : 66
+    },
+    {
+      "id": "66",
+      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"11\" name=\"phone\" placeholder=\"кликни тут и пиши номер\"></textarea>",
+      "parents": [65]
+    },
+    {
+      "id": "67",
+      "label": "дальше",
+      "parents": [66],
+      "sendMail": true,
+      "goTo" : 68
+    },
+    {
+      "id": "68",
+      "label": "ты классный <br>человек <br>я с тобой <br>скоро <br>свяжусь",
+      "parents": [67]
+    },
+    {
+      "id": "69",
+      "label": "вернуться <br>в начало",
+      "parents": [68],
+      "goTo" : 1
+    }
+  ]
+}
+

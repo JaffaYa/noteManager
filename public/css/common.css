@@ -1,0 +1,223 @@
+html {
+  font-size: 12px;
+}
+*{
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+a,
+a:hover {
+  text-decoration: none;
+}
+/* buttons */
+.node-btn{
+  position: relative;
+  cursor: pointer;
+}
+.node-btn .c1 {
+  z-index: -2;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255, 0.5);
+  transition: 0.35s cubic-bezier(.5,.41,.05, 2);
+  transition-delay: 0.085s;
+}
+.node-btn .c2{
+  z-index: -1;
+  width: 0.85rem;
+  height: 0.85rem;
+  background-color: rgb(255, 255, 255, 1);
+  transition: 0.35s cubic-bezier(.5,.41,.05, 2);
+  transition-delay: 0s;
+}
+.node-btn .c1, 
+.node-btn .c2{
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scale(0.55);
+}
+.node-btn:hover .c1{
+  transform: translate(-50%, -50%) scale(0.75);
+  transition-delay: 0s;
+}
+.node-btn:hover .c2{
+  transform: translate(-50%, -50%) scale(0.75);
+  transition-delay: 0.085s;
+}
+.node-btn .v-content{
+  left: 0;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #212121;
+  line-height: 0.8rem;
+  font-family: 'Fira Sans', sans-serif;
+  word-break: normal;
+  white-space: nowrap;
+  transform-origin: top left;
+  transform: scale(0.5) translateX(0%) translateY(-0.1rem);
+}
+/*.node-btn .icon {
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  transition: 0.35s cubic-bezier(.5,.41,.05, 2);
+  transition-delay: 0.085s;
+}*/
+
+
+
+
+/* button longread */
+.btn-longread {
+  z-index: 10;
+  position: absolute;
+  min-width: 100px;
+  min-height: 100px;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);  
+} 
+.btn-longread .c1, 
+.btn-longread .c2 {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scale(0.55);
+}
+.btn-longread .c1 {
+  z-index: -2;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255, 0.5);
+  transition: 0.35s cubic-bezier(.5,.41,.05,1.5);
+  transition-delay: 0.085s;
+}
+.btn-longread .c2 {
+  z-index: -1;
+  width: 95px;
+  height: 95px;
+  background-color: rgb(255, 255, 255, 1);
+  transition: 0.35s cubic-bezier(.5,.41,.05,1.5);
+  transition-delay: 0s;
+}
+
+
+
+/* live card */
+.node.show .live-card{
+  transform: translateY(-45%);
+  transition: 0.7s cubic-bezier(.55,.34,.17,.98);
+}
+.node.active.show .live-card{
+  transform: translateX(20%) translateY(-10%);
+}
+.node.active.show .live-avatar{
+}
+.live-avatar{
+}
+.live-avatar img{
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: 0.7s cubic-bezier(.55,.34,.17,.98);
+}
+.node.show .live-avatar img{
+  width: 3rem;
+  height: 3rem;
+  border: 0.3rem solid rgb(255,255,255,0.5);
+}
+.node.active.show .live-avatar img{
+  width: 4rem;
+  height: 4rem;
+  border: 0.5rem solid rgb(255,255,255,0.5);
+}
+.live-name{
+  color: #fafafa;
+}
+.node.show .live-name{
+  margin-top: -0.75rem;
+  font-size: 1rem;
+}
+.node.active.show .live-name{
+  margin-top: -1rem;
+}
+.live-sphere{
+  color: #212121;
+  font-size: 0.6rem;
+  line-height: 0.5rem;
+}
+
+
+/* icons */
+.icon{
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-100%, -50%) scale(0);
+  transform-origin: center;
+  transition-delay: 0.15s;
+}
+.node.show .icon{
+  transform: translate(-100%, -50%) scale(1);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
+  transition-delay: 0.75s;
+}
+.node-btn.show .icon{
+  transform: translate(-100%, -75%) scale(1);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
+  transition-delay: 0.75s;
+}
+/*.show:hover .icon{
+  transform: translate(-100%, -50%) scale(1.5);
+  transition: 0.5s cubic-bezier(.5,.41,.05,1.5);
+  transition-delay: 0.025s;
+}
+*/
+.icon img{
+  width: 0.80rem;
+  height: auto;
+}
+.node-btn .icon img{
+  width: 0.40rem;
+  height: auto;
+}
+.tag{
+  margin: 0.4rem 0;
+}
+.tags-container{
+  /*position: absolute;*/
+}
+
+
+
+@media only screen and (max-width: 768px) {
+
+.node.show .live-card {
+    transform: translateY(-45%);
+}
+.node.show .live-card .live-avatar img{
+  width: 3rem;
+  height: 3rem;
+}
+.node.active.show .live-card {
+    transform: translateY(10%);
+}
+.node.active.show .live-card .live-avatar img{
+  width: 4rem;
+  height: 4rem;
+}
+
+}

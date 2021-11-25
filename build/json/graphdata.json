@@ -247,7 +247,7 @@
     {
       "id": "64",
       "label": "а номер <br>телефона?",
-      "parents": [35]
+      "parents": [61,62,63]
     },
     {
       "id": "65",
@@ -257,7 +257,7 @@
     },
     {
       "id": "66",
-      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"11\" name=\"phone\" placeholder=\"кликни тут и пиши имя\"></textarea>",
+      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"11\" name=\"phone\" placeholder=\"кликни тут и пиши номер\"></textarea>",
       "parents": [65]
     },
     {
@@ -269,7 +269,7 @@
     },
     {
       "id": "68",
-      "label": "ты классный <br>человек <br>я с тобой <br>свяжусь",
+      "label": "ты классный <br>человек <br>я с тобой <br>скоро <br>свяжусь",
       "parents": [67]
     },
     {

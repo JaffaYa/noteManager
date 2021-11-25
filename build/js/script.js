@@ -1,5 +1,6 @@
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
+	// inputs
 	function getScrollHeight(elm){
 	  var savedValue = elm.value
 	  elm.value = ''
@@ -52,8 +53,74 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// setHeight(textarea);
 
 
+	// cursor
+	function cursorPointer(){
+		var $pointer1 = document.querySelector('.pointer-1');
+		var $pointer2 = document.querySelector('.pointer-2');
+		var $hoverables = document.querySelectorAll('.v-content');
+
+		document.addEventListener('mousemove', onMouseMove);
+		document.addEventListener('mousedown', onMouseDown);
+		document.addEventListener('mouseup', onMouseUp);
+		for (let i = 0; i < $hoverables.length; i++) {
+		  $hoverables[i].addEventListener('mouseenter', onMouseHover);
+		  $hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
+		}
+
+		function onMouseMove(e) {
+		  console.log('move');
+		  gsap.to($pointer1, .4, {
+		    x: e.pageX - 30,
+		    y: e.pageY - 30
+		  })
+		  gsap.to($pointer2, .1, {
+		    x: e.pageX - 12,
+		    y: e.pageY - 12
+		  })
+		}
+		function onMouseDown(e) {
+		  console.log('Down');
+		  gsap.to($pointer1, .5, {
+		    scale: 0
+		  })
+		  gsap.to($pointer2, .3, {
+		    scale: 0
+		  })
+		}
+		function onMouseUp(e) {
+		  console.log('Up');
+		  gsap.to($pointer1, .5, {
+		    scale: 1
+		  })
+		  gsap.to($pointer2, .3, {
+		    scale: 1
+		  })
+		}
+
+		function onMouseHover() {
+		  console.log('hover');
+		  gsap.to($pointer1, .3, {
+		    scale: 2
+		  })
+		  gsap.to($pointer2, .3, {
+		    scale: 0.5
+		  })
+		}
+		function onMouseHoverOut() {
+		  console.log('out');
+		  gsap.to($pointer1, .3, {
+		    scale: 1
+		  })
+		  gsap.to($pointer2, .3, {
+		    scale: 1
+		  })
+		}
+	}
+	cursorPointer();
+
+
 	var bodyClass = document.querySelector('body'); // temp
-	var vLogo = document.querySelector('.v-logo'); // temp
+	var vActiveBack = document.querySelector('.v-active-back'); // temp
 	var playBubble = make_sound("sounds/bubble.mp3");
 	var isAdmin = document.location.search == '?admin';
 	var bodyFullScreanTogle = make_FullScrinTogle(document.querySelector('body'));
@@ -72,8 +139,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 	});
 
-	document.querySelector('.v-logo').addEventListener('click', function(event){
+	document.querySelector('.v-active-btn').addEventListener('click', function(event){
 		bodyClass.classList.toggle('v-active');
+		vActiveBack.classList.toggle('show');
+		bodyClass.classList.remove('menu-show', 'page-show'); // temp
+	});
+
+	document.querySelector('.v-active-back').addEventListener('click', function(event){
+		bodyClass.classList.toggle('v-active');
+		this.classList.toggle('show');
 	});
 
 	var debug = false;
@@ -109,14 +183,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showLinkDelay = verticalScreen ? 50 : 50; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
-	var showCssDuration = 300; //длина анимации появления в css
-	var hideNodeCssDuration = 300; //длина анимации прятания ноды в css
-	var hideLinkCssDuration = 300; //длина анимации прятания линка в css
+	var showCssDuration = 700; //длина анимации появления в css
+	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
+	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
 	var startDelay = 1000; //доп задерка при старте
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 500 : 500; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 900 : 700; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -125,7 +199,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	window.simulationResize = function (){};
-
 
 	//data init
 	var activePath = [];
@@ -195,172 +268,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	};
 
-
-
-	// init plexus
-	function plexusBg(){
-		if(verticalScreen){
-	        // particlesJS("plexus-1", {"particles":{"number":{"value":111,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":25,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.25,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":33,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.5,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-
-			// tsParticles.load("plexus-1", {
-			//   autoPlay: true,
-			//   fullScreen: { enable: true, zIndex: 1 },
-			//   detectRetina: true,
-			//   fpsLimit: 30,
-			//   particles: {
-			//     links: {
-			//       color: { value: "#ffffff" },
-			//       distance: 25,
-			//       enable: true,
-			//       opacity: 1,
-			//       width: 1
-			//     },
-			//     move: {
-			//       angle: { offset: 0, value: 35 },
-			//       direction: "left",
-			//       enable: true,
-			//       random: true,
-			//       size: true,
-			//       speed: 0.5,
-			//       straight: false,
-			//       warp: true
-			//     },
-			//     number: {
-			//       value: 111
-			//     },
-			//     opacity: {
-			//       value: 1
-			//     },
-			//     size: {
-			//       random: { enable: true, minimumValue: 0.5 },
-			//       value: 1
-			//     },
-			//     stroke: { width: 0 }
-			//   },
-			//   pauseOnBlur: true,
-			//   pauseOnOutsideViewport: true
-			// });
-
-			tsParticles.load("plexus-2", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: false,
-			  fpsLimit: 25,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 27,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 35, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 0.75
-			    },
-			    number: {
-			      value: 155
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 0.5 },
-			      value: 1.5
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
-		}else{
-	        // particlesJS("plexus-1", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":3},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":44,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.35,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":555,"size":3.33,"duration":5,"opacity":0.9,"speed":3},"repulse":{"distance":666,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-	        // particlesJS("plexus-2", {"particles":{"number":{"value":222,"density":{"enable":false,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.25,"sync":false}},"size":{"value":4,"random":true,"anim":{"enable":true,"speed":1,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":55,"color":"#ffffff","opacity":1,"width":1},"move":{"enable":true,"speed":0.7,"direction":"left","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":true,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":false,"mode":"bubble"},"onclick":{"enable":false,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":155,"size":10,"duration":10,"opacity":0.8,"speed":1},"repulse":{"distance":111.8881118881119,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":false});
-			tsParticles.load("plexus-1", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 25,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 44,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 222
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1 },
-			      value: 2
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
-
-			tsParticles.load("plexus-2", {
-			  autoPlay: true,
-			  fullScreen: { enable: true, zIndex: 1 },
-			  detectRetina: true,
-			  fpsLimit: 25,
-			  particles: {
-			    links: {
-			      color: { value: "#ffffff" },
-			      distance: 44,
-			      enable: true,
-			      opacity: 1,
-			      width: 1
-			    },
-			    move: {
-			      angle: { offset: 0, value: 35 },
-			      direction: "left",
-			      enable: true,
-			      random: true,
-			      size: true,
-			      speed: 1,
-			      straight: false,
-			      warp: true
-			    },
-			    number: {
-			      value: 111
-			    },
-			    opacity: {
-			      value: 1
-			    },
-			    size: {
-			      random: { enable: true, minimumValue: 1.5 },
-			      value: 3
-			    },
-			    stroke: { width: 0 }
-			  },
-			  pauseOnBlur: true,
-			  pauseOnOutsideViewport: true
-			});
-		}
-	}
-	// plexusBg();
 
 
 
@@ -453,6 +360,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					break;
 				case 'logo':
 					bodyClass.classList.toggle('v-active');
+					vActiveBack.classList.toggle('show');
 					break;
 				default:
 					throw new Error('Неизвестная нода.')

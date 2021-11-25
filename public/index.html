@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="%PUBLIC_URL%/css/common.css?v=222" rel="stylesheet">
+    <link href="%PUBLIC_URL%/css/styles.css?v=222" rel="stylesheet">
+    <title>my name is variant</title>
+  </head>
+  <body>
+    
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <div class="main-bg"></div>
+        <div id="plexus"></div>
+        <div id="my_data">
+        </div>
+        
+        <div class="hider">
+            <div class="node-btn back">
+                <div class="v-content">назад</div>
+                <div class="c1"></div>
+                <div class="c2"></div>
+            </div>
+        </div>
+        <div class="paranja"></div>
+        <div class="popup menu">
+            <a href="">
+                <div class="node-btn">
+                    <div class="v-content">в самое начало</div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </div>
+            </a>
+            <a id="fullscreenButton">
+                <div class="node-btn">
+                    <div class="v-content">на весь экран</div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </div>                
+            </a>
+            <a class="v-active-btn">
+                <div class="node-btn">
+                    <div class="v-content">сделать красиво</div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </div>                
+            </a>
+        </div>
+
+        <div class="popup iframe">
+            <iframe src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="v-logo"><img src="img/logo-anim-500.gif"></div>
+    
+    <div class="btn-back v-active-back">
+        <div class="v-content">назад</div>
+        <div class="c1"></div>
+        <div class="c2"></div>
+    </div>
+
+    <div class="cursor">
+      <div class="pointer-1"></div>
+      <div class="pointer-2"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Load d3.js -->
+    <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+    <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init('user_Eb7PZqLYZZ3t7MJGUoc45');
+        })();
+    </script>
+
+    <script src="js/script.js?v=222"></script>
+
+
+
+
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
