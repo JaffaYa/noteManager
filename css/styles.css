@@ -7,10 +7,6 @@ html {
   background: transparent;
   font-size: 12px;
 }
-.plexus-1 iframe {
-  width: 100%;
-  height: 100%;
-}
 body {
   width: 100%;
   height: 100%;
@@ -57,10 +53,7 @@ body {
   transform: scale(0.6) translateX(-50%) translateY(-60%)!important; 
 }
 
-.v-content input{
-  font-size: 1rem;
-  /*pointer-events: none;*/
-}
+
 
 
 
@@ -531,6 +524,92 @@ canvas.tsparticles-canvas-el {
 
 
 
+/* inputs */
+:-ms-input-placeholder {
+  color: #212121;
+}
+::-ms-input-placeholder {
+  color: #212121;
+}
+::-moz-placeholder {
+  color: #212121;
+}
+::-webkit-input-placeholde {
+  color: #212121;
+}
+::placeholder {
+  color: #212121;
+}
+.node .v-content textarea {
+  display: block;
+  width: 35vw;  
+  font-size: 1rem;
+  background-color: transparent;
+  font-weight: 900;
+  color: #212121;
+  line-height: 0.8rem;
+  font-family: 'Fira Sans', sans-serif;
+  padding: 10px;
+  overflow: hidden;
+  resize: none;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 8px solid;
+  border-color: #212121;
+  animation: input 1.5s infinite;
+}
+.node .v-content textarea:focus {
+  border: none;
+  border-bottom: 8px solid;
+  border-color: transparent;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.node .v-content input {
+  display: block;
+  width: 35vw;  
+  font-size: 1rem;
+  background-color: transparent;
+  font-weight: 900;
+  color: #212121;
+  line-height: 0.8rem;
+  font-family: 'Fira Sans', sans-serif;
+  padding: 10px;
+  overflow: hidden;
+  resize: none;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 8px solid;
+  border-color: #212121;
+  animation: input 1.5s infinite;
+}
+.node .v-content input:focus {
+  border: none;
+  border-bottom: 8px solid;
+  border-color: transparent;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+@keyframes input {
+  50% {
+    border-color: transparent;
+  }
+}
+
+
+
+
 @media only screen and (max-width: 1024px) {
   .nodes .node {
     transform: scale(0.5);
@@ -665,6 +744,11 @@ canvas.tsparticles-canvas-el {
 }
 
 @media only screen and (max-width: 1024px) {
+  .node .v-content textarea {
+    display: block;
+    width: 140vw;
+  }  
+
   /*inputMobile*/
   .nodes .node.inputMobile{
     transform: scale(1);
@@ -678,7 +762,7 @@ canvas.tsparticles-canvas-el {
     height: 100vh;
     transform: scale(1) translate(-50%, -50%);
     backdrop-filter: blur(5px);
-    transition: width 0.7s cubic-bezier(.52, .45, .1, 1), height 0.7s cubic-bezier(.52, .45, .1, 1);
+    transition: width 0.7s cubic-bezier(.52, .45, .1, 1);
     transition-delay: 0s;
     user-select: none;
     position: none;
@@ -688,11 +772,12 @@ canvas.tsparticles-canvas-el {
   .node.inputMobile .v-content textarea,
   .node.inputMobile .v-content textarea{
     width: 70%;
-    height: 70%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    font-size: 0.5rem;
+    line-height: 0.4rem;
   }
 
 }
