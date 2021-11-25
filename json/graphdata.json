@@ -257,7 +257,7 @@
     },
     {
       "id": "66",
-      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"11\" name=\"phone\" placeholder=\"кликни тут и пиши\"></textarea>",
+      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"11\" name=\"phone\" placeholder=\"кликни тут и пиши имя\"></textarea>",
       "parents": [65]
     },
     {
