@@ -374,6 +374,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let node = model.getNodeById(nodeElem.__data__.id);
 					node.fx = 0;
 					node.fy = 0;
+					model.mobileInpuntActive = true;
 				}
 				return;
 			}
@@ -666,6 +667,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let node = model.getNodeById(nodeElem.__data__.id);
 			node.fx = null;
 			node.fy = null;
+			model.mobileInpuntActive = false;
 		});
 
 		//set handler for textarea
@@ -696,6 +698,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let node = model.getNodeById(nodeElem.__data__.id);
 			node.fx = null;
 			node.fy = null;
+			model.mobileInpuntActive = false;
 		});
 
 
@@ -854,23 +857,29 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	function dragstarted(d) {
 		// if (!d3.event.active) simulation.alphaTarget(1.7).restart();
-		if (!d3.event.active) 
-		simulation.alphaTarget(0.5).restart(); // less alphaTarget
-		simulation.velocityDecay(0.2);
-		model.stats.restart();
-		d.fx = d.x;
-		d.fy = d.y;
+		if(!model.mobileInpuntActive){
+			if (!d3.event.active) 
+				simulation.alphaTarget(0.5).restart(); // less alphaTarget
+			simulation.velocityDecay(0.2);
+			model.stats.restart();
+			d.fx = d.x;
+			d.fy = d.y;
+		}
 	}
 
 	function dragged(d) {
-		d.fx = d3.event.x;
-		d.fy = d3.event.y;
+		if(!model.mobileInpuntActive){
+			d.fx = d3.event.x;
+			d.fy = d3.event.y;
+		}
 	}
 
 	function dragended(d) {
-		if (!d3.event.active) simulation.alphaTarget(0);
-		d.fx = null;
-		d.fy = null;
+		if(!model.mobileInpuntActive){
+			if (!d3.event.active) simulation.alphaTarget(0);
+			d.fx = null;
+			d.fy = null;
+		}
 	}
 
 
@@ -997,6 +1006,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.isSlide = isSlide;
 		this.userData = new makeUserDataPath();
 		this.nodeInputs = {};
+		this.mobileInpuntActive = false;
 		/*
 		* node = {
 		*	id: int,
