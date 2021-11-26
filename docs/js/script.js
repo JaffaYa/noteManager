@@ -1,124 +1,21 @@
+// баги
+
+// добавил код с 147 строки, для более плавного перехода при клике на кнопки истории браузера
+// НО вместо этого ноды не двигаются вообще
+// а просто плавно сменяют друг друга
+
+// ***
+
+// функция setTextareaHeight не работает при задании максимальной высоты не в px, а в %
+// подразумевалось, что начальная высота n = rows=\"2\" - в файле json строка "label": "<textarea class=\"textarea\" rows=\"2\"
+// а максимальная высота около 50vh
+// НО это не работает
+
+
+
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
-	// inputs
-	function getScrollHeight(elm){
-	  var savedValue = elm.value
-	  elm.value = ''
-	  elm._baseScrollHeight = elm.scrollHeight
-	  elm.value = savedValue
-	}
-
-	function onExpandableTextareaInput({ target:elm }){
-	  if( !elm.classList.contains('textarea') || !elm.nodeName == 'TEXTAREA' ) return
-	  
-	  var minRows = elm.getAttribute('data-min-rows')|0, rows;
-	  !elm._baseScrollHeight && getScrollHeight(elm)
-
-	  elm.rows = minRows
-	  rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 64)
-	  elm.rows = minRows + rows
-	}
-
-	document.addEventListener('input', onExpandableTextareaInput)
-
-	// document.querySelector('.textarea').addEventListener('click', function(event){
-	// 	onExpandableTextareaInput();
-	// });
-
-
-
-
-	// Задача адаптировать код ниже. Верхний код убрать. 
-
-
-	// var textarea = document.querySelector('.textarea');
-
-	// function setHeight(elem) {
-	//   var style = getComputedStyle(elem, null);
-	//   var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
-	//   var maxHeight = parseFloat(style.maxHeight) || 300;
-	  
-	//   elem.style.height = 'auto';
-
-	//   var newHeight = elem.scrollHeight + verticalBorders;
-	  
-	//   elem.style.overflowY = newHeight > maxHeight ? 'auto' : 'hidden';
-	//   elem.style.height = Math.min(newHeight, maxHeight) + 'px';
-	// }
-
-	// textarea.addEventListener('input', (e) => {
-	//   setHeight(e.target);
-	// });
-
-	// setHeight(textarea);
-
-
-	// cursor
-	function cursorPointer(){
-		var $pointer1 = document.querySelector('.pointer-1');
-		var $pointer2 = document.querySelector('.pointer-2');
-		var $hoverables = document.querySelectorAll('.v-content');
-
-		document.addEventListener('mousemove', onMouseMove);
-		document.addEventListener('mousedown', onMouseDown);
-		document.addEventListener('mouseup', onMouseUp);
-		for (let i = 0; i < $hoverables.length; i++) {
-		  $hoverables[i].addEventListener('mouseenter', onMouseHover);
-		  $hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
-		}
-
-		function onMouseMove(e) {
-		  console.log('move');
-		  gsap.to($pointer1, .4, {
-		    x: e.pageX - 30,
-		    y: e.pageY - 30
-		  })
-		  gsap.to($pointer2, .1, {
-		    x: e.pageX - 12,
-		    y: e.pageY - 12
-		  })
-		}
-		function onMouseDown(e) {
-		  console.log('Down');
-		  gsap.to($pointer1, .5, {
-		    scale: 0
-		  })
-		  gsap.to($pointer2, .3, {
-		    scale: 0
-		  })
-		}
-		function onMouseUp(e) {
-		  console.log('Up');
-		  gsap.to($pointer1, .5, {
-		    scale: 1
-		  })
-		  gsap.to($pointer2, .3, {
-		    scale: 1
-		  })
-		}
-
-		function onMouseHover() {
-		  console.log('hover');
-		  gsap.to($pointer1, .3, {
-		    scale: 2
-		  })
-		  gsap.to($pointer2, .3, {
-		    scale: 0.5
-		  })
-		}
-		function onMouseHoverOut() {
-		  console.log('out');
-		  gsap.to($pointer1, .3, {
-		    scale: 1
-		  })
-		  gsap.to($pointer2, .3, {
-		    scale: 1
-		  })
-		}
-	}
-	cursorPointer();
-
-
+	
 	var bodyClass = document.querySelector('body'); // temp
 	var vActiveBack = document.querySelector('.v-active-back'); // temp
 	var playBubble = make_sound("sounds/bubble.mp3");
@@ -260,7 +157,56 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.nodes(model.nodesToDisplay);
 			simulation.force("link").links(model.links);
 			// simulation.alphaTarget(0.1).restart();
-			simulation.alpha(0.5).restart();
+			// simulation.alpha(0.5).restart();
+
+			let time = 0;
+
+			if(verticalScreen){
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.7);
+					simulation.velocityDecay(0.4) 
+				}, time+0, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.4);
+				// 	simulation.velocityDecay(0.4) 
+				// }, time+250, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.3);
+				// 	simulation.alphaDecay(0.1);
+				// 	simulation.velocityDecay(0.3) 
+				// }, time+500, simulation);
+
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.alphaDecay(0.05);
+					simulation.velocityDecay(0.2) 
+				}, time+350, simulation);
+			}else{
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.2);
+					simulation.velocityDecay(0.4) 
+				}, time+0, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.6);
+				// 	simulation.velocityDecay(0.4) 
+				// }, time+250, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.3);
+				// 	simulation.alphaDecay(0.1);
+				// 	simulation.velocityDecay(0.2) 
+				// }, time+500, simulation);
+
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.alphaDecay(0.05);
+					simulation.velocityDecay(0.2) 
+				}, time+500, simulation);
+			}
+
 
 			model.stats.restart();
 		}
@@ -600,6 +546,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.classed('v-content', true)
 		.html(d => d.label);
 
+		d3newNodesLabels
+		// .each(function(d, i) {
+		// 	// view.setTextareaHeight(this);
+		// })
+		.on('mouseenter', view.cursor.onMouseHover)
+		.on('mouseleave', view.cursor.onMouseHoverOut);
+
 		//set handler for inputs
 		d3newNodesLabels
 		.select('input')
@@ -661,6 +614,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fy = null;
 			model.mobileInpuntActive = false;
 			simulation.alpha(0.5).restart();
+		})
+		.each(function(d, i) {
+			view.setTextareaHeight(this);
+		})
+		.on('input', e => {
+			view.setTextareaHeight(d3.event.target);
 		});
 
 
@@ -1879,6 +1838,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.scrollNext = true;
 		this.isMobileWidth = isMobileWidth;
 		this.findParenNodeElement = findParenNodeElement;
+		this.setTextareaHeight = setTextareaHeight;
+		this.cursor = new cursor();
 
 		var width = window.innerWidth;
 		var height = window.innerHeight;
@@ -1906,6 +1867,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}else{
 				return false;
 			}
+		}
+
+		function setTextareaHeight(elem) {
+			var style = getComputedStyle(elem, null);
+			var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
+			var maxHeight = parseFloat(style.maxHeight) || 300;
+
+			elem.style.height = 'auto';
+
+			var newHeight = elem.scrollHeight + verticalBorders;
+
+			elem.style.overflowY = newHeight > maxHeight ? 'auto' : 'hidden';
+			elem.style.height = Math.min(newHeight, maxHeight) + 'px';
 		}
 
 		//мощность силы линка(если линк это пружина то это сила ее натяжения)
@@ -2405,6 +2379,73 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var initialize = force.initialize;
 			force.initialize = function() { initialize.call(force, model.nodesToDisplay.filter(filter)); };
 			return force;
+		}
+
+		// cursor
+		function cursor(){
+			this.onMouseHover = onMouseHover;
+			this.onMouseHoverOut = onMouseHoverOut;
+
+			var $pointer1 = document.querySelector('.pointer-1');
+			var $pointer2 = document.querySelector('.pointer-2');
+			var $hoverables = document.querySelectorAll('.v-content');
+
+			document.addEventListener('mousemove', onMouseMove);
+			document.addEventListener('mousedown', onMouseDown);
+			document.addEventListener('mouseup', onMouseUp);
+			for (let i = 0; i < $hoverables.length; i++) {
+			  $hoverables[i].addEventListener('mouseenter', onMouseHover);
+			  $hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
+			}
+
+			function onMouseMove(e) {
+			  // console.log('move');
+			  gsap.to($pointer1, .4, {
+			    x: e.pageX - 30,
+			    y: e.pageY - 30
+			  })
+			  gsap.to($pointer2, .1, {
+			    x: e.pageX - 12,
+			    y: e.pageY - 12
+			  })
+			}
+			function onMouseDown(e) {
+			  // console.log('Down');
+			  gsap.to($pointer1, .5, {
+			    scale: 0
+			  })
+			  gsap.to($pointer2, .3, {
+			    scale: 0
+			  })
+			}
+			function onMouseUp(e) {
+			  // console.log('Up');
+			  gsap.to($pointer1, .5, {
+			    scale: 1
+			  })
+			  gsap.to($pointer2, .3, {
+			    scale: 1
+			  })
+			}
+
+			function onMouseHover() {
+			  // console.log('hover');
+			  gsap.to($pointer1, .3, {
+			    scale: 2
+			  })
+			  gsap.to($pointer2, .3, {
+			    scale: 0.5
+			  })
+			}
+			function onMouseHoverOut() {
+			  // console.log('out');
+			  gsap.to($pointer1, .3, {
+			    scale: 1
+			  })
+			  gsap.to($pointer2, .3, {
+			    scale: 1
+			  })
+			}
 		}
 
 	}

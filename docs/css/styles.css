@@ -473,11 +473,15 @@ body {
   left: -100%;
   bottom: 0.8rem;
   cursor: pointer;
-  transition: left 0s 0.75s;
+  opacity: 0;
+  transition: left 0s 0.75s,
+  opacity 0.75s ease-in-out 0s;
 }
 .v-active-back.show {
   left: 1.8rem;
-  transition: left 0s 0s;
+  opacity: 1;
+  transition: left 0s 0s,
+  opacity 0.75s ease-in-out 0s;
 }
 
 /* cursor */
@@ -598,6 +602,18 @@ body {
 ::placeholder {
   color: #212121;
 }
+textarea::-webkit-scrollbar {
+  width: 4px;
+  padding-bottom: 10px;
+}
+textarea::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  border-radius: 0 2px 2px 0;
+}
+textarea::-webkit-scrollbar-thumb {
+  background-color: #212121;
+  border-radius: 2px;
+}
 .node .v-content textarea {
   display: block;
   width: 35vw;  
@@ -607,7 +623,7 @@ body {
   color: #212121;
   line-height: 0.8rem;
   font-family: 'Fira Sans', sans-serif;
-  padding: 10px;
+  padding: 1px;
   overflow: hidden;
   resize: none;
   border: none;
@@ -615,13 +631,14 @@ body {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  border-bottom: 8px solid;
+  border-bottom: 4px solid;
   border-color: #212121;
+  word-wrap: break-word;
   animation: input 1.5s infinite;
 }
 .node .v-content textarea:focus {
   border: none;
-  border-bottom: 8px solid;
+  border-bottom: 4px solid;
   border-color: transparent;
   outline: none;
   -webkit-box-shadow: none;
@@ -783,6 +800,16 @@ body {
   }
   .btn-functional.btn-logo .v-content{
     transform: translateY(-50%); 
+  }
+  .v-active-back {
+    left: 0rem;
+    bottom: 0rem;
+    transform: scale(0.5);
+  }
+  .v-active-back.show {
+    left: 0rem;
+    bottom: 0rem;
+    transform: scale(0.5);
   }
 
 }
