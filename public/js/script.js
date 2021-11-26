@@ -79,6 +79,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
+	let backButtonPermision = true;
+	let backButtonDelay = 1000;
+
 
 	window.simulationResize = function (){};
 
@@ -125,6 +128,27 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		if(id){
 			let currActivePath = model.getActivePath();
+
+			if(backButtonPermision){
+				backButtonPermision = false;
+
+				if(model.isInArrayId(id,currActivePath)){
+					model.userData.push(null, 'браузер назад');
+					// console.dir('браузер назад');
+					model.backButton(deleteDelay, deleteDelayCallback);
+				}else{
+					model.userData.push(null, 'браузер вперед');
+					// console.dir('браузер вперед');
+					model.forwardButton(id, deleteDelay, deleteDelayCallback);
+				}
+				
+				setTimeout( () => {
+					backButtonPermision = true;
+				}, backButtonDelay );
+
+			}else{
+				return false;
+			}
 			if(model.isInArrayId(id,currActivePath)){
 				model.userData.push(null, 'браузер назад');
 				// console.dir('браузер назад');
@@ -221,7 +245,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 		
-		let  backButton = false;
+		let backButton = false;
+		
 
 		model.userData.push(d);
 
@@ -233,8 +258,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					model.backButton(deleteDelay, deleteDelayCallback);
-					backButton = true;
+					if(backButtonPermision){
+						model.backButton(deleteDelay, deleteDelayCallback);
+						backButton = true;
+						backButtonPermision = false;
+						setTimeout( () => {
+							// console.log(backButtonPermision);
+							backButtonPermision = true;
+						}, backButtonDelay );
+					}else{
+						return false;
+					}
 					break;
 				case 'menu':
 					popupActive('menu');
