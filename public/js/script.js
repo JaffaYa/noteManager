@@ -1,3 +1,18 @@
+// баги
+
+// добавил код с 147 строки, для более плавного перехода при клике на кнопки истории браузера
+// НО вместо этого ноды не двигаются вообще
+// а просто плавно сменяют друг друга
+
+// ***
+
+// функция setTextareaHeight не работает при задании максимальной высоты не в px, а в %
+// подразумевалось, что начальная высота n = rows=\"2\" - в файле json строка "label": "<textarea class=\"textarea\" rows=\"2\"
+// а максимальная высота около 50vh
+// НО это не работает
+
+
+
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	
@@ -167,7 +182,56 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.nodes(model.nodesToDisplay);
 			simulation.force("link").links(model.links);
 			// simulation.alphaTarget(0.1).restart();
-			simulation.alpha(0.5).restart();
+			// simulation.alpha(0.5).restart();
+
+			let time = 0;
+
+			if(verticalScreen){
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.7);
+					simulation.velocityDecay(0.4) 
+				}, time+0, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.4);
+				// 	simulation.velocityDecay(0.4) 
+				// }, time+250, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.3);
+				// 	simulation.alphaDecay(0.1);
+				// 	simulation.velocityDecay(0.3) 
+				// }, time+500, simulation);
+
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.alphaDecay(0.05);
+					simulation.velocityDecay(0.2) 
+				}, time+350, simulation);
+			}else{
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.2);
+					simulation.velocityDecay(0.4) 
+				}, time+0, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.6);
+				// 	simulation.velocityDecay(0.4) 
+				// }, time+250, simulation);
+
+				// setTimeout(function(simulation){
+				// 	simulation.alphaTarget(0.3);
+				// 	simulation.alphaDecay(0.1);
+				// 	simulation.velocityDecay(0.2) 
+				// }, time+500, simulation);
+
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.alphaDecay(0.05);
+					simulation.velocityDecay(0.2) 
+				}, time+500, simulation);
+			}
+
 
 			model.stats.restart();
 		}
