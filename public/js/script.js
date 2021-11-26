@@ -141,7 +141,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					// console.dir('браузер вперед');
 					model.forwardButton(id, deleteDelay, deleteDelayCallback);
 				}
-				
+
 				setTimeout( () => {
 					backButtonPermision = true;
 				}, backButtonDelay );
@@ -149,15 +149,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}else{
 				return false;
 			}
-			if(model.isInArrayId(id,currActivePath)){
-				model.userData.push(null, 'браузер назад');
-				// console.dir('браузер назад');
-				model.backButton(deleteDelay, deleteDelayCallback);
-			}else{
-				model.userData.push(null, 'браузер вперед');
-				// console.dir('браузер вперед');
-				model.forwardButton(id, deleteDelay, deleteDelayCallback);
-			}
+			
+			// if(model.isInArrayId(id,currActivePath)){
+			// 	model.userData.push(null, 'браузер назад');
+			// 	// console.dir('браузер назад');
+			// 	model.backButton(deleteDelay, deleteDelayCallback);
+			// }else{
+			// 	model.userData.push(null, 'браузер вперед');
+			// 	// console.dir('браузер вперед');
+			// 	model.forwardButton(id, deleteDelay, deleteDelayCallback);
+			// }
 
 
 			svgLinks = buildLinks(model.links);
