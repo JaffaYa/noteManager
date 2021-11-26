@@ -95,7 +95,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 	let backButtonPermision = true;
-	let backButtonDelay = 1000;
+	let backButtonDelay = 500;
 
 
 	window.simulationResize = function (){};
@@ -255,6 +255,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
 		.force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
 		.force("collide", view.isolateForce(d3.forceCollide().radius(view.getColideRadius).strength(view.colideRadiusStr()).iterations(view.getColideRadiusIterations()),view.collideForceIsolate))
+		.force("order", d3.forceY(view.orderForce).strength(view.orderForceStr))
 
 
 		// simulation
@@ -1861,6 +1862,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.radialStr = radialStr;
 		this.radialX = radialX;
 		this.radialY = radialY;
+		this.orderForce = orderForce;
+		this.orderForceStr = orderForceStr;
 		this.simulationResize = throttle(simulationResize,50);
 		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
@@ -1985,6 +1988,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 1;
 		}
 
+		//позиция силы ордера
+		function orderForce(d){
+			return forceSettings('orderForce', d);
+		}
+		//мощность сылы ордера
+		function orderForceStr(d){
+			return forceSettings('orderForceStr', d);
+		}
+
 		//где будет работать сила столкновения
 		function collideForceIsolate(d){
 			if(verticalScreen){
@@ -2083,6 +2095,30 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}else{
 								return 0;
 							}
+							break;
+						//позиция силы ордера
+						case 'orderForce':
+							if(childrens.includes(d.id)){
+								let order = childrens.map(d => d).sort();
+								let onePart = (height/order.length)*0.3;
+								for (let i = 0; i < childrens.length; i++) {
+									if(childrens[i] == d.id){
+										return onePart*(i+1) - onePart;
+									}
+								}
+								return 0;
+							}else{
+								return 0;
+							}
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							if(childrens.includes(d.id)){
+								return 0.25;
+							}else{
+								return 0;
+							}
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -2150,6 +2186,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//радиус силы столкновения
 						case 'getColideRadius':
+							return 0;
+							break;
+						//позиция силы ордера
+						case 'orderForce':
+							return 0;
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
 							return 0;
 							break;
 						default:
@@ -2234,6 +2278,33 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								return 0;
 							}
 							break;
+						//позиция силы ордера
+						case 'orderForce':
+							if(childrens.includes(d.id)){
+								let order = childrens.map(d => d).sort();
+								let onePart = (height/order.length)*0.4;
+								for (let i = 0; i < childrens.length; i++) {
+									if(childrens[i] == d.id){
+										if(order.length > 1){
+											return ((onePart * (i+1) - onePart) - height/6);
+										}else{
+											return (onePart * (i+1) - onePart);
+										}
+									}
+								}
+								return 0;
+							}else{
+								return 0;
+							}
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							if(childrens.includes(d.id)){
+								return 0.2;
+							}else{
+								return 0;
+							}
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -2302,6 +2373,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'getColideRadius':
 							let collRadCoef = 2040/100;
 							return width/collRadCoef;
+							break;
+						//позиция силы ордера
+						case 'orderForce':
+							return 0;
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							return 0;
 							break;
 						default:
 							throw new Error('Неизвестная cила.');
