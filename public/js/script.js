@@ -95,7 +95,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 	let backButtonPermision = true;
-	let backButtonDelay = 500;
+	let backButtonDelay = 800;
 
 
 	window.simulationResize = function (){};
