@@ -428,7 +428,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+350, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
+				simulation.alphaTarget(0.4);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 
