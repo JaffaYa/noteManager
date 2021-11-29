@@ -2,31 +2,93 @@
   "nodes": [
     {
       "id": "1",
-      "label": "кто ты <br>человек?",
+      "label": "здравствуй<br>человек",
       "parents": [0]
     },
     {
-      "id": "2",
-      "label": "фрилансер",
+      "id": "200",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [1],
+      "goTo": 100
+    },
+    {
+      "id": "201",
+      "label": "кто<br>ты?",
+      "parents": [1],
+      "goTo": 203
+    },
+    {
+      "id": "203",
+      "label": "я искусст<br>венный <br>разум",
+      "parents": [201]
+    },
+    {
+      "id": "204",
+      "label": "что ты <br>умеешь?",
+      "parents": [203],
+      "goTo": 205
+    },
+    {
+      "id": "205",
+      "label": "я создан <br>чтобы дать<br>тебе пользу",
+      "parents": [204]
+    },
+    {
+      "id": "206",
+      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [205],
+      "goTo": 100
+    },
+    {
+      "id": "207",
+      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [205],
+      "goTo": 100
+    },
+    {
+      "id": "208",
+      "label": "как твоё <br>имя?",
+      "parents": [203],
+      "goTo": 209
+    },
+    {
+      "id": "209",
+      "label": "моё имя <br>variant<div class='icon icon-heart'><img src='img/icons/heart.png'></div>",
+      "parents": [200]
+    },
+    {
+      "id": "210",
+      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>сказать <br>привет",
+      "parents": [209],
+      "goTo": 100
+    },
+    {
+      "id": "100",
+      "label": "кто ты <br>человек?",
+      "parents": [200]
+    },
+    {
+      "id": "101",
+      "label": "фрилансер",
+      "parents": [100],
       "goTo": 5
     },
     {
-      "id": "3",
+      "id": "102",
       "label": "предприниматель",
-      "parents": [1],
+      "parents": [100],
       "goTo": 10
     },
     {
       "id": "4",
       "label": "другое",
-      "parents": [1],
+      "parents": [100],
       "goTo": 13
     },
     {
       "id": "5",
       "label": "как давно <br>ты на <br>фрилансе?",
-      "parents": [2]
+      "parents": [101]
     },
     {
       "id": "6",
@@ -65,7 +127,7 @@
     {
       "id": "10",
       "label": "как давно ты <br>в бизнесе?",
-      "parents": [3]
+      "parents": [102]
     },
     {
       "id": "11",
@@ -286,7 +348,7 @@
     },
     {
       "id": "71",
-      "label": "я с тобой <br>скоро <br>свяжусь",
+      "label": "я свяжусь <br>с тобой <br>скоро",
       "parents": [69,70]
     },
     {

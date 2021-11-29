@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="%PUBLIC_URL%/css/common.css?v=333" rel="stylesheet">
-    <link href="%PUBLIC_URL%/css/styles.css?v=333" rel="stylesheet">
+    <link href="%PUBLIC_URL%/css/common.css?v=779" rel="stylesheet">
+    <link href="%PUBLIC_URL%/css/styles.css?v=779" rel="stylesheet">
     <title>my name is variant</title>
   </head>
   <body>
@@ -26,22 +26,22 @@
         </div>
         <div class="paranja"></div>
         <div class="popup menu">
-            <a href="">
-                <div class="node-btn">
+            <a href="/?node=1">
+                <div class="node-btn show">
                     <div class="v-content">в самое начало</div>
                     <div class="c1"></div>
                     <div class="c2"></div>
                 </div>
             </a>
             <a id="fullscreenButton">
-                <div class="node-btn">
+                <div class="node-btn show">
                     <div class="v-content">на весь экран</div>
                     <div class="c1"></div>
                     <div class="c2"></div>
                 </div>                
             </a>
             <a class="v-active-btn">
-                <div class="node-btn">
+                <div class="node-btn show">
                     <div class="v-content">сделать красиво</div>
                     <div class="c1"></div>
                     <div class="c2"></div>
@@ -55,8 +55,15 @@
     </div>
 
     <div class="v-logo"><img src="img/logo-anim-500.gif"></div>
-    
-    <div class="node-btn btn-back v-active-back">
+
+  
+    <div class="node-btn btn-functional active help-message hide">
+        <div class="v-content">кликай и <br>крути <br>туда <br>сюда</div>
+        <div class="c1"></div>
+        <div class="c2"></div>
+    </div>
+
+    <div class="node-btn btn-back btn-functional v-active-back hide">
         <div class="v-content">назад</div>
         <div class="c1"></div>
         <div class="c2"></div>
@@ -80,7 +87,7 @@
         })();
     </script>
 
-    <script src="js/script.js?v=333"></script>
+    <script src="js/script.js?v=779"></script>
 
 
 

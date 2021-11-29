@@ -1,5 +1,7 @@
 // баги
 
+// кнопка назад не работает, если загрузить страницу с 40 новы, или 60, и многих других
+
 // добавил код с 147 строки, для более плавного перехода при клике на кнопки истории браузера
 // НО вместо этого ноды не двигаются вообще
 // а просто плавно сменяют друг друга
@@ -10,6 +12,16 @@
 // подразумевалось, что начальная высота n = rows=\"2\" - в файле json строка "label": "<textarea class=\"textarea\" rows=\"2\"
 // а максимальная высота около 50vh
 // НО это не работает
+
+// ***
+// задачи
+// *** 
+// добавить в verticalScreen условие width < 500 = true - это решит баги с клавиатурой на мобилках
+
+// добавить вызов setTextareaHeight при ресайзе
+// сделать запрет на вызов функций onMouseHoverOut и onMouseHover пока исполняется функция onMouseDown
+
+
 
 
 
@@ -38,13 +50,22 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	document.querySelector('.v-active-btn').addEventListener('click', function(event){
 		bodyClass.classList.toggle('v-active');
+		vActiveBack.classList.toggle('hide');
 		vActiveBack.classList.toggle('show');
+		document.querySelector('.help-message').classList.toggle('hide');
+		document.querySelector('.help-message').classList.toggle('show');
+		setTimeout(function(){
+			document.querySelector('.help-message').classList.toggle('show');
+			document.querySelector('.help-message').classList.toggle('hide');
+		}, 2000, simulation);
+		document.querySelector('.paranja').classList.remove('active');
 		bodyClass.classList.remove('menu-show', 'page-show'); // temp
 	});
 
 	document.querySelector('.v-active-back').addEventListener('click', function(event){
-		bodyClass.classList.toggle('v-active');
-		this.classList.toggle('show');
+		bodyClass.classList.remove('v-active');
+		this.classList.remove('show');
+		this.classList.add('hide');
 	});
 
 	var debug = false;
@@ -52,7 +73,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//graphic variables
 	var width = window.innerWidth;
 	var height = window.innerHeight;
-	var verticalScreen = height/width > width/height ? true : false;
+	var verticalScreen = width < 500  ? true : false;
 
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 
@@ -76,7 +97,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
 	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showSlideDelay = verticalScreen ? 150 : 150; //задерка сдвига перед появлением
+	var showSlideDelay = verticalScreen ? 200 : 150; //задерка сдвига перед появлением
 	var showLinkDelay = verticalScreen ? 50 : 50; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
@@ -87,12 +108,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 900 : 700; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 700 : 700; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
 
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
+
+	let backButtonPermision = true;
+	let backButtonDelay = verticalScreen ? 1000 : 700;
 
 
 	window.simulationResize = function (){};
@@ -121,9 +145,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 
-	window.model = new makeModel("json/graphdata.json?v=108", simInit);
+	window.model = new makeModel("json/graphdata.json?v=777", simInit);
 
-	model.stats.enable(); // statistics enable
+	// model.stats.enable(); // statistics enable
 	model.admin.set(false); // admin enable
 	// model.showAllTree(); // all tree enable
 
@@ -140,15 +164,37 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		if(id){
 			let currActivePath = model.getActivePath();
-			if(model.isInArrayId(id,currActivePath)){
-				model.userData.push(null, 'браузер назад');
-				// console.dir('браузер назад');
-				model.backButton(deleteDelay, deleteDelayCallback);
+
+			if(backButtonPermision){
+				backButtonPermision = false;
+
+				if(model.isInArrayId(id,currActivePath)){
+					model.userData.push(null, 'браузер назад');
+					// console.dir('браузер назад');
+					model.backButton(deleteDelay, deleteDelayCallback);
+				}else{
+					model.userData.push(null, 'браузер вперед');
+					// console.dir('браузер вперед');
+					model.forwardButton(id, deleteDelay, deleteDelayCallback);
+				}
+
+				setTimeout( () => {
+					backButtonPermision = true;
+				}, backButtonDelay );
+
 			}else{
-				model.userData.push(null, 'браузер вперед');
-				// console.dir('браузер вперед');
-				model.forwardButton(id, deleteDelay, deleteDelayCallback);
+				return false;
 			}
+			
+			// if(model.isInArrayId(id,currActivePath)){
+			// 	model.userData.push(null, 'браузер назад');
+			// 	// console.dir('браузер назад');
+			// 	model.backButton(deleteDelay, deleteDelayCallback);
+			// }else{
+			// 	model.userData.push(null, 'браузер вперед');
+			// 	// console.dir('браузер вперед');
+			// 	model.forwardButton(id, deleteDelay, deleteDelayCallback);
+			// }
 
 
 			svgLinks = buildLinks(model.links);
@@ -163,7 +209,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.7);
+					simulation.alphaTarget(0.5);
 					simulation.velocityDecay(0.4) 
 				}, time+0, simulation);
 
@@ -180,12 +226,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					simulation.alphaDecay(0.05);
+					// simulation.alphaDecay(0.05);
 					simulation.velocityDecay(0.2) 
-				}, time+350, simulation);
+				}, time+500, simulation);
 			}else{
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.2);
+					simulation.alphaTarget(0.4);
 					simulation.velocityDecay(0.4) 
 				}, time+0, simulation);
 
@@ -230,6 +276,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
 		.force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
 		.force("collide", view.isolateForce(d3.forceCollide().radius(view.getColideRadius).strength(view.colideRadiusStr()).iterations(view.getColideRadiusIterations()),view.collideForceIsolate))
+		.force("order", d3.forceY(view.orderForce).strength(view.orderForceStr))
 
 
 		// simulation
@@ -285,7 +332,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 		
-		let  backButton = false;
+		let backButton = false;
+		
 
 		model.userData.push(d);
 
@@ -297,8 +345,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					model.backButton(deleteDelay, deleteDelayCallback);
-					backButton = true;
+					if(backButtonPermision){
+						model.backButton(deleteDelay, deleteDelayCallback);
+						backButton = true;
+						backButtonPermision = false;
+						setTimeout( () => {
+							// console.log(backButtonPermision);
+							backButtonPermision = true;
+						}, backButtonDelay );
+					}else{
+						return false;
+					}
 					break;
 				case 'menu':
 					popupActive('menu');
@@ -307,6 +364,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				case 'logo':
 					bodyClass.classList.toggle('v-active');
 					vActiveBack.classList.toggle('show');
+					vActiveBack.classList.toggle('hide');
+					document.querySelector('.help-message').classList.toggle('show');
+					document.querySelector('.help-message').classList.toggle('hide');
+					setTimeout(function(){
+						document.querySelector('.help-message').classList.toggle('show');
+						document.querySelector('.help-message').classList.toggle('hide');
+					}, 2000, simulation);
 					break;
 				default:
 					throw new Error('Неизвестная нода.')
@@ -328,7 +392,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		  		return key+' - '+model.nodeInputs[key];
 			}).join('<br>');
 
-			let userDataText = model.userData.get().join('<br>');
+			let userDataText = model.userData.get().join('<br><br>');
 			// console.dir(userDataText);
 			sendMail(nodeInputsText, userDataText);
 		}
@@ -392,7 +456,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+350, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
+				simulation.alphaTarget(0.4);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 
@@ -551,7 +615,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	// view.setTextareaHeight(this);
 		// })
 		.on('mouseenter', view.cursor.onMouseHover)
-		.on('mouseleave', view.cursor.onMouseHoverOut);
+		.on('mouseleave', view.cursor.onMouseHoverOut)
+		.on('mousedown', view.cursor.onMouseDown)
+		.on('mouseup', view.cursor.onMouseUp);
 
 		//set handler for inputs
 		d3newNodesLabels
@@ -1826,6 +1892,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.radialStr = radialStr;
 		this.radialX = radialX;
 		this.radialY = radialY;
+		this.orderForce = orderForce;
+		this.orderForceStr = orderForceStr;
 		this.simulationResize = throttle(simulationResize,50);
 		this.getNodeRadius = getNodeRadius;
 		this.isolateForce = isolateForce;
@@ -1950,6 +2018,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 1;
 		}
 
+		//позиция силы ордера
+		function orderForce(d){
+			return forceSettings('orderForce', d);
+		}
+		//мощность сылы ордера
+		function orderForceStr(d){
+			return forceSettings('orderForceStr', d);
+		}
+
 		//где будет работать сила столкновения
 		function collideForceIsolate(d){
 			if(verticalScreen){
@@ -1987,7 +2064,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//длина линки в пикселях
 						case 'linkDistance':
-							return 100;
+							return 0;
 							break;
 						//мощность силы отталкивания(заряда)
 						case 'manyBodyStr':
@@ -2009,7 +2086,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.15 : 0.7;
+							return d.active ? 0.35 : 0.7;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2021,7 +2098,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.1 : 0.1;
+							return d.active ? 0.3 : 0.2;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2031,7 +2108,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.05;
+								return 0.005;
 							}else{
 								return 0;
 							}
@@ -2048,6 +2125,30 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}else{
 								return 0;
 							}
+							break;
+						//позиция силы ордера
+						case 'orderForce':
+							if(childrens.includes(d.id)){
+								let order = childrens.map(d => d).sort();
+								let onePart = (height/order.length)*0.3;
+								for (let i = 0; i < childrens.length; i++) {
+									if(childrens[i] == d.id){
+										return onePart*(i+1) - onePart;
+									}
+								}
+								return 0;
+							}else{
+								return 0;
+							}
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							if(childrens.includes(d.id)){
+								return 0.25;
+							}else{
+								return 0;
+							}
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -2117,6 +2218,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'getColideRadius':
 							return 0;
 							break;
+						//позиция силы ордера
+						case 'orderForce':
+							return 0;
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							return 0;
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -2170,7 +2279,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.25 : 0.05;
+							return d.active ? 0.25 : 0.015;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2195,6 +2304,33 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							if(childrens.includes(d.id)){
 								let collRadCoef = 2040/100;
 								return width/collRadCoef;
+							}else{
+								return 0;
+							}
+							break;
+						//позиция силы ордера
+						case 'orderForce':
+							if(childrens.includes(d.id)){
+								let order = childrens.map(d => d).sort();
+								let onePart = (height/order.length)*0.4;
+								for (let i = 0; i < childrens.length; i++) {
+									if(childrens[i] == d.id){
+										if(order.length > 1){
+											return ((onePart * (i+1) - onePart) - height/6);
+										}else{
+											return (onePart * (i+1) - onePart);
+										}
+									}
+								}
+								return 0;
+							}else{
+								return 0;
+							}
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							if(childrens.includes(d.id)){
+								return 0.2;
 							}else{
 								return 0;
 							}
@@ -2268,6 +2404,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							let collRadCoef = 2040/100;
 							return width/collRadCoef;
 							break;
+						//позиция силы ордера
+						case 'orderForce':
+							return 0;
+							break;
+						//мощность сылы ордера
+						case 'orderForceStr':
+							return 0;
+							break;
 						default:
 							throw new Error('Неизвестная cила.');
 							break;
@@ -2325,7 +2469,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setHtmlFontSize(get){
 
 			//коефициент сколько екранного пространства должена занимать активаная надпись
-			let sizeCoeficient = verticalScreen ? 1 : 0.26;
+			let sizeCoeficient = verticalScreen ? 0.45 : 0.26;
 			//значение в px сколько екранного пространства должена занимать активаная надпись
 			let allTextWidth = width*sizeCoeficient;
 			//примерное количесто букв
@@ -2385,6 +2529,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function cursor(){
 			this.onMouseHover = onMouseHover;
 			this.onMouseHoverOut = onMouseHoverOut;
+			this.onMouseDown = onMouseDown;
+			this.onMouseUp = onMouseUp;
 
 			var $pointer1 = document.querySelector('.pointer-1');
 			var $pointer2 = document.querySelector('.pointer-2');
@@ -2399,7 +2545,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 
 			function onMouseMove(e) {
-			  // console.log('move');
+			  console.log('move');
 			  gsap.to($pointer1, .4, {
 			    x: e.pageX - 30,
 			    y: e.pageY - 30
@@ -2410,7 +2556,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  })
 			}
 			function onMouseDown(e) {
-			  // console.log('Down');
+			  console.log('Down');
 			  gsap.to($pointer1, .5, {
 			    scale: 0
 			  })
@@ -2419,7 +2565,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  })
 			}
 			function onMouseUp(e) {
-			  // console.log('Up');
+			  console.log('Up');
 			  gsap.to($pointer1, .5, {
 			    scale: 1
 			  })
@@ -2429,7 +2575,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 
 			function onMouseHover() {
-			  // console.log('hover');
+			  console.log('hover');
 			  gsap.to($pointer1, .3, {
 			    scale: 2
 			  })
@@ -2438,7 +2584,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  })
 			}
 			function onMouseHoverOut() {
-			  // console.log('out');
+			  console.log('out');
 			  gsap.to($pointer1, .3, {
 			    scale: 1
 			  })
