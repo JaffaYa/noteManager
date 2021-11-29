@@ -451,7 +451,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.alphaDecay(0.05);
+				// simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
 			}, time+350, simulation);
 		}else{
@@ -2130,7 +2130,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'orderForce':
 							if(childrens.includes(d.id)){
 								let order = childrens.map(d => d).sort();
-								let onePart = (height/order.length)*0.3;
+								let onePart = (height/order.length)*0.4;
 								for (let i = 0; i < childrens.length; i++) {
 									if(childrens[i] == d.id){
 										return onePart*(i+1) - onePart;
