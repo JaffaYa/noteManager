@@ -2566,8 +2566,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  gsap.to($pointer2, .3, {
 			    scale: 0
 			  })
-			  $hoverables.removeEventListener('mouseenter', onMouseHover);
-			  $hoverables.removeEventListener('mouseleave', onMouseHoverOut);
+			  // $hoverables.removeEventListener('mouseenter', onMouseHover);
+			  // $hoverables.removeEventListener('mouseleave', onMouseHoverOut);
 			}
 			function onMouseUp(e) {
 			  // console.log('Up');
