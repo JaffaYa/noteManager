@@ -73,7 +73,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//graphic variables
 	var width = window.innerWidth;
 	var height = window.innerHeight;
-	var verticalScreen = width < 500  ? true : false;
+	var verticalScreen = (height/width > width/height) || (width < 500) ? true : false;
 
 	var svgViewPort = [-width / 2, -height / 2, width, height];
 
@@ -323,6 +323,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if( view.isMobileWidth() ){
 					let nodeElem = view.findParenNodeElement(window.event.target);
 					nodeElem.classList.add('inputMobile');
+					bodyClass.classList.add('inputMobile-active');
 					let node = model.getNodeById(nodeElem.__data__.id);
 					node.fx = 0;
 					node.fy = 0;
@@ -451,7 +452,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.alphaDecay(0.05);
+				// simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
 			}, time+350, simulation);
 		}else{
@@ -643,6 +644,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//remove mobile class on unfocus
 			let nodeElem = view.findParenNodeElement(d3.event.target);
 			nodeElem.classList.remove('inputMobile');
+			bodyClass.classList.remove('inputMobile-active');
 			let node = model.getNodeById(nodeElem.__data__.id);
 			node.fx = null;
 			node.fy = null;
@@ -675,6 +677,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//remove mobile class on unfocus
 			let nodeElem = view.findParenNodeElement(d3.event.target);
 			nodeElem.classList.remove('inputMobile');
+			bodyClass.classList.remove('inputMobile-active');
 			let node = model.getNodeById(nodeElem.__data__.id);
 			node.fx = null;
 			node.fy = null;
@@ -1911,7 +1914,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		var width = window.innerWidth;
 		var height = window.innerHeight;
-		var verticalScreen = height/width > width/height ? true : false;
+		var verticalScreen = (height/width > width/height) || (width < 500) ? true : false;
 
 		//init
 		setHtmlFontSize();
@@ -2086,7 +2089,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.35 : 0.7;
+							return d.active ? 0.25 : 0.4;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2098,7 +2101,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.3 : 0.2;
+							return d.active ? 0.25 : 0.25;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2130,7 +2133,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'orderForce':
 							if(childrens.includes(d.id)){
 								let order = childrens.map(d => d).sort();
-								let onePart = (height/order.length)*0.3;
+								let onePart = (height/order.length)*0.6;
 								for (let i = 0; i < childrens.length; i++) {
 									if(childrens[i] == d.id){
 										return onePart*(i+1) - onePart;
@@ -2290,7 +2293,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.15;
+								return 0.05;
 							}else{
 								return 0;
 							}
@@ -2312,7 +2315,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						case 'orderForce':
 							if(childrens.includes(d.id)){
 								let order = childrens.map(d => d).sort();
-								let onePart = (height/order.length)*0.4;
+								let onePart = (height/order.length)*0.5;
 								for (let i = 0; i < childrens.length; i++) {
 									if(childrens[i] == d.id){
 										if(order.length > 1){
@@ -2423,7 +2426,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function simulationResize(resizeEvent){
 			width = window.innerWidth;
 			height = window.innerHeight;
-			verticalScreen = height/width > width/height ? true : false;
+			verticalScreen = (height/width > width/height) || (width < 500) ? true : false;
 			svgViewPort = [-width / 2, -height / 2, width, height];
 
 			setHtmlFontSize();
@@ -2545,7 +2548,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 
 			function onMouseMove(e) {
-			  console.log('move');
+			  // console.log('move');
 			  gsap.to($pointer1, .4, {
 			    x: e.pageX - 30,
 			    y: e.pageY - 30
@@ -2556,16 +2559,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  })
 			}
 			function onMouseDown(e) {
-			  console.log('Down');
+			  // console.log('Down');
 			  gsap.to($pointer1, .5, {
 			    scale: 0
 			  })
 			  gsap.to($pointer2, .3, {
 			    scale: 0
 			  })
+			  $hoverables.removeEventListener('mouseenter', onMouseHover);
+			  $hoverables.removeEventListener('mouseleave', onMouseHoverOut);
 			}
 			function onMouseUp(e) {
-			  console.log('Up');
+			  // console.log('Up');
 			  gsap.to($pointer1, .5, {
 			    scale: 1
 			  })
@@ -2575,7 +2580,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 
 			function onMouseHover() {
-			  console.log('hover');
+			  // console.log('hover');
 			  gsap.to($pointer1, .3, {
 			    scale: 2
 			  })
@@ -2584,7 +2589,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  })
 			}
 			function onMouseHoverOut() {
-			  console.log('out');
+			  // console.log('out');
 			  gsap.to($pointer1, .3, {
 			    scale: 1
 			  })

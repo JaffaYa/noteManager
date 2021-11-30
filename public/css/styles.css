@@ -368,7 +368,8 @@ body {
   width: 100%;
   background-color: rgba(0,0,0,0);
   opacity: 0;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-right: 2px solid rgba(255,255,255,0);
   transition: 
   background-color 0.5s ease-in-out 0.25s,
@@ -690,7 +691,6 @@ textarea::-webkit-scrollbar-thumb {
 .node .v-content textarea:focus {
   border: none;
   border-bottom: 4px solid;
-  border-color: transparent;
   outline: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -719,8 +719,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 .node .v-content input:focus {
   border: none;
-  border-bottom: 8px solid;
-  border-color: transparent;
+  border-bottom: 4px solid;
   outline: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -877,27 +876,30 @@ textarea::-webkit-scrollbar-thumb {
   /*inputMobile*/
   .nodes .node.inputMobile{
     transform: scale(1);
-    z-index: 15;
+    z-index: 20;
   }
   .horizontal .node.inputMobile .v-content,
   .vertical .node.inputMobile .v-content{
     width: 100vw;
     height: 100vh;
     transform: scale(1) translate(-50%, -50%);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: width 0.7s cubic-bezier(.52, .45, .1, 1);
     transition-delay: 0s;
     user-select: none;
     text-align: center;
   }
 
-  .node.inputMobile .v-content textarea,
+  .node.inputMobile .v-content input,
   .node.inputMobile .v-content textarea{
     width: 70%;
-    position: absolute;
+    position: fixed;
+    z-index: 20;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    /*background-color: rgba(255,255,255,0.5);*/
   }
 
 }
@@ -911,6 +913,10 @@ textarea::-webkit-scrollbar-thumb {
       width: 4rem;
       height: auto;
   }
+  .vertical .node.hide .v-content {
+    transform: scale(0.5) translateX(0%) translateY(-100%);
+  }
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -920,7 +926,14 @@ textarea::-webkit-scrollbar-thumb {
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
+  #plexus{
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .inputMobile-active #plexus{
+    opacity: 0;
+  }
   .vertical .logo-main img{
       width: 8rem;
       height: auto;
