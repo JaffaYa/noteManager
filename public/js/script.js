@@ -321,13 +321,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				window.event.target.nodeName == 'TEXTAREA'
 				){
 				if( view.isMobileWidth() ){
-					let nodeElem = view.findParenNodeElement(window.event.target);
-					nodeElem.classList.add('inputMobile');
-					bodyClass.classList.add('inputMobile-active');
-					let node = model.getNodeById(nodeElem.__data__.id);
-					node.fx = 0;
-					node.fy = 0;
-					model.mobileInpuntActive = true;
+					// let nodeElem = view.findParenNodeElement(window.event.target);
+					// nodeElem.classList.add('inputMobile');
+					// bodyClass.classList.add('inputMobile-active');
+					// let node = model.getNodeById(nodeElem.__data__.id);
+					// node.fx = 0;
+					// node.fy = 0;
+					// model.mobileInpuntActive = true;
 				}
 				return;
 			}
@@ -675,20 +675,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		})
 		.on('blur', e => {
 			//remove mobile class on unfocus
-			let nodeElem = view.findParenNodeElement(d3.event.target);
-			nodeElem.classList.remove('inputMobile');
-			bodyClass.classList.remove('inputMobile-active');
-			let node = model.getNodeById(nodeElem.__data__.id);
-			node.fx = null;
-			node.fy = null;
-			model.mobileInpuntActive = false;
-			simulation.alpha(0.5).restart();
+			// let nodeElem = view.findParenNodeElement(d3.event.target);
+			// nodeElem.classList.remove('inputMobile');
+			// bodyClass.classList.remove('inputMobile-active');
+			// let node = model.getNodeById(nodeElem.__data__.id);
+			// node.fx = null;
+			// node.fy = null;
+			// model.mobileInpuntActive = false;
+			// simulation.alpha(0.5).restart();
 		})
 		.each(function(d, i) {
-			view.setTextareaHeight(this);
+			// view.setTextareaHeight(this);
 		})
 		.on('input', e => {
-			view.setTextareaHeight(d3.event.target);
+			// view.setTextareaHeight(d3.event.target);
 		});
 
 
