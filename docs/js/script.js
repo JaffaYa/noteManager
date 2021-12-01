@@ -16,9 +16,9 @@
 // ***
 // задачи
 // *** 
-// добавить в verticalScreen условие width < 500 = true - это решит баги с клавиатурой на мобилках
 
 // добавить вызов setTextareaHeight при ресайзе
+
 // сделать запрет на вызов функций onMouseHoverOut и onMouseHover пока исполняется функция onMouseDown
 
 
@@ -104,7 +104,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var startDelay = 1000; //доп задерка при старте
+	var startDelay = 1500; //доп задерка при старте
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
@@ -2089,7 +2089,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.25 : 0.4;
+							return d.active ? 0.25 : 0.6;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2566,8 +2566,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			  gsap.to($pointer2, .3, {
 			    scale: 0
 			  })
-			  $hoverables.removeEventListener('mouseenter', onMouseHover);
-			  $hoverables.removeEventListener('mouseleave', onMouseHoverOut);
 			}
 			function onMouseUp(e) {
 			  // console.log('Up');
