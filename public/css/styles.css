@@ -84,7 +84,7 @@ body {
   cursor: pointer;
 }
 .node.active{
-  cursor: none;
+  cursor: default;
 }
 
 
@@ -473,7 +473,9 @@ to{
   vertical-align: bottom;
 }
 
-
+.btn-logo{
+  z-index: 0;
+}
 .v-logo {
   pointer-events: none;  
   position: fixed;
@@ -575,14 +577,14 @@ to{
   background-color: transparent;
   border: 1px solid rgba(255,255,255,1);
   animation: pointerStart 0.5s forwards;
-  animation-delay: 2.6s;
+  animation-delay: 2.1s;
 }
 .pointer-2 {
   width: 24px;
   height: 24px;
   background-color: rgba(255,255,255,1);
   animation: pointerStart 0.5s forwards;
-  animation-delay: 2.5s;
+  animation-delay: 2s;
 }
 
 @keyframes pointerStart {
