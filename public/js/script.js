@@ -2596,7 +2596,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 			function onMouseHoverOut() {
 			  	// console.log('out');
-			  	if(!mouseDownFlag){
+			  	if(!mouseDownFlag || 1){
 				  	gsap.to($pointer1, .3, {
 				  		scale: 1
 				  	});
