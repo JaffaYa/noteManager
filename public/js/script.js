@@ -1,6 +1,5 @@
 // баги
 
-// кнопка назад не работает, если загрузить страницу с 40 новы, или 60, и многих других
 
 // добавил код с 147 строки, для более плавного перехода при клике на кнопки истории браузера
 // НО вместо этого ноды не двигаются вообще
@@ -147,8 +146,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json?v=777", simInit);
 
-	// model.stats.enable(); // statistics enable
-	model.admin.set(false); // admin enable
+	model.stats.enable(); // statistics enable
+	// model.admin.set(false); // admin enable
 	// model.showAllTree(); // all tree enable
 
 	window.view = new makeView(model);
@@ -206,6 +205,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// simulation.alpha(0.5).restart();
 
 			let time = 0;
+
+			simulation.alphaTarget(0.5).restart()
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
