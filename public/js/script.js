@@ -1645,7 +1645,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return fullActivePath.reverse();
 
 			function makeFullChain(){
-				var limmiter = 20;
+				var limmiter = 200;
 
 				function findMissNods(parentsIds, parentId){
 					limmiter--;
