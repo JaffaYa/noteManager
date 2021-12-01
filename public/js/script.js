@@ -1,16 +1,8 @@
 // баги
 
-
-// функция setTextareaHeight не работает при задании максимальной высоты не в px, а в %
-// подразумевалось, что начальная высота n = rows=\"2\" - в файле json строка "label": "<textarea class=\"textarea\" rows=\"2\"
-// а максимальная высота около 50vh
-// НО это не работает
-
 // ***
 // задачи
 // *** 
-
-// добавить вызов setTextareaHeight при ресайзе
 
 // сделать запрет на вызов функций onMouseHoverOut и onMouseHover пока исполняется функция onMouseDown
 
@@ -2537,6 +2529,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			this.onMouseDown = onMouseDown;
 			this.onMouseUp = onMouseUp;
 
+			var mouseDownFlag = false;
+
 			var $pointer1 = document.querySelector('.pointer-1');
 			var $pointer2 = document.querySelector('.pointer-2');
 			var $hoverables = document.querySelectorAll('.v-content');
@@ -2545,57 +2539,63 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			document.addEventListener('mousedown', onMouseDown);
 			document.addEventListener('mouseup', onMouseUp);
 			for (let i = 0; i < $hoverables.length; i++) {
-			  $hoverables[i].addEventListener('mouseenter', onMouseHover);
-			  $hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
+				$hoverables[i].addEventListener('mouseenter', onMouseHover);
+				$hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
 			}
 
 			function onMouseMove(e) {
-			  // console.log('move');
-			  gsap.to($pointer1, .4, {
-			    x: e.pageX - 30,
-			    y: e.pageY - 30
-			  })
-			  gsap.to($pointer2, .1, {
-			    x: e.pageX - 12,
-			    y: e.pageY - 12
-			  })
+			  	// console.log('move');
+			  	gsap.to($pointer1, .4, {
+			  		x: e.pageX - 30,
+			  		y: e.pageY - 30
+			  	});
+			  	gsap.to($pointer2, .1, {
+			  		x: e.pageX - 12,
+			  		y: e.pageY - 12
+			  	});
 			}
 			function onMouseDown(e) {
-			  // console.log('Down');
-			  gsap.to($pointer1, .5, {
-			    scale: 0
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 0
-			  })
+			  	// console.log('Down');
+			  	mouseDownFlag = true;
+			  	gsap.to($pointer1, .5, {
+			  		scale: 0
+			  	});
+			  	gsap.to($pointer2, .3, {
+			  		scale: 0
+			  	});
 			}
 			function onMouseUp(e) {
-			  // console.log('Up');
-			  gsap.to($pointer1, .5, {
-			    scale: 1
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 1
-			  })
+			  	// console.log('Up');
+			  	mouseDownFlag = false;
+			  	gsap.to($pointer1, .5, {
+			  		scale: 1
+			  	});
+			  	gsap.to($pointer2, .3, {
+			  		scale: 1
+			  	});
 			}
 
 			function onMouseHover() {
-			  // console.log('hover');
-			  gsap.to($pointer1, .3, {
-			    scale: 2
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 0.5
-			  })
+			  	// console.log('hover');
+			  	if(!mouseDownFlag){
+			  		gsap.to($pointer1, .3, {
+			  			scale: 2
+			  		});
+			  		gsap.to($pointer2, .3, {
+			  			scale: 0.5
+			  		});
+			  	}
 			}
 			function onMouseHoverOut() {
-			  // console.log('out');
-			  gsap.to($pointer1, .3, {
-			    scale: 1
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 1
-			  })
+			  	// console.log('out');
+			  	if(!mouseDownFlag){
+				  	gsap.to($pointer1, .3, {
+				  		scale: 1
+				  	});
+				  	gsap.to($pointer2, .3, {
+				  		scale: 1
+				  	});
+				}
 			}
 		}
 
