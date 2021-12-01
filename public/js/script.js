@@ -1,10 +1,11 @@
-// баги
+/**
+ * баги
+ */
 
-// ***
-// задачи
-// *** 
 
-// сделать запрет на вызов функций onMouseHoverOut и onMouseHover пока исполняется функция onMouseDown
+/**
+ * задачи
+ */ 
 
 
 
@@ -132,7 +133,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 	window.model = new makeModel("json/graphdata.json?v=777", simInit);
 
-	model.stats.enable(); // statistics enable
+	// model.stats.enable(); // statistics enable
 	// model.admin.set(false); // admin enable
 	// model.showAllTree(); // all tree enable
 
@@ -1931,11 +1932,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var style = getComputedStyle(elem, null);
 			var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
 			// var maxHeight = parseFloat(style.maxHeight) || 300;
-			var maxHeight = height/2;
+			// var maxHeight = height/2;
+			var maxHeight = setHtmlFontSize('get')*5;
 
 			elem.style.height = 'auto';
 
 			var newHeight = elem.scrollHeight + verticalBorders;
+			// var newHeight = elem.scrollHeight;
 
 			elem.style.overflowY = newHeight > maxHeight ? 'auto' : 'hidden';
 			elem.style.height = Math.min(newHeight, maxHeight) + 'px';
