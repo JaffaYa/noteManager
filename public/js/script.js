@@ -671,6 +671,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fy = null;
 			model.mobileInpuntActive = false;
 			simulation.alpha(0.5).restart();
+
+			view.setTextareaHeight(d3.event.target);
 		})
 		.each(function(d, i) {
 			view.setTextareaHeight(this);
@@ -1933,7 +1935,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
 			// var maxHeight = parseFloat(style.maxHeight) || 300;
 			// var maxHeight = height/2;
-			var maxHeight = setHtmlFontSize('get')*5;
+			// var maxHeight = setHtmlFontSize('get')*5*0.8 + 20;
+			var lineHeight = Math.round(parseFloat(style.lineHeight));
+			var padding = Math.round(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+			var maxHeight = lineHeight*5 + padding;
 
 			elem.style.height = 'auto';
 
