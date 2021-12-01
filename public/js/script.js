@@ -1,12 +1,6 @@
 // баги
 
 
-// добавил код с 147 строки, для более плавного перехода при клике на кнопки истории браузера
-// НО вместо этого ноды не двигаются вообще
-// а просто плавно сменяют друг друга
-
-// ***
-
 // функция setTextareaHeight не работает при задании максимальной высоты не в px, а в %
 // подразумевалось, что начальная высота n = rows=\"2\" - в файле json строка "label": "<textarea class=\"textarea\" rows=\"2\"
 // а максимальная высота около 50vh
@@ -1944,7 +1938,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setTextareaHeight(elem) {
 			var style = getComputedStyle(elem, null);
 			var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
-			var maxHeight = parseFloat(style.maxHeight) || 300;
+			// var maxHeight = parseFloat(style.maxHeight) || 300;
+			var maxHeight = height/2;
 
 			elem.style.height = 'auto';
 
@@ -2450,7 +2445,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//change lick width
 			var strokeWidth = self.getLinkWidth();
 			linksCont.selectAll("line")
-			.attr('stroke-width', strokeWidth)
+			.attr('stroke-width', strokeWidth);
+
+			//change textarea height
+			nodesCont.selectAll("div.node textarea")
+			.each(function(d, i) {
+				self.setTextareaHeight(this);
+			});
 
 			simulation.alpha(1).restart();
 			model.stats.restart();
