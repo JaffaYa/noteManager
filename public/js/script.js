@@ -322,9 +322,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		
 		let backButton = false;
-		
 
 		model.userData.push(d);
+		
+		//validate required node
+		if(d.required !== undefined){
+			if( !model.checkRequiredNode(d.required) ){
+				return;
+			}
+		}
+
 
 		if(!d.active){
 			// playBubble(); // sound off
@@ -638,6 +645,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fy = null;
 			model.mobileInpuntActive = false;
 			simulation.alpha(0.5).restart();
+
+			//remove error class on unfocus
+			nodeElem.classList.remove('error');
 		});
 
 		//set handler for textarea
@@ -672,7 +682,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			model.mobileInpuntActive = false;
 			simulation.alpha(0.5).restart();
 
+			//set textarea size in inactive state 
 			view.setTextareaHeight(d3.event.target);
+
+			//remove error class on unfocus
+			nodeElem.classList.remove('error');
 		})
 		.each(function(d, i) {
 			view.setTextareaHeight(this);
@@ -987,6 +1001,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.userData = new makeUserDataPath();
 		this.nodeInputs = {};
 		this.mobileInpuntActive = false;
+		this.checkRequiredNode = checkRequiredNode;
 		/*
 		* node = {
 		*	id: int,
@@ -1002,7 +1017,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	addNew: bool,
 		*	display: bool,
 		*	sendMail: bool,
-		*	goTo: int,
+		*	goTo: int.id,
+		*	required: int.id,
 		* }
 		*/
 		this.nodes = [];
@@ -1061,14 +1077,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].active = false;
 				nodes[i].activePath = false;
 				nodes[i].depth = undefined;
-				nodes[i].leftDepth = false;
+				nodes[i].leftDepth = undefined;
 				nodes[i].children = [];
 				nodes[i].functional = false;
 				nodes[i].function = '';
 				nodes[i].addNew = false;
 				nodes[i].display = false;
 				nodes[i].sendMail = !!nodes[i].sendMail || false;
-				nodes[i].goTo = nodes[i].goTo*1 || false;
+				nodes[i].goTo = nodes[i].goTo*1 || undefined;
+				nodes[i].required = nodes[i].required*1 || undefined;
 			}
 			let startNode = setInitNode();
 			makeNodeActive(startNode);
@@ -1515,7 +1532,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									addNew: true,
 									display: false,
 									sendMail: false,
-									goTo: false
+									goTo: undefined,
+									required: undefined
 								});
 							}
 						}
@@ -1553,7 +1571,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					addNew: false,
 					display: false,
 					sendMail: false,
-					goTo: false
+					goTo: undefined,
+					required: undefined
 				});
 			}
 		}
@@ -1812,6 +1831,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			this.push = function(node, message = ''){
 				let textToPush = '';
+				//нужно отрефакторить
 				if(node){
 					let nodeList = document.querySelectorAll("div.node");
 					if(nodeList.length){
@@ -1866,6 +1886,63 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					return name +' - "'+ text +'" '+ elem.innerText.trim();
 				}else{
 					return elem.innerText;
+				}
+			}
+		}
+
+		function checkRequiredNode(nodeId){
+			let node = getNodeById(nodeId);
+
+			//нужно отрефакторить и графическую часть перенести
+			// в вью, но при этом не выполнять сдвиг если не прошел валидацию
+
+			let nodeVal = undefined;
+			let nodeElem = undefined;
+			let nodeList = document.querySelectorAll("div.node");
+			if(nodeList.length){
+				let nodeExist = false;
+				nodeList.forEach( elem => {
+					if( elem.__data__.id == node.id ){
+						nodeExist = true;
+						nodeElem = elem;
+						nodeVal = getElementValue(elem);
+					}
+				});
+				if(!nodeExist){//если ноды еще/уже не существует
+					let div = document.createElement('div');
+					div.innerHTML = node.label;
+					nodeVal = getElementValue(div);
+				}
+			}else{//если нод еще не существует
+				let div = document.createElement('div');
+				div.innerHTML = node.label
+				nodeVal = getElementValue(div);
+			}
+
+			if(!nodeVal){
+				if(nodeElem) nodeElem.classList.add('error');
+				return false;
+			}
+
+			return true;
+
+			function getElementValue(elem){
+				let input = elem.querySelector('input');
+				let textArea = elem.querySelector('textarea');
+				if(input){
+					let value = input.value;
+					if(!value && model.nodeInputs[name]){
+						value = model.nodeInputs[name];
+					}
+					return value.trim();
+				}else if(textArea){
+					let text = textArea.value;
+					if(!text && model.nodeInputs[name]){
+						text = model.nodeInputs[name];
+					}
+					return text.trim();
+				}else{
+					return false;
 				}
 			}
 		}
