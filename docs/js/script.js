@@ -442,13 +442,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	simulation.velocityDecay(0.4) 
 			// }, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
+				simulation.alphaTarget(0.);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.5);
+				simulation.alphaTarget(0.6);
 				simulation.velocityDecay(0.3) 
-			}, time+250, simulation);
+			}, time+350, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.4);
@@ -465,16 +465,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.alphaTarget(0);
 				// simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
-			}, time+350, simulation);
+			}, time+550, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
+				simulation.alphaTarget(0.4);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.5);
+				simulation.alphaTarget(0.6);
 				simulation.velocityDecay(0.3) 
-			}, time+250, simulation);
+			}, time+350, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.6);
@@ -491,7 +491,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.alphaTarget(0);
 				simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
-			}, time+500, simulation);
+			}, time+550, simulation);
 		}
 
 		// setTimeout(function(simulation){
