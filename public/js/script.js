@@ -2216,10 +2216,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//позиция силы ордера
 						case 'orderForce':
 							if(childrens.includes(d.id)){
-								let order = childrens.map(d => d).sort();
+								let order = childrens.map(d => model.getNodeById(d)).sort( (a,b) => {
+									let ac = a.order ? a.order : a.id;
+									let bc = b.order ? b.order : b.id;
+									return ac - bc;
+								} );
 								let onePart = (height/order.length)*0.6;
-								for (let i = 0; i < childrens.length; i++) {
-									if(childrens[i] == d.id){
+								for (let i = 0; i < order.length; i++) {
+									if(order[i].id == d.id){
 										return onePart*(i+1) - onePart;
 									}
 								}
@@ -2403,7 +2407,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									let bc = b.order ? b.order : b.id;
 									return ac - bc;
 								} );
-								console.log(order);
 								let onePart = (height/order.length)*0.5;
 								for (let i = 0; i < order.length; i++) {
 									if(order[i].id == d.id){
@@ -2534,6 +2537,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.force("verticalForce").strength(self.verticalForceStr);
 			simulation.force("collide").radius(self.getColideRadius);
 			simulation.force("radial").strength(self.radialStr).x(self.radialX()).y(self.radialY());
+			simulation.force("order").strength(self.orderForceStr);
 
 			//change lick width
 			var strokeWidth = self.getLinkWidth();
