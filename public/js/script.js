@@ -383,11 +383,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		//send email
 		if(d.sendMail){
+			//тут формируеться {{{nodeInputs}}}
+			//берем ключи обьекта model.nodeInputs и делаем с них массив типа "ключ - значение"
 			let nodeInputsText = Object.keys(model.nodeInputs).map(function(key) {
+				//шаблон 1 значения масива "ключ - значение"
 		  		return key+' - '+model.nodeInputs[key];
-			}).join('<br>');
+			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
-			let userDataText = model.userData.get().join('<br><br>');
+			//тут формируеться {{{userDataText}}}
+			//запрашиваем массив всех действий пользователя и склеиваем его в строку
+			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
 			// console.dir(userDataText);
 			sendMail(nodeInputsText, userDataText);
 		}
