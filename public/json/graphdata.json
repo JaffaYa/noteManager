@@ -123,8 +123,7 @@
       "id": "9",
       "label": "дальше",
       "parents": [8],
-      "goTo": 16,
-      "required": 8
+      "goTo": 16
     },
     {
       "id": "10",

@@ -13,6 +13,10 @@
 
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
+	var appleDevices = ['iPhone'];
+    if (appleDevices.indexOf(navigator.platform) > -1) {
+        $("#fullscreenButton").hide();
+    }
 	
 	var bodyClass = document.querySelector('body'); // temp
 	var vActiveBack = document.querySelector('.v-active-back'); // temp
@@ -433,10 +437,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		let time = 0;
 
 		if(verticalScreen){
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.7);
+			// 	simulation.velocityDecay(0.4) 
+			// }, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.7);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.5);
+				simulation.velocityDecay(0.3) 
+			}, time+250, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.4);
@@ -456,9 +468,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+350, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.4);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.5);
+				simulation.velocityDecay(0.3) 
+			}, time+250, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.6);

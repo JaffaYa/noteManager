@@ -29,7 +29,7 @@ body {
   position: fixed;
   opacity: 0;
   background-color: #1f74db;
-  background: linear-gradient(145deg, #1f74db, #ec308c, #FFA900, #A3A847, #1f74db);
+  background: linear-gradient(145deg, #3862da, #d0187c, #da7538, #30b553, #3164c1);
   background-size: 1000% 1000%;
   animation: gradient 40s 3s ease infinite, mainBgStart 3s 0s ease-in forwards;
 }
@@ -38,6 +38,14 @@ body {
   opacity: 0; }
 100% {
   opacity: 1; }
+}
+@keyframes gradient {
+0% {
+  background-position: 0% 0%; }
+50% {
+  background-position: 100% 100%; }
+100% {
+  background-position: 0% 0%; }
 }
 #my_data {
   margin: 0;
@@ -194,7 +202,6 @@ body {
   opacity: 0;
   transform: scale(0.6) translateX(10%) translateY(0rem);
   transition: 0.45s ease-out;
-  /*transition-delay: 0.35s;*/
 }
 .node.hide .v-content,
 .node-btn.hide .v-content{
@@ -684,22 +691,10 @@ to{
 
 
 
-@keyframes gradient {
-0% {
-  background-position: 0% 0%; }
-50% {
-  background-position: 100% 100%; }
-100% {
-  background-position: 0% 0%; }
-}
+
 
 /* for safari only */
-@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0)
-{ @media {
-  #fullscreenButton {
-    display: none;
-  }
-}}
+
 
 
 /* inputs */
@@ -782,7 +777,7 @@ textarea::-webkit-scrollbar-thumb {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  border-bottom: 8px solid;
+  border-bottom: 4px solid;
   border-color: #ffffff;
   animation: input 1.5s infinite;
   user-select: text!important;
@@ -938,6 +933,12 @@ textarea::-webkit-scrollbar-thumb {
   }
   .btn-functional.btn-logo .v-content{
     transform: translateY(-50%); 
+  }
+  .node .v-content textarea,
+  .node .v-content textarea:focus,
+  .node .v-content input,
+  .node .v-content input:focus {
+    border-bottom: 2px solid #fff;
   }
 
 }

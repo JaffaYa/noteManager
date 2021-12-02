@@ -13,6 +13,10 @@
 
 document.addEventListener( "DOMContentLoaded", function( event ) {
 
+	var appleDevices = ['iPhone'];
+    if (appleDevices.indexOf(navigator.platform) > -1) {
+        $("#fullscreenButton").hide();
+    }
 	
 	var bodyClass = document.querySelector('body'); // temp
 	var vActiveBack = document.querySelector('.v-active-back'); // temp
@@ -244,7 +248,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			model.stats.restart();
 		}
 
-
+		browserNavButtons = false;
 	};
 
 
@@ -383,12 +387,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		//send email
 		if(d.sendMail){
+			//тут формируется {{{nodeInputs}}}
+			//берем ключи обьекта model.nodeInputs и делаем с них массив типа "ключ - значение"
 			let nodeInputsText = Object.keys(model.nodeInputs).map(function(key) {
+				//шаблон 1 значения масива "ключ - значение"
 		  		return key+' - '+model.nodeInputs[key];
-			}).join('<br>');
+			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
-			let userDataText = model.userData.get().join('<br><br>');
-			// console.dir(userDataText);
+			//тут формируется {{{userDataText}}}
+			//запрашиваем массив всех действий пользователя и склеиваем его в строку
+			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
+			
 			sendMail(nodeInputsText, userDataText);
 		}
 
@@ -428,10 +437,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		let time = 0;
 
 		if(verticalScreen){
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.7);
+			// 	simulation.velocityDecay(0.4) 
+			// }, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.7);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.5);
+				simulation.velocityDecay(0.3) 
+			}, time+250, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.4);
@@ -451,9 +468,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}, time+350, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.4);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.5);
+				simulation.velocityDecay(0.3) 
+			}, time+250, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.6);
@@ -1001,6 +1022,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.nodeInputs = {};
 		this.mobileInpuntActive = false;
 		this.checkRequiredNode = checkRequiredNode;
+		this.path = new Path();
 		/*
 		* node = {
 		*	id: int,
@@ -1016,6 +1038,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	addNew: bool,
 		*	display: bool,
 		*	sendMail: bool,
+		*	order: int,
 		*	goTo: int.id,
 		*	required: int.id,
 		* }
@@ -1083,12 +1106,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].addNew = false;
 				nodes[i].display = false;
 				nodes[i].sendMail = !!nodes[i].sendMail || false;
+				nodes[i].order = nodes[i].order*1 || undefined;
 				nodes[i].goTo = nodes[i].goTo*1 || undefined;
 				nodes[i].required = nodes[i].required*1 || undefined;
 			}
 			let startNode = setInitNode();
 			makeNodeActive(startNode);
 			myThis.userData.push(startNode);
+			myThis.path.currentActivePath.push(startNode);
 			updateNodes();
 
 			function setInitNode(){
@@ -1155,7 +1180,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
-		function setNodesChildrens(node){
+		function setNodesChildrens(){
 			let nodes = myThis.nodes;
 			var id = undefined;
 			var nodeChildrens = [];
@@ -1194,11 +1219,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				activePath.push(currNode);
 			}
 			myThis.activeNode = currNode;
+
+			//add browser history state if it's no
 			if(!browserNavButtons){
 				// window.location = "#id:"+currNode.id;
 				history.pushState({id:currNode.id}, '', '?node='+currNode.id);
-			}else{
-				browserNavButtons = false;
 			}
 		}
 
@@ -1410,6 +1435,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			myThis.userData.push(node);
 
+			if(goToFlag){
+				myThis.path.currentActivePath.push(previosNode);
+			}
+			if(!backButtonFlag){
+				myThis.path.currentActivePath.push(node);
+			}
+
 
 			// backButtonFlag и goToFlag по сути выполняют одну логику
 			// из - за того что в backButtonFlag устанавлеваеться каждый раз
@@ -1522,7 +1554,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									active: false,
 									activePath: false,
 									depth: undefined,//nodes[i].depth+1
-									leftDepth: false,
+									leftDepth: undefined,
 									label: "+",
 									parents: [nodes[i].id],
 									children: [],
@@ -1531,6 +1563,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									addNew: true,
 									display: false,
 									sendMail: false,
+									order: undefined,
 									goTo: undefined,
 									required: undefined
 								});
@@ -1561,7 +1594,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					active: false,
 					activePath: false,
 					depth: undefined,
-					leftDepth: false,
+					leftDepth: undefined,
 					label: name,
 					parents: [],
 					children: [],
@@ -1570,6 +1603,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					addNew: false,
 					display: false,
 					sendMail: false,
+					order: undefined,
 					goTo: undefined,
 					required: undefined
 				});
@@ -1589,22 +1623,138 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			var backStepNode = currActivePath.pop();
 			backStepNode.activePath = false;
 
+			currentNode = currActivePath[currActivePath.length-1];
+
 			backButtonFlag = true;
-			//one link slide
-			oneLinkNode = backStepNode;//нода у которой больше 1 связи
-			let fullPath = getFullActivePath(backStepNode)
-			oneLinkNodeFrom = fullPath[fullPath.length-2];//нода с которой должна связаться
-			// console.dir(oneLinkNodeFrom);
+
+			let curNodesArr = myThis.path.currentActivePath.pop(currentNode);
+
+			if(curNodesArr.length > 1){
+				//one link slide
+				oneLinkNode = curNodesArr[0];//нода у которой больше 1 связи
+				
+				oneLinkNodeFrom = curNodesArr[curNodesArr.length-1];//нода с которой должна связаться
+			}else{
+				//one link slide
+				oneLinkNode = backStepNode;//нода у которой больше 1 связи
+				
+				let fullPath = getFullActivePath(backStepNode)
+				oneLinkNodeFrom = fullPath[fullPath.length-2];//нода с которой должна связаться
+			}
 
 			//simulate click on stepback node
 			// console.dir(currActivePath);
-			cliсkOnNode(currActivePath[currActivePath.length-1], deleteDelay, callback);
+			cliсkOnNode(currentNode, deleteDelay, callback);
 		}
 
 		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
 			let node = getNodeById(nodeId);
 			backButtonFlag = true;
+			myThis.path.currentActivePath.push(node);
 			cliсkOnNode(node, deleteDelay, callback);
+		}
+
+		function Path(){
+			//list of only active nodes
+			this.activePath = null;
+			//list of all nodes in path with goto
+			this.fullActivePath = null;
+			//list of all activity include functional buttons, browser buttons, text wrote in inputs and maybe send emails
+			this.fullActivity = null;
+			//list of nodes that take into account the back and forward buttons
+			this.currentActivePath = new CurrentActivePath();
+
+
+
+			function CurrentActivePath(){
+				this.get = get;
+				this.push = push;
+				this.pop = pop;
+				/*
+				 * currentActivePath = {
+				 *	 active: bool,
+				 *	 node: obj.node,
+				 * }
+				 */
+				let currentActivePath = [];
+
+				function get(){
+					return currentActivePath;
+				}
+
+				function push(node){
+					let newNodes = [];
+					let beenInCAP = false;
+					let beenInCAPpos = null;
+					for (let i = 0; i < currentActivePath.length; i++) {
+						if(currentActivePath[i].node.id == node.id){
+							beenInCAP = true;
+							beenInCAPpos = i;
+							break;
+						}
+					}
+					if(!beenInCAP){
+						currentActivePath.push({
+							active: true,
+				 			node: node
+						});
+						newNodes.push(node);
+					}else{
+						for (let i = 0; i <= beenInCAPpos; i++) {
+							if(!currentActivePath[i].active){
+								currentActivePath[i].active = true;
+								newNodes.push(currentActivePath[i].node);
+								
+							}
+						}
+					}
+
+					return newNodes;
+				}
+
+				function pop(node = null){
+					let newNodes = [];
+					let lastElementPos = null;
+
+					if(!node){
+						for (let i = currentActivePath.length - 1; i >= 0; i--) {
+							if(currentActivePath[i].active){
+								lastElementPos = i;
+								currentActivePath[i].active = false;
+								newNodes.push(currentActivePath[i].node);
+								break;
+							}
+						}
+					}else{
+						for (let i = currentActivePath.length - 1; i >= 0; i--) {
+							if(currentActivePath[i].active && 
+								node.id == currentActivePath[i].node.id
+								){
+								lastElementPos = i;
+								break;
+							}
+						}
+						if(lastElementPos !== null){
+							for (let i = currentActivePath.length - 1; i > lastElementPos; i--) {
+								if(currentActivePath[i].active){
+									currentActivePath[i].active = false;
+									newNodes.push(currentActivePath[i].node);
+								}
+							}
+						}else{
+							//если запрашиваемой ноды нет то сбросить все хранилище
+							//и установить ноду как начальная
+							currentActivePath = [{
+								active: true,
+					 			node: node
+							}];
+						}
+					}
+
+					return newNodes;
+				}
+			}
+
 		}
 
 		function getActivePath(){
@@ -1617,19 +1767,23 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// }
 
 			//if come to page with not firt node
-			if( activePath.length > 0 && !isInArrayId(1,activePath) ){
+			if( activePath.length <= 1 && !isInArrayId(1,activePath) ){
 				activePath = getFullActivePath(activePath[activePath.length-1]);
-				activePath = activePath.filter(d => d.goTo === false);
+				activePath = activePath.filter(d => !d.goTo);
 			}
 
 			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
 		}
 
 
-		//переписать что бы в фулл актив паз писались все ноды
-		//а в актив паз просто фильтрировались goTo ноды
+		//рефакторинг:
+		//нужны переменые либо свойства
+		//активного пути, тот что пользователь прошел
+		//полного активного пути, с нодами goto
+		//нужен метод поиска полного и не полного пути
+		//от текущей до начала, елси пользователь приходит 
+		//не со стартовой ноды
 		function getFullActivePath(node = null){
-			this.fullChain = makeFullChain();
 			let fullActivePath = [];
 
 			if(node !== null){
@@ -2207,10 +2361,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//позиция силы ордера
 						case 'orderForce':
 							if(childrens.includes(d.id)){
-								let order = childrens.map(d => d).sort();
+								let order = childrens.map(d => model.getNodeById(d)).sort( (a,b) => {
+									let ac = a.order ? a.order : a.id;
+									let bc = b.order ? b.order : b.id;
+									return ac - bc;
+								} );
 								let onePart = (height/order.length)*0.6;
-								for (let i = 0; i < childrens.length; i++) {
-									if(childrens[i] == d.id){
+								for (let i = 0; i < order.length; i++) {
+									if(order[i].id == d.id){
 										return onePart*(i+1) - onePart;
 									}
 								}
@@ -2389,10 +2547,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//позиция силы ордера
 						case 'orderForce':
 							if(childrens.includes(d.id)){
-								let order = childrens.map(d => d).sort();
+								let order = childrens.map(d => model.getNodeById(d)).sort( (a,b) => {
+									let ac = a.order ? a.order : a.id;
+									let bc = b.order ? b.order : b.id;
+									return ac - bc;
+								} );
 								let onePart = (height/order.length)*0.5;
-								for (let i = 0; i < childrens.length; i++) {
-									if(childrens[i] == d.id){
+								for (let i = 0; i < order.length; i++) {
+									if(order[i].id == d.id){
 										if(order.length > 1){
 											return ((onePart * (i+1) - onePart) - height/6);
 										}else{
@@ -2408,7 +2570,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность сылы ордера
 						case 'orderForceStr':
 							if(childrens.includes(d.id)){
-								return 0.2;
+								return 0.15;
 							}else{
 								return 0;
 							}
@@ -2520,6 +2682,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			simulation.force("verticalForce").strength(self.verticalForceStr);
 			simulation.force("collide").radius(self.getColideRadius);
 			simulation.force("radial").strength(self.radialStr).x(self.radialX()).y(self.radialY());
+			simulation.force("order").strength(self.orderForceStr);
 
 			//change lick width
 			var strokeWidth = self.getLinkWidth();
