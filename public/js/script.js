@@ -245,7 +245,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			model.stats.restart();
 		}
 
-
+		browserNavButtons = false;
 	};
 
 
@@ -1156,7 +1156,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
-		function setNodesChildrens(node){
+		function setNodesChildrens(){
 			let nodes = myThis.nodes;
 			var id = undefined;
 			var nodeChildrens = [];
@@ -1195,11 +1195,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				activePath.push(currNode);
 			}
 			myThis.activeNode = currNode;
+
+			//add browser history state if it's no
 			if(!browserNavButtons){
 				// window.location = "#id:"+currNode.id;
 				history.pushState({id:currNode.id}, '', '?node='+currNode.id);
-			}else{
-				browserNavButtons = false;
 			}
 		}
 
@@ -1523,7 +1523,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									active: false,
 									activePath: false,
 									depth: undefined,//nodes[i].depth+1
-									leftDepth: false,
+									leftDepth: undefined,
 									label: "+",
 									parents: [nodes[i].id],
 									children: [],
@@ -1562,7 +1562,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					active: false,
 					activePath: false,
 					depth: undefined,
-					leftDepth: false,
+					leftDepth: undefined,
 					label: name,
 					parents: [],
 					children: [],
@@ -1593,6 +1593,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			backButtonFlag = true;
 			//one link slide
 			oneLinkNode = backStepNode;//нода у которой больше 1 связи
+			
 			let fullPath = getFullActivePath(backStepNode)
 			oneLinkNodeFrom = fullPath[fullPath.length-2];//нода с которой должна связаться
 			// console.dir(oneLinkNodeFrom);
@@ -1630,7 +1631,6 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		//переписать что бы в фулл актив паз писались все ноды
 		//а в актив паз просто фильтрировались goTo ноды
 		function getFullActivePath(node = null){
-			this.fullChain = makeFullChain();
 			let fullActivePath = [];
 
 			if(node !== null){
