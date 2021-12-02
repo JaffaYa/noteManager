@@ -1620,15 +1620,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//if come to page with not firt node
 			if( activePath.length > 0 && !isInArrayId(1,activePath) ){
 				activePath = getFullActivePath(activePath[activePath.length-1]);
-				activePath = activePath.filter(d => d.goTo === false);
+				activePath = activePath.filter(d => !d.goTo);
 			}
 
 			return activePath;//.sort( (a, b) => a.depth*1 - b.depth*1 )
 		}
 
 
-		//переписать что бы в фулл актив паз писались все ноды
-		//а в актив паз просто фильтрировались goTo ноды
+		//рефакторинг:
+		//нужны переменые либо свойства
+		//активного пути, тот что пользователь прошел
+		//полного активного пути, с нодами goto
+		//нужен метод поиска полного и не полного пути
+		//от текущей до начала, елси пользователь приходит 
+		//не со стартовой ноды
 		function getFullActivePath(node = null){
 			let fullActivePath = [];
 
