@@ -7,7 +7,7 @@
     },
     {
       "id": "200",
-      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>сказать <br>привет",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [1],
       "goTo": 100
     },
@@ -35,13 +35,13 @@
     },
     {
       "id": "206",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
       "parents": [205],
       "goTo": 100
     },
     {
       "id": "207",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
       "parents": [205],
       "goTo": 100
     },
@@ -53,12 +53,12 @@
     },
     {
       "id": "209",
-      "label": "моё имя <br>variant<div class='icon icon-heart'><img src='img/icons/heart.png'></div>",
+      "label": "моё имя <br>variant<div class='icon'><img src='img/icons/heart.png'></div>",
       "parents": [200]
     },
     {
       "id": "210",
-      "label": "<div class='icon icon-heart'><img src='img/icons/heart.png'></div>сказать <br>привет",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [209],
       "goTo": 100
     },
@@ -115,7 +115,7 @@
     },
     {
       "id": "8",
-      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"100\" name=\"specialization\" placeholder=\"кликни тут и пиши\"></textarea>",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"100\" name=\"specialization\" placeholder=\"кликни тут и пиши\"></textarea>",
       "parents": [6,7,11,12,14,15]
     },
     {
@@ -235,13 +235,13 @@
     },
     {
       "id": "29",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
       "parents": [28],
       "goTo" : 35
     }, 
     {
       "id": "34",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
       "parents": [28],
       "goTo" : 35
     }, 
@@ -252,13 +252,13 @@
     },
     {
       "id": "36",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
       "parents": [35],
       "goTo" : 38
     },
     {
       "id": "37",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
       "parents": [35],
       "goTo" : 38
     },
@@ -275,14 +275,15 @@
     },
     {
       "id": "40",
-      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"name\" placeholder=\"кликни тут и пиши имя\"></textarea>",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"name\" placeholder=\"кликни тут и пиши имя\"></textarea>",
       "parents": [39]
     },
     {
       "id": "41",
       "label": "дальше",
       "parents": [40],
-      "goTo" : 60
+      "goTo" : 60,
+      "required": 40
     },
     {
       "id": "60",
@@ -320,7 +321,7 @@
     },
     {
       "id": "66",
-      "label": "<textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" placeholder=\"кликни тут и пиши номер\"></textarea>",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" placeholder=\"кликни тут и пиши номер\"></textarea>",
       "parents": [65]
     },
     {
@@ -328,22 +329,23 @@
       "label": "дальше",
       "parents": [66],
       "sendMail": true,
-      "goTo" : 68
+      "goTo" : 68,
+      "required": 66
     },
     {
       "id": "68",
-      "label": "ты классный <br>человек <div class='icon icon-heart'><img src='img/icons/heart.png'></div>",
+      "label": "ты классный <br>человек <div class='icon'><img src='img/icons/heart.png'></div>",
       "parents": [67]
     },
     {
       "id": "69",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-up.png'></div>лайк",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
       "parents": [68],
       "goTo" : 71
     },
     {
       "id": "70",
-      "label": "<div class='icon icon-heart'><img src='img/icons/thumb-down.png'></div>диз",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
       "parents": [68],
       "goTo" : 71
     },

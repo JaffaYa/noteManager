@@ -1,7 +1,7 @@
 /**
  * баги
  */
-
+// очень часто глючит кнопка назад. просто не работает и всё.
 
 /**
  * задачи
@@ -78,19 +78,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showCssDuration = 700; //длина анимации появления в css
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var showNodeDelay = 50; //задерка перед появлением ноды
-	var showLinkDelay = 50; //задерка перед появлением линка
+	var showNodeDelay = 75; //задерка перед появлением ноды
 	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
 	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showSlideDelay = verticalScreen ? 200 : 150; //задерка сдвига перед появлением
-	var showLinkDelay = verticalScreen ? 50 : 50; //задерка сдвига перед появлением
+	var showSlideDelay = verticalScreen ? 200 : 250; //задерка сдвига перед появлением
+	var showLinkDelay = verticalScreen ? 75 : 75; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var startDelay = 1500; //доп задерка при старте
+	var startDelay = 1750; //доп задерка при старте
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
@@ -1921,6 +1920,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			if(!nodeVal){
 				if(nodeElem) nodeElem.classList.add('error');
+				setTimeout(function(){
+					nodeElem.classList.remove('error')
+				}, 750, simulation);
 				return false;
 			}
 
@@ -2196,7 +2198,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/40;
+								let collRadCoef = 375/30;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2340,7 +2342,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.65;
 								// return 0;
 							}
 
@@ -2378,7 +2380,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/100;
+								let collRadCoef = 2040/80;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2440,12 +2442,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								case 'back':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-									return (width/11.8 + getNodeRadius(d)) - width/2;
+									return (width/12 + getNodeRadius(d)) - width/2;
 									break;
 								case 'menu':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
-									return width/2 - (width/7.4 + getNodeRadius(d));
+									return width/2 - (width/12 + getNodeRadius(d));
 									break;
 								case 'logo':
 									return 0;

@@ -1,25 +1,11 @@
-// баги
+/**
+ * баги
+ */
+// очень часто глючит кнопка назад. просто не работает и всё.
 
-// кнопка назад не работает, если загрузить страницу с 40 новы, или 60, и многих других
-
-// добавил код с 147 строки, для более плавного перехода при клике на кнопки истории браузера
-// НО вместо этого ноды не двигаются вообще
-// а просто плавно сменяют друг друга
-
-// ***
-
-// функция setTextareaHeight не работает при задании максимальной высоты не в px, а в %
-// подразумевалось, что начальная высота n = rows=\"2\" - в файле json строка "label": "<textarea class=\"textarea\" rows=\"2\"
-// а максимальная высота около 50vh
-// НО это не работает
-
-// ***
-// задачи
-// *** 
-
-// добавить вызов setTextareaHeight при ресайзе
-
-// сделать запрет на вызов функций onMouseHoverOut и onMouseHover пока исполняется функция onMouseDown
+/**
+ * задачи
+ */ 
 
 
 
@@ -92,19 +78,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	// var showCssDuration = 700; //длина анимации появления в css
 	// var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	// var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var showNodeDelay = 50; //задерка перед появлением ноды
-	var showLinkDelay = 50; //задерка перед появлением линка
+	var showNodeDelay = 75; //задерка перед появлением ноды
 	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
 	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showSlideDelay = verticalScreen ? 200 : 150; //задерка сдвига перед появлением
-	var showLinkDelay = verticalScreen ? 50 : 50; //задерка сдвига перед появлением
+	var showSlideDelay = verticalScreen ? 200 : 250; //задерка сдвига перед появлением
+	var showLinkDelay = verticalScreen ? 75 : 75; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
-	var startDelay = 1500; //доп задерка при старте
+	var startDelay = 1750; //доп задерка при старте
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
@@ -148,7 +133,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	window.model = new makeModel("json/graphdata.json?v=777", simInit);
 
 	// model.stats.enable(); // statistics enable
-	model.admin.set(false); // admin enable
+	// model.admin.set(false); // admin enable
 	// model.showAllTree(); // all tree enable
 
 	window.view = new makeView(model);
@@ -206,6 +191,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// simulation.alpha(0.5).restart();
 
 			let time = 0;
+
+			simulation.alphaTarget(0.5).restart()
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
@@ -334,9 +321,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		
 		let backButton = false;
-		
 
 		model.userData.push(d);
+		
+		//validate required node
+		if(d.required !== undefined){
+			if( !model.checkRequiredNode(d.required) ){
+				return;
+			}
+		}
+
 
 		if(!d.active){
 			// playBubble(); // sound off
@@ -650,6 +644,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fy = null;
 			model.mobileInpuntActive = false;
 			simulation.alpha(0.5).restart();
+
+			//remove error class on unfocus
+			nodeElem.classList.remove('error');
 		});
 
 		//set handler for textarea
@@ -683,6 +680,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			node.fy = null;
 			model.mobileInpuntActive = false;
 			simulation.alpha(0.5).restart();
+
+			//set textarea size in inactive state 
+			view.setTextareaHeight(d3.event.target);
+
+			//remove error class on unfocus
+			nodeElem.classList.remove('error');
 		})
 		.each(function(d, i) {
 			view.setTextareaHeight(this);
@@ -997,6 +1000,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.userData = new makeUserDataPath();
 		this.nodeInputs = {};
 		this.mobileInpuntActive = false;
+		this.checkRequiredNode = checkRequiredNode;
 		/*
 		* node = {
 		*	id: int,
@@ -1012,7 +1016,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	addNew: bool,
 		*	display: bool,
 		*	sendMail: bool,
-		*	goTo: int,
+		*	goTo: int.id,
+		*	required: int.id,
 		* }
 		*/
 		this.nodes = [];
@@ -1071,14 +1076,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].active = false;
 				nodes[i].activePath = false;
 				nodes[i].depth = undefined;
-				nodes[i].leftDepth = false;
+				nodes[i].leftDepth = undefined;
 				nodes[i].children = [];
 				nodes[i].functional = false;
 				nodes[i].function = '';
 				nodes[i].addNew = false;
 				nodes[i].display = false;
 				nodes[i].sendMail = !!nodes[i].sendMail || false;
-				nodes[i].goTo = nodes[i].goTo*1 || false;
+				nodes[i].goTo = nodes[i].goTo*1 || undefined;
+				nodes[i].required = nodes[i].required*1 || undefined;
 			}
 			let startNode = setInitNode();
 			makeNodeActive(startNode);
@@ -1525,7 +1531,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									addNew: true,
 									display: false,
 									sendMail: false,
-									goTo: false
+									goTo: undefined,
+									required: undefined
 								});
 							}
 						}
@@ -1563,7 +1570,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					addNew: false,
 					display: false,
 					sendMail: false,
-					goTo: false
+					goTo: undefined,
+					required: undefined
 				});
 			}
 		}
@@ -1645,7 +1653,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return fullActivePath.reverse();
 
 			function makeFullChain(){
-				var limmiter = 20;
+				var limmiter = 200;
 
 				function findMissNods(parentsIds, parentId){
 					limmiter--;
@@ -1822,6 +1830,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			this.push = function(node, message = ''){
 				let textToPush = '';
+				//нужно отрефакторить
 				if(node){
 					let nodeList = document.querySelectorAll("div.node");
 					if(nodeList.length){
@@ -1876,6 +1885,66 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					return name +' - "'+ text +'" '+ elem.innerText.trim();
 				}else{
 					return elem.innerText;
+				}
+			}
+		}
+
+		function checkRequiredNode(nodeId){
+			let node = getNodeById(nodeId);
+
+			//нужно отрефакторить и графическую часть перенести
+			// в вью, но при этом не выполнять сдвиг если не прошел валидацию
+
+			let nodeVal = undefined;
+			let nodeElem = undefined;
+			let nodeList = document.querySelectorAll("div.node");
+			if(nodeList.length){
+				let nodeExist = false;
+				nodeList.forEach( elem => {
+					if( elem.__data__.id == node.id ){
+						nodeExist = true;
+						nodeElem = elem;
+						nodeVal = getElementValue(elem);
+					}
+				});
+				if(!nodeExist){//если ноды еще/уже не существует
+					let div = document.createElement('div');
+					div.innerHTML = node.label;
+					nodeVal = getElementValue(div);
+				}
+			}else{//если нод еще не существует
+				let div = document.createElement('div');
+				div.innerHTML = node.label
+				nodeVal = getElementValue(div);
+			}
+
+			if(!nodeVal){
+				if(nodeElem) nodeElem.classList.add('error');
+				setTimeout(function(){
+					nodeElem.classList.remove('error')
+				}, 750, simulation);
+				return false;
+			}
+
+			return true;
+
+			function getElementValue(elem){
+				let input = elem.querySelector('input');
+				let textArea = elem.querySelector('textarea');
+				if(input){
+					let value = input.value;
+					if(!value && model.nodeInputs[name]){
+						value = model.nodeInputs[name];
+					}
+					return value.trim();
+				}else if(textArea){
+					let text = textArea.value;
+					if(!text && model.nodeInputs[name]){
+						text = model.nodeInputs[name];
+					}
+					return text.trim();
+				}else{
+					return false;
 				}
 			}
 		}
@@ -1943,11 +2012,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function setTextareaHeight(elem) {
 			var style = getComputedStyle(elem, null);
 			var verticalBorders = Math.round(parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth));
-			var maxHeight = parseFloat(style.maxHeight) || 300;
+			// var maxHeight = parseFloat(style.maxHeight) || 300;
+			// var maxHeight = height/2;
+			// var maxHeight = setHtmlFontSize('get')*5*0.8 + 20;
+			var lineHeight = Math.round(parseFloat(style.lineHeight));
+			var padding = Math.round(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+			var maxHeight = lineHeight*5 + padding;
 
 			elem.style.height = 'auto';
 
 			var newHeight = elem.scrollHeight + verticalBorders;
+			// var newHeight = elem.scrollHeight;
 
 			elem.style.overflowY = newHeight > maxHeight ? 'auto' : 'hidden';
 			elem.style.height = Math.min(newHeight, maxHeight) + 'px';
@@ -2123,7 +2198,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/40;
+								let collRadCoef = 375/30;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2267,7 +2342,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.65;
 								// return 0;
 							}
 
@@ -2305,7 +2380,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/100;
+								let collRadCoef = 2040/80;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2367,12 +2442,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								case 'back':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) - (width/1.3 + getNodeRadius()*4);
 									// console.log( (width/10 + getNodeRadius(d)) - width/2 );
-									return (width/11.8 + getNodeRadius(d)) - width/2;
+									return (width/12 + getNodeRadius(d)) - width/2;
 									break;
 								case 'menu':
 									// return (width/2 + width/2*(nodeDepth - activeDepth)) -  (getNodeRadius()*4 + 150);
 									// console.log( width/2 - (width/10 + getNodeRadius(d)) );
-									return width/2 - (width/7.4 + getNodeRadius(d));
+									return width/2 - (width/12 + getNodeRadius(d));
 									break;
 								case 'logo':
 									return 0;
@@ -2449,7 +2524,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//change lick width
 			var strokeWidth = self.getLinkWidth();
 			linksCont.selectAll("line")
-			.attr('stroke-width', strokeWidth)
+			.attr('stroke-width', strokeWidth);
+
+			//change textarea height
+			nodesCont.selectAll("div.node textarea")
+			.each(function(d, i) {
+				self.setTextareaHeight(this);
+			});
 
 			simulation.alpha(1).restart();
 			model.stats.restart();
@@ -2535,6 +2616,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			this.onMouseDown = onMouseDown;
 			this.onMouseUp = onMouseUp;
 
+			var mouseDownFlag = false;
+
 			var $pointer1 = document.querySelector('.pointer-1');
 			var $pointer2 = document.querySelector('.pointer-2');
 			var $hoverables = document.querySelectorAll('.v-content');
@@ -2543,57 +2626,63 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			document.addEventListener('mousedown', onMouseDown);
 			document.addEventListener('mouseup', onMouseUp);
 			for (let i = 0; i < $hoverables.length; i++) {
-			  $hoverables[i].addEventListener('mouseenter', onMouseHover);
-			  $hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
+				$hoverables[i].addEventListener('mouseenter', onMouseHover);
+				$hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
 			}
 
 			function onMouseMove(e) {
-			  // console.log('move');
-			  gsap.to($pointer1, .4, {
-			    x: e.pageX - 30,
-			    y: e.pageY - 30
-			  })
-			  gsap.to($pointer2, .1, {
-			    x: e.pageX - 12,
-			    y: e.pageY - 12
-			  })
+			  	// console.log('move');
+			  	gsap.to($pointer1, .4, {
+			  		x: e.pageX - 30,
+			  		y: e.pageY - 30
+			  	});
+			  	gsap.to($pointer2, .1, {
+			  		x: e.pageX - 12,
+			  		y: e.pageY - 12
+			  	});
 			}
 			function onMouseDown(e) {
-			  // console.log('Down');
-			  gsap.to($pointer1, .5, {
-			    scale: 0
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 0
-			  })
+			  	// console.log('Down');
+			  	mouseDownFlag = true;
+			  	gsap.to($pointer1, .5, {
+			  		scale: 0
+			  	});
+			  	gsap.to($pointer2, .3, {
+			  		scale: 0
+			  	});
 			}
 			function onMouseUp(e) {
-			  // console.log('Up');
-			  gsap.to($pointer1, .5, {
-			    scale: 1
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 1
-			  })
+			  	// console.log('Up');
+			  	mouseDownFlag = false;
+			  	gsap.to($pointer1, .5, {
+			  		scale: 1
+			  	});
+			  	gsap.to($pointer2, .3, {
+			  		scale: 1
+			  	});
 			}
 
 			function onMouseHover() {
-			  // console.log('hover');
-			  gsap.to($pointer1, .3, {
-			    scale: 2
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 0.5
-			  })
+			  	// console.log('hover');
+			  	if(!mouseDownFlag){
+			  		gsap.to($pointer1, .3, {
+			  			scale: 2
+			  		});
+			  		gsap.to($pointer2, .3, {
+			  			scale: 0.5
+			  		});
+			  	}
 			}
 			function onMouseHoverOut() {
-			  // console.log('out');
-			  gsap.to($pointer1, .3, {
-			    scale: 1
-			  })
-			  gsap.to($pointer2, .3, {
-			    scale: 1
-			  })
+			  	// console.log('out');
+			  	if(!mouseDownFlag || 1){
+				  	gsap.to($pointer1, .3, {
+				  		scale: 1
+				  	});
+				  	gsap.to($pointer2, .3, {
+				  		scale: 1
+				  	});
+				}
 			}
 		}
 

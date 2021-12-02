@@ -166,19 +166,30 @@ a:hover {
   position: absolute;
   top: 0;
   left: 0;
+  -webkit-filter: blur(50px);1
+  -moz-filter: blur(50px);
+  -o-filter: blur(50px);
+  -ms-filter: blur(50px);
+  filter: blur(50px);
   transform: translate(-100%, -50%) scale(0);
   transform-origin: center;
   transition-delay: 0.15s;
 }
 .node.show .icon{
+  -webkit-filter: blur(0px);1
+  -moz-filter: blur(0px);
+  -o-filter: blur(0px);
+  -ms-filter: blur(0px);
+  filter: blur(0px);
   transform: translate(-100%, -50%) scale(1);
-  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
-  transition-delay: 0.75s;
+  transition: 0.75s cubic-bezier(.33,.38,.3,1.6);
+  transition-delay: 0.6s;
 }
+
 .node-btn.show .icon{
   transform: translate(-100%, -75%) scale(1);
   transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
-  transition-delay: 0.75s;
+  transition-delay: 0.6s;
 }
 /*.show:hover .icon{
   transform: translate(-100%, -50%) scale(1.5);
@@ -186,8 +197,10 @@ a:hover {
   transition-delay: 0.025s;
 }
 */
+
+
 .icon img{
-  width: 0.80rem;
+  width: 1rem;
   height: auto;
 }
 .node-btn .icon img{
