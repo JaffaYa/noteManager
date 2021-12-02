@@ -113,14 +113,14 @@ body {
   z-index: 4;
   width: 1.35rem;
   height: 1.35rem;
-  background-color: rgb(255,255,255,0.5);
+  background-color: rgba(255,255,255,0.5);
 }
 .node .c2,
 .node-btn .c2{
   z-index: 7;
   width: 0.85rem;
   height: 0.85rem;
-  background-color: rgb(255,255,255,1);
+  background-color: rgba(255,255,255,1);
 }
 .node.hide .c1, 
 .node.hide .c2,
@@ -748,7 +748,7 @@ textarea::-webkit-scrollbar-thumb {
   -moz-box-shadow: none;
   box-shadow: none;
   border-bottom: 4px solid;
-  border-color: #212121;
+  border-color: #ffffff;
   word-wrap: break-word;
   animation: input 1.5s infinite;
   -webkit-user-select: text!important;
@@ -757,6 +757,7 @@ textarea::-webkit-scrollbar-thumb {
 .node .v-content textarea:focus {
   border: none;
   border-bottom: 4px solid;
+  border-color: #ffffff;
   outline: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -782,7 +783,7 @@ textarea::-webkit-scrollbar-thumb {
   -moz-box-shadow: none;
   box-shadow: none;
   border-bottom: 8px solid;
-  border-color: #212121;
+  border-color: #ffffff;
   animation: input 1.5s infinite;
   user-select: text!important;
   -webkit-user-select: text!important;
@@ -790,6 +791,7 @@ textarea::-webkit-scrollbar-thumb {
 .node .v-content input:focus {
   border: none;
   border-bottom: 4px solid;
+  border-color: #ffffff;
   outline: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
