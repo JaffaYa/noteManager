@@ -1016,6 +1016,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	addNew: bool,
 		*	display: bool,
 		*	sendMail: bool,
+		*	order: int,
 		*	goTo: int.id,
 		*	required: int.id,
 		* }
@@ -1083,6 +1084,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				nodes[i].addNew = false;
 				nodes[i].display = false;
 				nodes[i].sendMail = !!nodes[i].sendMail || false;
+				nodes[i].order = nodes[i].order*1 || undefined;
 				nodes[i].goTo = nodes[i].goTo*1 || undefined;
 				nodes[i].required = nodes[i].required*1 || undefined;
 			}
@@ -1531,6 +1533,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									addNew: true,
 									display: false,
 									sendMail: false,
+									order: undefined,
 									goTo: undefined,
 									required: undefined
 								});
@@ -1570,6 +1573,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					addNew: false,
 					display: false,
 					sendMail: false,
+					order: undefined,
 					goTo: undefined,
 					required: undefined
 				});
@@ -2394,10 +2398,15 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//позиция силы ордера
 						case 'orderForce':
 							if(childrens.includes(d.id)){
-								let order = childrens.map(d => d).sort();
+								let order = childrens.map(d => model.getNodeById(d)).sort( (a,b) => {
+									let ac = a.order ? a.order : a.id;
+									let bc = b.order ? b.order : b.id;
+									return ac - bc;
+								} );
+								console.log(order);
 								let onePart = (height/order.length)*0.5;
-								for (let i = 0; i < childrens.length; i++) {
-									if(childrens[i] == d.id){
+								for (let i = 0; i < order.length; i++) {
+									if(order[i].id == d.id){
 										if(order.length > 1){
 											return ((onePart * (i+1) - onePart) - height/6);
 										}else{
@@ -2413,7 +2422,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность сылы ордера
 						case 'orderForceStr':
 							if(childrens.includes(d.id)){
-								return 0.2;
+								return 0.15;
 							}else{
 								return 0;
 							}
