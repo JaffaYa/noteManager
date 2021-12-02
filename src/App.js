@@ -67,7 +67,7 @@ if (window.innerWidth > 768) {
       enablePan: false,
       rotateSpeed: 0.75,
       autoRotate: true,
-      autoRotateSpeed: -0.3,
+      autoRotateSpeed: -0.5,
       resetCameraFlag: true
     }
   }
