@@ -185,10 +185,10 @@ body {
   position: absolute;
   left: 0;
   z-index: 10;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 900;
   color: #212121;
-  line-height: 0.82;
+  line-height: 0.83;
   font-family: 'Fira Sans', sans-serif;
   word-break: normal;
   white-space: nowrap;
@@ -224,11 +224,11 @@ body {
 }
 .node.active .v-content{
   opacity: 0;
-  transform: scale(1.2) translateX(-105%) translateY(-55%);
+  transform: scale(1.15) translateX(-105%) translateY(-55%);
 }
 .node.active.show .v-content{
   opacity: 1;
-  transform: scale(1.15) translateX(-100%) translateY(-45%);
+  transform: scale(1.1) translateX(-100%) translateY(-45%);
 }
 .node.hide .v-content{
   opacity: 0;

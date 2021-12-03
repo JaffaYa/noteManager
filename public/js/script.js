@@ -145,9 +145,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		jsonName = window.localStorage.getItem('jn');
 	}
 
-	console.log(`json/${jsonName}.json?v=${jsonVersion}`);
+	console.log(`./json/${jsonName}.json?v=${jsonVersion}`);
 
-	window.model = new makeModel(`json/${jsonName}.json?v=${jsonVersion}`, simInit);
+	window.model = new makeModel(`./json/${jsonName}.json?v=${jsonVersion}`, simInit);
 	//?jn=graphdata&node=1
 
 	// model.stats.enable(); // statistics enable
@@ -1045,9 +1045,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		emailjs.send('mail_variant_name', 'template_ih7ziro', templateParams)
 		.then(function(response) {
-			// console.log('SUCCESS!', response.status, response.text);
+			console.log('SUCCESS!', response.status, response.text);
 		}, function(error) {
-			// console.log('FAILED...', error);
+			console.log('FAILED...', error);
 		});
 	}
 	
@@ -2618,7 +2618,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// console.log('activeDepth',activeDepth);
 							if(d.active){
 								// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.85;
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.75;
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
@@ -2633,7 +2633,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							return d.active ? -(height*2/18) : 0.05;
+							return d.active ? -(height*2/22) : 0.05;
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':

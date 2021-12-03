@@ -97,7 +97,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 450 : 450; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 400 : 400; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -105,7 +105,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 	let backButtonPermision = true;
-	let backButtonDelay = verticalScreen ? 1000 : 700;
+	let backButtonDelay = verticalScreen ? 1000 : 500;
 
 
 	window.simulationResize = function (){};
@@ -130,11 +130,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var htmlNodes = nodesCont.selectAll("div.node");
 	var svgLinks = linksCont.selectAll("line");
 
+	var jsonName = getParameterByName('jn');
+
+	Math.randomDec = function (min, max, decimals) {
+        return (Math.random() * (max - min) + min).toFixed(decimals || 2);
+    };
+
+	var jsonVersion = Math.randomDec(0, 999, 3);
 
 
+	if (!!jsonName) {
+		window.localStorage.setItem('jn', jsonName);
+	} else {
+		jsonName = window.localStorage.getItem('jn');
+	}
 
+	console.log(`./json/${jsonName}.json?v=${jsonVersion}`);
 
-	window.model = new makeModel("json/graphdata.json?v=777", simInit);
+	window.model = new makeModel(`./json/${jsonName}.json?v=${jsonVersion}`, simInit);
+	//?jn=graphdata&node=1
 
 	// model.stats.enable(); // statistics enable
 	// model.admin.set(false); // admin enable
@@ -153,6 +167,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		if(id){
 			let currActivePath = model.getActivePath();
+
+			//рефакторинг:
+			//переделать backButton	и forwardButton на 
+			//goto node
 
 			if(backButtonPermision){
 				backButtonPermision = false;
@@ -334,7 +352,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		
 		let backButton = false;
 
-		model.userData.push(d);
+		//goToUrl
+		if(d.goToUrl){
+			window.location.href = d.goToUrl;
+			return;
+		}
+
+
 		
 		//validate required node
 		if(d.required !== undefined){
@@ -353,6 +377,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			switch (d.function){
 				case 'back':
 					if(backButtonPermision){
+						//рефакторинг:
+						//переделать логику кнопки назад
+						//что бы она только устанавливала ноду
+						//а запусткать весь пересчет поже для всех по cliсkOnNode
+						model.userData.push(d);
 						model.backButton(deleteDelay, deleteDelayCallback);
 						backButton = true;
 						backButtonPermision = false;
@@ -399,14 +428,23 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//берем ключи обьекта model.nodeInputs и делаем с них массив типа "ключ - значение"
 			let nodeInputsText = Object.keys(model.nodeInputs).map(function(key) {
 				//шаблон 1 значения масива "ключ - значение"
-		  		return key+' - '+model.nodeInputs[key];
+				let input = model.nodeInputs[key];
+				let keyText = input.mailname ? input.mailname : key;
+		  		return keyText + ' - ' + input.val;
 			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
-			//тут формируется {{{userDataText}}}
+			//тут формируется {{{shortUserData}}}
+			let shortUserDataText = model.path.fullActivePath.get().map(d => {
+				let div = document.createElement('div');
+				div.innerHTML = d.label;
+				return model.userData.getElementText(div);
+			}).join('<br>');
+
+			//тут формируется {{{userData}}}
 			//запрашиваем массив всех действий пользователя и склеиваем его в строку
 			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
-			
-			sendMail(nodeInputsText, userDataText);
+		
+			sendMail(nodeInputsText, shortUserDataText, userDataText);
 		}
 
 		let doActive = model.isSlide(d);
@@ -632,7 +670,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		let d3newNodesLabels = d3newNodes.append("div")
 		.classed('v-content', true)
-		.html(d => d.label);
+		.html(d => model.setLabelVar(d.label) );
 
 		d3newNodesLabels
 		// .each(function(d, i) {
@@ -652,15 +690,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let input = div.querySelector('input');
 			if(input){
 				let name = input.getAttribute('name');
-				if(model.nodeInputs[name]){
-					return model.nodeInputs[name]
+				if(model.nodeInputs[name] && model.nodeInputs[name].val){
+					return model.nodeInputs[name].val;
 				}
 			}
 			return '';
 		})
 		.on('change', e => {
 			let name = d3.event.target.getAttribute('name');
-			model.nodeInputs[name] = d3.event.target.value;	
+			let mailname = d3.event.target.getAttribute('mailname');
+			model.nodeInputs[name] = {
+				mailname: mailname,
+				val: d3.event.target.value
+			};	
 			model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
 		})
 		.on('blur', e => {
@@ -688,15 +730,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let textarea = div.querySelector('textarea');
 			if(textarea){
 				let name = textarea.getAttribute('name');
-				if(model.nodeInputs[name]){
-					return model.nodeInputs[name]
+				if(model.nodeInputs[name] && model.nodeInputs[name].val){
+					return model.nodeInputs[name].val;
 				}
 			}
 			return '';
 		})
 		.on('change', e => {
 			let name = d3.event.target.getAttribute('name');
-			model.nodeInputs[name] = d3.event.target.value;	
+			let mailname = d3.event.target.getAttribute('mailname');
+			model.nodeInputs[name] = {
+				mailname: mailname,
+				val: d3.event.target.value
+			};	
 			model.userData.push(null, 'ввод в textarea '+name+' значения '+d3.event.target.value);
 		})
 		.on('blur', e => {
@@ -990,9 +1036,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	//send email
-	function sendMail(nodeInputsText, userDataText){
+	function sendMail(nodeInputsText, shortUserDataText, userDataText){
 		var templateParams = {
 			nodeInputs: nodeInputsText,
+			shortUserData: shortUserDataText,
 			userData: userDataText
 		};
 
@@ -1031,6 +1078,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.mobileInpuntActive = false;
 		this.checkRequiredNode = checkRequiredNode;
 		this.path = new Path();
+		this.setLabelVar = setLabelVar;
 		/*
 		* node = {
 		*	id: int,
@@ -1048,6 +1096,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	sendMail: bool,
 		*	order: int,
 		*	goTo: int.id,
+		*	goToUrl: str,
 		*	required: int.id,
 		* }
 		*/
@@ -1102,6 +1151,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function makeNodeTree(jsonData){
 			var nodes = [];
 			myThis.nodes = nodes = jsonData.nodes;
+			//добавить номализацию строк
 			for (var i = 0; i < nodes.length; i++) {
 				nodes[i].id = nodes[i].id*1;
 				nodes[i].active = false;
@@ -1125,12 +1175,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			updateNodes();
 
 			function setInitNode(){
-				// console.dir(window.location);
-				let get = window.location.search;
-				let id = null;
-				if(get){
-					id = get.split('=')[1];
-				}
+				// // console.dir(window.location);
+				// let get = window.location.search;
+				let id = getParameterByName('node');
+				// if(get){
+				// 	id = get.split('=')[1];
+				// }
 				if(id === null){
 					id = 1;
 				}
@@ -1441,7 +1491,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 
+			if(goToFlag){
+				myThis.userData.push(previosNode);
+			}
 			myThis.userData.push(node);
+
 
 			if(goToFlag){
 				myThis.path.currentActivePath.push(previosNode);
@@ -1573,6 +1627,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									sendMail: false,
 									order: undefined,
 									goTo: undefined,
+									goToUrl: undefined,
 									required: undefined
 								});
 							}
@@ -1613,6 +1668,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					sendMail: false,
 					order: undefined,
 					goTo: undefined,
+					goToUrl: undefined,
 					required: undefined
 				});
 			}
@@ -1658,21 +1714,53 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
 			let node = getNodeById(nodeId);
 			backButtonFlag = true;
-			myThis.path.currentActivePath.push(node);
+
+			let curNodesArr = myThis.path.currentActivePath.push(node);
+
+			if(curNodesArr.length > 1){
+				//one link slide
+				oneLinkNode = curNodesArr[curNodesArr.length-1];//нода у которой больше 1 связи
+				
+				oneLinkNodeFrom = curNodesArr[0];//нода с которой должна связаться
+			}
+			
 			cliсkOnNode(node, deleteDelay, callback);
 		}
 
 		function Path(){
+			let selfPath = this;
 			//list of only active nodes
 			this.activePath = null;
 			//list of all nodes in path with goto
-			this.fullActivePath = null;
+			this.fullActivePath = new FullActivePath();
+			//list of all nodes what visited user
+			this.fullPath = null;
 			//list of all activity include functional buttons, browser buttons, text wrote in inputs and maybe send emails
 			this.fullActivity = null;
 			//list of nodes that take into account the back and forward buttons
 			this.currentActivePath = new CurrentActivePath();
 
 
+			function FullActivePath(){
+				this.get = get;
+				this.push = push;
+				this.pop = pop;
+
+				let fullActivePath = [];
+
+				function get(){
+					// return fullActivePath;
+					return selfPath.currentActivePath.get().filter(d => d.active).map(d => d.node);
+				}
+
+				function push(node){
+					
+				}
+
+				function pop(node = null){
+					
+				}
+			}
 
 			function CurrentActivePath(){
 				this.get = get;
@@ -1695,10 +1783,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let beenInCAP = false;
 					let beenInCAPpos = null;
 					for (let i = 0; i < currentActivePath.length; i++) {
-						if(currentActivePath[i].node.id == node.id){
+						let currDepth = currentActivePath[i].node.leftDepth ? currentActivePath[i].node.leftDepth : currentActivePath[i].node.depth;
+						let nodeDepth = node.leftDepth ? node.leftDepth : node.depth;
+						if(currentActivePath[i].node.id == node.id ||
+							currDepth == nodeDepth
+							){
 							beenInCAP = true;
 							beenInCAPpos = i;
-							break;
 						}
 					}
 					if(!beenInCAP){
@@ -1709,14 +1800,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						newNodes.push(node);
 					}else{
 						for (let i = 0; i <= beenInCAPpos; i++) {
+						let currDepth = currentActivePath[i].node.leftDepth ? currentActivePath[i].node.leftDepth : currentActivePath[i].node.depth;
+						let nodeDepth = node.leftDepth ? node.leftDepth : node.depth;
 							if(!currentActivePath[i].active){
 								currentActivePath[i].active = true;
+								if(currDepth == nodeDepth){
+									currentActivePath[i].node = node;
+								}
 								newNodes.push(currentActivePath[i].node);
 								
 							}
 						}
 					}
-
+					// console.log('push');
+					// console.log(newNodes);
 					return newNodes;
 				}
 
@@ -1758,7 +1855,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}];
 						}
 					}
-
+					// console.log('pop');
+					// console.log(newNodes);
 					return newNodes;
 				}
 			}
@@ -1990,6 +2088,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function makeUserDataPath() {
 			let userData = [];
 
+			this.getElementText = getElementText;
+
 			this.push = function(node, message = ''){
 				let textToPush = '';
 				//нужно отрефакторить
@@ -2034,16 +2134,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let name = input.getAttribute('name');
 					let placeHolder = input.getAttribute('placeholder');
 					let value = input.value;
-					if(!value && model.nodeInputs[name]){
-						value = model.nodeInputs[name];
+					if(!value && myThis.nodeInputs[name]){
+						value = myThis.nodeInputs[name].val;
 					}
 					return placeHolder +' "'+ value +'" '+ elem.innerText.trim();
 				}else if(textArea){
 					let name = textArea.getAttribute('name');
-					let text = textArea.value.trim();
-					if(!text && model.nodeInputs[name]){
-						text = model.nodeInputs[name];
+					let mailname = textArea.getAttribute('mailname');
+					let text = textArea.value;
+					if(!text && myThis.nodeInputs[name]){
+						text = myThis.nodeInputs[name].val;
 					}
+					name = mailname ? mailname : name;
 					return name +' - "'+ text +'" '+ elem.innerText.trim();
 				}else{
 					return elem.innerText;
@@ -2095,20 +2197,32 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				let textArea = elem.querySelector('textarea');
 				if(input){
 					let value = input.value;
-					if(!value && model.nodeInputs[name]){
-						value = model.nodeInputs[name];
+					if(!value && model.nodeInputs[name] && model.nodeInputs[name].val){
+						value = model.nodeInputs[name].val;
 					}
 					return value.trim();
 				}else if(textArea){
 					let text = textArea.value;
-					if(!text && model.nodeInputs[name]){
-						text = model.nodeInputs[name];
+					if(!text && model.nodeInputs[name] && model.nodeInputs[name].val){
+						text = model.nodeInputs[name].val;
 					}
 					return text.trim();
 				}else{
 					return false;
 				}
 			}
+		}
+
+		function setLabelVar(label){
+			let inputs = Object.keys(myThis.nodeInputs);
+
+			for (let i = 0; i < inputs.length; i++) {
+				label = label.replace('{'+inputs[i]+'}', myThis.nodeInputs[inputs[i]].val); 
+			}
+			const regex = /{.*}/ig;
+			label = label.replace(regex, '');
+
+			return label;
 		}
 
 	}
@@ -2504,7 +2618,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// console.log('activeDepth',activeDepth);
 							if(d.active){
 								// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.85;
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.75;
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
@@ -2519,7 +2633,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							return d.active ? -(height*2/18) : 0.05;
+							return d.active ? -(height*2/22) : 0.05;
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
@@ -2857,6 +2971,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
+	}
+
+	function getParameterByName(name, url = window.location.href) {
+		name = name.replace(/[\[\]]/g, '\\$&');
+		var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+				results = regex.exec(url);
+				
+		if (!results) return null;
+		if (!results[2]) return '';
+
+		return decodeURIComponent(results[2].replace(/\+/g, ' '));
 	}
 
 });
