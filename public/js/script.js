@@ -161,6 +161,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(id){
 			let currActivePath = model.getActivePath();
 
+			//рефакторинг:
+			//переделать backButton	и forwardButton на 
+			//goto node
+
 			if(backButtonPermision){
 				backButtonPermision = false;
 
@@ -341,7 +345,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		
 		let backButton = false;
 
-		model.userData.push(d);
+
 		
 		//validate required node
 		if(d.required !== undefined){
@@ -360,6 +364,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			switch (d.function){
 				case 'back':
 					if(backButtonPermision){
+						//рефакторинг:
+						//переделать логику кнопки назад
+						//что бы она только устанавливала ноду
+						//а запусткать весь пересчет поже для всех по cliсkOnNode
+						model.userData.push(d);
 						model.backButton(deleteDelay, deleteDelayCallback);
 						backButton = true;
 						backButtonPermision = false;
@@ -409,11 +418,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		  		return key+' - '+model.nodeInputs[key];
 			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
-			//тут формируется {{{userDataText}}}
+			//тут формируется {{{shortUserData}}}
+			let shortUserDataText = model.path.fullActivePath.get().map(d => {
+				let div = document.createElement('div');
+				div.innerHTML = d.label;
+				return model.userData.getElementText(div);
+			}).join('<br>');
+
+			//тут формируется {{{userData}}}
 			//запрашиваем массив всех действий пользователя и склеиваем его в строку
 			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
 			
-			sendMail(nodeInputsText, userDataText);
+			sendMail(nodeInputsText, shortUserDataText, userDataText);
 		}
 
 		let doActive = model.isSlide(d);
@@ -997,17 +1013,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	}
 
 	//send email
-	function sendMail(nodeInputsText, userDataText){
+	function sendMail(nodeInputsText, shortUserDataText, userDataText){
 		var templateParams = {
 			nodeInputs: nodeInputsText,
+			shortUserData: shortUserDataText,
 			userData: userDataText
 		};
 
 		emailjs.send('mail_variant_name', 'template_ih7ziro', templateParams)
 		.then(function(response) {
-			console.log('SUCCESS!', response.status, response.text);
+			// console.log('SUCCESS!', response.status, response.text);
 		}, function(error) {
-			console.log('FAILED...', error);
+			// console.log('FAILED...', error);
 		});
 	}
 	
@@ -1448,7 +1465,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}
 			}
 
+			if(goToFlag){
+				myThis.userData.push(previosNode);
+			}
 			myThis.userData.push(node);
+
 
 			if(goToFlag){
 				myThis.path.currentActivePath.push(previosNode);
@@ -1665,21 +1686,53 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
 			let node = getNodeById(nodeId);
 			backButtonFlag = true;
-			myThis.path.currentActivePath.push(node);
+
+			let curNodesArr = myThis.path.currentActivePath.push(node);
+
+			if(curNodesArr.length > 1){
+				//one link slide
+				oneLinkNode = curNodesArr[curNodesArr.length-1];//нода у которой больше 1 связи
+				
+				oneLinkNodeFrom = curNodesArr[0];//нода с которой должна связаться
+			}
+			
 			cliсkOnNode(node, deleteDelay, callback);
 		}
 
 		function Path(){
+			let selfPath = this;
 			//list of only active nodes
 			this.activePath = null;
 			//list of all nodes in path with goto
-			this.fullActivePath = null;
+			this.fullActivePath = new FullActivePath();
+			//list of all nodes what visited user
+			this.fullPath = null;
 			//list of all activity include functional buttons, browser buttons, text wrote in inputs and maybe send emails
 			this.fullActivity = null;
 			//list of nodes that take into account the back and forward buttons
 			this.currentActivePath = new CurrentActivePath();
 
 
+			function FullActivePath(){
+				this.get = get;
+				this.push = push;
+				this.pop = pop;
+
+				let fullActivePath = [];
+
+				function get(){
+					// return fullActivePath;
+					return selfPath.currentActivePath.get().filter(d => d.active).map(d => d.node);
+				}
+
+				function push(node){
+					
+				}
+
+				function pop(node = null){
+					
+				}
+			}
 
 			function CurrentActivePath(){
 				this.get = get;
@@ -1702,10 +1755,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let beenInCAP = false;
 					let beenInCAPpos = null;
 					for (let i = 0; i < currentActivePath.length; i++) {
-						if(currentActivePath[i].node.id == node.id){
+						let currDepth = currentActivePath[i].node.leftDepth ? currentActivePath[i].node.leftDepth : currentActivePath[i].node.depth;
+						let nodeDepth = node.leftDepth ? node.leftDepth : node.depth;
+						if(currentActivePath[i].node.id == node.id ||
+							currDepth == nodeDepth
+							){
 							beenInCAP = true;
 							beenInCAPpos = i;
-							break;
 						}
 					}
 					if(!beenInCAP){
@@ -1716,14 +1772,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						newNodes.push(node);
 					}else{
 						for (let i = 0; i <= beenInCAPpos; i++) {
+						let currDepth = currentActivePath[i].node.leftDepth ? currentActivePath[i].node.leftDepth : currentActivePath[i].node.depth;
+						let nodeDepth = node.leftDepth ? node.leftDepth : node.depth;
 							if(!currentActivePath[i].active){
 								currentActivePath[i].active = true;
+								if(currDepth == nodeDepth){
+									currentActivePath[i].node = node;
+								}
 								newNodes.push(currentActivePath[i].node);
 								
 							}
 						}
 					}
-
+					// console.log('push');
+					// console.log(newNodes);
 					return newNodes;
 				}
 
@@ -1765,7 +1827,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}];
 						}
 					}
-
+					// console.log('pop');
+					// console.log(newNodes);
 					return newNodes;
 				}
 			}
@@ -1996,6 +2059,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function makeUserDataPath() {
 			let userData = [];
+
+			this.getElementText = getElementText;
 
 			this.push = function(node, message = ''){
 				let textToPush = '';
