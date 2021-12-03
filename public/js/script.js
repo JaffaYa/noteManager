@@ -148,7 +148,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	console.log(`json/${jsonName}.json?v=${jsonVersion}`);
 
 	window.model = new makeModel(`json/${jsonName}.json?v=${jsonVersion}`, simInit);
-	// window.model = new makeModel("json/graphdata.json", simInit);
+	//?jn=graphdata&node=1
 
 	// model.stats.enable(); // statistics enable
 	// model.admin.set(false); // admin enable
