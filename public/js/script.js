@@ -130,8 +130,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var htmlNodes = nodesCont.selectAll("div.node");
 	var svgLinks = linksCont.selectAll("line");
 
-	var jsonName = getParameterByName('jn') ?? 'graphdata';
-	var jsonVersion = getParameterByName('v') ?? '777';
+	var jsonName = getParameterByName('jn');
+	var jsonVersion = Math.random();
+	
+	if (!!jsonName) {
+		window.localStorage.setItem('jn', jsonName);
+	} else {
+		jsonName = window.localStorage.getItem('jn');
+	}
 
 	console.log(`json/${jsonName}.json?v=${jsonVersion}`);
 
