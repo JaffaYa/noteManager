@@ -10,8 +10,7 @@
       "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [1],
       "order": 201,
-      "goTo": 100,
-      "goToUrl": "https://variant.name/?node=1"
+      "goTo": 100
     },
     {
       "id": "201",
@@ -166,7 +165,7 @@
     },
     {
       "id": "16",
-      "label": "{specialization}<br> сколько <br>ты сейчас <br> зараба<br>тываешь?",
+      "label": "сколько <br>ты сейчас <br> зараба<br>тываешь?",
       "parents": [9]
     },
     {
@@ -416,7 +415,7 @@
     },
     {
       "id": "504",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и пиши email\"></textarea>",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и пиши email\"></textarea>",
       "parents": [502]
     },
     {
