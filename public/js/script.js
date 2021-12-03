@@ -2333,7 +2333,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							if(d.active){
 								return (height/18 + (height*4/5)*(nodeDepth - activeDepth)) - height/4.5;
 							}else{
-								return (height/18 + (height*4/4.7)*(nodeDepth - activeDepth)) - height/1.15;
+								return (height/18 + (height*4/4.7)*(nodeDepth - activeDepth)) - height/1;
 							}
 							break;
 						//мощность силы которая задает вертикальную координату
@@ -2504,11 +2504,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// console.log('activeDepth',activeDepth);
 							if(d.active){
 								// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.85;
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.65;
+								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.8;
 								// return 0;
 							}
 
@@ -2519,7 +2519,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
-							return d.active ? -(height*2/20) : 0.05;
+							return d.active ? -(height*2/18) : 0.05;
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
@@ -2534,7 +2534,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.25;
+								return 0.5;
 							}else{
 								return 0;
 							}
@@ -2546,7 +2546,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/80;
+								let collRadCoef = 2040/70;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2578,7 +2578,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность сылы ордера
 						case 'orderForceStr':
 							if(childrens.includes(d.id)){
-								return 0.15;
+								return 0.5;
 							}else{
 								return 0;
 							}

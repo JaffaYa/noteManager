@@ -104,7 +104,7 @@ if (window.innerWidth > 768) {
       boundingBox: 'canvas',
       count: 350,
       minSize: 10,
-      maxSize: 18,
+      maxSize: 15,
       visible: true
     },
     cameraControls: {

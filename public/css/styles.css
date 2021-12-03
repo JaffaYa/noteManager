@@ -185,10 +185,10 @@ body {
   position: absolute;
   left: 0;
   z-index: 10;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: #212121;
-  line-height: 0.85;
+  line-height: 0.82;
   font-family: 'Fira Sans', sans-serif;
   word-break: normal;
   white-space: nowrap;
@@ -228,7 +228,7 @@ body {
 }
 .node.active.show .v-content{
   opacity: 1;
-  transform: scale(1) translateX(-100%) translateY(-45%);
+  transform: scale(1.15) translateX(-100%) translateY(-45%);
 }
 .node.hide .v-content{
   opacity: 0;
@@ -940,7 +940,10 @@ textarea::-webkit-scrollbar-thumb {
   .node .v-content input:focus {
     border-bottom: 2px solid #fff;
   }
-
+  .vertical .node .v-content,
+  .vertical .node-btn .v-content{
+    font-size: 1.2rem;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -1061,7 +1064,7 @@ textarea::-webkit-scrollbar-thumb {
       transform: translate(-50%, -50%) scale(0.75);
   }
   .node.active.show .v-content {
-    transform: scale(1) translateX(0%) translateY(-100%);
+    transform: scale(1.1) translateX(0%) translateY(-100%);
   }
   .horizontal .node.inputMobile .v-content,
   .vertical .node.inputMobile .v-content{
