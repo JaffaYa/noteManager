@@ -344,14 +344,14 @@
     },
     {
       "id": "406",
-      "label": "скажешь <br>номер <br>телефона?",
+      "label": "скажешь <br>номер <br>телефона <br>для связи??",
       "parents": [405]
     },
     {
       "id": "407",
       "label": "да",
       "parents": [406],
-      "goTo" : 66
+      "goTo" : 409
     },
     {
       "id": "408",
@@ -359,6 +359,18 @@
       "parents": [406],
       "sendMail": true,
       "goTo" : 68
+    },
+    {
+      "id": "409",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"кликни тут и пиши номер\"></textarea>",
+      "parents": [407]
+    },
+    {
+      "id": "410",
+      "label": "дальше",
+      "parents": [409],
+      "goTo" : 68,
+      "required": 409
     },
     {
       "id": "64",
@@ -374,36 +386,48 @@
     {
       "id": "66",
       "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"кликни тут и пиши номер\"></textarea>",
-      "parents": [65,407]
+      "parents": [65]
     },
     {
       "id": "67",
       "label": "дальше",
       "parents": [66],
-      "goTo" : 406,
+      "goTo" : 501,
       "required": 66
     },
     {
-      "id": "406",
-      "label": "скажешь <br> твой <br>email?",
-      "parents": [67]
+      "id": "501",
+      "label": "скажешь <br>твой <br>email <br>для связи?",
+      "parents": [405]
     },
     {
-      "id": "407",
+      "id": "502",
       "label": "да",
-      "parents": [406],
-      "goTo" : 404
+      "parents": [501],
+      "goTo" : 504
     },
     {
-      "id": "408",
+      "id": "503",
       "label": "нет",
-      "parents": [406],
+      "parents": [501],
       "sendMail": true,
       "goTo" : 68
     },
     {
+      "id": "504",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и пиши email\"></textarea>",
+      "parents": [502]
+    },
+    {
+      "id": "505",
+      "label": "дальше",
+      "parents": [504],
+      "goTo" : 68,
+      "required": 504
+    },
+    {
       "id": "68",
-      "label": "ты классный <br>человек <div class='icon'><img src='img/icons/heart.png'></div>",
+      "label": "ты классный <br>человек <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
       "parents": [67]
     },
     {
