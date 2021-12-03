@@ -89,7 +89,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var showSlideDelay = verticalScreen ? 200 : 250; //задерка сдвига перед появлением
 	var showLinkDelay = verticalScreen ? 75 : 75; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
@@ -97,7 +97,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 700 : 700; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 450 : 450; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -200,9 +200,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.5);
+					simulation.alphaTarget(0.2);
 					simulation.velocityDecay(0.4) 
 				}, time+0, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.6);
+					simulation.velocityDecay(0.3) 
+				}, time+150, simulation);
 
 				// setTimeout(function(simulation){
 				// 	simulation.alphaTarget(0.4);
@@ -222,9 +226,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}, time+500, simulation);
 			}else{
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.4);
+					simulation.alphaTarget(0.2);
 					simulation.velocityDecay(0.4) 
 				}, time+0, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.6);
+					simulation.velocityDecay(0.3) 
+				}, time+150, simulation);
 
 				// setTimeout(function(simulation){
 				// 	simulation.alphaTarget(0.6);
@@ -442,13 +450,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			// 	simulation.velocityDecay(0.4) 
 			// }, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0.6);
 				simulation.velocityDecay(0.3) 
-			}, time+350, simulation);
+			}, time+150, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.4);
@@ -465,16 +473,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.alphaTarget(0);
 				// simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
-			}, time+550, simulation);
+			}, time+500, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.4);
+				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0.6);
 				simulation.velocityDecay(0.3) 
-			}, time+350, simulation);
+			}, time+150, simulation);
 
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.6);
@@ -491,7 +499,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				simulation.alphaTarget(0);
 				simulation.alphaDecay(0.05);
 				simulation.velocityDecay(0.2) 
-			}, time+550, simulation);
+			}, time+500, simulation);
 		}
 
 		// setTimeout(function(simulation){
@@ -2507,7 +2515,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.25 : 0.25;
+							return d.active ? 0.25 : 0.35;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2526,7 +2534,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.05;
+								return 0.25;
 							}else{
 								return 0;
 							}
