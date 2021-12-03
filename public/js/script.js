@@ -130,11 +130,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var htmlNodes = nodesCont.selectAll("div.node");
 	var svgLinks = linksCont.selectAll("line");
 
+	var jsonName = getParameterByName('jn') ?? 'graphdata';
+	var jsonVersion = getParameterByName('v') ?? '777';
 
+	console.log(`json/${jsonName}.json?v=${jsonVersion}`);
 
-
-
-	window.model = new makeModel("json/graphdata.json?v=777", simInit);
+	window.model = new makeModel(`json/${jsonName}.json?v=${jsonVersion}`, simInit);
 
 	// model.stats.enable(); // statistics enable
 	// model.admin.set(false); // admin enable
@@ -1142,12 +1143,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			updateNodes();
 
 			function setInitNode(){
-				// console.dir(window.location);
-				let get = window.location.search;
-				let id = null;
-				if(get){
-					id = get.split('=')[1];
-				}
+				// // console.dir(window.location);
+				// let get = window.location.search;
+				let id = getParameterByName('node');
+				// if(get){
+				// 	id = get.split('=')[1];
+				// }
 				if(id === null){
 					id = 1;
 				}
@@ -2922,6 +2923,17 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}
 		}
 
+	}
+
+	function getParameterByName(name, url = window.location.href) {
+		name = name.replace(/[\[\]]/g, '\\$&');
+		var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+				results = regex.exec(url);
+				
+		if (!results) return null;
+		if (!results[2]) return '';
+
+		return decodeURIComponent(results[2].replace(/\+/g, ' '));
 	}
 
 });
