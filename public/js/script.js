@@ -142,6 +142,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	console.log(`json/${jsonName}.json?v=${jsonVersion}`);
 
 	window.model = new makeModel(`json/${jsonName}.json?v=${jsonVersion}`, simInit);
+	// window.model = new makeModel("json/graphdata.json", simInit);
 
 	// model.stats.enable(); // statistics enable
 	// model.admin.set(false); // admin enable
@@ -415,7 +416,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//берем ключи обьекта model.nodeInputs и делаем с них массив типа "ключ - значение"
 			let nodeInputsText = Object.keys(model.nodeInputs).map(function(key) {
 				//шаблон 1 значения масива "ключ - значение"
-		  		return key+' - '+model.nodeInputs[key];
+				let input = model.nodeInputs[key];
+				let keyText = input.mailname ? input.mailname : key;
+		  		return keyText + ' - ' + input.val;
 			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
 			//тут формируется {{{shortUserData}}}
@@ -428,7 +431,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			//тут формируется {{{userData}}}
 			//запрашиваем массив всех действий пользователя и склеиваем его в строку
 			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
-			
+		
 			sendMail(nodeInputsText, shortUserDataText, userDataText);
 		}
 
@@ -675,15 +678,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let input = div.querySelector('input');
 			if(input){
 				let name = input.getAttribute('name');
-				if(model.nodeInputs[name]){
-					return model.nodeInputs[name]
+				if(model.nodeInputs[name] && model.nodeInputs[name].val){
+					return model.nodeInputs[name].val;
 				}
 			}
 			return '';
 		})
 		.on('change', e => {
 			let name = d3.event.target.getAttribute('name');
-			model.nodeInputs[name] = d3.event.target.value;	
+			let mailname = d3.event.target.getAttribute('mailname');
+			model.nodeInputs[name] = {
+				mailname: mailname,
+				val: d3.event.target.value
+			};	
 			model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
 		})
 		.on('blur', e => {
@@ -711,15 +718,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			let textarea = div.querySelector('textarea');
 			if(textarea){
 				let name = textarea.getAttribute('name');
-				if(model.nodeInputs[name]){
-					return model.nodeInputs[name]
+				if(model.nodeInputs[name] && model.nodeInputs[name].val){
+					return model.nodeInputs[name].val;
 				}
 			}
 			return '';
 		})
 		.on('change', e => {
 			let name = d3.event.target.getAttribute('name');
-			model.nodeInputs[name] = d3.event.target.value;	
+			let mailname = d3.event.target.getAttribute('mailname');
+			model.nodeInputs[name] = {
+				mailname: mailname,
+				val: d3.event.target.value
+			};	
 			model.userData.push(null, 'ввод в textarea '+name+' значения '+d3.event.target.value);
 		})
 		.on('blur', e => {
@@ -2106,16 +2117,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let name = input.getAttribute('name');
 					let placeHolder = input.getAttribute('placeholder');
 					let value = input.value;
-					if(!value && model.nodeInputs[name]){
-						value = model.nodeInputs[name];
+					if(!value && myThis.nodeInputs[name]){
+						value = myThis.nodeInputs[name].val;
 					}
 					return placeHolder +' "'+ value +'" '+ elem.innerText.trim();
 				}else if(textArea){
 					let name = textArea.getAttribute('name');
-					let text = textArea.value.trim();
-					if(!text && model.nodeInputs[name]){
-						text = model.nodeInputs[name];
+					let mailname = textArea.getAttribute('mailname');
+					let text = textArea.value;
+					if(!text && myThis.nodeInputs[name]){
+						text = myThis.nodeInputs[name].val;
 					}
+					name = mailname ? mailname : name;
 					return name +' - "'+ text +'" '+ elem.innerText.trim();
 				}else{
 					return elem.innerText;
@@ -2167,14 +2180,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				let textArea = elem.querySelector('textarea');
 				if(input){
 					let value = input.value;
-					if(!value && model.nodeInputs[name]){
-						value = model.nodeInputs[name];
+					if(!value && model.nodeInputs[name] && model.nodeInputs[name].val){
+						value = model.nodeInputs[name].val;
 					}
 					return value.trim();
 				}else if(textArea){
 					let text = textArea.value;
-					if(!text && model.nodeInputs[name]){
-						text = model.nodeInputs[name];
+					if(!text && model.nodeInputs[name] && model.nodeInputs[name].val){
+						text = model.nodeInputs[name].val;
 					}
 					return text.trim();
 				}else{
