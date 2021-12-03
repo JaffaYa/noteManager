@@ -121,7 +121,7 @@
     },
     {
       "id": "8",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"100\" name=\"specialization\" placeholder=\"кликни тут и пиши\"></textarea>",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"100\" name=\"specialization\" mailname=\"specialization\" placeholder=\"кликни тут и пиши\"></textarea>",
       "parents": [6,7,11,12,14,15]
     },
     {
@@ -280,7 +280,7 @@
     },
     {
       "id": "40",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"name\" placeholder=\"кликни тут и пиши имя\"></textarea>",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"name\" mailname=\"Имя\" placeholder=\"кликни тут и пиши имя\"></textarea>",
       "parents": [39]
     },
     {
@@ -314,6 +314,54 @@
       "goTo" : 64
     },
     {
+      "id": "401",
+      "label": "напиши <br>на почту",
+      "parents": [60],
+      "goTo" : 402
+    },
+    {
+      "id": "402",
+      "label": "какой  <br>твой email?",
+      "parents": [401]
+    },
+    {
+      "id": "403",
+      "label": "сказать",
+      "parents": [402],
+      "goTo" : 404
+    },
+    {
+      "id": "404",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и пиши email\"></textarea>",
+      "parents": [403]
+    },
+    {
+      "id": "405",
+      "label": "дальше",
+      "parents": [404],
+      "sendMail": true,
+      "goTo" : 406,
+      "required": 404
+    },
+    {
+      "id": "406",
+      "label": "скажешь <br>номер <br>телефона?",
+      "parents": [405]
+    },
+    {
+      "id": "407",
+      "label": "да",
+      "parents": [406],
+      "goTo" : 66
+    },
+    {
+      "id": "408",
+      "label": "нет",
+      "parents": [406],
+      "sendMail": true,
+      "goTo" : 68
+    },
+    {
       "id": "64",
       "label": "а номер <br>телефона?",
       "parents": [61,62,63]
@@ -327,15 +375,32 @@
     {
       "id": "66",
       "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"кликни тут и пиши номер\"></textarea>",
-      "parents": [65]
+      "parents": [65,407]
     },
     {
       "id": "67",
       "label": "дальше",
       "parents": [66],
-      "sendMail": true,
-      "goTo" : 68,
+      "goTo" : 406,
       "required": 66
+    },
+    {
+      "id": "406",
+      "label": "скажешь <br> твой <br>email?",
+      "parents": [67]
+    },
+    {
+      "id": "407",
+      "label": "да",
+      "parents": [406],
+      "goTo" : 404
+    },
+    {
+      "id": "408",
+      "label": "нет",
+      "parents": [406],
+      "sendMail": true,
+      "goTo" : 68
     },
     {
       "id": "68",

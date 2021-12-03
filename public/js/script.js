@@ -97,7 +97,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 450 : 450; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 400 : 400; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -105,7 +105,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 	let backButtonPermision = true;
-	let backButtonDelay = verticalScreen ? 1000 : 700;
+	let backButtonDelay = verticalScreen ? 1000 : 500;
 
 
 	window.simulationResize = function (){};
@@ -131,8 +131,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var svgLinks = linksCont.selectAll("line");
 
 	var jsonName = getParameterByName('jn');
-	var jsonVersion = Math.random();
-	
+
+	Math.randomDec = function (min, max, decimals) {
+        return (Math.random() * (max - min) + min).toFixed(decimals || 2);
+    };
+
+	var jsonVersion = Math.randomDec(0, 999, 3);
+
+
 	if (!!jsonName) {
 		window.localStorage.setItem('jn', jsonName);
 	} else {
