@@ -154,6 +154,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(id){
 			let currActivePath = model.getActivePath();
 
+			//рефакторинг:
+			//переделать backButton	и forwardButton на 
+			//goto node
+
 			if(backButtonPermision){
 				backButtonPermision = false;
 
@@ -1658,7 +1662,16 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function forwardButton(nodeId, deleteDelay = false, callback = function(){}){
 			let node = getNodeById(nodeId);
 			backButtonFlag = true;
-			myThis.path.currentActivePath.push(node);
+
+			let curNodesArr = myThis.path.currentActivePath.push(node);
+
+			if(curNodesArr.length > 1){
+				//one link slide
+				oneLinkNode = curNodesArr[curNodesArr.length-1];//нода у которой больше 1 связи
+				
+				oneLinkNodeFrom = curNodesArr[0];//нода с которой должна связаться
+			}
+			
 			cliсkOnNode(node, deleteDelay, callback);
 		}
 
@@ -1695,7 +1708,11 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					let beenInCAP = false;
 					let beenInCAPpos = null;
 					for (let i = 0; i < currentActivePath.length; i++) {
-						if(currentActivePath[i].node.id == node.id){
+						let currDepth = currentActivePath[i].node.leftDepth ? currentActivePath[i].node.leftDepth : currentActivePath[i].node.depth;
+						let nodeDepth = node.leftDepth ? node.leftDepth : node.depth;
+						if(currentActivePath[i].node.id == node.id ||
+							currDepth == nodeDepth
+							){
 							beenInCAP = true;
 							beenInCAPpos = i;
 							break;
@@ -1709,14 +1726,20 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 						newNodes.push(node);
 					}else{
 						for (let i = 0; i <= beenInCAPpos; i++) {
+						let currDepth = currentActivePath[i].node.leftDepth ? currentActivePath[i].node.leftDepth : currentActivePath[i].node.depth;
+						let nodeDepth = node.leftDepth ? node.leftDepth : node.depth;
 							if(!currentActivePath[i].active){
 								currentActivePath[i].active = true;
+								if(currDepth == nodeDepth){
+									currentActivePath[i].node = node;
+								}
 								newNodes.push(currentActivePath[i].node);
 								
 							}
 						}
 					}
-
+					console.log('push');
+					console.log(newNodes);
 					return newNodes;
 				}
 
@@ -1758,7 +1781,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 							}];
 						}
 					}
-
+					console.log('pop');
+					console.log(newNodes);
 					return newNodes;
 				}
 			}
