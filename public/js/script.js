@@ -346,6 +346,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		
 		let backButton = false;
 
+		//goToUrl
+		if(d.goToUrl){
+			window.location.href = d.goToUrl;
+			return;
+		}
+
 
 		
 		//validate required node
@@ -658,7 +664,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		let d3newNodesLabels = d3newNodes.append("div")
 		.classed('v-content', true)
-		.html(d => d.label);
+		.html(d => model.setLabelVar(d.label) );
 
 		d3newNodesLabels
 		// .each(function(d, i) {
@@ -1066,6 +1072,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		this.mobileInpuntActive = false;
 		this.checkRequiredNode = checkRequiredNode;
 		this.path = new Path();
+		this.setLabelVar = setLabelVar;
 		/*
 		* node = {
 		*	id: int,
@@ -1083,6 +1090,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		*	sendMail: bool,
 		*	order: int,
 		*	goTo: int.id,
+		*	goToUrl: str,
 		*	required: int.id,
 		* }
 		*/
@@ -1137,6 +1145,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function makeNodeTree(jsonData){
 			var nodes = [];
 			myThis.nodes = nodes = jsonData.nodes;
+			//добавить номализацию строк
 			for (var i = 0; i < nodes.length; i++) {
 				nodes[i].id = nodes[i].id*1;
 				nodes[i].active = false;
@@ -1612,6 +1621,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 									sendMail: false,
 									order: undefined,
 									goTo: undefined,
+									goToUrl: undefined,
 									required: undefined
 								});
 							}
@@ -1652,6 +1662,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					sendMail: false,
 					order: undefined,
 					goTo: undefined,
+					goToUrl: undefined,
 					required: undefined
 				});
 			}
@@ -2194,6 +2205,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 					return false;
 				}
 			}
+		}
+
+		function setLabelVar(label){
+			let inputs = Object.keys(myThis.nodeInputs);
+
+			for (let i = 0; i < inputs.length; i++) {
+				label = label.replace('{'+inputs[i]+'}', myThis.nodeInputs[inputs[i]].val); 
+			}
+			const regex = /{.*}/ig;
+			label = label.replace(regex, '');
+
+			return label;
 		}
 
 	}
