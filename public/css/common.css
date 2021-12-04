@@ -1,6 +1,4 @@
-html {
-  font-size: 12px;
-}
+
 *{
   -webkit-touch-callout:none;
   -webkit-user-select:none;
@@ -218,19 +216,25 @@ a:hover {
 
 @media only screen and (max-width: 768px) {
 
-.node.show .live-card {
-    transform: translateY(-45%);
-}
-.node.show .live-card .live-avatar img{
-  width: 3rem;
-  height: 3rem;
-}
-.node.active.show .live-card {
-    transform: translateY(10%);
-}
-.node.active.show .live-card .live-avatar img{
-  width: 4rem;
-  height: 4rem;
-}
-
+  .node.show .live-card {
+      transform: translateY(-45%);
+  }
+  .node.show .live-card .live-avatar img{
+    width: 3rem;
+    height: 3rem;
+  }
+  .node.active.show .live-card {
+      transform: translateY(10%);
+  }
+  .node.active.show .live-card .live-avatar img{
+    width: 4rem;
+    height: 4rem;
+  }
+  .icon{
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(20px);
+  }
 }

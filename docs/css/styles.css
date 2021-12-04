@@ -21,6 +21,7 @@ body {
   overflow: hidden;
   background-color: #212121;
 }
+/* gradient background for web */
 .main-bg {
   width: 100%;
   height: 100%;
@@ -28,16 +29,30 @@ body {
   left: 0;
   position: fixed;
   opacity: 0;
-  background-color: #1f74db;
+  background-color: #3862da;
   background: linear-gradient(145deg, #3862da, #d0187c, #da7538, #30b553, #3164c1);
   background-size: 1000% 1000%;
-  animation: gradient 40s 3s ease infinite, mainBgStart 3s 0s ease-in forwards;
+  animation: gradient 40s 4s ease infinite, mainBgStart 3s 0s ease-in forwards;
 }
+
+/* transition background for video */
+/*.main-bg {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  opacity: 0;
+  background-color: #3862da;
+  animation: colors 25s 5s ease infinite, mainBgStart 3s 0s ease-in forwards;
+}*/
 @keyframes mainBgStart {
 0% {
-  opacity: 0; }
+  opacity: 0; 
+}
 100% {
-  opacity: 1; }
+  opacity: 1; 
+}
 }
 @keyframes gradient {
 0% {
@@ -47,6 +62,24 @@ body {
 100% {
   background-position: 0% 0%; }
 }
+@keyframes colors {
+0% {
+    background-color: #3862da;
+}
+25% {
+    background-color: #d0187c;
+}
+50% {
+    background-color: #da7538;
+}
+75% {
+    background-color: #30b553;
+}
+100% {
+    background-color: #3862da;
+}
+}
+
 #my_data {
   margin: 0;
   width: 100%;
@@ -193,7 +226,6 @@ body {
   word-break: normal;
   white-space: nowrap;
   transform-origin: 0% 0%;  
-  -webkit-font-smoothing: antialiased;
   -webkit-filter: blur(15px);
   -moz-filter: blur(15px);
   -o-filter: blur(15px);
@@ -237,6 +269,21 @@ body {
 .node.error .v-content{
   transform: scale(0.9) translateX(-100%) translateY(-45%)!important;
   transition: 0.45s cubic-bezier(0.5,-1,0,1);
+}
+.node.error :-ms-input-placeholder {
+  color: #fff;
+}
+.node.error ::-ms-input-placeholder {
+  color: #fff;
+}
+.node.error ::-moz-placeholder {
+  color: #fff;
+}
+.node.error ::-webkit-input-placeholde {
+  color: #fff;
+}
+.node.error ::placeholder {
+  color: #fff;
 }
 .btn-menu .v-content{
     transform: scale(0.5) translateX(-100%) translateY(-0.1rem)!important;
@@ -700,18 +747,23 @@ to{
 /* inputs */
 :-ms-input-placeholder {
   color: #212121;
+  transition: 0.45s ease-in-out;
 }
 ::-ms-input-placeholder {
   color: #212121;
+  transition: 0.45s ease-in-out;
 }
 ::-moz-placeholder {
   color: #212121;
+  transition: 0.45s ease-in-out;
 }
 ::-webkit-input-placeholde {
   color: #212121;
+  transition: 0.45s ease-in-out;
 }
 ::placeholder {
   color: #212121;
+  transition: 0.45s ease-in-out;
 }
 textarea::-webkit-scrollbar {
   width: 4px;
@@ -923,10 +975,10 @@ textarea::-webkit-scrollbar-thumb {
     top: 50%;
   }
   .btn-back .v-content{
-    transform: scale(0.75) translateX(0%) translateY(-0.1rem)!important;
+    transform: scale(0.70) translateX(0%) translateY(-0.1rem)!important;
   }
   .btn-menu .v-content{
-      transform: scale(0.75) translateX(-100%) translateY(-0.1rem)!important;
+      transform: scale(0.70) translateX(-100%) translateY(-0.1rem)!important;
   }
   .nodes .node.btn-functional.btn-logo{
       transform: scale(0.75);
@@ -1021,6 +1073,14 @@ textarea::-webkit-scrollbar-thumb {
   .vertical .node.hide .v-content {
     transform: scale(0.5) translateX(0%) translateY(-100%);
   }
+  .node .v-content,
+  .node-btn .v-content{
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+  }
 
 }
 
@@ -1058,7 +1118,7 @@ textarea::-webkit-scrollbar-thumb {
   }
   .node.show .v-content, 
   .node-btn.show .v-content {
-    transform: scale(0.75) translateX(0%) translateY(-0.1rem);
+    transform: scale(0.7) translateX(0%) translateY(-0.1rem);
   }
   .node.show .c1, .node.show .c2, .node-btn.show .c1, .node-btn.show .c2 {
       transform: translate(-50%, -50%) scale(0.75);
@@ -1078,3 +1138,7 @@ textarea::-webkit-scrollbar-thumb {
   }
 }
 
+/*.cursor,
+.btn-menu{
+  display: none;
+}*/

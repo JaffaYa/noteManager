@@ -97,7 +97,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 400 : 400; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 500 : 500; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -105,7 +105,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 	let backButtonPermision = true;
-	let backButtonDelay = verticalScreen ? 1000 : 500;
+	let backButtonDelay = verticalScreen ? 700 : 700;
 
 
 	window.simulationResize = function (){};
@@ -139,9 +139,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var jsonVersion = Math.randomDec(0, 999, 3);
 
 	if (!!jsonName) {
-		window.localStorage.setItem('jn', jsonName);
+		window.localStorage.setItem('@', jsonName);
 	} else {
-		jsonName = window.localStorage.getItem('jn');
+		jsonName = window.localStorage.getItem('@');
 	}
 	
 	// if no query params and no store (default value)
@@ -2626,7 +2626,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 								// return 0;
 							}else{
 								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.8;
+								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;
 								// return 0;
 							}
 
