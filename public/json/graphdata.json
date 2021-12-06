@@ -13,7 +13,6 @@
       "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [1],
       "order": 201,
-      "iframe": "https://learn.javascript.ru/js-animation",
       "goTo": 100
     },
     {
