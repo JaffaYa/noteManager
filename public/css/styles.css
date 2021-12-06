@@ -347,9 +347,8 @@ body {
 }
 .hider .node-btn{
   position: absolute;
-  left: 10%;
-  top: 50%;
-  transform: translateY(-50%) scale(0.75);
+  left: 35%;
+  transform: scale(0.65);
 }
 .hider .node-btn .c1,
 .hider .node-btn .c2{
@@ -434,19 +433,21 @@ body {
   right: -100%;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.75s ease-in-out 0s, right 0.75s ease-in-out 0s;
+  transition: opacity 0.75s ease-in-out 0s, right 0.6s cubic-bezier(.7,.1,.31,.9) 0s;
 }
 .page-show .popup.iframe,
 .menu-show .popup.menu{
   pointer-events: unset;
   right: 0;
   opacity: 1;
-  transition: opacity 0.75s ease-in-out 0s, right 0.75s ease-in-out 0.15s;
+  transition: opacity 0.75s ease-in-out 0s, right 0.6s cubic-bezier(.7,.1,.31,.9) 0.25s;
 }
 .hider{
   content: '';
   pointer-events: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -461,7 +462,7 @@ body {
   transition: 
   background-color 0.5s ease-in-out 0.25s,
   opacity 0.5s ease-in-out 0.35s,
-  width 0.5s ease-in-out 0s, 
+  width 0.5s cubic-bezier(.7,.1,.31,.9) 0s, 
   left 0s ease 7s;
 }
 .page-show .hider,
