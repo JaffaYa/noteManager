@@ -1,7 +1,7 @@
 /**
  * баги
  */
-// очень часто глючит кнопка назад. просто не работает и всё.
+// очень часто глючит кнопка назад. просто не работает и всё. - скорее всего время задержки на кнопку backButtonDelay? 
 
 /**
  * задачи
@@ -108,6 +108,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	let backButtonDelay = verticalScreen ? 700 : 700;
 
 	let animState = make_animationState();
+
+
+	//email send
+	var emailUserId = null;
+	var emailProvider = null;
+	var emailTemplate = null;
 
 
 	window.simulationResize = function (){};
@@ -328,7 +334,12 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		svgLinks = buildLinks(model.links);
 		htmlNodes = buildNodes(model.nodesToDisplay);
 
-		simulation
+		//emailing init
+		if(emailUserId){
+			emailjs.init(emailUserId);
+		}else{
+			console.error('Incorrect user id.');
+		}
 
 		firstScrean = false;
 		model.stats.restart();
@@ -446,16 +457,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
 			//тут формируется {{{shortUserData}}}
-			let shortUserDataText = model.path.fullActivePath.get().map(d => {
+			let shortUserDataText = '';
+			model.path.fullActivePath.get().map(d => {
 				let div = document.createElement('div');
 				div.innerHTML = d.label;
 				return model.userData.getElementText(div);
-			}).join('<br>');
+			}).forEach( (item, i) => {
+				if(!(i % 2)){
+					shortUserDataText += '<b>'+item+'</b><br>';
+				}else{
+					shortUserDataText += item+'<br><br>';
+				}
+			});
+			//.join('<br>');
 
 			//тут формируется {{{userData}}}
 			//запрашиваем массив всех действий пользователя и склеиваем его в строку
 			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
 		
+			// console.log(shortUserDataText);
 			sendMail(nodeInputsText, shortUserDataText, userDataText);
 		}
 
@@ -635,7 +655,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				if( (Date.now() - startTime) > timerLimiter ){
 					animationFlag = false;
 				}
-				
+
 				return animationFlag;
 			}
 		};
@@ -1085,12 +1105,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			userData: userDataText
 		};
 
-		emailjs.send('mail_variant_name', 'template_ih7ziro', templateParams)
-		.then(function(response) {
-			console.log('SUCCESS!', response.status, response.text);
-		}, function(error) {
-			console.log('FAILED...', error);
-		});
+		if(emailProvider && emailTemplate){
+			emailjs.send(emailProvider, emailTemplate, templateParams)
+			.then(function(response) {
+				console.log('SUCCESS!', response.status, response.text);
+			}, function(error) {
+				console.log('FAILED...', error);
+			});
+		}else{
+			console.error('Can\'t send email.');
+			console.log('emailProvider - '+emailProvider);
+			console.log('emailTemplate - '+emailTemplate);
+		}
 	}
 	
 	//prepare data to simulation
@@ -1192,6 +1218,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function makeNodeTree(jsonData){
 			var nodes = [];
+			emailUserId = jsonData.emailUserId || undefined;
+			emailProvider = jsonData.emailProvider || undefined;
+			emailTemplate = jsonData.emailTemplate || undefined;
 			myThis.nodes = nodes = jsonData.nodes;
 			//добавить номализацию строк
 			for (var i = 0; i < nodes.length; i++) {
