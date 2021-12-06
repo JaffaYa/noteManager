@@ -1619,8 +1619,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function isSlide(node){
 			if(node.functional) return true;
 			let hasChild = node.children.length > 0
-			let hasgoTo = node.goTo !== false;
-			return hasChild || hasgoTo;
+			let hasgoTo = node.goTo !== undefined;
+			return (hasChild || hasgoTo) && !node.iframe;
 		}
 
 		function Admin(admin = false){
