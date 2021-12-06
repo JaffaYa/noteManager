@@ -498,7 +498,7 @@ body {
 .page-show #my_data,
 .menu-show #my_data{
   opacity: 0;
-  transform: scale(1.1);
+  transform: scale(0.85);
   transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
   transition-delay: 0s;
 }
