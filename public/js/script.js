@@ -107,6 +107,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	let backButtonPermision = true;
 	let backButtonDelay = verticalScreen ? 700 : 700;
 
+	let animState = make_animationState();
+
 
 	window.simulationResize = function (){};
 
@@ -171,12 +173,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		if(id){
 			let currActivePath = model.getActivePath();
+			let animationRun = animState.get();
 
 			//рефакторинг:
 			//переделать backButton	и forwardButton на 
 			//goto node
 
-			if(backButtonPermision){
+			if(backButtonPermision && !animationRun){
 				backButtonPermision = false;
 
 				if(model.isInArrayId(id,currActivePath)){
@@ -218,7 +221,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			let time = 0;
 
-			simulation.alphaTarget(0.5).restart()
+			simulation.alphaTarget(0.5).restart();
+			
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
@@ -274,7 +278,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}, time+500, simulation);
 			}
 
-
+			animState.start();
 			model.stats.restart();
 		}
 
@@ -328,8 +332,10 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		firstScrean = false;
 		model.stats.restart();
+		animState.start();
 
 		simulation.on("tick", simulationTick);
+		simulation.on("end", animationEnd);
 	}
 
 
@@ -380,7 +386,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					if(backButtonPermision){
+					let animationRun = animState.get();
+
+					if(backButtonPermision && !animationRun){
 						//рефакторинг:
 						//переделать логику кнопки назад
 						//что бы она только устанавливала ноду
@@ -568,7 +576,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// }, time+500, simulation);
 
 
-
+		animState.start();
 		model.stats.restart();
 
 		return;
@@ -589,7 +597,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	simulation.alphaDecay(0.0228).restart();
 		// }
 
-		// console.log('alpha:'+simulation.alpha());
+		// console.log('alpha:'+Math.round( simulation.alpha()*10000)/10000   );
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -606,6 +614,36 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
+	}
+
+	function make_animationState(){
+		let animationFlag = false;
+		//limit time of animation state
+		let timerLimiter = 1000; //not longer that 1s
+
+		let startTime;
+
+		return {
+			start: function(){
+				startTime = Date.now();
+				return animationFlag = true;
+			},
+			stop: function(){
+				return animationFlag = false;
+			},
+			get: function(){
+				if( (Date.now() - startTime) > timerLimiter ){
+					animationFlag = false;
+				}
+				
+				return animationFlag;
+			}
+		};
+	}
+
+	function animationEnd(e){
+		animState.stop();
+		// console.log(animState.get());
 	}
 
 	function deleteDelayCallback(model){
@@ -2823,6 +2861,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			simulation.alpha(1).restart();
 			model.stats.restart();
+			animState.start();
 		}
 
 		function getLinkWidth(){
