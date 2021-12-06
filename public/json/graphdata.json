@@ -121,7 +121,7 @@
     {
       "id": "8",
       "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"100\" name=\"specialization\" mailname=\"Ниша и Специлизация\" placeholder=\"кликни тут и пиши\"></textarea>",
-      "parents": [6,7,11,12,14,15]
+      "parents": [51]
     },
     {
       "id": "9",
@@ -344,7 +344,7 @@
     },
     {
       "id": "406",
-      "label": "скажешь <br>номер <br>телефона <br>для связи??",
+      "label": "скажешь <br>номер <br>телефона <br>для связи?",
       "parents": [405]
     },
     {
@@ -423,6 +423,7 @@
       "label": "дальше",
       "parents": [504],
       "goTo" : 68,
+      "sendMail": true,
       "required": 504
     },
     {
