@@ -13,14 +13,13 @@
       "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [1],
       "order": 201,
-      "goTo": 100
+      "iframe": "https://variant.name/"
     },
     {
       "id": "201",
       "label": "кто <br>ты?",
       "parents": [1],
-      "order": 202,
-      "goTo": 203
+      "iframe": "https://project.innovatorclub.ru/"
     },
     {
       "id": "203",

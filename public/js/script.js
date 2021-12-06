@@ -1,17 +1,4 @@
-/**
- * баги
- */
-// очень часто глючит кнопка назад. просто не работает и всё. - скорее всего время задержки на кнопку backButtonDelay? 
-
-/**
- * задачи
- */ 
-
-
-
-
-
-document.addEventListener( "DOMContentLoaded", function( event ) {
+document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 	var appleDevices = ['iPhone'];
     if (appleDevices.indexOf(navigator.platform) > -1) {
