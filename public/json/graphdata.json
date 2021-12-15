@@ -12,8 +12,7 @@
       "id": "200",
       "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
       "parents": [1],
-      "order": 201,
-      "iframe": "https://variant.name/"
+      "order": 201
     },
     {
       "id": "201",
