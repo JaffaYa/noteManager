@@ -134,14 +134,14 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	var jsonVersion = Math.randomDec(0, 999, 3);
 
 	if (!!jsonName) {
-		window.localStorage.setItem('@', jsonName);
+		window.localStorage.setItem('jn', jsonName);
 	} else {
-		jsonName = window.localStorage.getItem('@');
+		jsonName = window.localStorage.getItem('jn');
 	}
 	
 	// if no query params and no store (default value)
 	if (!jsonName) {
-		jsonName = 'graphdata';
+		jsonName = 'v-1';
 	}
 
 	console.log(`./json/${jsonName}.json?v=${jsonVersion}`);
@@ -362,7 +362,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 		//goToUrl
 		if(d.goToUrl){
-			window.location.href = d.goToUrl;
+			// window.location.href = d.goToUrl;
+			window.open(d.goToUrl);
 			return;
 		}
 

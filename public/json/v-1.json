@@ -1,0 +1,806 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "здравствуй <br>человек",
+      "parents": [0]
+    },
+    {
+      "id": "101",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>сказать <br>привет",
+      "parents": [1],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "102",
+      "label": "кто&nbsp;ты?",
+      "parents": [1],
+      "order": 2,
+      "goTo": 103
+    },
+    {
+      "id": "103",
+      "label": "я&nbsp;искусст<br>венный <br>разум",
+      "parents": [102]
+    },
+    {
+      "id": "104",
+      "label": "что&nbsp;ты <br>умеешь?",
+      "parents": [103],
+      "order": 1,
+      "goTo": 106
+    },
+    {
+      "id": "105",
+      "label": "как&nbsp;твоё <br>имя?",
+      "parents": [103],
+      "order": 2,
+      "goTo": 109
+    },
+    {
+      "id": "106",
+      "label": "я&nbsp;создан <br>чтобы&nbsp;дать <br>тебе&nbsp;пользу",
+      "parents": [104]
+    },
+    {
+      "id": "107",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [106],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "108",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [106],
+      "order": 2,
+      "goTo": 200
+    },
+    {
+      "id": "109",
+      "label": "моё&nbsp;имя <br>variant<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [105]
+    },
+    {
+      "id": "110",
+      "label": "сказать <br>привет<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [109],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "111",
+      "label": "что&nbsp;ты <br>умеешь?",
+      "parents": [109],
+      "order": 2,
+      "goTo": 106
+    },
+    {
+      "id": "200",
+      "label": "для&nbsp;тебя <br>у&nbsp;меня <br>есть",
+      "parents": [110,101,107,108]
+    },
+    {
+      "id": "201",
+      "label": "классные <br>продукты",
+      "parents": [200],
+      "order": 1,
+      "goTo": 203
+    },
+    {
+      "id": "202",
+      "label": "инструменты <br>для&nbsp;бизнеса<br>и&nbsp;человека",
+      "parents": [200],
+      "order": 2,
+      "goTo": 205
+    },
+    {
+      "id": "203",
+      "label": "классные <br>продукты",
+      "parents": [201]
+    },
+    {
+      "id": "204",
+      "label": "для&nbsp;тела",
+      "parents": [203],
+      "iframe": "pages/products/all/"
+    },
+    {
+      "id": "205",
+      "label": "инструменты <br>для&nbsp;бизнеса <br> и&nbsp;человека",
+      "parents": [202]
+    },
+    {
+      "id": "300",
+      "label": "конструктор <br>вариантов",
+      "parents": [205],
+      "goTo": 301
+    },
+    {
+      "id": "400",
+      "label": "живая <br>визитка",
+      "parents": [205],
+      "goTo": 401
+    },
+
+    {
+      "id": "401",
+      "label": "живая <br>визитка",
+      "parents": [400]
+    },
+    {
+      "id": "402",
+      "label": "в&nbsp;чём <br>польза?",
+      "parents": [401],
+      "order": 1
+    },
+    {
+      "id": "403",
+      "label": "покажи <br>пример",
+      "parents": [401],
+      "order": 2
+    },
+    {
+      "id": "404",
+      "label": "хочу&nbsp;такую <br>штуку",
+      "parents": [401],
+      "order": 3,
+      "goTo": 343
+    },
+
+
+
+    {
+      "id": "301",
+      "label": "конструктор <br>вариантов",
+      "parents": [300]
+    },
+    {
+      "id": "302",
+      "label": "в&nbsp;чём <br>польза?",
+      "parents": [301],
+      "order": 1,
+      "goTo": 3002
+    },
+    {
+      "id": "303",
+      "label": "покажи <br>пример",
+      "parents": [301],
+      "order": 2,
+      "goTo": 4000
+    },
+    {
+      "id": "304",
+      "label": "хочу&nbsp;такую <br>штуку",
+      "parents": [301],
+      "order": 3,
+      "goTo": 343
+    },
+    {
+      "id": "4000",
+      "label": "примеры <br>вариантов",
+      "parents": [303]
+    },
+    {
+      "id": "4001",
+      "label": "для&nbsp;курса <br>обучения",
+      "parents": [4000],
+      "order": 1,
+      "goToUrl": "/?node=1&jn=v-example-course"
+    },
+    {
+      "id": "4002",
+      "label": "про&nbsp;маркет<br>плейсы",
+      "parents": [4000],
+      "order": 2,
+      "goToUrl": "/?node=1&jn=v-marketplace"
+    },
+
+
+
+
+    {
+      "id": "3002",
+      "label": "из&nbsp;меня <br>можно <br>сделать",
+      "parents": [302]
+    },
+    {
+      "id": "3003",
+      "label": "визульный <br>чат-бот",
+      "parents": [3002],
+      "order": 1,
+      "goTo": 3006
+    },
+    {
+      "id": "3004",
+      "label": "опросы <br>тесты&nbsp;и&nbsp;квизы",
+      "parents": [3002],
+      "order": 2,
+      "goTo": 3006
+    },
+    {
+      "id": "3005",
+      "label": "презентации <br>и&nbsp;инструкции",
+      "order": 3,
+      "parents": [3002],
+      "goTo": 3006
+    },
+    {
+      "id": "3006",
+      "label": "я&nbsp;могу&nbsp;быть <br>полезен <br>в&nbsp;любом <br>варианте",
+      "parents": [3003,3004,3005]
+    },
+    {
+      "id": "3007",
+      "label": "чем <br>например?",
+      "parents": [3006],
+      "goTo" : 3009
+    },
+
+
+
+    {
+      "id": "3009",
+      "label": "я&nbsp;привлекаю <br>внимание <br>человека",
+      "parents": [3007]
+    },
+    {
+      "id": "3010",
+      "label": "как&nbsp;ты <br>это&nbsp;делаешь?",
+      "parents": [3009],
+      "goTo": 305
+    },
+    {
+      "id": "305",
+      "label": "я&nbsp;яркий <br>заметный <br>живой&nbsp;и <br>необычный",
+      "parents": [3010]
+    },
+    {
+      "id": "3011",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [305],
+      "goTo" : 307
+    },
+    {
+      "id": "3012",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [305],
+      "goTo" : 307
+    },
+
+
+
+    {
+      "id": "307",
+      "label": "я&nbsp;направляю <br>внимание <br>человека",
+      "parents": [3011,3012]
+    },
+    {
+      "id": "308",
+      "label": "по&nbsp;одному <br>варианту",
+      "parents": [307],
+      "goTo": 310
+    },
+    {
+      "id": "309",
+      "label": "или&nbsp;по <br>другому",
+      "parents": [307],
+      "goTo": 312
+    },
+    {
+      "id": "310",
+      "label": "ты&nbsp;идёшь <br>по&nbsp;первому <br>пути",
+      "parents": [308]
+    },
+    {
+      "id": "311",
+      "label": "дальше",
+      "parents": [310],
+      "goTo": 314
+    },
+    {
+      "id": "312",
+      "label": "ты&nbsp;идёшь <br>по&nbsp;второму <br>пути",
+      "parents": [309]
+    },
+    {
+      "id": "313",
+      "label": "дальше",
+      "parents": [312],
+      "goTo": 314
+    },
+    {
+      "id": "314",
+      "label": "а&nbsp;тут <br>пути&nbsp;снова <br>соединились",
+      "parents": [311,313]
+    },
+    {
+      "id": "3410",
+      "label": "для&nbsp;чего <br>это&nbsp;нужно?",
+      "parents": [314],
+      "goTo": 3411
+    },
+    {
+      "id": "3411",
+      "label": "так&nbsp;я&nbsp;даю&nbsp;<br>человеку <br>нужную <br>информацию <br>на&nbsp;основе",
+      "parents": [3410]
+    },
+    {
+      "id": "3412",
+      "label": "его&nbsp;желаний",
+      "parents": [3411],
+      "goTo": 316
+    },
+    {
+      "id": "3413",
+      "label": "его&nbsp;вопросов",
+      "parents": [3411],
+      "goTo": 316
+    },
+    {
+      "id": "3414",
+      "label": "и&nbsp;его <br>возражений",
+      "parents": [3411],
+      "goTo": 316
+    },
+    {
+      "id": "316",
+      "label": "я&nbsp;задаю <br>человеку <br>вопросы",
+      "parents": [311,313]
+    },
+    {
+      "id": "317",
+      "label": "например?",
+      "parents": [316],
+      "goTo": 322
+    },
+    {
+      "id": "322",
+      "label": "например <br>как&nbsp;твоё имя <br>человек?",
+      "parents": [317]
+    },
+    {
+      "id": "323",
+      "label": "сказать",
+      "parents": [322],
+      "goTo": 324
+    },
+    {
+      "id": "3231",
+      "label": "не&nbsp;говорить",
+      "parents": [322],
+      "goTo": 3232
+    },
+    {
+      "id": "3232",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>твоё&nbsp;право <br>человек",
+      "parents": [3231]
+    },
+    {
+      "id": "3233",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [3232],
+      "goTo" : 800
+    },
+    {
+      "id": "3234",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [3232],
+      "goTo" : 800
+    },
+
+
+
+    {
+      "id": "324",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"20\" name=\"name\" mailname=\"Имя\" placeholder=\"кликни тут и напиши имя\"></textarea>",
+      "parents": [323]
+    },
+    {
+      "id": "325",
+      "label": "дальше",
+      "parents": [324],
+      "required": 324,
+      "goTo": 800
+    },
+    {
+      "id": "800",
+      "label": "так&nbsp;я&nbsp;узнаю <br>человека <br>поближе",
+      "parents": [325]
+    },
+    {
+      "id": "801",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [800],
+      "goTo" : 318
+    },
+    {
+      "id": "802",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [800],
+      "goTo" : 318
+    },
+    {
+      "id": "318",
+      "label": "кто&nbsp;ты <br>человек?",
+      "parents": [801,802]
+    },
+    {
+      "id": "319",
+      "label": "маркетолог",
+      "parents": [318],
+      "order": 1,
+      "goTo": 333
+    },
+    {
+      "id": "320",
+      "label": "бизнесмен",
+      "parents": [318],
+      "order": 2,
+      "goTo": 334
+    },
+    {
+      "id": "321",
+      "label": "кто-то <br>другой",
+      "parents": [318],
+      "order": 3,
+      "goTo": 327
+    },
+    {
+      "id": "327",
+      "label": "скажешь <br>кто&nbsp;ты?",
+      "parents": [321]
+    },
+    {
+      "id": "328",
+      "label": "да",
+      "parents": [327],
+      "goTo": 330
+    },
+    {
+      "id": "329",
+      "label": "нет",
+      "parents": [327],
+      "goTo": 335
+    },
+    {
+      "id": "330",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"30\" name=\"specialization\" mailname=\"Специлизация\" placeholder=\"кликни тут и напиши твою специализацию\"></textarea>",
+      "parents": [328]
+    },
+    {
+      "id": "331",
+      "label": "дальше",
+      "parents": [330],
+      "required": 330,
+      "goTo": 332
+    },
+    {
+      "id": "332",
+      "label": "ты&nbsp;классный <br>{specialization} <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [331]
+    },
+    {
+      "id": "333",
+      "label": "ты&nbsp;классный <br>маркетолог <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [319]
+    },
+    {
+      "id": "334",
+      "label": "ты&nbsp;классный <br>бизнесмен <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [320]
+    },
+    {
+      "id": "335",
+      "label": "всё&nbsp;равно <br>ты&nbsp;классный <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [329]
+    },
+    {
+      "id": "336",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [332,333,334,335],
+      "goTo" : 338
+    },
+    {
+      "id": "337",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [332,333,334,335],
+      "goTo" : 338
+    },
+    {
+      "id": "338",
+      "label": "теперь <br>я&nbsp;знаю <br>о&nbsp;человеке <br>немного <br>больше",
+      "parents": [336,337]
+    },
+    {
+      "id": "339",
+      "label": "ок <br>что&nbsp;дальше?",
+      "parents": [338],
+      "goTo" : 340
+    },
+    {
+      "id": "340",
+      "label": "попрошу <br>человека <br>оставить <br>контакты <br>для&nbsp;связи",
+      "parents": [339]
+    },
+    {
+      "id": "341",
+      "label": "а&nbsp;что&nbsp;потом?",
+      "parents": [340],
+      "goTo" : 346
+    },
+    {
+      "id": "346",
+      "label": "потом <br>сохраняю <br>весь&nbsp;путь <br>человека <br>по&nbsp;вариантам",
+      "parents": [341]
+    },
+    {
+      "id": "347",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [346],
+      "goTo" : 349
+    },
+    {
+      "id": "348",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [346],
+      "goTo" : 349
+    },
+    {
+      "id": "349",
+      "label": "сохраняю <br>все&nbsp;данные <br>которые <br>человек <br>указал",
+      "parents": [347,348]
+    },    
+    {
+      "id": "350",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [349],
+      "goTo" : 352
+    },
+    {
+      "id": "351",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [349],
+      "goTo" : 352
+    },
+    {
+      "id": "352",
+      "label": "и&nbsp;отправляю <br>всю&nbsp;эту&nbspинфу <br>на&nbsp;почту <br>в&nbsp;виде&nbsp;заявки",
+      "parents": [350,351]
+    },    
+    {
+      "id": "353",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>лайк",
+      "parents": [352],
+      "goTo" : 355
+    },
+    {
+      "id": "354",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>диз",
+      "parents": [352],
+      "goTo" : 355
+    },
+    {
+      "id": "355",
+      "label": "что&nbsp;скажешь <br>человек?",
+      "parents": [353,354]
+    },    
+    {
+      "id": "356",
+      "label": "хочу&nbsp;такую <br>штуку",
+      "parents": [355],
+      "order": 1,
+      "goTo" : 343
+    },
+    {
+      "id": "357",
+      "label": "у&nbsp;меня <br>есть&nbsp;вопросы",
+      "parents": [355],
+      "order": 2,
+      "goTo" : 700
+    },
+    {
+      "id": "358",
+      "label": "мне&nbsp;это<br>не&nbsp;интересно",
+      "parents": [355],
+      "order": 3,
+      "goTo" : 900
+    },
+    {
+      "id": "700",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"question\" mailname=\"Вопрос\" placeholder=\"кликни тут и напиши вопрос\"></textarea>",
+      "parents": [357]
+    },
+    {
+      "id": "701",
+      "label": "дальше",
+      "parents": [700],
+      "goTo" : 343,
+      "required": 700
+    },
+    {
+      "id": "343",
+      "label": "оставишь <br>контакты <br>для&nbsp;связи?",
+      "parents": [304,404,347,701]
+    },
+    {
+      "id": "344",
+      "label": "да",
+      "parents": [343],
+      "goTo" : 606
+    },
+    {
+      "id": "345",
+      "label": "нет",
+      "parents": [343],
+      "goTo" : 360
+    },
+    {
+      "id": "360",
+      "label": "тогда&nbsp;как <br>я&nbsp;свяжусь <br>с&nbsp;тобой?",
+      "parents": [345]
+    },
+    {
+      "id": "361",
+      "label": "я&nbsp;сам <br>свяжусь <br>с&nbsp;тобой",
+      "parents": [360],
+      "sendMail": true,
+      "goTo" : 362
+    },
+    {
+      "id": "3611",
+      "label": "никак",
+      "parents": [360],
+      "sendMail": true,
+      "goTo" : 905
+    },
+    {
+      "id": "362",
+      "label": "ок <br>пиши&nbsp;мне <br>я&nbsp;на&nbsp;связи",
+      "parents": [361]
+    },
+    {
+      "id": "363",
+      "label": "на&nbsp;whatsapp",
+      "parents": [362],
+      "goToUrl" : "https://wa.me/79282635777?text=здравствуй вариант я хочу такую штуку"
+    },
+    {
+      "id": "364",
+      "label": "в&nbsp;telegram",
+      "parents": [362],
+      "goToUrl" : "https://t.me/variant_name"
+    },
+    {
+      "id": "606",
+      "label": "как&nbsp;с&nbsp;тобой <br>связаться?",
+      "parents": [344]
+    },
+    {
+      "id": "607",
+      "label": "по&nbsp;whatsapp",
+      "parents": [606],
+      "goTo" : 614
+    },
+    {
+      "id": "608",
+      "label": "в&nbsp;telegram",
+      "parents": [606],
+      "goTo" : 614
+    },
+    {
+      "id": "609",
+      "label": "напиши <br>на&nbsp;почту",
+      "parents": [606],
+      "goTo" : 610
+    },
+    {
+      "id": "610",
+      "label": "какой <br>твой&nbsp;email?",
+      "parents": [609]
+    },
+    {
+      "id": "611",
+      "label": "сказать",
+      "parents": [610],
+      "goTo" : 612
+    },
+    {
+      "id": "612",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и напиши email\"></textarea>",
+      "parents": [611]
+    },
+    {
+      "id": "613",
+      "label": "дальше",
+      "parents": [612],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 612
+    },
+    {
+      "id": "614",
+      "label": "а&nbsp;номер <br>телефона?",
+      "parents": [607,608,609]
+    },
+    {
+      "id": "615",
+      "label": "сказать",
+      "parents": [614],
+      "goTo" : 616
+    },
+    {
+      "id": "616",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"кликни тут и пиши номер\"></textarea>",
+      "parents": [615]
+    },
+    {
+      "id": "617",
+      "label": "дальше",
+      "parents": [616],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 616
+    },
+    {
+      "id": "621",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>я&nbsp;свяжусь <br>с&nbsp;тобой <br>скоро",
+      "parents": [613,617]
+    },
+    {
+      "id": "622",
+      "label": "вернуться <br>в&nbsp;начало",
+      "parents": [621],
+      "goToUrl": "/?node=1&jn=v-1"
+    },
+
+
+
+    {
+      "id": "900",
+      "label": "скажешь&nbsp;что <br>не&nbsp;нравится?",
+      "parents": [358]
+    },
+    {
+      "id": "901",
+      "label": "да",
+      "parents": [900],
+      "goTo" : 903
+    },
+    {
+      "id": "902",
+      "label": "нет",
+      "parents": [900],
+      "sendMail": true,
+      "goTo" : 905
+    },
+    {
+      "id": "903",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"comment\" mailname=\"Замечания\" placeholder=\"кликни тут и напиши твои замечания\"></textarea>",
+      "parents": [357]
+    },
+    {
+      "id": "904",
+      "label": "дальше",
+      "parents": [903],
+      "goTo" : 343,
+      "required": 903
+    },
+    {
+      "id": "905",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>будь <br>счастлив <br>человек",
+      "parents": [902,3611]
+    },
+    {
+      "id": "906",
+      "label": "вернуться <br>в начало",
+      "parents": [905],
+      "goToUrl": "https://variant.name/?node=1&jn=v-1"
+    }
+  ]
+}
+

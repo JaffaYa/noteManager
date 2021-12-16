@@ -17,25 +17,25 @@
     },
     {
       "id": "201",
-      "label": "кто <br>ты?",
+      "label": "кто&nbsp;ты?",
       "parents": [1],
       "order": 202,
       "goTo": 203
     },
     {
       "id": "203",
-      "label": "я искусст<br>венный <br>разум",
+      "label": "я&nbsp;искусст<br>венный <br>разум",
       "parents": [201]
     },
     {
       "id": "204",
-      "label": "что ты <br>умеешь?",
+      "label": "что&nbsp;ты <br>умеешь?",
       "parents": [203],
       "goTo": 205
     },
     {
       "id": "205",
-      "label": "я создан <br>чтобы дать <br>тебе пользу",
+      "label": "я&nbsp;создан <br>чтобы&nbsp;дать <br>тебе&nbsp;пользу",
       "parents": [204]
     },
     {
@@ -52,13 +52,13 @@
     },
     {
       "id": "208",
-      "label": "как твоё <br>имя?",
+      "label": "как&nbsp;твоё <br>имя?",
       "parents": [203],
       "goTo": 209
     },
     {
       "id": "209",
-      "label": "моё имя <br>variant<div class='icon'><img src='img/icons/heart.png'></div>",
+      "label": "моё&nbsp;имя <br>variant<div class='icon'><img src='img/icons/heart.png'></div>",
       "parents": [200]
     },
     {
@@ -69,7 +69,7 @@
     },
     {
       "id": "100",
-      "label": "кто ты <br>человек?",
+      "label": "кто&nbsp;ты <br>человек?",
       "parents": [200]
     },
     {
@@ -81,7 +81,7 @@
     },
     {
       "id": "102",
-      "label": "предприниматель",
+      "label": "предприни<br>матель",
       "parents": [100],
       "order": 102,
       "goTo": 10
@@ -95,7 +95,7 @@
     },
     {
       "id": "5",
-      "label": "как давно <br>ты на <br>фрилансе?",
+      "label": "как&nbsp;давно <br>ты&nbsp;на <br>фрилансе?",
       "parents": [101]
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "id": "50",
-      "label": "в какой нише <br>и какая у тебя <br>специали<br>зация?",
+      "label": "в&nbsp;какой&nbsp;нише <br>и&nbsp;какая&nbsp;у&nbsp;тебя <br>специали<br>зация?",
       "parents": [6,7,11,12,14,15]
     },
     {
@@ -134,7 +134,7 @@
     },
     {
       "id": "10",
-      "label": "как давно ты <br>в бизнесе?",
+      "label": "как&nbsp;давно&nbsp;ты <br>в&nbsp;бизнесе?",
       "parents": [102]
     },
     {
@@ -151,7 +151,7 @@
     },
     {
       "id": "13",
-      "label": "как давно <br>ты этим <br>занимаешься?",
+      "label": "как&nbsp;давно <br>ты&nbsp;этим <br>занимаешься?",
       "parents": [4]
     },
     {
@@ -168,53 +168,53 @@
     },
     {
       "id": "16",
-      "label": "сколько <br>ты сейчас <br> зараба<br>тываешь?",
+      "label": "сколько <br>ты&nbsp;сейчас <br> зараба<br>тываешь?",
       "parents": [9]
     },
     {
       "id": "17",
-      "label": "до <br>50 000 ₽",
+      "label": "до <br>50&nbsp;000&nbsp;₽",
       "parents": [16],
       "goTo": 20
     },
     {
       "id": "18",
-      "label": "до <br>150 000 ₽",
+      "label": "до <br>150&nbsp;000&nbsp;₽",
       "parents": [16],
       "goTo": 20
     },
     {
       "id": "19",
-      "label": "больше <br>200 000 ₽",
+      "label": "больше <br>200&nbsp;000&nbsp;₽",
       "parents": [16],
       "goTo": 20
     },
     {
       "id": "20",
-      "label": "сколько ты <br>хочешь <br>зарабатывать <br>в ближайшие <br>3 месяца?",
+      "label": "сколько&nbsp;ты <br>хочешь <br>зарабатывать <br>в&nbsp;ближайшие <br>3&nbsp;месяца?",
       "parents": [17,18,19]
     }, 
     {
       "id": "21",
-      "label": "до <br>100 000 ₽",
+      "label": "до <br>100&nbsp;000&nbsp;₽",
       "parents": [20],
       "goTo": 24
     },
     {
       "id": "22",
-      "label": "до <br>300 000 ₽",
+      "label": "до <br>300&nbsp;000&nbsp;₽",
       "parents": [20],
       "goTo": 24
     },
     {
       "id": "23",
-      "label": "больше <br>1 000 000 ₽",
+      "label": "больше <br>1&nbsp;000&nbsp;000&nbsp;₽",
       "parents": [20],
       "goTo": 24
     },
     {
       "id": "24",
-      "label": "почему <br>у тебя это <br>может не <br>получиться?",
+      "label": "почему <br>у&nbsp;тебя&nbsp;это <br>может&nbsp;не <br>получиться?",
       "parents": [21,22,23]
     },
     {
@@ -225,19 +225,19 @@
     },
     {
       "id": "26",
-      "label": "нет клиентов",
+      "label": "нет&nbsp;клиентов",
       "parents": [24],
       "goTo": 28
     },
     {
       "id": "27",
-      "label": "мало опыта",
+      "label": "мало&nbsp;опыта",
       "parents": [24],
       "goTo": 28
     },
     {
       "id": "28",
-      "label": "верь в себя <br>человек всё <br>получится",
+      "label": "верь&nbsp;в&nbsp;себя <br>человек&nbsp;всё <br>получится",
       "parents": [25,26,27]
     },
     {
@@ -254,7 +254,7 @@
     }, 
     {
       "id": "35",
-      "label": "я хочу <br>предложить <br>тебе курс <br>обучения",
+      "label": "я&nbsp;хочу <br>предложить <br>тебе&nbsp;курс <br>обучения",
       "parents": [29,34]
     },
     {
@@ -271,7 +271,7 @@
     },
     {
       "id": "38",
-      "label": "как твоё <br>имя <br>человек?",
+      "label": "как&nbsp;твоё <br>имя <br>человек?",
       "parents": [36,37]
     },
     {
@@ -294,36 +294,36 @@
     },
     {
       "id": "60",
-      "label": "как с тобой <br>связаться?",
+      "label": "как&nbsp;с&nbsp;тобой <br>связаться?",
       "parents": [41]
     },
     {
       "id": "61",
-      "label": "позвони",
+      "label": "позвони&nbsp;мне",
       "parents": [60],
       "goTo" : 64
     },
     {
       "id": "62",
-      "label": "по whatsapp",
+      "label": "по&nbsp;whatsapp",
       "parents": [60],
       "goTo" : 64
     },
     {
       "id": "63",
-      "label": "в telegram",
+      "label": "в&nbsp;telegram",
       "parents": [60],
       "goTo" : 64
     },
     {
       "id": "401",
-      "label": "напиши <br>на почту",
+      "label": "напиши <br>на&nbsp;почту",
       "parents": [60],
       "goTo" : 402
     },
     {
       "id": "402",
-      "label": "какой  <br>твой email?",
+      "label": "какой <br>твой&nbsp;email?",
       "parents": [401]
     },
     {
@@ -347,7 +347,7 @@
     },
     {
       "id": "406",
-      "label": "скажешь <br>номер <br>телефона <br>для связи?",
+      "label": "скажешь <br>номер <br>телефона <br>для&nbsp;связи?",
       "parents": [405]
     },
     {
@@ -377,7 +377,7 @@
     },
     {
       "id": "64",
-      "label": "а номер <br>телефона?",
+      "label": "а&nbsp;номер <br>телефона?",
       "parents": [61,62,63]
     },
     {
@@ -400,7 +400,7 @@
     },
     {
       "id": "501",
-      "label": "скажешь <br>твой <br>email <br>для связи?",
+      "label": "скажешь <br>твой <br>email <br>для&nbsp;связи?",
       "parents": [405]
     },
     {
@@ -431,7 +431,7 @@
     },
     {
       "id": "68",
-      "label": "ты классный <br>человек <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "label": "ты&nbsp;классный <br>человек <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
       "parents": [67]
     },
     {
@@ -448,12 +448,12 @@
     },
     {
       "id": "71",
-      "label": "я свяжусь <br>с тобой <br>скоро",
+      "label": "я&nbsp;свяжусь <br>с&nbsp;тобой <br>скоро",
       "parents": [69,70]
     },
     {
       "id": "72",
-      "label": "вернуться <br>в начало",
+      "label": "вернуться <br>в&nbsp;начало",
       "parents": [71],
       "goTo" : 1
     }

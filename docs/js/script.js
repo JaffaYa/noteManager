@@ -1,17 +1,4 @@
-/**
- * баги
- */
-// очень часто глючит кнопка назад. просто не работает и всё.
-
-/**
- * задачи
- */ 
-
-
-
-
-
-document.addEventListener( "DOMContentLoaded", function( event ) {
+document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 	var appleDevices = ['iPhone'];
     if (appleDevices.indexOf(navigator.platform) > -1) {
@@ -107,6 +94,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	let backButtonPermision = true;
 	let backButtonDelay = verticalScreen ? 700 : 700;
 
+	let animState = make_animationState();
+
+
+	//email send
+	var emailUserId = null;
+	var emailProvider = null;
+	var emailTemplate = null;
+
 
 	window.simulationResize = function (){};
 
@@ -139,14 +134,14 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 	var jsonVersion = Math.randomDec(0, 999, 3);
 
 	if (!!jsonName) {
-		window.localStorage.setItem('@', jsonName);
+		window.localStorage.setItem('jn', jsonName);
 	} else {
-		jsonName = window.localStorage.getItem('@');
+		jsonName = window.localStorage.getItem('jn');
 	}
 	
 	// if no query params and no store (default value)
 	if (!jsonName) {
-		jsonName = 'graphdata';
+		jsonName = 'v-1';
 	}
 
 	console.log(`./json/${jsonName}.json?v=${jsonVersion}`);
@@ -171,12 +166,13 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		}
 		if(id){
 			let currActivePath = model.getActivePath();
+			let animationRun = animState.get();
 
 			//рефакторинг:
 			//переделать backButton	и forwardButton на 
 			//goto node
 
-			if(backButtonPermision){
+			if(backButtonPermision && !animationRun){
 				backButtonPermision = false;
 
 				if(model.isInArrayId(id,currActivePath)){
@@ -218,7 +214,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			let time = 0;
 
-			simulation.alphaTarget(0.5).restart()
+			simulation.alphaTarget(0.5).restart();
+			
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
@@ -274,7 +271,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 				}, time+500, simulation);
 			}
 
-
+			animState.start();
 			model.stats.restart();
 		}
 
@@ -324,12 +321,19 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		svgLinks = buildLinks(model.links);
 		htmlNodes = buildNodes(model.nodesToDisplay);
 
-		simulation
+		//emailing init
+		if(emailUserId){
+			emailjs.init(emailUserId);
+		}else{
+			console.error('Incorrect user id.');
+		}
 
 		firstScrean = false;
 		model.stats.restart();
+		animState.start();
 
 		simulation.on("tick", simulationTick);
+		simulation.on("end", animationEnd);
 	}
 
 
@@ -358,7 +362,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		//goToUrl
 		if(d.goToUrl){
-			window.location.href = d.goToUrl;
+			// window.location.href = d.goToUrl;
+			window.open(d.goToUrl);
 			return;
 		}
 
@@ -380,7 +385,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		if(d.functional){
 			switch (d.function){
 				case 'back':
-					if(backButtonPermision){
+					let animationRun = animState.get();
+
+					if(backButtonPermision && !animationRun){
 						//рефакторинг:
 						//переделать логику кнопки назад
 						//что бы она только устанавливала ноду
@@ -438,16 +445,25 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			}).join('<br>');//склеиваем масиив в 1 строчку с помощью <br>
 
 			//тут формируется {{{shortUserData}}}
-			let shortUserDataText = model.path.fullActivePath.get().map(d => {
+			let shortUserDataText = '';
+			model.path.fullActivePath.get().map(d => {
 				let div = document.createElement('div');
 				div.innerHTML = d.label;
 				return model.userData.getElementText(div);
-			}).join('<br>');
+			}).forEach( (item, i) => {
+				if(!(i % 2)){
+					shortUserDataText += '<b>'+item+'</b><br>';
+				}else{
+					shortUserDataText += item+'<br><br>';
+				}
+			});
+			//.join('<br>');
 
 			//тут формируется {{{userData}}}
 			//запрашиваем массив всех действий пользователя и склеиваем его в строку
 			let userDataText = model.userData.get().join('<br><br>');//склеиваем масиив в 1 строчку с помощью <br><br> 
 		
+			// console.log(shortUserDataText);
 			sendMail(nodeInputsText, shortUserDataText, userDataText);
 		}
 
@@ -568,7 +584,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// }, time+500, simulation);
 
 
-
+		animState.start();
 		model.stats.restart();
 
 		return;
@@ -589,7 +605,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		// 	simulation.alphaDecay(0.0228).restart();
 		// }
 
-		// console.log('alpha:'+simulation.alpha());
+		// console.log('alpha:'+Math.round( simulation.alpha()*10000)/10000   );
 		// console.log('alphaMin:'+simulation.alphaMin());
 		// console.log('alphaTarget:'+simulation.alphaTarget());
 		// console.log('alphaDecay:'+simulation.alphaDecay());
@@ -606,6 +622,36 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			return 'left:'+d.x+'px;top:'+d.y+'px;'
 		});
 
+	}
+
+	function make_animationState(){
+		let animationFlag = false;
+		//limit time of animation state
+		let timerLimiter = 1000; //not longer that 1s
+
+		let startTime;
+
+		return {
+			start: function(){
+				startTime = Date.now();
+				return animationFlag = true;
+			},
+			stop: function(){
+				return animationFlag = false;
+			},
+			get: function(){
+				if( (Date.now() - startTime) > timerLimiter ){
+					animationFlag = false;
+				}
+
+				return animationFlag;
+			}
+		};
+	}
+
+	function animationEnd(e){
+		animState.stop();
+		// console.log(animState.get());
 	}
 
 	function deleteDelayCallback(model){
@@ -1047,12 +1093,18 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 			userData: userDataText
 		};
 
-		emailjs.send('mail_variant_name', 'template_ih7ziro', templateParams)
-		.then(function(response) {
-			console.log('SUCCESS!', response.status, response.text);
-		}, function(error) {
-			console.log('FAILED...', error);
-		});
+		if(emailProvider && emailTemplate){
+			emailjs.send(emailProvider, emailTemplate, templateParams)
+			.then(function(response) {
+				console.log('SUCCESS!', response.status, response.text);
+			}, function(error) {
+				console.log('FAILED...', error);
+			});
+		}else{
+			console.error('Can\'t send email.');
+			console.log('emailProvider - '+emailProvider);
+			console.log('emailTemplate - '+emailTemplate);
+		}
 	}
 	
 	//prepare data to simulation
@@ -1154,6 +1206,9 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 		function makeNodeTree(jsonData){
 			var nodes = [];
+			emailUserId = jsonData.emailUserId || undefined;
+			emailProvider = jsonData.emailProvider || undefined;
+			emailTemplate = jsonData.emailTemplate || undefined;
 			myThis.nodes = nodes = jsonData.nodes;
 			//добавить номализацию строк
 			for (var i = 0; i < nodes.length; i++) {
@@ -1552,8 +1607,8 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 		function isSlide(node){
 			if(node.functional) return true;
 			let hasChild = node.children.length > 0
-			let hasgoTo = node.goTo !== false;
-			return hasChild || hasgoTo;
+			let hasgoTo = node.goTo !== undefined;
+			return (hasChild || hasgoTo) && !node.iframe;
 		}
 
 		function Admin(admin = false){
@@ -2823,6 +2878,7 @@ document.addEventListener( "DOMContentLoaded", function( event ) {
 
 			simulation.alpha(1).restart();
 			model.stats.restart();
+			animState.start();
 		}
 
 		function getLinkWidth(){

@@ -296,7 +296,7 @@ function throttle(func, time) {
   var saveThis = null;
   return function waper(x){
     if (permision){
-      func.call(this, x);//тут можна замінити на .apply(this,arguments)
+      func.call(this, x);// here can change to .apply(this,arguments)
       permision = false;
       setTimeout(function(){
         permision = true;

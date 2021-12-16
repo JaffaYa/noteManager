@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="%PUBLIC_URL%/css/common.css?v=817" rel="stylesheet">
-    <link href="%PUBLIC_URL%/css/styles.css?v=817" rel="stylesheet">
+    <link href="%PUBLIC_URL%/css/common.css?v=1001" rel="stylesheet">
+    <link href="%PUBLIC_URL%/css/styles.css?v=1001" rel="stylesheet">
     <title>my name is variant</title>
   </head>
-  <body>
+  <body class="main-body">
     
     <noscript>You need to enable JavaScript to run this app.</noscript>
     
@@ -26,31 +26,49 @@
         </div>
         <div class="paranja"></div>
         <div class="popup menu">
-            <a href="/?node=1">
-                <div class="node-btn show">
-                    <div class="v-content">в самое начало</div>
-                    <div class="c1"></div>
-                    <div class="c2"></div>
-                </div>
-            </a>
-            <a id="fullscreenButton">
-                <div class="node-btn show">
-                    <div class="v-content">на весь экран</div>
-                    <div class="c1"></div>
-                    <div class="c2"></div>
-                </div>                
-            </a>
-            <a class="v-active-btn">
-                <div class="node-btn show">
-                    <div class="v-content">залипнуть</div>
-                    <div class="c1"></div>
-                    <div class="c2"></div>
-                </div>                
-            </a>
+            <div class="menu-wrapper">
+                <a href="/?node=1">
+                    <div class="node-btn show">
+                        <div class="v-content">в&nbsp;самое&nbsp;начало</div>
+                        <div class="c1"></div>
+                        <div class="c2"></div>
+                    </div>
+                </a>
+                <a id="fullscreenButton">
+                    <div class="node-btn show">
+                        <div class="v-content">на&nbsp;весь&nbsp;экран</div>
+                        <div class="c1"></div>
+                        <div class="c2"></div>
+                    </div>                
+                </a>
+                <a class="v-active-btn">
+                    <div class="node-btn show">
+                        <div class="v-content">залипнуть</div>
+                        <div class="c1"></div>
+                        <div class="c2"></div>
+                    </div>                
+                </a>
+                <a href="/?node=203&jn=v-1" target="_blank">
+                    <div class="node-btn show">
+                        <div class="v-content">классные <br>продукты</div>
+                        <div class="c1"></div>
+                        <div class="c2"></div>
+                    </div>                
+                </a>
+                <a href="/?node=205&jn=v-1" target="_blank">
+                    <div class="node-btn show">
+                        <div class="v-content">инструменты <br>для&nbsp;бизнеса и&nbsp;<br>человека</div>
+                        <div class="c1"></div>
+                        <div class="c2"></div>
+                    </div>                
+                </a>
+            </div>
         </div>
 
         <div class="popup iframe">
-            <iframe src="" frameborder="0"></iframe>
+            <div class="iframe-wrapper">
+                <iframe src="" frameborder="0"></iframe>
+            </div>
         </div>
     </div>
 
@@ -58,7 +76,7 @@
 
   
     <div class="node-btn btn-functional active help-message hide">
-        <div class="v-content">нажми <br>на экран <br>и крути <br>туда сюда</div>
+        <div class="v-content">нажми <br>на&nbsp;экран <br>и&nbsp;крути <br>туда&nbsp;сюда</div>
         <div class="c1"></div>
         <div class="c2"></div>
     </div>
@@ -87,7 +105,7 @@
         })();
     </script>
 
-    <script src="js/script.js?v=817"></script>
+    <script src="js/script.js?v=1001"></script>
 
 
 
