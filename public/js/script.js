@@ -931,7 +931,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		//exit
 		d3links.exit()
 		.transition()
-		.delay(hideLinkDelay)
+		.delay(makehideLinkDelay)
 		// .delay(makelinkDelay())
 		.duration(hideLinkCssDuration)
 		.on('start', function(){
@@ -946,6 +946,15 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		return linksCont.selectAll("line");
 
 		
+		function makehideLinkDelay(){
+			//if slide not goTo hide link without delay
+			let node = model.activeNode;
+			if(node.goTo){
+				return hideLinkDelay;
+			}else{
+				return 0;
+			}
+		}
 		function makelinkDelay(){
 			var counter = 0;
 
@@ -1456,6 +1465,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 					if(parent == 0) return;
 					//node don't show
 					if(!isInArrayId(parent, nodes)) return;
+					if(!nodes[i].display && !oneLinkNode) return;
 
 					//only one link on slide
 					if(oneLinkNode){
@@ -1506,6 +1516,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		}
 
 		function setLeftDepth(node, goToNode) {
+			if(node.functional || goToNode.functional) return;
+
 			//click on the same node
 			if(node.id == goToNode.id) return;
 
@@ -1605,7 +1617,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		}
 
 		function isSlide(node){
-			if(node.functional) return true;
+			if(node.function == 'back') return true;
+			if(node.functional) return false;
 			let hasChild = node.children.length > 0
 			let hasgoTo = node.goTo !== undefined;
 			return (hasChild || hasgoTo) && !node.iframe;
@@ -2464,7 +2477,12 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			let scrollNext = true; 
 			let nodeDepth = d.leftDepth ? d.leftDepth : d.depth;
 
-			if(!self.scrollNext) activeDepth--;
+			if( !model.isSlide(activeNode) &&
+				childrens.length == 0 &&
+				!activeNode.functional
+				){
+				activeDepth--;
+			}
 
 			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
 			if(verticalScreen){
@@ -2677,12 +2695,16 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							// console.log('activeDepth',activeDepth);
 							if(d.active){
 								// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.75;
-								// return 0;
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.75;//в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно
 							}else{
-								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;
-								// return 0;
+								//ноды с одинаковой глубиной но не активная, толкать принудильтельно назад
+								if( (nodeDepth - activeDepth) == 0 ){
+									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
+									return (width/4 + width/2*(nodeDepth - activeDepth - 1)) - width/1.7;//в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно
+								}else{
+									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
+									return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;//в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно
+								}
 							}
 
 							break;
