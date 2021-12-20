@@ -242,7 +242,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				}, time+150, simulation);
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					simulation.velocityDecay(0.75) 
+					simulation.velocityDecay(0.45) 
 				}, time+500, simulation);
 			}else{
 				setTimeout(function(simulation){
@@ -255,7 +255,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				}, time+150, simulation);
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					simulation.velocityDecay(0.75) 
+					simulation.velocityDecay(0.45) 
 				}, time+500, simulation);
 			}
 
@@ -501,7 +501,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}, time+150, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.velocityDecay(0.95) 
+				simulation.velocityDecay(0.45) 
 			}, time+500, simulation);
 		}else{
 			setTimeout(function(simulation){
@@ -514,7 +514,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}, time+150, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.velocityDecay(0.95) 
+				simulation.velocityDecay(0.45) 
 			}, time+500, simulation);
 		}
 
@@ -2632,7 +2632,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.75 : 0.55;
+							return d.active ? 0.5 : 0.35;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
