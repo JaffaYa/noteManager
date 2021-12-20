@@ -81,21 +81,21 @@
     },
     {
       "id": "200",
-      "label": "для&nbsp;тебя <br>у&nbsp;меня <br>есть",
+      "label": "что&nbsp;ты <br>хочешь <br>человек?",
       "parents": [110,101,107,108]
     },
     {
       "id": "201",
       "label": "классные <br>продукты",
       "parents": [200],
-      "order": 1,
+      "order": 2,
       "goTo": 203
     },
     {
       "id": "202",
       "label": "инструменты <br>для&nbsp;бизнеса<br>и&nbsp;человека",
       "parents": [200],
-      "order": 2,
+      "order": 3,
       "goTo": 205
     },
     {
@@ -126,6 +126,33 @@
       "parents": [205],
       "goTo": 401
     },
+    {
+      "id": "7000",
+      "label": "QR&nbsp;визитка",
+      "parents": [205],
+      "goTo": 7001
+    },
+
+    {
+      "id": "7001",
+      "label": "QR&nbsp;визитка",
+      "parents": [7000]
+    },
+    {
+      "id": "7002",
+      "label": "покажи <br>пример",
+      "parents": [7001],
+      "order": 1,
+      "iframe" : "pages/qr/"
+    },
+    {
+      "id": "7003",
+      "label": "хочу&nbsp;такую <br>штуку",
+      "parents": [7001],
+      "order": 2,
+      "goTo": 343
+    },
+
 
     {
       "id": "401",
@@ -133,23 +160,92 @@
       "parents": [400]
     },
     {
-      "id": "402",
-      "label": "в&nbsp;чём <br>польза?",
-      "parents": [401],
-      "order": 1
-    },
-    {
       "id": "403",
       "label": "покажи <br>пример",
       "parents": [401],
-      "order": 2
+      "order": 1,
+      "goTo": 408
     },
     {
       "id": "404",
       "label": "хочу&nbsp;такую <br>штуку",
       "parents": [401],
-      "order": 3,
+      "order": 2,
       "goTo": 343
+    },
+
+
+    {
+      "id": "408",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>искусственный разум</div></div>",     
+      "parents": [403]
+    },
+    {
+      "id": "409",
+      "label": "что&nbsp;я&nbsp;умею",
+      "parents": [408],
+      "order": 1,
+      "goTo": 412
+    },
+    {
+      "id": "410",
+      "label": "мои контакты",
+      "parents": [408],
+      "order": 2,
+      "goTo": 416
+    },
+    {
+      "id": "411",
+      "label": "QR&nbsp;визитка",
+      "parents": [408],
+      "order": 3,
+      "iframe" : "pages/qr/"
+    },
+    {
+      "id": "412",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>я могу</div></div>",     
+      "parents": [409],
+      "order": 1
+    },
+    {
+      "id": "413",
+      "label": "создать <br>вариант",
+      "parents": [412],
+      "order": 1,
+      "goTo": 606
+    },
+    {
+      "id": "414",
+      "label": "создать <br>живую <br>визитку",
+      "parents": [412],
+      "order": 2,
+      "goTo": 606
+    },
+    {
+      "id": "4141",
+      "label": "создать <br>QR&nbsp;визитку",
+      "parents": [412],
+      "order": 3,
+      "goTo": 606
+    },
+
+
+    {
+      "id": "416",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>мои контакты</div></div>",     
+      "parents": [410]
+    },
+    {
+      "id": "417",
+      "label": "написать&nbsp;на <br>whatsapp",
+      "parents": [416],
+      "goToUrl" : "https://wa.me/79282635777?text=здравствуй вариант я хочу такую штуку"
+    },
+    {
+      "id": "418",
+      "label": "написать&nbsp;в <br>telegram",
+      "parents": [416],
+      "goToUrl" : "https://t.me/variant_name"
     },
 
 
@@ -226,6 +322,13 @@
       "id": "3005",
       "label": "презентации <br>и&nbsp;инструкции",
       "order": 3,
+      "parents": [3002],
+      "goTo": 3006
+    },
+    {
+      "id": "30051",
+      "label": "любые <br>классные <br>штуки",
+      "order": 4,
       "parents": [3002],
       "goTo": 3006
     },
@@ -699,6 +802,25 @@
       "goTo" : 610
     },
     {
+      "id": "6001",
+      "label": "другим <br>способом",
+      "parents": [606],
+      "goTo" : 6002
+    },
+    {
+      "id": "6002",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"anotherway\" mailname=\"Email\" placeholder=\"кликни тут и напиши как с тобой связаться\"></textarea>",
+      "parents": [6001]
+    },
+    {
+      "id": "6003",
+      "label": "дальше",
+      "parents": [6002],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 6002
+    },
+    {
       "id": "610",
       "label": "какой <br>твой&nbsp;email?",
       "parents": [609]
@@ -749,7 +871,7 @@
     {
       "id": "621",
       "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>я&nbsp;свяжусь <br>с&nbsp;тобой <br>скоро",
-      "parents": [613,617]
+      "parents": [613,617,6003]
     },
     {
       "id": "622",

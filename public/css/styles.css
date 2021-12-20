@@ -234,7 +234,6 @@ body.main-body {
   font-weight: 900;
   color: #212121;
   line-height: 0.83;
-  letter-spacing: -0.02rem;
   font-family: 'Fira Sans', sans-serif;
   transform-origin: 0% 0%;  
   -webkit-filter: blur(15px);
@@ -273,7 +272,7 @@ body.main-body {
   -ms-filter: blur(0px);
   filter: blur(0px);
   opacity: 1;
-  transform: scale(0.5) translateX(0%) translateY(-0.1rem);
+  transform: scale(0.5) translateX(0%) translateY(-0.15rem);
   transition: 0.55s cubic-bezier(.5,.16,.24,.97);
   transition-delay: 0.15s;
 }

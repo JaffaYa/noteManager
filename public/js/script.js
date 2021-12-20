@@ -133,20 +133,34 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 	var jsonVersion = Math.randomDec(0, 999, 3);
 
-	if (!!jsonName) {
-		window.localStorage.setItem('jn', jsonName);
-	} else {
-		jsonName = window.localStorage.getItem('jn');
-	}
+	// if (!!jsonName) {
+	// 	window.localStorage.setItem('jn', jsonName);
+	// } else {
+	// 	jsonName = window.localStorage.getItem('jn');
+	// }
 	
 	// if no query params and no store (default value)
 	if (!jsonName) {
 		jsonName = 'v-1';
 	}
 
-	console.log(`./json/${jsonName}.json?v=${jsonVersion}`);
 
-	window.model = new makeModel(`./json/${jsonName}.json?v=${jsonVersion}`, simInit);
+	let url = `./json/${jsonName}.json?v=${jsonVersion}`
+	console.log(url);
+
+	function fileExists(url) {
+		if(url){
+			var req = new XMLHttpRequest();
+			req.open('HEAD', url, false);
+			req.send();
+			return req.status === 200;
+		} else {
+			return false;
+		}
+	}
+	if (!fileExists(url)) url = `./json/v-1.json?v=${jsonVersion}`
+
+	window.model = new makeModel(url, simInit);
 	//?jn=graphdata&node=1
 
 	// model.stats.enable(); // statistics enable
@@ -226,22 +240,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 					simulation.alphaTarget(0.6);
 					simulation.velocityDecay(0.3) 
 				}, time+150, simulation);
-
-				// setTimeout(function(simulation){
-				// 	simulation.alphaTarget(0.4);
-				// 	simulation.velocityDecay(0.4) 
-				// }, time+250, simulation);
-
-				// setTimeout(function(simulation){
-				// 	simulation.alphaTarget(0.3);
-				// 	simulation.alphaDecay(0.1);
-				// 	simulation.velocityDecay(0.3) 
-				// }, time+500, simulation);
-
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					// simulation.alphaDecay(0.05);
-					simulation.velocityDecay(0.2) 
+					simulation.velocityDecay(0.75) 
 				}, time+500, simulation);
 			}else{
 				setTimeout(function(simulation){
@@ -252,22 +253,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 					simulation.alphaTarget(0.6);
 					simulation.velocityDecay(0.3) 
 				}, time+150, simulation);
-
-				// setTimeout(function(simulation){
-				// 	simulation.alphaTarget(0.6);
-				// 	simulation.velocityDecay(0.4) 
-				// }, time+250, simulation);
-
-				// setTimeout(function(simulation){
-				// 	simulation.alphaTarget(0.3);
-				// 	simulation.alphaDecay(0.1);
-				// 	simulation.velocityDecay(0.2) 
-				// }, time+500, simulation);
-
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					simulation.alphaDecay(0.05);
-					simulation.velocityDecay(0.2) 
+					simulation.velocityDecay(0.75) 
 				}, time+500, simulation);
 			}
 
@@ -503,10 +491,6 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		let time = 0;
 
 		if(verticalScreen){
-			// setTimeout(function(simulation){
-			// 	simulation.alphaTarget(0.7);
-			// 	simulation.velocityDecay(0.4) 
-			// }, time+0, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0.2);
 				simulation.velocityDecay(0.4) 
@@ -515,22 +499,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				simulation.alphaTarget(0.6);
 				simulation.velocityDecay(0.3) 
 			}, time+150, simulation);
-
-			// setTimeout(function(simulation){
-			// 	simulation.alphaTarget(0.4);
-			// 	simulation.velocityDecay(0.4) 
-			// }, time+250, simulation);
-
-			// setTimeout(function(simulation){
-			// 	simulation.alphaTarget(0.3);
-			// 	simulation.alphaDecay(0.1);
-			// 	simulation.velocityDecay(0.3) 
-			// }, time+500, simulation);
-
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				// simulation.alphaDecay(0.05);
-				simulation.velocityDecay(0.2) 
+				simulation.velocityDecay(0.95) 
 			}, time+500, simulation);
 		}else{
 			setTimeout(function(simulation){
@@ -541,48 +512,11 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				simulation.alphaTarget(0.6);
 				simulation.velocityDecay(0.3) 
 			}, time+150, simulation);
-
-			// setTimeout(function(simulation){
-			// 	simulation.alphaTarget(0.6);
-			// 	simulation.velocityDecay(0.4) 
-			// }, time+250, simulation);
-
-			// setTimeout(function(simulation){
-			// 	simulation.alphaTarget(0.3);
-			// 	simulation.alphaDecay(0.1);
-			// 	simulation.velocityDecay(0.2) 
-			// }, time+500, simulation);
-
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.alphaDecay(0.05);
-				simulation.velocityDecay(0.2) 
+				simulation.velocityDecay(0.95) 
 			}, time+500, simulation);
 		}
-
-		// setTimeout(function(simulation){
-		// 	simulation.alphaTarget(0.2);
-		// 	simulation.velocityDecay(0.4) 
-		// }, time+700, simulation);
-
-		// setTimeout(function(simulation){
-		// 	simulation.alphaTarget(1);
-		// 	// simulation.alphaDecay(0.022);
-		// 	// simulation.velocityDecay(0.2) 
-		// }, time+500, simulation);
-
-		// setTimeout(function(simulation){
-		// 	simulation.alphaTarget(0.55);
-		// 	simulation.alphaDecay(0.05)
-		// 	// simulation.velocityDecay(0.25) 
-		// }, time+750, simulation);
-
-		// setTimeout(function(simulation){
-		// 	simulation.alphaTarget(0.7);
-		// 	// simulation.alphaDecay(0.05)
-		// 	simulation.velocityDecay(0.35) 
-		// }, time+500, simulation);
-
 
 		animState.start();
 		model.stats.restart();
@@ -931,7 +865,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		//exit
 		d3links.exit()
 		.transition()
-		.delay(makehideLinkDelay)
+		.delay(hideLinkDelay)
 		// .delay(makelinkDelay())
 		.duration(hideLinkCssDuration)
 		.on('start', function(){
@@ -946,15 +880,6 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		return linksCont.selectAll("line");
 
 		
-		function makehideLinkDelay(){
-			//if slide not goTo hide link without delay
-			let node = model.activeNode;
-			if(node.goTo){
-				return hideLinkDelay;
-			}else{
-				return 0;
-			}
-		}
 		function makelinkDelay(){
 			var counter = 0;
 
@@ -986,8 +911,13 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		// if (!d3.event.active) simulation.alphaTarget(1.7).restart();
 		if(!model.mobileInpuntActive){
 			if (!d3.event.active) 
-				simulation.alphaTarget(0.5).restart(); // less alphaTarget
-			simulation.velocityDecay(0.2);
+			if(verticalScreen){
+				simulation.alphaTarget(0.5).restart(); 
+				simulation.velocityDecay(0.2);
+			}else{
+				simulation.alphaTarget(0.5).restart(); 
+				simulation.velocityDecay(0.2);
+			}
 			model.stats.restart();
 			d.fx = d.x;
 			d.fy = d.y;
@@ -1348,8 +1278,13 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 			//add browser history state if it's no
 			if(!browserNavButtons){
+				let jsonName = getParameterByName('jn');
+				let url = ''
+				if (jsonName) url += '?jn=' + jsonName
+				if (url.length> 0) url += '&node='+currNode.id
+				else url = url += '?node='+currNode.id
 				// window.location = "#id:"+currNode.id;
-				history.pushState({id:currNode.id}, '', '?node='+currNode.id);
+				history.pushState({ id: currNode.id, jn: jsonName }, '', url);
 			}
 		}
 
@@ -1465,7 +1400,6 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 					if(parent == 0) return;
 					//node don't show
 					if(!isInArrayId(parent, nodes)) return;
-					if(!nodes[i].display && !oneLinkNode) return;
 
 					//only one link on slide
 					if(oneLinkNode){
@@ -1516,8 +1450,6 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		}
 
 		function setLeftDepth(node, goToNode) {
-			if(node.functional || goToNode.functional) return;
-
 			//click on the same node
 			if(node.id == goToNode.id) return;
 
@@ -1617,8 +1549,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		}
 
 		function isSlide(node){
-			if(node.function == 'back') return true;
-			if(node.functional) return false;
+			if(node.functional) return true;
 			let hasChild = node.children.length > 0
 			let hasgoTo = node.goTo !== undefined;
 			return (hasChild || hasgoTo) && !node.iframe;
@@ -2477,12 +2408,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			let scrollNext = true; 
 			let nodeDepth = d.leftDepth ? d.leftDepth : d.depth;
 
-			if( !model.isSlide(activeNode) &&
-				childrens.length == 0 &&
-				!activeNode.functional
-				){
-				activeDepth--;
-			}
+			if(!self.scrollNext) activeDepth--;
 
 			//для мобилок, планшетов и всего у чего вертикальная оринетация экрана
 			if(verticalScreen){
@@ -2517,7 +2443,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.25 : 0.6;
+							return d.active ? 0.75 : 0.8;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2529,7 +2455,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.25 : 0.25;
+							return d.active ? 0.75 : 0.15;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2551,7 +2477,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 375/30;
+								let collRadCoef = 375/40;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2695,22 +2621,18 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							// console.log('activeDepth',activeDepth);
 							if(d.active){
 								// console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.75;//в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно
+								return (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.75;
+								// return 0;
 							}else{
-								//ноды с одинаковой глубиной но не активная, толкать принудильтельно назад
-								if( (nodeDepth - activeDepth) == 0 ){
-									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-									return (width/4 + width/2*(nodeDepth - activeDepth - 1)) - width/1.7;//в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно
-								}else{
-									// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
-									return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;//в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно
-								}
+								// console.log('child-x:',(width/5 + width/2*(nodeDepth - activeDepth)) - width/2);
+								return (width/4 + width/2*(nodeDepth - activeDepth)) - width/1.7;
+								// return 0;
 							}
 
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.25 : 0.35;
+							return d.active ? 0.75 : 0.55;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2718,18 +2640,18 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.25 : 0.015;
+							return d.active ? 0.5 : 0.015;
 							break;
 						//радиус радиальной силы
 						case 'radial':
 							// let radialRadCoef = 1400/450;
-							let radialRadCoef = 1400/300;
+							let radialRadCoef = 1400/250;
 							return width/radialRadCoef;
 							break;
 						//мощность радиальной силы
 						case 'radialStr':
 							if(childrens.includes(d.id)){
-								return 0.5;
+								return 0.65;
 							}else{
 								return 0;
 							}
@@ -2741,7 +2663,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							// return width/collRadCoef;
 							// break;
 							if(childrens.includes(d.id)){
-								let collRadCoef = 2040/70;
+								let collRadCoef = 2040/100;
 								return width/collRadCoef;
 							}else{
 								return 0;
@@ -2755,7 +2677,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 									let bc = b.order ? b.order : b.id;
 									return ac - bc;
 								} );
-								let onePart = (height/order.length)*0.5;
+								let onePart = (height/order.length)*0.65;
 								for (let i = 0; i < order.length; i++) {
 									if(order[i].id == d.id){
 										if(order.length > 1){
