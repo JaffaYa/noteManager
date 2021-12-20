@@ -76,7 +76,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	var showSlideDelay = verticalScreen ? 200 : 250; //задерка сдвига перед появлением
 	var showLinkDelay = verticalScreen ? 75 : 75; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = verticalScreen ? 150 : 150; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
@@ -84,7 +84,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 500 : 500; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 500 : 750; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -2443,7 +2443,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.75 : 0.8;
+							return d.active ? 0.35 : 0.5;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2455,7 +2455,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задает вертикальную координату
 						case 'verticalForceStr':
-							return d.active ? 0.75 : 0.15;
+							return d.active ? 0.25 : 0.25;
 							break;
 						//радиус радиальной силы
 						case 'radial':
@@ -2505,7 +2505,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 						//мощность сылы ордера
 						case 'orderForceStr':
 							if(childrens.includes(d.id)){
-								return 0.25;
+								return 0.45;
 							}else{
 								return 0;
 							}
