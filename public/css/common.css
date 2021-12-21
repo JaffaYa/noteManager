@@ -25,7 +25,7 @@ a:hover {
   width: 1.35rem;
   height: 1.35rem;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
   transition-delay: 0.085s;
 }
@@ -33,7 +33,7 @@ a:hover {
   z-index: -1;
   width: 0.85rem;
   height: 0.85rem;
-  background-color: rgb(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 1);
   transition: 0.35s cubic-bezier(.5,.41,.05, 2);
   transition-delay: 0s;
 }
@@ -103,7 +103,7 @@ a:hover {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   transition: 0.35s cubic-bezier(.5,.41,.05,1.5);
   transition-delay: 0.085s;
 }
@@ -111,7 +111,7 @@ a:hover {
   z-index: -1;
   width: 95px;
   height: 95px;
-  background-color: rgb(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 1);
   transition: 0.35s cubic-bezier(.5,.41,.05,1.5);
   transition-delay: 0s;
 }
@@ -120,9 +120,20 @@ a:hover {
 
 /* live card */
 .live-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: 0.7s cubic-bezier(.55,.34,.17,.98);
+  transform: translateX(0%) translateY(0%) scale(1);
 }
-
+.node.show .live-card {
+  align-items: center;
+  transform: translateX(-10%) translateY(-45%) scale(1);
+}
+.node.show.active .live-card {
+  align-items: center;
+  transform: translateX(0%) translateY(0) scale(1);
+}
 .live-avatar{
   display: flex;
   width: 4rem;
@@ -130,7 +141,7 @@ a:hover {
   box-sizing: border-box;
   justify-content: flex-end;
   border-radius: 50%;
-  border: 0.5rem solid rgb(255,255,255,0.5);
+  border: 0.5rem solid rgba(255,255,255,0.5);
 }
 .vertical .live-avatar{
   justify-content: center;
@@ -610,17 +621,15 @@ a:hover {
       transform: translateY(-45%);
   }
   .node.show .live-card .live-avatar img{
-    width: 3rem;
-    height: 3rem;
   }
   .node.active.show .live-card {
     transform: translateY(10%);
   }
   .live-name {
-    color: #fff;
+    /*color: #fff;*/
   }
   .live-sphere {
-    color: #212121;
+    /*color: #212121;*/
   }
   .icon{
     -webkit-filter: blur(20px);

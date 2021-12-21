@@ -95,7 +95,7 @@
       "id": "202",
       "label": "инструменты <br>для&nbsp;бизнеса<br>и&nbsp;человека",
       "parents": [200],
-      "order": 3,
+      "order": 1,
       "goTo": 205
     },
     {
@@ -116,48 +116,35 @@
     },
     {
       "id": "300",
-      "label": "конструктор <br>вариантов",
-      "parents": [205],
-      "goTo": 301
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>конструктор <br>вариантов</div></div>",     
+      "parents": [205]
     },
     {
       "id": "400",
-      "label": "живая <br>визитка",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>живая визитка</div></div>",     
       "parents": [205]
     },
     {
       "id": "7000",
-      "label": "QR&nbsp;визитка",
-      "parents": [205],
-      "goTo": 7001
-    },
-
-    {
-      "id": "7001",
-      "label": "QR&nbsp;визитка",
-      "parents": [7000]
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>QR&nbsp;визитка</div></div>",     
+      "parents": [205]
     },
     {
       "id": "7002",
       "label": "покажи <br>пример",
-      "parents": [7001],
+      "parents": [7000],
       "order": 1,
       "iframe" : "pages/qr/"
     },
     {
       "id": "7003",
       "label": "хочу&nbsp;такую <br>штуку",
-      "parents": [7001],
+      "parents": [7000],
       "order": 2,
       "goTo": 343
     },
 
 
-    {
-      "id": "401",
-      "label": "живая <br>визитка",
-      "parents": [400]
-    },
     {
       "id": "403",
       "label": "покажи <br>пример",
@@ -248,30 +235,24 @@
     },
 
 
-
-    {
-      "id": "301",
-      "label": "конструктор <br>вариантов",
-      "parents": [300]
-    },
     {
       "id": "302",
       "label": "в&nbsp;чём <br>польза?",
-      "parents": [301],
+      "parents": [300],
       "order": 1,
       "goTo": 3002
     },
     {
       "id": "303",
       "label": "покажи <br>пример",
-      "parents": [301],
+      "parents": [300],
       "order": 2,
       "goTo": 4000
     },
     {
       "id": "304",
       "label": "хочу&nbsp;такую <br>штуку",
-      "parents": [301],
+      "parents": [300],
       "order": 3,
       "goTo": 343
     },
@@ -317,16 +298,10 @@
       "order": 2,
       "goTo": 3006
     },
-    {
-      "id": "3005",
-      "label": "презентации <br>и&nbsp;инструкции",
-      "order": 3,
-      "parents": [3002],
-      "goTo": 3006
-    },
+
     {
       "id": "30051",
-      "label": "любые <br>классные <br>штуки",
+      "label": "другие <br>классные <br>штуки",
       "order": 4,
       "parents": [3002],
       "goTo": 3006
@@ -334,7 +309,7 @@
     {
       "id": "3006",
       "label": "я&nbsp;могу&nbsp;быть <br>полезен <br>в&nbsp;любом <br>варианте",
-      "parents": [3003,3004,3005]
+      "parents": [3003,3004,30051]
     },
     {
       "id": "3007",
@@ -786,26 +761,26 @@
       "id": "607",
       "label": "по&nbsp;whatsapp",
       "parents": [606],
+      "order": 1,
       "goTo" : 614
     },
     {
       "id": "608",
       "label": "в&nbsp;telegram",
       "parents": [606],
+      "order": 20,
       "goTo" : 614
     },
     {
       "id": "609",
       "label": "напиши <br>на&nbsp;почту",
       "parents": [606],
+      "order": 30,
       "goTo" : 610
     },
-    {
-      "id": "6001",
-      "label": "другим <br>способом",
-      "parents": [606],
-      "goTo" : 6002
-    },
+
+
+
     {
       "id": "6002",
       "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"anotherway\" mailname=\"Email\" placeholder=\"кликни тут и напиши как с тобой связаться\"></textarea>",
