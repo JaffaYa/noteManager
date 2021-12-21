@@ -307,7 +307,7 @@ body.main-body {
   color: #fff;
 }
 .btn-menu .v-content{
-    transform: scale(0.5) translateX(-100%) translateY(-0.1rem)!important;
+    transform: scale(0.4) translateX(-100%) translateY(-0.1rem)!important;
 }
 .icon.warning-icon,
 .show .icon.warning-icon{
