@@ -73,7 +73,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
 	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showSlideDelay = verticalScreen ? 200 : 250; //задерка сдвига перед появлением
+	var showSlideDelay = verticalScreen ? 200 : 150; //задерка сдвига перед появлением
 	var showLinkDelay = verticalScreen ? 35 : 35; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
@@ -247,20 +247,20 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}else{
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0.05);
-					simulation.velocityDecay(0.7) 
+					simulation.velocityDecay(0.5) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.1);
-					simulation.velocityDecay(0.9) 
-				}, time+500, simulation);
+					simulation.alphaTarget(0.2);
+					simulation.velocityDecay(0.7) 
+				}, time+250, simulation);
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.5);
+					simulation.alphaTarget(0.7);
 					simulation.velocityDecay(0.5) 
-				}, time+750, simulation);
+				}, time+500, simulation);
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
 					simulation.velocityDecay(0.9) 
-				}, time+1000, simulation);
+				}, time+750, simulation);
 			}
 
 			animState.start();
@@ -509,21 +509,21 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}, time+750, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.1);
+				simulation.alphaTarget(0.05);
 				simulation.velocityDecay(0.5) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.3);
-				simulation.velocityDecay(0.9) 
-			}, time+500, simulation);
+				simulation.alphaTarget(0.2);
+				simulation.velocityDecay(0.7) 
+			}, time+250, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.9);
-				simulation.velocityDecay(0.9) 
-			}, time+750, simulation);
+				simulation.alphaTarget(0.7);
+				simulation.velocityDecay(0.5) 
+			}, time+500, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
 				simulation.velocityDecay(0.9) 
-			}, time+1000, simulation);
+			}, time+750, simulation);
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.5);
 			// 	simulation.velocityDecay(0.9) 
