@@ -9,7 +9,7 @@ html {
   -ms-user-select:none;
   user-select:none;
   -webkit-tap-highlight-color:rgba(0,0,0,0);
-  letter-spacing: -0.005rem;
+ -webkit-font-smoothing: antialiased;
 }
 a,
 a:hover {
@@ -136,12 +136,12 @@ a:hover {
 }
 .live-avatar{
   display: flex;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   box-sizing: border-box;
   justify-content: flex-end;
   border-radius: 50%;
-  border: 0.5rem solid rgba(255,255,255,0.5);
+  border: 0.35rem solid rgba(255,255,255,0.85);
 }
 .vertical .live-avatar{
   justify-content: center;
@@ -183,8 +183,8 @@ a:hover {
   font-size: 0.6rem;
   line-height: 0.5rem;
   text-align: center;
+  text-shadow: none;
 }
-
 
 
 
@@ -430,6 +430,7 @@ a:hover {
 /* icons */
 .icon{
   position: absolute;
+  z-index: -1;
   top: 0;
   left: 0;
   -webkit-filter: blur(50px);
@@ -437,7 +438,7 @@ a:hover {
   -o-filter: blur(50px);
   -ms-filter: blur(50px);
   filter: blur(50px);
-  transform: translate(-100%, -50%) scale(0);
+  transform: translate(-110%, -50%) scale(0);
   transform-origin: center;
   transition-delay: 0.15s;
 }
@@ -447,23 +448,37 @@ a:hover {
   -o-filter: blur(0px);
   -ms-filter: blur(0px);
   filter: blur(0px);
-  transform: translate(-100%, -50%) scale(1);
-  transition: 0.75s cubic-bezier(.33,.38,.3,1.6);
-  transition-delay: 0.6s;
+  transform: translate(-110%, -50%) scale(1);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
 }
 .node-btn.show .icon{
-  transform: translate(-100%, -75%) scale(1);
+  transform: translate(-110%, -75%) scale(1);
   transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
-  transition-delay: 0.6s;
 }
-/*.show:hover .icon{
-  transform: translate(-100%, -50%) scale(1.5);
-  transition: 0.5s cubic-bezier(.5,.41,.05,1.5);
-  transition-delay: 0.025s;
+.btn-menu.show .icon{
+  transform: translate(275%, -75%) scale(1);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
 }
-*/
 
 
+.show:hover .icon{
+  transform: translate(-110%, -50%) scale(1.5);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
+}
+.btn-back.show:hover .icon{
+  transform: translate(-175%, -50%) scale(1.5);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
+}
+.btn-menu.show:hover .icon{
+  transform: translate(275%, -75%) scale(1.5);
+  transition: 0.5s cubic-bezier(.33,.38,.3,1.6);
+}
+.vertical .btn-back.show:hover .icon{
+    transform: translate(-110%, -50%) scale(1);
+}
+.vertical .btn-menu.show:hover .icon{
+  transform: translate(275%, -75%) scale(1);
+}
 .icon img{
   width: 1rem;
   height: auto;

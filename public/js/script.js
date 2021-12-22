@@ -76,7 +76,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	var showSlideDelay = verticalScreen ? 200 : 250; //задерка сдвига перед появлением
 	var showLinkDelay = verticalScreen ? 35 : 35; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
-	var hideLinkDelay = verticalScreen ? 150 : 150; //задерка сдвига перед прятанием ** delay before link hide
+	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var showCssDuration = 700; //длина анимации появления в css
 	var hideNodeCssDuration = 700; //длина анимации прятания ноды в css
 	var hideLinkCssDuration = 700; //длина анимации прятания линка в css
@@ -84,7 +84,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 500 : 750; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 650 : 650; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -92,7 +92,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	//и еще по идеи можно сдлеать что бы пропадали линки и ноды тоже по очереди
 
 	let backButtonPermision = true;
-	let backButtonDelay = verticalScreen ? 700 : 700;
+	let backButtonDelay = verticalScreen ? 950 : 950;
 
 	let animState = make_animationState();
 
@@ -163,7 +163,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	window.model = new makeModel(url, simInit);
 	//?jn=graphdata&node=1
 
-	// model.stats.enable(); // statistics enable
+	model.stats.enable(); // statistics enable
 	// model.admin.set(false); // admin enable
 	// model.showAllTree(); // all tree enable
 
@@ -238,25 +238,29 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				}, time+0, simulation);
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0.5);
-					simulation.velocityDecay(0.3) 
+					simulation.velocityDecay(0.4) 
 				}, time+150, simulation);
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					simulation.velocityDecay(0.65) 
+					simulation.velocityDecay(0.9) 
 				}, time+750, simulation);
 			}else{
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.2);
-					simulation.velocityDecay(0.4) 
+					simulation.alphaTarget(0.05);
+					simulation.velocityDecay(0.7) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.7);
-					simulation.velocityDecay(0.2) 
-				}, time+150, simulation);
+					simulation.alphaTarget(0.1);
+					simulation.velocityDecay(0.9) 
+				}, time+500, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.5);
+					simulation.velocityDecay(0.5) 
+				}, time+750, simulation);
 				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
-					simulation.velocityDecay(0.65) 
-				}, time+750, simulation);
+					simulation.velocityDecay(0.9) 
+				}, time+1000, simulation);
 			}
 
 			animState.start();
@@ -496,26 +500,42 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				simulation.velocityDecay(0.4) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.7);
-				simulation.velocityDecay(0.3) 
+				simulation.alphaTarget(0.5);
+				simulation.velocityDecay(0.4) 
 			}, time+150, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.velocityDecay(0.65) 
+				simulation.velocityDecay(0.9) 
 			}, time+750, simulation);
 		}else{
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
-				simulation.velocityDecay(0.4) 
+				simulation.alphaTarget(0.1);
+				simulation.velocityDecay(0.5) 
 			}, time+0, simulation);
 			setTimeout(function(simulation){
-				simulation.alphaTarget(0.7);
-				simulation.velocityDecay(0.3) 
-			}, time+150, simulation);
+				simulation.alphaTarget(0.3);
+				simulation.velocityDecay(0.9) 
+			}, time+500, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0.9);
+				simulation.velocityDecay(0.9) 
+			}, time+750, simulation);
 			setTimeout(function(simulation){
 				simulation.alphaTarget(0);
-				simulation.velocityDecay(0.65) 
-			}, time+750, simulation);
+				simulation.velocityDecay(0.9) 
+			}, time+1000, simulation);
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.5);
+			// 	simulation.velocityDecay(0.9) 
+			// }, time+0, simulation);
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0.5);
+			// 	simulation.velocityDecay(0.7) 
+			// }, time+500, simulation);
+			// setTimeout(function(simulation){
+			// 	simulation.alphaTarget(0);
+			// 	simulation.velocityDecay(0.9) 
+			// }, time+750, simulation);
 		}
 
 		animState.start();
@@ -561,7 +581,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	function make_animationState(){
 		let animationFlag = false;
 		//limit time of animation state
-		let timerLimiter = 1000; //not longer that 1s
+		let timerLimiter = 1300; //not longer that 1s
 
 		let startTime;
 
@@ -865,7 +885,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		//exit
 		d3links.exit()
 		.transition()
-		.delay(hideLinkDelay)
+		// .delay(hideLinkDelay)
+		.delay(makehideLinkDelay)
 		// .delay(makelinkDelay())
 		.duration(hideLinkCssDuration)
 		.on('start', function(){
@@ -879,7 +900,16 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		//return updated links list
 		return linksCont.selectAll("line");
 
-		
+		function makehideLinkDelay(){
+			//if slide not goTo hide link without delay
+			let node = model.activeNode;
+			if(node.goTo){
+				return hideLinkDelay;
+			}else{
+				return 0;
+			}
+		}
+
 		function makelinkDelay(){
 			var counter = 0;
 
@@ -1400,7 +1430,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 					if(parent == 0) return;
 					//node don't show
 					if(!isInArrayId(parent, nodes)) return;
-
+					if(!nodes[i].display && !oneLinkNode) return;
 					//only one link on slide
 					if(oneLinkNode){
 						if(oneLinkNode.id == nodes[i].id){
@@ -1648,8 +1678,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		}
 
 		function addFunctionalButtons(){
-			addFunctionalButton(10000, 'назад', 'back');
-			addFunctionalButton(10001, 'меню', 'menu');
+			// addFunctionalButton(10000, 'назад', 'back');
+			// addFunctionalButton(10001, 'меню', 'menu');
+			addFunctionalButton(10000, '<div class="icon"><img src="img/icons/back.png"></div>back', 'back');
+			addFunctionalButton(10001, '<div class="icon"><img src="img/icons/menu-2.png"></div>menu', 'menu');
 			addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-anim-500.gif"></div>', 'logo');
 		}
 
@@ -2443,7 +2475,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 							break;
 						//мощность силы которая задаеть горизонтальную координату
 						case 'slideForceStr':
-							return d.active ? 0.5 : 0.75;
+							return d.active ? 0.5 : 0.45;
 							break;
 						//сила задает вертикальную координату для каждой ноды
 						case 'verticalForce':
@@ -2505,7 +2537,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 						//мощность сылы ордера
 						case 'orderForceStr':
 							if(childrens.includes(d.id)){
-								return 0.6;
+								return 0.4;
 							}else{
 								return 0;
 							}
@@ -2920,7 +2952,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}
 
 			function onMouseMove(e) {
-			  	// console.log('move');
+			  	console.log('move');
 			  	gsap.to($pointer1, .4, {
 			  		x: e.pageX - 30,
 			  		y: e.pageY - 30
@@ -2931,7 +2963,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			  	});
 			}
 			function onMouseDown(e) {
-			  	// console.log('Down');
+			  	console.log('Down');
 			  	mouseDownFlag = true;
 			  	gsap.to($pointer1, .5, {
 			  		scale: 0
@@ -2941,7 +2973,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			  	});
 			}
 			function onMouseUp(e) {
-			  	// console.log('Up');
+			  	console.log('Up');
 			  	mouseDownFlag = false;
 			  	gsap.to($pointer1, .5, {
 			  		scale: 1
@@ -2952,7 +2984,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}
 
 			function onMouseHover() {
-			  	// console.log('hover');
+			  	console.log('hover');
 			  	if(!mouseDownFlag){
 			  		gsap.to($pointer1, .3, {
 			  			scale: 2
@@ -2963,7 +2995,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			  	}
 			}
 			function onMouseHoverOut() {
-			  	// console.log('out');
+			  	console.log('out');
 			  	if(!mouseDownFlag || 1){
 				  	gsap.to($pointer1, .3, {
 				  		scale: 1
