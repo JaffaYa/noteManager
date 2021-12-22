@@ -869,7 +869,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 					return [d.source, d.target];
 				}
 			}
-		);
+		)
+		.classed('show', d => {
+			return d.source.display || d.target.display;
+		});
 
 		var strokeWidth = view.getLinkWidth();
 		//enter
