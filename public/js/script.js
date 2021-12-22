@@ -73,7 +73,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	// var showSlideDelay = verticalScreen ? 550 : 250; //задерка сдвига перед появлением
 	// var hideSlideDelay = verticalScreen ? 350 : 350; //задерка сдвига перед прятанием ** delay before link hide
 	// var hideLinkDelay = verticalScreen ? 150 : 250; //задерка сдвига перед прятанием ** delay before link hide
-	var showSlideDelay = verticalScreen ? 200 : 150; //задерка сдвига перед появлением
+	var showSlideDelay = verticalScreen ? 200 : 350; //задерка сдвига перед появлением
 	var showLinkDelay = verticalScreen ? 35 : 35; //задерка сдвига перед появлением
 	var hideSlideDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
 	var hideLinkDelay = verticalScreen ? 0 : 0; //задерка сдвига перед прятанием ** delay before link hide
@@ -84,7 +84,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 
 	// var deleteDelay = verticalScreen ? 900 : 800; //задержка до удаления из симуляции, но не с экрана
-	var deleteDelay = verticalScreen ? 650 : 650; //задержка до удаления из симуляции, но не с экрана
+	var deleteDelay = verticalScreen ? 650 : 350; //задержка до удаления из симуляции, но не с экрана
 	var firstScrean = true;
 	//еще есть возможность добавить фукциональные клавиши(назад, меню)
 	//в последовательность этой анимации - они будут отбражаться в последнею очередь
@@ -233,34 +233,38 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 			if(verticalScreen){
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.2);
-					simulation.velocityDecay(0.4) 
-				}, time+0, simulation);
-				setTimeout(function(simulation){
-					simulation.alphaTarget(0.5);
-					simulation.velocityDecay(0.4) 
-				}, time+150, simulation);
-				setTimeout(function(simulation){
-					simulation.alphaTarget(0);
+					simulation.alphaTarget(0.01);
 					simulation.velocityDecay(0.9) 
-				}, time+750, simulation);
-			}else{
-				setTimeout(function(simulation){
-					simulation.alphaTarget(0.05);
-					simulation.velocityDecay(0.5) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
-					simulation.alphaTarget(0.2);
-					simulation.velocityDecay(0.7) 
-				}, time+250, simulation);
-				setTimeout(function(simulation){
-					simulation.alphaTarget(0.7);
-					simulation.velocityDecay(0.5) 
+					simulation.alphaTarget(0.1);
+					simulation.velocityDecay(0.9) 
 				}, time+500, simulation);
 				setTimeout(function(simulation){
+					simulation.alphaTarget(2);
+					simulation.velocityDecay(0.7) 
+				}, time+750, simulation);
+				setTimeout(function(simulation){
 					simulation.alphaTarget(0);
 					simulation.velocityDecay(0.9) 
+				}, time+1250, simulation);
+			}else{
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.01);
+					simulation.velocityDecay(0.9) 
+				}, time+0, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.1);
+					simulation.velocityDecay(0.9) 
+				}, time+500, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(2);
+					simulation.velocityDecay(0.7) 
 				}, time+750, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.velocityDecay(0.9) 
+				}, time+1250, simulation);
 			}
 
 			animState.start();
@@ -495,35 +499,39 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		let time = 0;
 
 		if(verticalScreen){
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
-				simulation.velocityDecay(0.4) 
-			}, time+0, simulation);
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.5);
-				simulation.velocityDecay(0.4) 
-			}, time+150, simulation);
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0);
-				simulation.velocityDecay(0.9) 
-			}, time+750, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.01);
+					simulation.velocityDecay(0.9) 
+				}, time+0, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.1);
+					simulation.velocityDecay(0.9) 
+				}, time+500, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(2);
+					simulation.velocityDecay(0.7) 
+				}, time+750, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.velocityDecay(0.9) 
+				}, time+1250, simulation);
 		}else{
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.05);
-				simulation.velocityDecay(0.5) 
-			}, time+0, simulation);
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.2);
-				simulation.velocityDecay(0.7) 
-			}, time+250, simulation);
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0.7);
-				simulation.velocityDecay(0.5) 
-			}, time+500, simulation);
-			setTimeout(function(simulation){
-				simulation.alphaTarget(0);
-				simulation.velocityDecay(0.9) 
-			}, time+750, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.01);
+					simulation.velocityDecay(0.9) 
+				}, time+0, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0.1);
+					simulation.velocityDecay(0.9) 
+				}, time+500, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(2);
+					simulation.velocityDecay(0.7) 
+				}, time+750, simulation);
+				setTimeout(function(simulation){
+					simulation.alphaTarget(0);
+					simulation.velocityDecay(0.9) 
+				}, time+1250, simulation);
 			// setTimeout(function(simulation){
 			// 	simulation.alphaTarget(0.5);
 			// 	simulation.velocityDecay(0.9) 
@@ -581,7 +589,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	function make_animationState(){
 		let animationFlag = false;
 		//limit time of animation state
-		let timerLimiter = 1300; //not longer that 1s
+		let timerLimiter = 1000; //not longer that 1s
 
 		let startTime;
 
