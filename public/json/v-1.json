@@ -106,7 +106,7 @@
 
     {
       "id": "300",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant <br>constructor</div></div>",     
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/variant-constructor.png'></div></div><div class='live-name'>variant <br>constructor</div></div>",     
       "parents": [204]
     },
     {
@@ -116,7 +116,7 @@
     },
     {
       "id": "7000",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>QR&nbsp;card</div></div>",     
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/qr-card.png'></div></div><div class='live-name'>QR&nbsp;card</div></div>",     
       "parents": [204]
     },
     {
