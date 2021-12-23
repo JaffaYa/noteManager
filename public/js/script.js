@@ -847,18 +847,18 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 
 		//exit
-		d3links.exit()
-		.transition()
-		// .delay(hideLinkDelay)
-		.delay(makehideLinkDelay)
+		d3links.exit().remove();
+		// .transition()
+		// // .delay(hideLinkDelay)
+		// // .delay(makehideLinkDelay)
 		// .delay(makelinkDelay())
-		.duration(hideLinkCssDuration)
-		.on('start', function(){
-			this.classList.remove('show');
-		})
-		.on('end', function(){
-			this.remove();
-		});
+		// .duration(hideLinkCssDuration)
+		// .on('start', function(){
+		// 	this.classList.remove('show');
+		// })
+		// .on('end', function(){
+		// 	this.remove();
+		// });
 
 
 		//return updated links list
@@ -1382,46 +1382,63 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		}
 
 		function updateLinks(){
-			let nodes = myThis.nodesToDisplay;
+			// let nodes = myThis.nodesToDisplay;
+			// myThis.links = [];
+
+			// for (var i = 0; i < nodes.length; i++) {
+
+			// 	if(nodes[i].functional) continue;
+
+			// 	nodes[i].parents.forEach(function(parent) {
+			// 		//core node hasn't links
+			// 		if(parent == 0) return;
+			// 		//node don't show
+			// 		if(!isInArrayId(parent, nodes)) return;
+			// 		if(!nodes[i].display && !oneLinkNode) return;
+			// 		//only one link on slide
+			// 		if(oneLinkNode){
+			// 			if(oneLinkNode.id == nodes[i].id){
+			// 				if(oneLinkNodeFrom){
+			// 					if(parent == oneLinkNodeFrom.id){
+			// 						myThis.links.push({
+			// 							source: getNodeById(parent*1),
+			// 							target: nodes[i],
+			// 							dashed: nodes[i].addNew,
+			// 							value: 2
+			// 						});
+			// 					}
+			// 				}
+			// 				return;	
+			// 			}
+			// 		}
+
+			// 		//push new link
+			// 		myThis.links.push({
+			// 			source: getNodeById(parent*1),
+			// 			target: nodes[i],
+			// 			dashed: nodes[i].addNew,
+			// 			value: 2
+			// 		});
+			// 	});
+
+			// }
+
+			let activeNode = myThis.activeNode;
+			let childrens = activeNode.children;
 			myThis.links = [];
 
-			for (var i = 0; i < nodes.length; i++) {
-
-				if(nodes[i].functional) continue;
-
-				nodes[i].parents.forEach(function(parent) {
-					//core node hasn't links
-					if(parent == 0) return;
-					//node don't show
-					if(!isInArrayId(parent, nodes)) return;
-					if(!nodes[i].display && !oneLinkNode) return;
-					//only one link on slide
-					if(oneLinkNode){
-						if(oneLinkNode.id == nodes[i].id){
-							if(oneLinkNodeFrom){
-								if(parent == oneLinkNodeFrom.id){
-									myThis.links.push({
-										source: getNodeById(parent*1),
-										target: nodes[i],
-										dashed: nodes[i].addNew,
-										value: 2
-									});
-								}
-							}
-							return;	
-						}
-					}
-
-					//push new link
-					myThis.links.push({
-						source: getNodeById(parent*1),
-						target: nodes[i],
-						dashed: nodes[i].addNew,
-						value: 2
-					});
+			for (var i = 0; i < childrens.length; i++) {
+				let node = getNodeById(childrens[i]);
+				//push new link
+				myThis.links.push({
+					source: activeNode,
+					target: node,
+					dashed: node.addNew,
+					value: 2
 				});
-
 			}
+
+
 		}
 
 		function isInArrayId(id, array = []){
