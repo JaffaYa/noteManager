@@ -1,0 +1,153 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div>",     
+      "parents": [0]
+    },
+    {
+      "id": "101",
+      "label": "<div class='qr-item'><div class='qr-code'><img src='pages/qr/qr-instagram.png'></div><div class='qr-description'><div class='qr-icon' style='-webkit-mask-image: url(img/icons/qr/instagram.svg); mask-image: url(img/icons/qr/instagram.svg'></div><div class='qr-dash'style='-webkit-mask-image: url(img/icons/qr/dash.svg); mask-image: url(img/icons/qr/dash.svg);'></div><div class='qr-text'>instagram</div></div><div class='qr-item-active'><div class='qr-code'><img src='pages/qr/qr-instagram.png'>    </div><div class='qr-description'><div class='qr-icon' style='-webkit-mask-image: url(img/icons/qr/instagram.svg); mask-image: url(img/icons/qr/instagram.svg);'></div><div class='qr-dash'style='-webkit-mask-image: url(img/icons/qr/dash.svg); mask-image: url(img/icons/qr/dash.svg);'></div><div class='qr-text'>instagram</div></div></div>",
+      "parents": [1],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "102",
+      "label": "инструкция",
+      "parents": [1],
+      "order": 2,
+      "goTo": 103
+    },
+    {
+      "id": "103",
+      "label": "есть <br>претензии?",
+      "parents": [1],
+      "order": 3,
+      "goTo": 103
+    },
+
+
+
+    {
+      "id": "6002",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"anotherway\" mailname=\"Email\" placeholder=\"кликни тут и напиши как с тобой связаться\"></textarea>",
+      "parents": [6001]
+    },
+    {
+      "id": "6003",
+      "label": "дальше",
+      "parents": [6002],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 6002
+    },
+    {
+      "id": "610",
+      "label": "какой <br>твой&nbsp;email?",
+      "parents": [609]
+    },
+    {
+      "id": "611",
+      "label": "сказать",
+      "parents": [610],
+      "goTo" : 612
+    },
+    {
+      "id": "612",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и напиши email\"></textarea>",
+      "parents": [611]
+    },
+    {
+      "id": "613",
+      "label": "дальше",
+      "parents": [612],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 612
+    },
+    {
+      "id": "614",
+      "label": "а&nbsp;номер <br>телефона?",
+      "parents": [607,608,609]
+    },
+    {
+      "id": "615",
+      "label": "сказать",
+      "parents": [614],
+      "goTo" : 616
+    },
+    {
+      "id": "616",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"кликни тут и пиши номер\"></textarea>",
+      "parents": [615]
+    },
+    {
+      "id": "617",
+      "label": "дальше",
+      "parents": [616],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 616
+    },
+    {
+      "id": "621",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>я&nbsp;свяжусь <br>с&nbsp;тобой <br>скоро",
+      "parents": [613,617,6003]
+    },
+    {
+      "id": "622",
+      "label": "вернуться <br>в&nbsp;начало",
+      "parents": [621],
+      "goToUrl": "/?node=1&jn=v-1"
+    },
+
+
+
+    {
+      "id": "900",
+      "label": "скажешь&nbsp;что <br>не&nbsp;нравится?",
+      "parents": [358]
+    },
+    {
+      "id": "901",
+      "label": "да",
+      "parents": [900],
+      "goTo" : 903
+    },
+    {
+      "id": "902",
+      "label": "нет",
+      "parents": [900],
+      "sendMail": true,
+      "goTo" : 905
+    },
+    {
+      "id": "903",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"comment\" mailname=\"Замечания\" placeholder=\"кликни тут и напиши твои замечания\"></textarea>",
+      "parents": [357]
+    },
+    {
+      "id": "904",
+      "label": "дальше",
+      "parents": [903],
+      "goTo" : 343,
+      "required": 903
+    },
+    {
+      "id": "905",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>будь <br>счастлив <br>человек",
+      "parents": [902,3611]
+    },
+    {
+      "id": "906",
+      "label": "вернуться <br>в начало",
+      "parents": [905],
+      "goToUrl": "https://variant.name/?node=1&jn=v-1"
+    }
+  ]
+}
+

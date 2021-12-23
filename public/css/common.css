@@ -208,6 +208,9 @@ a:hover {
   opacity: 1;
   transition: 0s left 0s;
 }
+.node .v-content .qr-item {
+  width: 80vw;
+}
 .qr-list.active .qr-item {
   left: 150%;
   transition: 0s left 0.35s;
@@ -222,6 +225,8 @@ a:hover {
   opacity: 1;
   transition: 0.35s cubic-bezier(.5,.16,.24,.5);
 }
+.node.active .v-content .qr-code,
+.node.active .v-content .qr-description,
 .qr-list.active .qr-code,
 .qr-list.active .qr-description {
   -webkit-filter: blur(10px);
@@ -350,7 +355,8 @@ a:hover {
   transform: scale(0.75);
   transition: transform 0.34s cubic-bezier(.5,.16,.24,.25), 0s left 0.01s;
 }
-.qr-item.active .qr-item-active {
+.node.active .v-content .qr-item-active,
+ .qr-item.active .qr-item-active {
   left: 20%;
   transform: scale(1);
   transition: transform 0.34s cubic-bezier(.5,.16,.24,.25) 0.01s, 0s left 0s;
@@ -363,6 +369,7 @@ a:hover {
   opacity: 0;
   transition-delay: 0s;
 }
+.node.active .v-content .qr-item-active .qr-code,
 .qr-list.active .qr-item-active .qr-code {
   -webkit-filter: blur(0px);
   -moz-filter: blur(0px);
@@ -372,6 +379,7 @@ a:hover {
   opacity: 1;
   transition-delay: 0s;
 }
+.node.active .v-content .qr-item-active .qr-description,
 .qr-list.active .qr-item-active .qr-description {
   -webkit-filter: blur(0px);
   -moz-filter: blur(0px);
@@ -381,6 +389,7 @@ a:hover {
   opacity: 1;
   transition-delay: 0.15s;
 }
+.node.active .v-content .qr-item-active,
 .qr-list.active .qr-item.active .qr-item-active {
   -webkit-filter: blur(0px);
   -moz-filter: blur(0px);
