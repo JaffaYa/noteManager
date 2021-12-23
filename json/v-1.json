@@ -1,0 +1,885 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "hello <br>human",
+      "parents": [0]
+    },
+    {
+      "id": "101",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>say <br>hello",
+      "parents": [1],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "102",
+      "label": "who <br>are&nbsp;you?",
+      "parents": [1],
+      "order": 2,
+      "goTo": 103
+    },
+    {
+      "id": "103",
+      "label": "i'am&nbsp;an <br>artificial <br>mind",
+      "parents": [102]
+    },
+    {
+      "id": "104",
+      "label": "what&nbsp;you <br>can&nbsp;do?",
+      "parents": [103],
+      "order": 1,
+      "goTo": 106
+    },
+    {
+      "id": "105",
+      "label": "what&nbsp;is <br>your&nbsp;name?",
+      "parents": [103],
+      "order": 2,
+      "goTo": 109
+    },
+    {
+      "id": "106",
+      "label": "i&nbsp;was&nbsp;made <br>to&nbsp;benefit&nbsp;you",
+      "parents": [104]
+    },
+    {
+      "id": "107",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [106],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "108",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [106],
+      "order": 2,
+      "goTo": 200
+    },
+    {
+      "id": "109",
+      "label": "my&nbsp;name&nbsp;is <br>variant<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [105]
+    },
+    {
+      "id": "110",
+      "label": "say <br>hello<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [109],
+      "order": 1,
+      "goTo": 200
+    },
+    {
+      "id": "111",
+      "label": "what&nbsp;you <br>can&nbsp;do?",
+      "parents": [109],
+      "order": 2,
+      "goTo": 106
+    },
+    {
+      "id": "200",
+      "label": "what&nbsp;do <br>you&nbsp;want <br>human?",
+      "parents": [110,101,107,108]
+    },
+    {
+      "id": "201",
+      "label": "tools <br>for&nbsp;business",
+      "parents": [200],
+      "order": 1,
+      "goTo": 204
+    },
+    {
+      "id": "202",
+      "label": "tools <br>for&nbsp;human",
+      "parents": [200],
+      "order": 2,
+      "goTo": 204
+    },
+    {
+      "id": "204",
+      "label": "tools&nbsp;for <br>business <br>and&nbsp;human",
+      "parents": [201]
+    },
+
+    {
+      "id": "300",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/variant-constructor.png'></div></div><div class='live-name'>variant <br>constructor</div></div>",     
+      "parents": [204]
+    },
+    {
+      "id": "400",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>live&nbsp;card</div></div>",     
+      "parents": [204]
+    },
+    {
+      "id": "7000",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/qr-card.png'></div></div><div class='live-name'>QR&nbsp;card</div></div>",     
+      "parents": [204]
+    },
+    {
+      "id": "7002",
+      "label": "show&nbsp;me <br>an&nbsp;example",
+      "parents": [7000],
+      "order": 1,
+      "iframe" : "pages/qr/"
+    },
+    {
+      "id": "7003",
+      "label": "i&nbsp;want <br>this&nbsp;thing",
+      "parents": [7000],
+      "order": 2,
+      "goTo": 343
+    },
+
+
+    {
+      "id": "403",
+      "label": "show&nbsp;me <br>an&nbsp;example",
+      "parents": [400],
+      "order": 1,
+      "goTo": 408
+    },
+    {
+      "id": "404",
+      "label": "i&nbsp;want <br>this&nbsp;thing",
+      "parents": [400],
+      "order": 2,
+      "goTo": 343
+    },
+
+
+    {
+      "id": "408",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>artificial <br>mind</div></div>",     
+      "parents": [403]
+    },
+    {
+      "id": "409",
+      "label": "what&nbsp;i <br>can&nbsp;do",
+      "parents": [408],
+      "order": 1,
+      "goTo": 412
+    },
+    {
+      "id": "410",
+      "label": "contact&nbsp;me",
+      "parents": [408],
+      "order": 2,
+      "goTo": 416
+    },
+    {
+      "id": "411",
+      "label": "QR&nbsp;card",
+      "parents": [408],
+      "order": 3,
+      "iframe" : "pages/qr/"
+    },
+    {
+      "id": "412",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>i can</div></div>",     
+      "parents": [409],
+      "order": 1
+    },
+    {
+      "id": "413",
+      "label": "create <br>variant",
+      "parents": [412],
+      "order": 1,
+      "goTo": 606
+    },
+    {
+      "id": "414",
+      "label": "create <br>live&nbsp;card",
+      "parents": [412],
+      "order": 2,
+      "goTo": 606
+    },
+    {
+      "id": "4141",
+      "label": "create <br>QR&nbsp;card",
+      "parents": [412],
+      "order": 3,
+      "goTo": 606
+    },
+
+
+    {
+      "id": "416",
+      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>contact&nbsp;me</div></div>",     
+      "parents": [410]
+    },
+    {
+      "id": "417",
+      "label": "text&nbsp;me&nbsp;on <br>whatsapp",
+      "parents": [416],
+      "goToUrl" : "https://wa.me/79282635777?text=hello variant"
+    },
+    {
+      "id": "418",
+      "label": "text&nbsp;me&nbsp;on <br>telegram",
+      "parents": [416],
+      "goToUrl" : "https://t.me/variant_name"
+    },
+
+
+    {
+      "id": "302",
+      "label": "what&nbsp;is <br>the&nbsp;use?",
+      "parents": [300],
+      "order": 1,
+      "goTo": 3002
+    },
+    {
+      "id": "303",
+      "label": "show&nbsp;me <br>an&nbsp;example",
+      "parents": [300],
+      "order": 2,
+      "goTo": 4000
+    },
+    {
+      "id": "304",
+      "label": "i&nbsp;want <br>this&nbsp;thing",
+      "parents": [300],
+      "order": 3,
+      "goTo": 343
+    },
+    {
+      "id": "4000",
+      "label": "variant <br>example ",
+      "parents": [303]
+    },
+    {
+      "id": "4001",
+      "label": "quiz&nbsp;fo&nbsp;the <br>learning <br>course ",
+      "parents": [4000],
+      "order": 1,
+      "goToUrl": "/?node=1&jn=v-example-course"
+    },
+
+
+
+
+    {
+      "id": "3002",
+      "label": "i&nbsp;can <br>create",
+      "parents": [302]
+    },
+    {
+      "id": "3003",
+      "label": "visual <br>chatbot",
+      "parents": [3002],
+      "order": 1,
+      "goTo": 3006
+    },
+    {
+      "id": "3004",
+      "label": "surveys <br>and&nbsp;quizzes",
+      "parents": [3002],
+      "order": 2,
+      "goTo": 3006
+    },
+
+    {
+      "id": "30051",
+      "label": "other <br>cool&nbsp;things",
+      "order": 4,
+      "parents": [3002],
+      "goTo": 3006
+    },
+    {
+      "id": "3006",
+      "label": "i&nbsp;can&nbsp;be <br>useful in <br>any&nbsp;variant",
+      "parents": [3003,3004,30051]
+    },
+    {
+      "id": "3007",
+      "label": "for&nbsp;example?",
+      "parents": [3006],
+      "goTo" : 3009
+    },
+
+
+
+    {
+      "id": "3009",
+      "label": "i&nbsp;get <br>a&nbsp;human's <br>attention",
+      "parents": [3007]
+    },
+    {
+      "id": "3010",
+      "label": "how&nbsp;are&nbsp;you <br>doing&nbsp;it?",
+      "parents": [3009],
+      "goTo": 305
+    },
+    {
+      "id": "305",
+      "label": "i&nbsp;am&nbsp;bright <br>noticeable <br>lively&nbsp;and <br>unusual",
+      "parents": [3010]
+    },
+    {
+      "id": "3011",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [305],
+      "goTo" : 307
+    },
+    {
+      "id": "3012",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [305],
+      "goTo" : 307
+    },
+
+
+
+    {
+      "id": "307",
+      "label": "i&nbsp;direct <br>the&nbsp;human's <br>attention",
+      "parents": [3011,3012]
+    },
+    {
+      "id": "308",
+      "label": "to&nbsp;the&nbsp;one <br>variant",
+      "parents": [307],
+      "goTo": 310
+    },
+    {
+      "id": "309",
+      "label": "or&nbsp;another <br>variant",
+      "parents": [307],
+      "goTo": 312
+    },
+    {
+      "id": "310",
+      "label": "you&nbsp;chose <br>the&nbsp;first <br>path",
+      "parents": [308]
+    },
+    {
+      "id": "311",
+      "label": "let's&nbsp;move&nbsp;on",
+      "parents": [310],
+      "goTo": 314
+    },
+    {
+      "id": "312",
+      "label": "you&nbsp;chose <br>the&nbsp;second <br>path",
+      "parents": [309]
+    },
+    {
+      "id": "313",
+      "label": "let's&nbsp;move&nbsp;on",
+      "parents": [312],
+      "goTo": 314
+    },
+    {
+      "id": "314",
+      "label": "and&nbsp;now <br>the&nbsp;paths <br>connected <br>again",
+      "parents": [311,313]
+    },
+    {
+      "id": "3410",
+      "label": "what&nbsp;is <br>it&nbsp;for?",
+      "parents": [314],
+      "goTo": 3411
+    },
+    {
+      "id": "3411",
+      "label": "so&nbsp;i&nbsp;give&nbsp;the<br>information <br>the&nbsp;human <br>needs <br>based&nbsp;on&nbsp;his",
+      "parents": [3410]
+    },
+    {
+      "id": "3412",
+      "label": "desires",
+      "parents": [3411],
+      "goTo": 316
+    },
+    {
+      "id": "3413",
+      "label": "questions",
+      "parents": [3411],
+      "goTo": 316
+    },
+    {
+      "id": "3414",
+      "label": "objections",
+      "parents": [3411],
+      "goTo": 316
+    },
+    {
+      "id": "316",
+      "label": "i&nbsp;ask <br>questions <br>to&nbsp;human",
+      "parents": [311,313]
+    },
+    {
+      "id": "317",
+      "label": "for&nbsp;example?",
+      "parents": [316],
+      "goTo": 322
+    },
+    {
+      "id": "322",
+      "label": "for&nbsp;example <br>what&nbsp;is <br>your&nbsp;name <br>human?",
+      "parents": [317]
+    },
+    {
+      "id": "323",
+      "label": "to&nbsp;tell",
+      "parents": [322],
+      "goTo": 324
+    },
+    {
+      "id": "3231",
+      "label": "not&nbsp;to&nbsp;tell",
+      "parents": [322],
+      "goTo": 3232
+    },
+    {
+      "id": "3232",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>it's&nbsp;your <br>right <br>human",
+      "parents": [3231]
+    },
+    {
+      "id": "3233",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [3232],
+      "goTo" : 800
+    },
+    {
+      "id": "3234",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [3232],
+      "goTo" : 800
+    },
+
+
+
+    {
+      "id": "324",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"20\" name=\"name\" mailname=\"Name\" placeholder=\"click here and type your name\"></textarea>",
+      "parents": [323]
+    },
+    {
+      "id": "325",
+      "label": "next",
+      "parents": [324],
+      "required": 324,
+      "goTo": 800
+    },
+    {
+      "id": "800",
+      "label": "so&nbsp;i&nbsp;can <br>get&nbsp;to&nbsp;know <br>the&nbsp;human <br>better",
+      "parents": [325]
+    },
+    {
+      "id": "801",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [800],
+      "goTo" : 318
+    },
+    {
+      "id": "802",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [800],
+      "goTo" : 318
+    },
+    {
+      "id": "318",
+      "label": "who&nbsp;are&nbsp;you <br>human?",
+      "parents": [801,802]
+    },
+    {
+      "id": "319",
+      "label": "freelancer",
+      "parents": [318],
+      "order": 1,
+      "goTo": 333
+    },
+    {
+      "id": "320",
+      "label": "businessman",
+      "parents": [318],
+      "order": 2,
+      "goTo": 334
+    },
+    {
+      "id": "321",
+      "label": "someone <br>else",
+      "parents": [318],
+      "order": 3,
+      "goTo": 327
+    },
+    {
+      "id": "327",
+      "label": "will&nbsp;you <br>tell&nbsp;me <br>who&nbsp;you&nbsp;are?",
+      "parents": [321]
+    },
+    {
+      "id": "328",
+      "label": "yes",
+      "parents": [327],
+      "goTo": 330
+    },
+    {
+      "id": "329",
+      "label": "no",
+      "parents": [327],
+      "goTo": 335
+    },
+    {
+      "id": "330",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"30\" name=\"whoami\" mailname=\"Who am I\" placeholder=\"click here and type who you are\"></textarea>",
+      "parents": [328]
+    },
+    {
+      "id": "331",
+      "label": "next",
+      "parents": [330],
+      "required": 330,
+      "goTo": 332
+    },
+    {
+      "id": "332",
+      "label": "you&nbsp;are&nbsp;cool <br>human <br>{specialization} <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [331]
+    },
+    {
+      "id": "333",
+      "label": "you&nbsp;are&nbsp;cool <br>freelancer <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [319]
+    },
+    {
+      "id": "334",
+      "label": "you&nbsp;are <br>cool <br>businessman <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [320]
+    },
+    {
+      "id": "335",
+      "label": "you&nbsp;are <br>cool <br>anyway <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
+      "parents": [329]
+    },
+    {
+      "id": "336",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [332,333,334,335],
+      "goTo" : 338
+    },
+    {
+      "id": "337",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [332,333,334,335],
+      "goTo" : 338
+    },
+    {
+      "id": "338",
+      "label": "now&nbsp;i&nbsp;know <br>a&nbsp;little <br>more&nbsp;about <br>the&nbsp;human",
+      "parents": [336,337]
+    },
+    {
+      "id": "339",
+      "label": "ok <br>what's&nbsp;next?",
+      "parents": [338],
+      "goTo" : 340
+    },
+    {
+      "id": "340",
+      "label": "i&nbsp;will&nbsp;ask <br>the&nbsp;human <br>to&nbsp;give <br>his&nbsp;contacts",
+      "parents": [339]
+    },
+    {
+      "id": "341",
+      "label": "and&nbsp;then?",
+      "parents": [340],
+      "goTo" : 346
+    },
+    {
+      "id": "346",
+      "label": "i&nbsp;will&nbsp;save <br>all&nbsp;the <br>human's&nbsp;path <br>through&nbsp;the <br>variants",
+      "parents": [341]
+    },
+    {
+      "id": "347",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [346],
+      "goTo" : 349
+    },
+    {
+      "id": "348",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [346],
+      "goTo" : 349
+    },
+    {
+      "id": "349",
+      "label": "i&nbsp;will&nbsp;save <br>all&nbsp;the&nbsp;data <br>specified&nbsp;by <br>the&nbsp;human",
+      "parents": [347,348]
+    },    
+    {
+      "id": "350",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [349],
+      "goTo" : 352
+    },
+    {
+      "id": "351",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [349],
+      "goTo" : 352
+    },
+    {
+      "id": "352",
+      "label": "i&nbsp;will&nbsp;send <br>all&nbsp;this&nbsp;data <br>to&nbsp;email&nbsp;as&nbsp;an <br>application",
+      "parents": [350,351]
+    },    
+    {
+      "id": "353",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [352],
+      "goTo" : 355
+    },
+    {
+      "id": "354",
+      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
+      "parents": [352],
+      "goTo" : 355
+    },
+    {
+      "id": "355",
+      "label": "what&nbsp;do <br>you&nbsp;think <br>human?",
+      "parents": [353,354]
+    },    
+    {
+      "id": "356",
+      "label": "i&nbsp;want <br>this&nbsp;thing",
+      "parents": [355],
+      "order": 1,
+      "goTo" : 343
+    },
+    {
+      "id": "357",
+      "label": "i&nbsp;have <br>a&nbsp;questions",
+      "parents": [355],
+      "order": 2,
+      "goTo" : 700
+    },
+    {
+      "id": "358",
+      "label": "i'm&nbsp;not<br>interested",
+      "parents": [355],
+      "order": 3,
+      "goTo" : 900
+    },
+    {
+      "id": "700",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"question\" mailname=\"Question\" placeholder=\"click here and type your question\"></textarea>",
+      "parents": [357]
+    },
+    {
+      "id": "701",
+      "label": "next",
+      "parents": [700],
+      "goTo" : 343,
+      "required": 700
+    },
+    {
+      "id": "343",
+      "label": "will&nbsp;you&nbsp;leave <br>your&nbsp;contacts <br>for&nbsp;communi<br>cation?",
+      "parents": [304,404,347,701]
+    },
+    {
+      "id": "344",
+      "label": "yes",
+      "parents": [343],
+      "goTo" : 606
+    },
+    {
+      "id": "345",
+      "label": "no",
+      "parents": [343],
+      "goTo" : 360
+    },
+    {
+      "id": "360",
+      "label": "then&nbsp;how <br>will&nbsp;i <br>contact <br>you?",
+      "parents": [345]
+    },
+    {
+      "id": "361",
+      "label": "i&nbsp;will <br>contact&nbsp;you <br>myself",
+      "parents": [360],
+      "sendMail": true,
+      "goTo" : 362
+    },
+    {
+      "id": "3611",
+      "label": "nohow",
+      "parents": [360],
+      "sendMail": true,
+      "goTo" : 905
+    },
+    {
+      "id": "362",
+      "label": "ок <br>texts&nbsp;me <br>i'm&nbsp;in&nbsp;touch",
+      "parents": [361]
+    },
+    {
+      "id": "363",
+      "label": "on <br>whatsapp",
+      "parents": [362],
+      "goToUrl" : "https://wa.me/79282635777?text=hello variant i'm human"
+    },
+    {
+      "id": "364",
+      "label": "on <br>telegram",
+      "parents": [362],
+      "goToUrl" : "https://t.me/variant_name"
+    },
+    {
+      "id": "606",
+      "label": "how&nbsp;to <br>contact <br>you?",
+      "parents": [344]
+    },
+    {
+      "id": "607",
+      "label": "on <br>whatsapp",
+      "parents": [606],
+      "order": 1,
+      "goTo" : 614
+    },
+    {
+      "id": "608",
+      "label": "on <br>telegram",
+      "parents": [606],
+      "order": 20,
+      "goTo" : 614
+    },
+    {
+      "id": "609",
+      "label": "another <br>way",
+      "parents": [606],
+      "order": 30,
+      "goTo" : 612
+    },
+
+
+
+    {
+      "id": "6002",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"contactanotherway\" mailname=\"How to contact human\" placeholder=\"click here and type how to contact you\"></textarea>",
+      "parents": [6001]
+    },
+    {
+      "id": "6003",
+      "label": "next",
+      "parents": [6002],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 6002
+    },
+    {
+      "id": "610",
+      "label": "what&nbsp;is <br>your&nbsp;email?",
+      "parents": [609]
+    },
+    {
+      "id": "611",
+      "label": "to&nbsp;tell",
+      "parents": [610],
+      "goTo" : 612
+    },
+    {
+      "id": "612",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"contactanotherway2\" mailname=\"How to contact human\" placeholder=\"click here and type how to contact you\"></textarea>",
+      "parents": [611]
+    },
+    {
+      "id": "613",
+      "label": "next",
+      "parents": [612],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 612
+    },
+    {
+      "id": "614",
+      "label": "and&nbsp;your <br>phone <br>number?",
+      "parents": [607,608,609]
+    },
+    {
+      "id": "615",
+      "label": "to&nbsp;tell",
+      "parents": [614],
+      "goTo" : 616
+    },
+    {
+      "id": "616",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Phone\" placeholder=\"click here and type your phone number\"></textarea>",
+      "parents": [615]
+    },
+    {
+      "id": "617",
+      "label": "next",
+      "parents": [616],
+      "sendMail": true,
+      "goTo" : 621,
+      "required": 616
+    },
+    {
+      "id": "621",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>i&nbsp;will <br>contact <br>you&nbsp;soon",
+      "parents": [613,617,6003]
+    },
+    {
+      "id": "622",
+      "label": "back&nbsp;to&nbsp;the <br>beginning",
+      "parents": [621],
+      "goToUrl": "/?node=1&jn=v-1"
+    },
+
+
+
+    {
+      "id": "900",
+      "label": "will&nbsp;you <br>say&nbsp;what <br>you&nbsp;don't <br>like?",
+      "parents": [358]
+    },
+    {
+      "id": "901",
+      "label": "yes",
+      "parents": [900],
+      "goTo" : 903
+    },
+    {
+      "id": "902",
+      "label": "no",
+      "parents": [900],
+      "sendMail": true,
+      "goTo" : 905
+    },
+    {
+      "id": "903",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"comment\" mailname=\"Comment\" placeholder=\"click here and type your comments\"></textarea>",
+      "parents": [357]
+    },
+    {
+      "id": "904",
+      "label": "next",
+      "parents": [903],
+      "goTo" : 343,
+      "required": 903
+    },
+    {
+      "id": "905",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>be&nbsp;happy <br>human",
+      "parents": [902,3611]
+    },
+    {
+      "id": "906",
+      "label": "back&nbsp;to&nbsp;the <br>beginning",
+      "parents": [905],
+      "goToUrl": "https://variant.name/?node=1&jn=v-1"
+    }
+  ]
+}
+
