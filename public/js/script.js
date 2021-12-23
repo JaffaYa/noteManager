@@ -102,6 +102,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	var emailProvider = null;
 	var emailTemplate = null;
 
+	var fpsLockTime = 0;
+
 
 	window.simulationResize = function (){};
 
@@ -328,13 +330,19 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 	function manualTick(time){
 
-		model.stats.tickUPS();
-		simulation.tick();
-		
-		// simulation.tick();
-		model.stats.tick();
-		//render
-		simulationTick();
+		let timeMS = (Date.now() - fpsLockTime);
+
+    	if( timeMS > 16 ){
+    		fpsLockTime = Date.now();
+
+			model.stats.tickUPS();
+			simulation.tick();
+
+			// simulation.tick();
+			model.stats.tick();
+			//render
+			simulationTick();
+    	}
 
 		if (simulation.alpha() < simulation.alphaMin()) {
 			// stepper.stop();
@@ -2093,6 +2101,7 @@ addClassElementEvent('.qr-item','active','click');
 		function stats(){
 			var isActive = false;
 			//fps
+			var lastFPS = 0;
 			var startTime = 0;
 			var frame = 0;
 			//ups
@@ -2165,7 +2174,7 @@ addClassElementEvent('.qr-item','active','click');
 						var time = Date.now();
 						frame++;
 						if (time - startTime > 1000) {
-							fps.innerHTML = (frame / ((time - startTime) / 1000)).toFixed(1);
+							fps.innerHTML = lastFPS = (frame / ((time - startTime) / 1000)).toFixed(1);
 							startTime = time;
 							frame = 0;
 						}
@@ -2195,6 +2204,9 @@ addClassElementEvent('.qr-item','active','click');
 							frameUps = 0;
 						}
 					}
+				},
+				getFps: function(){
+					return (frame / (Date.now() - startTime)).toFixed(3);
 				},
 				getTickCount: getTickCount
 			}
