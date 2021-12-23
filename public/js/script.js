@@ -228,7 +228,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 			let time = 0;
 
-			simulation.alphaTarget(0.5).restart();
+			simulation.alphaTarget(0.5)
+			// .restart();
+			// simulation.stop();
+			requestAnimationFrame(manualTick);
 			
 
 			if(verticalScreen){
@@ -312,11 +315,99 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		model.stats.restart();
 		animState.start();
 
-		simulation.on("tick", simulationTick);
-		simulation.on("end", animationEnd);
+		// simulation.on("tick", simulationTick);
+		// simulation.on("end", animationEnd);
+
+		simulation.stop();
+		setInterval(function(){ 
+			model.stats.tickUPS();
+			simulation.tick();
+		}, 17);
+		requestAnimationFrame(manualTick);
 	}
 
+	function manualTick(time){
+		// simulation.tick();
+		model.stats.tick();
+		//render
+		simulationTick();
 
+		if (simulation.alpha() < simulation.alphaMin()) {
+			// stepper.stop();
+			// event.call("end", simulation);
+			animationEnd();
+	    }else{
+			requestAnimationFrame(manualTick);
+	    }
+	}
+
+	function render(){}
+
+
+
+	function simulationTick(){
+		
+
+		// let tickCount = model.stats.getTickCount();
+
+		// simulation.alphaDecay(simulation.alphaDecay() + 0.002);
+		// if(tickCount == 150){
+		// 	simulation.alphaTarget(0);
+		// }
+		// if(tickCount == 500){
+		// 	simulation.alphaDecay(0.0228).restart();
+		// }
+
+		// console.log('alpha:'+Math.round( simulation.alpha()*10000)/10000   );
+		// console.log('alphaMin:'+simulation.alphaMin());
+		// console.log('alphaTarget:'+simulation.alphaTarget());
+		// console.log('alphaDecay:'+simulation.alphaDecay());
+		// console.log('velocityDecay:'+simulation.velocityDecay());
+
+		svgLinks
+		.attr("x1", d => d.source.x)
+		.attr("y1", d => d.source.y)
+		.attr("x2", d => d.target.x)
+		.attr("y2", d => d.target.y);
+
+		htmlNodes
+		.attr("style", function (d){ 
+			return 'left:'+d.x+'px;top:'+d.y+'px;'
+		});
+
+
+	}
+
+	function make_animationState(){
+		let animationFlag = false;
+		//limit time of animation state
+		let timerLimiter = 1300; //not longer that 1s
+
+		let startTime;
+
+		return {
+			start: function(){
+				startTime = Date.now();
+				return animationFlag = true;
+			},
+			stop: function(){
+				return animationFlag = false;
+			},
+			get: function(){
+				if( (Date.now() - startTime) > timerLimiter ){
+					animationFlag = false;
+				}
+
+				return animationFlag;
+			}
+		};
+	}
+
+	function animationEnd(e){
+		console.log('animationEnds');
+		animState.stop();
+		// console.log(animState.get());
+	}
 
 
 	function bubleClick(d, i, arr) {
@@ -481,26 +572,28 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		// }, deleteDelay+100, simulation);
 
 		let time = 0;
+
+		requestAnimationFrame(manualTick);
 			
-			if(verticalScreen){
-				setTimeout(function(simulation){
-					simulation.alphaTarget(1.5);
-					simulation.velocityDecay(0.7) 
-				}, time+0, simulation);
-				setTimeout(function(simulation){
-					simulation.alphaTarget(0);
-					simulation.velocityDecay(0.5) 
-				}, time+500, simulation);
-			}else{
-				setTimeout(function(simulation){
-					simulation.alphaTarget(1.5);
-					simulation.velocityDecay(0.7) 
-				}, time+0, simulation);
-				setTimeout(function(simulation){
-					simulation.alphaTarget(0);
-					simulation.velocityDecay(0.5) 
-				}, time+500, simulation);
-			}
+		if(verticalScreen){
+			setTimeout(function(simulation){
+				simulation.alphaTarget(1.5);
+				simulation.velocityDecay(0.7) 
+			}, time+0, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0);
+				simulation.velocityDecay(0.5) 
+			}, time+500, simulation);
+		}else{
+			setTimeout(function(simulation){
+				simulation.alphaTarget(1.5);
+				simulation.velocityDecay(0.7) 
+			}, time+0, simulation);
+			setTimeout(function(simulation){
+				simulation.alphaTarget(0);
+				simulation.velocityDecay(0.5) 
+			}, time+500, simulation);
+		}
 
 		animState.start();
 		model.stats.restart();
@@ -510,67 +603,6 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
 
 
-	function simulationTick(){
-		model.stats.tick();
-
-		let tickCount = model.stats.getTickCount();
-
-		// simulation.alphaDecay(simulation.alphaDecay() + 0.002);
-		// if(tickCount == 150){
-		// 	simulation.alphaTarget(0);
-		// }
-		// if(tickCount == 500){
-		// 	simulation.alphaDecay(0.0228).restart();
-		// }
-
-		// console.log('alpha:'+Math.round( simulation.alpha()*10000)/10000   );
-		// console.log('alphaMin:'+simulation.alphaMin());
-		// console.log('alphaTarget:'+simulation.alphaTarget());
-		// console.log('alphaDecay:'+simulation.alphaDecay());
-		// console.log('velocityDecay:'+simulation.velocityDecay());
-
-		svgLinks
-		.attr("x1", d => d.source.x)
-		.attr("y1", d => d.source.y)
-		.attr("x2", d => d.target.x)
-		.attr("y2", d => d.target.y);
-
-		htmlNodes
-		.attr("style", function (d){ 
-			return 'left:'+d.x+'px;top:'+d.y+'px;'
-		});
-
-	}
-
-	function make_animationState(){
-		let animationFlag = false;
-		//limit time of animation state
-		let timerLimiter = 1300; //not longer that 1s
-
-		let startTime;
-
-		return {
-			start: function(){
-				startTime = Date.now();
-				return animationFlag = true;
-			},
-			stop: function(){
-				return animationFlag = false;
-			},
-			get: function(){
-				if( (Date.now() - startTime) > timerLimiter ){
-					animationFlag = false;
-				}
-
-				return animationFlag;
-			}
-		};
-	}
-
-	function animationEnd(e){
-		animState.stop();
-		// console.log(animState.get());
-	}
 
 	function deleteDelayCallback(model){
 		svgLinks = buildLinks(model.links);
@@ -682,7 +714,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			node.fx = null;
 			node.fy = null;
 			model.mobileInpuntActive = false;
-			simulation.alpha(0.5).restart();
+			simulation.alpha(0.5)
+			// .restart();
+			// simulation.stop();
+			requestAnimationFrame(manualTick);
 
 			//remove error class on unfocus
 			nodeElem.classList.remove('error');
@@ -722,7 +757,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			node.fx = null;
 			node.fy = null;
 			model.mobileInpuntActive = false;
-			simulation.alpha(0.5).restart();
+			simulation.alpha(0.5)
+			// .restart();
+			// simulation.stop();
+			requestAnimationFrame(manualTick);
 
 			//set textarea size in inactive state 
 			view.setTextareaHeight(d3.event.target);
@@ -906,12 +944,16 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		if(!model.mobileInpuntActive){
 			if (!d3.event.active) 
 			if(verticalScreen){
-				simulation.alphaTarget(0.5).restart(); 
+				simulation.alphaTarget(0.5);
+				//.restart(); 
 				simulation.velocityDecay(0.2);
 			}else{
-				simulation.alphaTarget(0.5).restart(); 
+				simulation.alphaTarget(0.5);
+				//.restart(); 
 				simulation.velocityDecay(0.2);
 			}
+			//simulation.stop();
+			requestAnimationFrame(manualTick);
 			model.stats.restart();
 			d.fx = d.x;
 			d.fy = d.y;
@@ -2017,6 +2059,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			//fps
 			var startTime = 0;
 			var frame = 0;
+			//ups
+			var startTimeUps = 0;
+			var frameUps = 0;
 
 			var tickCount = 0;
 			var simulationTime = 0;
@@ -2025,6 +2070,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			// wrapperStats.setAttribute('style',"font-size: 24px;z-index: 100;position: absolute;top: 0;");
 			wrapperStats.setAttribute('style',"font-size: 20px;z-index: 100;position: absolute;top: 0;");
 
+			//fps
+			var ups = createStat('UPS: ');
 			//fps
 			var fps = createStat('FPS: ');
 			//counter
@@ -2065,7 +2112,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				enable: function(){
 					isActive = true;
 					startTime = Date.now();
+					startTimeUps = Date.now();
 					frame = 0;
+					frameUps = 0;
 					if(parent){
 						parent.append(wrapperStats);
 					}
@@ -2097,6 +2146,18 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 						let simAlpha = simulation.alpha()
 						alpha.innerHTML = Math.round(simAlpha*1000)/1000;
 						alpha.style.width = simAlpha*100+'px';
+					}
+				},
+				tickUPS: function(){
+					if(isActive){
+						//ups
+						var time = Date.now();
+						frameUps++;
+						if (time - startTimeUps > 1000) {
+							ups.innerHTML = (frameUps / ((time - startTimeUps) / 1000)).toFixed(1);
+							startTimeUps = time;
+							frameUps = 0;
+						}
 					}
 				},
 				getTickCount: getTickCount
@@ -2846,7 +2907,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 				self.setTextareaHeight(this);
 			});
 
-			simulation.alpha(1).restart();
+			simulation.alpha(1)
+			// .restart();
+			// simulation.stop();
+			requestAnimationFrame(manualTick);
 			model.stats.restart();
 			animState.start();
 		}
@@ -2946,7 +3010,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}
 
 			function onMouseMove(e) {
-			  	console.log('move');
+			  	// console.log('move');
 			  	gsap.to($pointer1, .4, {
 			  		x: e.pageX - 30,
 			  		y: e.pageY - 30
@@ -2957,7 +3021,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			  	});
 			}
 			function onMouseDown(e) {
-			  	console.log('Down');
+			  	// console.log('Down');
 			  	mouseDownFlag = true;
 			  	gsap.to($pointer1, .5, {
 			  		scale: 0
@@ -2967,7 +3031,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			  	});
 			}
 			function onMouseUp(e) {
-			  	console.log('Up');
+			  	// console.log('Up');
 			  	mouseDownFlag = false;
 			  	gsap.to($pointer1, .5, {
 			  		scale: 1
@@ -2978,7 +3042,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			}
 
 			function onMouseHover() {
-			  	console.log('hover');
+			  	// console.log('hover');
 			  	if(!mouseDownFlag){
 			  		gsap.to($pointer1, .3, {
 			  			scale: 2
@@ -2989,7 +3053,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 			  	}
 			}
 			function onMouseHoverOut() {
-			  	console.log('out');
+			  	// console.log('out');
 			  	if(!mouseDownFlag || 1){
 				  	gsap.to($pointer1, .3, {
 				  		scale: 1
