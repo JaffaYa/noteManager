@@ -276,10 +276,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr).distanceMax(Infinity), d => !d.functional ) )// || d.function == 'logo'
 		// .force("center", d3.forceCenter(0,0))
 		.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
-		.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
-		.force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
-		.force("collide", view.isolateForce(d3.forceCollide().radius(view.getColideRadius).strength(view.colideRadiusStr()).iterations(view.getColideRadiusIterations()),view.collideForceIsolate))
-		.force("order", d3.forceY(view.orderForce).strength(view.orderForceStr))
+		// .force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
+		// .force("radial", d3.forceRadial(view.radial).strength(view.radialStr).x(view.radialX()).y(view.radialY()) )
+		// .force("collide", view.isolateForce(d3.forceCollide().radius(view.getColideRadius).strength(view.colideRadiusStr()).iterations(view.getColideRadiusIterations()),view.collideForceIsolate))
+		// .force("order", d3.forceY(view.orderForce).strength(view.orderForceStr))
 
 
 		// simulation
