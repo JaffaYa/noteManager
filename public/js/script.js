@@ -319,14 +319,18 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		// simulation.on("end", animationEnd);
 
 		simulation.stop();
-		setInterval(function(){ 
-			model.stats.tickUPS();
-			simulation.tick();
-		}, 17);
+		// setInterval(function(){ 
+		// 	model.stats.tickUPS();
+		// 	simulation.tick();
+		// }, 17);
 		requestAnimationFrame(manualTick);
 	}
 
 	function manualTick(time){
+
+		model.stats.tickUPS();
+		simulation.tick();
+		
 		// simulation.tick();
 		model.stats.tick();
 		//render
