@@ -1253,8 +1253,8 @@ textarea::-webkit-scrollbar-thumb {
       padding: 1.25rem 0;
   }
 }
-/*
-* {
+
+/** {
   transition: none!important;
 }*/
 
