@@ -241,7 +241,7 @@
 
 				if(verticalScreen){
 					setTimeout(function(simulation){
-						simulation.alphaTarget(1.5);
+						simulation.alphaTarget(0.5);
 						simulation.velocityDecay(0.7) 
 					}, time+0, simulation);
 					setTimeout(function(simulation){
@@ -250,7 +250,7 @@
 					}, time+500, simulation);
 				}else{
 					setTimeout(function(simulation){
-						simulation.alphaTarget(1.5);
+						simulation.alphaTarget(0.5);
 						simulation.velocityDecay(0.7) 
 					}, time+0, simulation);
 					setTimeout(function(simulation){
@@ -659,7 +659,7 @@
 				
 			if(verticalScreen){
 				setTimeout(function(simulation){
-					simulation.alphaTarget(1.5);
+					simulation.alphaTarget(0.5);
 					simulation.velocityDecay(0.7) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
@@ -668,7 +668,7 @@
 				}, time+500, simulation);
 			}else{
 				setTimeout(function(simulation){
-					simulation.alphaTarget(1.5);
+					simulation.alphaTarget(0.5);
 					simulation.velocityDecay(0.7) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
