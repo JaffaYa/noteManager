@@ -344,13 +344,13 @@
 					model.stats.tickUPS();
 					simulation.tick();
 				}
-
-	    	}
-
 			// simulation.tick();
 			model.stats.tick();
 			//render
 			simulationTick();
+
+	    	}
+
     	
 
 			// let fps = model.stats.getFps();
