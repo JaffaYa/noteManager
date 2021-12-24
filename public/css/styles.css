@@ -1254,9 +1254,9 @@ textarea::-webkit-scrollbar-thumb {
   }
 }
 
-* {
+/** {
   transition: none!important;
-}
+}*/
 
 /*.cursor,
 .btn-menu{
