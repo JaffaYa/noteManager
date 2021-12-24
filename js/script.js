@@ -2245,12 +2245,13 @@
 						if(isActive){
 							//ups
 							var time = Date.now();
-							frameUps++;
-							// if (time - startTimeUps > 1000) {
-								// ups.innerHTML = (frameUps / ((time - startTimeUps) / 1000)).toFixed(1);
+							// frameUps++;
+							frameUps = 60;
+							if (time - startTimeUps > 1000) {
+								ups.innerHTML = (frameUps / ((time - startTimeUps) / 1000)).toFixed(1);
 								startTimeUps = time;
 								frameUps = 0;
-							// }
+							}
 						}
 					},
 					getFps: function(){
