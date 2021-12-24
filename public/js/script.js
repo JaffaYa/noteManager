@@ -103,6 +103,9 @@
 		var emailTemplate = null;
 
 		var fpsLockTime = 0;
+		var ticksPerRender = 1;
+		var animFrameCount = 0;
+		var animStartTime = new Date();
 
 
 		window.simulationResize = function (){};
@@ -321,30 +324,59 @@
 			// simulation.on("end", animationEnd);
 
 			simulation.stop();
-			setInterval(function(){ 
-				model.stats.tickUPS();
-				simulation.tick();
-			}, 16);
+			// setInterval(function(){ 
+			// 	model.stats.tickUPS();
+			// 	simulation.tick();
+			// }, 16);
 			requestAnimationFrame(manualTick);
 		}
 
+		
+
 		function manualTick(time){
 
-			let timeMS = (Date.now() - fpsLockTime);
+			let timeMS = Date.now() - fpsLockTime;
 
-	    	if( timeMS >= 13 ){
+	    	// if( timeMS >= 13 ){
 	    		fpsLockTime = Date.now();
 
-				// model.stats.tickUPS();
-				// simulation.tick();
+	    		for (var i = 0; i < ticksPerRender; i++){
+					model.stats.tickUPS();
+					simulation.tick();
+				}
 
 				// simulation.tick();
 				model.stats.tick();
 				//render
 				simulationTick();
-	    	}
 
-			if (simulation.alpha() < simulation.alphaMin()) {
+
+	    	// }
+
+			// let fps = model.stats.getFps();
+			// console.log(fps);
+			// if(fps < 30){
+		 //        ticksPerRender++;
+	  //       }
+		 //    if(fps > 60 && ticksPerRender >= 1){
+		 //        ticksPerRender--;
+	  //       }
+
+	  		++animFrameCount;
+			if(animFrameCount>=15){ //Wait for 15, to get an accurate count
+				var now = new Date();
+				var fps = (animFrameCount / (now - animStartTime))*1000;
+				if(fps < 30){
+					ticksPerRender++;
+			        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+			    }
+			    if(fps > 60 && ticksPerRender > 1){
+			    	ticksPerRender--;
+			        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+			    }
+			}
+
+			if( simulation.alpha() < simulation.alphaMin() ){
 				// stepper.stop();
 				// event.call("end", simulation);
 				animationEnd();
@@ -2218,7 +2250,7 @@
 						}
 					},
 					getFps: function(){
-						return (frame / (Date.now() - startTime)).toFixed(3);
+						return lastFPS;
 					},
 					getTickCount: getTickCount
 				}
