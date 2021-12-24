@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/noteManager/static/css/main.afd7172b.chunk.css",
-    "main.js": "/noteManager/static/js/main.ddd7fa50.chunk.js",
-    "main.js.map": "/noteManager/static/js/main.ddd7fa50.chunk.js.map",
-    "runtime-main.js": "/noteManager/static/js/runtime-main.03efb067.js",
-    "runtime-main.js.map": "/noteManager/static/js/runtime-main.03efb067.js.map",
-    "static/js/2.14cb7857.chunk.js": "/noteManager/static/js/2.14cb7857.chunk.js",
-    "static/js/2.14cb7857.chunk.js.map": "/noteManager/static/js/2.14cb7857.chunk.js.map",
-    "static/js/3.9400bb17.chunk.js": "/noteManager/static/js/3.9400bb17.chunk.js",
-    "static/js/3.9400bb17.chunk.js.map": "/noteManager/static/js/3.9400bb17.chunk.js.map",
+    "main.js": "/noteManager/static/js/main.303ef802.chunk.js",
+    "main.js.map": "/noteManager/static/js/main.303ef802.chunk.js.map",
+    "runtime-main.js": "/noteManager/static/js/runtime-main.8eee13af.js",
+    "runtime-main.js.map": "/noteManager/static/js/runtime-main.8eee13af.js.map",
+    "static/js/2.c32a0a1a.chunk.js": "/noteManager/static/js/2.c32a0a1a.chunk.js",
+    "static/js/2.c32a0a1a.chunk.js.map": "/noteManager/static/js/2.c32a0a1a.chunk.js.map",
+    "static/js/3.23a248a6.chunk.js": "/noteManager/static/js/3.23a248a6.chunk.js",
+    "static/js/3.23a248a6.chunk.js.map": "/noteManager/static/js/3.23a248a6.chunk.js.map",
     "index.html": "/noteManager/index.html",
     "static/css/main.afd7172b.chunk.css.map": "/noteManager/static/css/main.afd7172b.chunk.css.map",
-    "static/js/2.14cb7857.chunk.js.LICENSE.txt": "/noteManager/static/js/2.14cb7857.chunk.js.LICENSE.txt"
+    "static/js/2.c32a0a1a.chunk.js.LICENSE.txt": "/noteManager/static/js/2.c32a0a1a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.03efb067.js",
-    "static/js/2.14cb7857.chunk.js",
+    "static/js/runtime-main.8eee13af.js",
+    "static/js/2.c32a0a1a.chunk.js",
     "static/css/main.afd7172b.chunk.css",
-    "static/js/main.ddd7fa50.chunk.js"
+    "static/js/main.303ef802.chunk.js"
   ]
 }

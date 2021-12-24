@@ -275,8 +275,8 @@
 			//init first data
 
 			window.simulation = d3.forceSimulation(model.nodesToDisplay)
-			// .force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-			// .force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr).distanceMax(Infinity), d => !d.functional ) )// || d.function == 'logo'
+			.force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
+			.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr).distanceMax(Infinity), d => !d.functional ) )// || d.function == 'logo'
 			// .force("center", d3.forceCenter(0,0))
 			.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 			.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
@@ -337,7 +337,7 @@
 
 			let timeMS = Date.now() - fpsLockTime;
 
-	    	// if( timeMS >= 13 ){
+	    	if( timeMS >= 13 ){
 	    		fpsLockTime = Date.now();
 
 	    		for (var i = 0; i < ticksPerRender; i++){
@@ -345,13 +345,13 @@
 					simulation.tick();
 				}
 
-				// simulation.tick();
-				model.stats.tick();
-				//render
-				simulationTick();
+	    	}
 
-
-	    	// }
+			// simulation.tick();
+			model.stats.tick();
+			//render
+			simulationTick();
+    	
 
 			// let fps = model.stats.getFps();
 			// console.log(fps);
