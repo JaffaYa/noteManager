@@ -241,7 +241,7 @@
 
 				if(verticalScreen){
 					setTimeout(function(simulation){
-						simulation.alphaTarget(1.5);
+						simulation.alphaTarget(0.5);
 						simulation.velocityDecay(0.7) 
 					}, time+0, simulation);
 					setTimeout(function(simulation){
@@ -250,7 +250,7 @@
 					}, time+500, simulation);
 				}else{
 					setTimeout(function(simulation){
-						simulation.alphaTarget(1.5);
+						simulation.alphaTarget(0.5);
 						simulation.velocityDecay(0.7) 
 					}, time+0, simulation);
 					setTimeout(function(simulation){
@@ -275,8 +275,8 @@
 			//init first data
 
 			window.simulation = d3.forceSimulation(model.nodesToDisplay)
-			// .force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
-			// .force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr).distanceMax(Infinity), d => !d.functional ) )// || d.function == 'logo'
+			.force("link", d3.forceLink(model.links).id(d => d.id).strength(view.linkStr).distance(view.linkDistance))
+			.force("charge", view.isolateForce(d3.forceManyBody().strength(view.manyBodyStr).distanceMax(Infinity), d => !d.functional ) )// || d.function == 'logo'
 			// .force("center", d3.forceCenter(0,0))
 			.force("slideForce", d3.forceX(view.slideForce).strength(view.slideForceStr))
 			.force("verticalForce", d3.forceY(view.verticalForce).strength(view.verticalForceStr))
@@ -344,33 +344,40 @@
 					model.stats.tickUPS();
 					simulation.tick();
 				}
-
 				// simulation.tick();
 				model.stats.tick();
 				//render
 				simulationTick();
 
+	
+	    	
+
+
+    	
+
+			// let fps = model.stats.getFps();
+			// console.log(fps);
+			// if(fps < 30){
+		 //        ticksPerRender++;
+	  //       }
+		 //    if(fps > 60 && ticksPerRender >= 1){
+		 //        ticksPerRender--;
+	  //       }
 
 		  		++animFrameCount;
 				if(animFrameCount>=15){ //Wait for 15, to get an accurate count
 					var now = new Date();
 					var fps = (animFrameCount / (now - animStartTime))*1000;
 					if(fps < 30){
-						// ticksPerRender++;
-						ticksPerRender = 2;
-				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
-				    }else if(fps < 15){
-				    	ticksPerRender = 4;
+						ticksPerRender++;
 				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
 				    }
 				    if(fps > 60 && ticksPerRender > 1){
-				    	// ticksPerRender--;
-				    	ticksPerRender = 1;
+				    	ticksPerRender--;
 				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
 				    }
 				}
   			}
-
 			if( simulation.alpha() < simulation.alphaMin() ){
 				// stepper.stop();
 				// event.call("end", simulation);
@@ -652,7 +659,7 @@
 				
 			if(verticalScreen){
 				setTimeout(function(simulation){
-					simulation.alphaTarget(1.5);
+					simulation.alphaTarget(0.5);
 					simulation.velocityDecay(0.7) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
@@ -661,7 +668,7 @@
 				}, time+500, simulation);
 			}else{
 				setTimeout(function(simulation){
-					simulation.alphaTarget(1.5);
+					simulation.alphaTarget(0.5);
 					simulation.velocityDecay(0.7) 
 				}, time+0, simulation);
 				setTimeout(function(simulation){
