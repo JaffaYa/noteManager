@@ -356,11 +356,16 @@
 					var now = new Date();
 					var fps = (animFrameCount / (now - animStartTime))*1000;
 					if(fps < 30){
-						ticksPerRender++;
+						// ticksPerRender++;
+						ticksPerRender = 2;
+				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+				    }else if(fps < 15){
+				    	ticksPerRender = 4;
 				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
 				    }
 				    if(fps > 60 && ticksPerRender > 1){
-				    	ticksPerRender--;
+				    	// ticksPerRender--;
+				    	ticksPerRender = 1;
 				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
 				    }
 				}
