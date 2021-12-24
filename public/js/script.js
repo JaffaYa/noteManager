@@ -366,7 +366,7 @@
 				if(animFrameCount>=15){ //Wait for 15, to get an accurate count
 					var now = new Date();
 					var fps = (animFrameCount / (now - animStartTime))*1000;
-					if(fps < 45){
+					if(fps < 30){
 						ticksPerRender++;
 				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
 				    }
