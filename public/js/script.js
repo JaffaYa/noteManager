@@ -353,14 +353,6 @@
 
 	    	// }
 
-			// let fps = model.stats.getFps();
-			// console.log(fps);
-			// if(fps < 30){
-		 //        ticksPerRender++;
-	  //       }
-		 //    if(fps > 60 && ticksPerRender >= 1){
-		 //        ticksPerRender--;
-	  //       }
 
 	  		++animFrameCount;
 			if(animFrameCount>=15){ //Wait for 15, to get an accurate count
@@ -368,11 +360,13 @@
 				var fps = (animFrameCount / (now - animStartTime))*1000;
 				if(fps < 30){
 					ticksPerRender++;
-			        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+			        animStartTime = now;
+			        animFrameCount = 0;  //Reset the fps counter
 			    }
 			    if(fps > 60 && ticksPerRender > 1){
 			    	ticksPerRender--;
-			        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+			        animStartTime = now;
+			        animFrameCount = 0;  //Reset the fps counter
 			    }
 			}
 
