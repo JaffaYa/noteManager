@@ -337,7 +337,7 @@
 
 			let timeMS = Date.now() - fpsLockTime;
 
-	    	// if( timeMS >= 13 ){
+	    	if( timeMS >= 13 ){
 	    		fpsLockTime = Date.now();
 
 	    		for (var i = 0; i < ticksPerRender; i++){
@@ -345,13 +345,13 @@
 					simulation.tick();
 				}
 
-				// simulation.tick();
-				model.stats.tick();
-				//render
-				simulationTick();
+	    	}
 
-
-	    	// }
+			// simulation.tick();
+			model.stats.tick();
+			//render
+			simulationTick();
+    	
 
 			// let fps = model.stats.getFps();
 			// console.log(fps);
