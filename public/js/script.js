@@ -344,13 +344,13 @@
 					model.stats.tickUPS();
 					simulation.tick();
 				}
+				// simulation.tick();
+				model.stats.tick();
+				//render
+				simulationTick();
 
-	    	}
+	    	
 
-			// simulation.tick();
-			model.stats.tick();
-			//render
-			simulationTick();
     	
 
 			// let fps = model.stats.getFps();
@@ -362,20 +362,20 @@
 		 //        ticksPerRender--;
 	  //       }
 
-	  		++animFrameCount;
-			if(animFrameCount>=15){ //Wait for 15, to get an accurate count
-				var now = new Date();
-				var fps = (animFrameCount / (now - animStartTime))*1000;
-				if(fps < 30){
-					ticksPerRender++;
-			        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
-			    }
-			    if(fps > 60 && ticksPerRender > 1){
-			    	ticksPerRender--;
-			        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
-			    }
-			}
-
+		  		++animFrameCount;
+				if(animFrameCount>=15){ //Wait for 15, to get an accurate count
+					var now = new Date();
+					var fps = (animFrameCount / (now - animStartTime))*1000;
+					if(fps < 30){
+						ticksPerRender++;
+				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+				    }
+				    if(fps > 60 && ticksPerRender > 1){
+				    	ticksPerRender--;
+				        animStartTime = now;animFrameCount = 0;  //Reset the fps counter
+				    }
+				}
+  			}
 			if( simulation.alpha() < simulation.alphaMin() ){
 				// stepper.stop();
 				// event.call("end", simulation);
@@ -383,6 +383,8 @@
 		    }else{
 				requestAnimationFrame(manualTick);
 		    }
+
+		 
 		}
 
 		function render(){}
