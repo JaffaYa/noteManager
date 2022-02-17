@@ -6,10 +6,10 @@ import ParticleField from 'react-particles-webgl';
  *
  * Any option passed in via props will overwrite the default config
  */
-var resizeReload = function(){
-  window.location.reload();
-}
-throttle(resizeReload, 500);
+// var resizeReload = function(){
+//   window.location.reload();
+// }
+// throttle(resizeReload, 500);
 
 // window.addEventListener('resize', resizeReload);
 
@@ -34,15 +34,17 @@ if (window.innerWidth > 1700) {
       zMax: 1
     },
     lines: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 0.999,
       limitConnections: true,
       maxConnections: 10,
-      minDistance: 90,
+      minDistance: 110,
       visible: true
     },
     particles: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 1,
@@ -56,15 +58,19 @@ if (window.innerWidth > 1700) {
     cameraControls: {
       enabled: true,
       enableDamping: true,
-      dampingFactor: 0.01,
+      dampingFactor: 0.001,
       enableZoom: true,
       zoomSpeed: 0.5,
       smoothZoom: true,
       minDistance: 1000,
       maxDistance: 2000,
-      polarAngle: Math.PI/3,
+      // polarAngle: Math.PI/3,
       // minPolarAngle: Math.PI/3,
       // maxPolarAngle: Math.PI/1.5,
+      minPolarAngle: - Infinity,
+      maxPolarAngle: Infinity,
+      minAzimuthAngle: - Infinity,
+      maxAzimuthAngle: Infinity,
       enablePan: false,
       rotateSpeed: 0.75,
       autoRotate: true,
@@ -89,6 +95,7 @@ else if (window.innerWidth >= 1366) {
       zMax: 1
     },
     lines: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 0.999,
@@ -98,6 +105,7 @@ else if (window.innerWidth >= 1366) {
       visible: true
     },
     particles: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 1,
@@ -111,7 +119,7 @@ else if (window.innerWidth >= 1366) {
     cameraControls: {
       enabled: true,
       enableDamping: true,
-      dampingFactor: 0.01,
+      dampingFactor: 0.001,
       enableZoom: true,
       zoomSpeed: 0.5,
       smoothZoom: true,
@@ -143,6 +151,7 @@ else if (window.innerWidth >= 1024) {
       zMax: 1
     },
     lines: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 0.999,
@@ -152,6 +161,7 @@ else if (window.innerWidth >= 1024) {
       visible: true
     },
     particles: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 1,
@@ -165,7 +175,7 @@ else if (window.innerWidth >= 1024) {
     cameraControls: {
       enabled: true,
       enableDamping: true,
-      dampingFactor: 0.01,
+      dampingFactor: 0.001,
       enableZoom: true,
       zoomSpeed: 0.5,
       smoothZoom: true,
@@ -197,6 +207,7 @@ else if (window.innerWidth >= 768) {
       zMax: 1
     },
     lines: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 0.999,
@@ -206,6 +217,7 @@ else if (window.innerWidth >= 768) {
       visible: true
     },
     particles: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#ffffff',
       transparency: 1,
@@ -219,7 +231,7 @@ else if (window.innerWidth >= 768) {
     cameraControls: {
       enabled: true,
       enableDamping: true,
-      dampingFactor: 0.01,
+      dampingFactor: 0.001,
       enableZoom: true,
       zoomSpeed: 0.5,
       smoothZoom: true,
@@ -251,6 +263,7 @@ else {
       zMax: 1
     },
     lines: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#fffff',
       transparency: 0.999,
@@ -260,6 +273,7 @@ else {
       visible: true
     },
     particles: {
+      // colorMode: 'rainbow',
       colorMode: 'solid',
       color: '#fffff',
       transparency: 1,
@@ -273,7 +287,7 @@ else {
     cameraControls: {
       enabled: true,
       enableDamping: true,
-      dampingFactor: 0.01,
+      dampingFactor: 0.003,
       enableZoom: true,
       zoomSpeed: 0.5,
       smoothZoom: true,
@@ -291,27 +305,27 @@ else {
 }
 
 
-function throttle(func, time) {
-  var permision = true;
-  var saveArg = null;
-  var saveThis = null;
-  return function waper(x){
-    if (permision){
-      func.call(this, x);// here can change to .apply(this,arguments)
-      permision = false;
-      setTimeout(function(){
-        permision = true;
-        if(saveThis){
-          waper.apply(saveThis,saveArg);
-          saveArg = saveThis = null;
-        }
-      }, time);
-    }else{
-      saveArg = arguments;
-      saveThis = this;
-    }
-  }
-}
+// function throttle(func, time) {
+//   var permision = true;
+//   var saveArg = null;
+//   var saveThis = null;
+//   return function waper(x){
+//     if (permision){
+//       func.call(this, x);// here can change to .apply(this,arguments)
+//       permision = false;
+//       setTimeout(function(){
+//         permision = true;
+//         if(saveThis){
+//           waper.apply(saveThis,saveArg);
+//           saveArg = saveThis = null;
+//         }
+//       }, time);
+//     }else{
+//       saveArg = arguments;
+//       saveThis = this;
+//     }
+//   }
+// }
 
 
 export default () => <ParticleField config={config} />;

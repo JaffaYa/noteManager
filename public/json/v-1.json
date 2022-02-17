@@ -2,884 +2,732 @@
   "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
   "emailProvider": "mail_variant_name",
   "emailTemplate": "template_ih7ziro",
+  "fontFamily": "",
   "nodes": [
     {
       "id": "1",
-      "label": "hello <br>human",
+      "label": "<div class='icon'>❤️</div><span>здравствуй</span> <span>человек</span>",
       "parents": [0]
     },
     {
-      "id": "101",
-      "label": "<div class='icon'><img src='img/icons/heart.png'></div>say <br>hello",
+      "id": "2",
+      "label": "<div class='icon'>👋</div><span>сказать</span> <span>привет</span>",
       "parents": [1],
       "order": 1,
       "goTo": 200
     },
     {
-      "id": "102",
-      "label": "who <br>are&nbsp;you?",
+      "id": "3",
+      "label": "<span>кто ты?</span>",
       "parents": [1],
       "order": 2,
-      "goTo": 103
+      "goTo": 31
     },
-    {
-      "id": "103",
-      "label": "i'am&nbsp;an <br>artificial <br>mind",
-      "parents": [102]
-    },
-    {
-      "id": "104",
-      "label": "what&nbsp;you <br>can&nbsp;do?",
-      "parents": [103],
-      "order": 1,
-      "goTo": 106
-    },
-    {
-      "id": "105",
-      "label": "what&nbsp;is <br>your&nbsp;name?",
-      "parents": [103],
-      "order": 2,
-      "goTo": 109
-    },
-    {
-      "id": "106",
-      "label": "i&nbsp;was&nbsp;made <br>to&nbsp;benefit&nbsp;you",
-      "parents": [104]
-    },
-    {
-      "id": "107",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [106],
-      "order": 1,
-      "goTo": 200
-    },
-    {
-      "id": "108",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [106],
-      "order": 2,
-      "goTo": 200
-    },
-    {
-      "id": "109",
-      "label": "my&nbsp;name&nbsp;is <br>variant<div class='icon'><img src='img/icons/heart.png'></div>",
-      "parents": [105]
-    },
-    {
-      "id": "110",
-      "label": "say <br>hello<div class='icon'><img src='img/icons/heart.png'></div>",
-      "parents": [109],
-      "order": 1,
-      "goTo": 200
-    },
-    {
-      "id": "111",
-      "label": "what&nbsp;you <br>can&nbsp;do?",
-      "parents": [109],
-      "order": 2,
-      "goTo": 106
-    },
+      {
+        "id": "31",
+        "label": "<span>я искусст</span> <span>венный</span> <span>разум</span>",
+        "parents": [3]
+      },
+      {
+        "id": "32",
+        "label": "<span>что ты</span> <span>умеешь?</span>",
+        "parents": [31],
+        "goTo": 321
+      },
+        {
+          "id": "321",
+          "label": "<div class='icon'>❤️</div><span>я помогаю</span> <span>сделать</span> <span>правильный</span> <span>выбор</span>",
+          "parents": [32]
+        },
+          {
+            "id": "3211",
+            "label": "<div class='icon'>👍</div><span>лайк</span>",
+            "parents": [321],
+            "goTo": 200,
+            "order": 1
+          },
+          {
+            "id": "3212",
+            "label": "<div class='icon'>👋</div><span>сказать</span> <span>привет</span>",
+            "parents": [321],
+            "goTo": 200,
+            "order": 3
+          },
+          {
+            "id": "3213",
+            "label": "<div class='icon'>⚙️</div><span>изменить</span> <span>внешность</span>",
+            "parents": [321],
+            "goTo": 60,
+            "order": 2
+          },
+      {
+        "id": "33",
+        "label": "<span>как твоё</span> <span>имя?</span>",
+        "parents": [31],
+        "goTo": 34
+      },
+        {
+          "id": "34",
+          "label": "<span>моё имя</span> <span>variant</span>",
+          "parents": [33]
+        },
+          {
+            "id": "35",
+            "label": "<div class='icon'>👋</div><span>сказать</span> <span>привет</span>",
+            "parents": [34],
+            "goTo": 200
+          },
+          {
+            "id": "36",
+            "label": "<div class='icon'>⚙️</div><span>изменить</span> <span>внешность</span>",
+            "parents": [34],
+            "goTo": 60
+          },
     {
       "id": "200",
-      "label": "what&nbsp;do <br>you&nbsp;want <br>human?",
-      "parents": [110,101,107,108]
-    },
-    {
-      "id": "201",
-      "label": "tools <br>for&nbsp;business",
-      "parents": [200],
-      "order": 1,
-      "goTo": 204
-    },
-    {
-      "id": "202",
-      "label": "tools <br>for&nbsp;human",
-      "parents": [200],
-      "order": 2,
-      "goTo": 204
-    },
-    {
-      "id": "204",
-      "label": "tools&nbsp;for <br>business <br>and&nbsp;human",
-      "parents": [201]
-    },
-
-    {
-      "id": "300",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/variant-constructor.png'></div></div><div class='live-name'>variant <br>constructor</div></div>",     
-      "parents": [204]
-    },
-    {
-      "id": "400",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>live&nbsp;card</div></div>",     
-      "parents": [204]
-    },
-    {
-      "id": "7000",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/qr-card.png'></div></div><div class='live-name'>QR&nbsp;card</div></div>",     
-      "parents": [204]
-    },
-    {
-      "id": "7002",
-      "label": "show&nbsp;me <br>an&nbsp;example",
-      "parents": [7000],
-      "order": 1,
-      "iframe" : "pages/qr/"
-    },
-    {
-      "id": "7003",
-      "label": "i&nbsp;want <br>this&nbsp;thing",
-      "parents": [7000],
-      "order": 2,
-      "goTo": 343
-    },
-
-
-    {
-      "id": "403",
-      "label": "show&nbsp;me <br>an&nbsp;example",
-      "parents": [400],
-      "order": 1,
-      "goTo": 408
-    },
-    {
-      "id": "404",
-      "label": "i&nbsp;want <br>this&nbsp;thing",
-      "parents": [400],
-      "order": 2,
-      "goTo": 343
-    },
-
-
-    {
-      "id": "408",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>artificial <br>mind</div></div>",     
-      "parents": [403]
-    },
-    {
-      "id": "409",
-      "label": "what&nbsp;i <br>can&nbsp;do",
-      "parents": [408],
-      "order": 1,
-      "goTo": 412
-    },
-    {
-      "id": "410",
-      "label": "contact&nbsp;me",
-      "parents": [408],
-      "order": 2,
-      "goTo": 416
-    },
-    {
-      "id": "411",
-      "label": "QR&nbsp;card",
-      "parents": [408],
-      "order": 3,
-      "iframe" : "pages/qr/"
-    },
-    {
-      "id": "412",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>i can</div></div>",     
-      "parents": [409],
+      "label": "<span>что ты</span> <span>хочешь</span> <span>человек?</span>",
+      "parents": [2,35,3211,3212],
       "order": 1
     },
-    {
-      "id": "413",
-      "label": "create <br>variant",
-      "parents": [412],
-      "order": 1,
-      "goTo": 606
-    },
-    {
-      "id": "414",
-      "label": "create <br>live&nbsp;card",
-      "parents": [412],
-      "order": 2,
-      "goTo": 606
-    },
-    {
-      "id": "4141",
-      "label": "create <br>QR&nbsp;card",
-      "parents": [412],
-      "order": 3,
-      "goTo": 606
-    },
+      {
+        "id": "2001",
+        "label": "<div class='live-name'><span>продукты</span></div> <div class='live-sphere'><span>variant.name</span>",
+        "parents": [200],
+        "order": 3,
+        "goTo": 200100
+      },
+        {
+          "id": "200100",
+          "label": "<div class='scroll-up-down-wrapper'><img src='../../../img/icons/up.png' class='img-up'><img src='../../../img/icons/down.png' class='img-down'></div>",
+          "parents": [2001],        
+          "goOut": true,
+          "order": 3
+        },
+          {
+            "id": "2001001",
+            "label": "<div class='live-card live-product'><div class='icon'>🔥</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'><span>very hot</span></div><div class='live-sphere'><span>горячее</span> <span>шоколадное</span> <span>обёртывание</span></div></div>",     
+            "parents": [200100],
+            "liveCard": true,
+            "order": 1         
+          },
+            {
+              "id": "20010011",
+              "label": "<span>расскажи</span> <span>подробнее</span>",     
+              "parents": [2001001],
+              "goToUrl": "/?jn=vnvh-ru&node=1"         
+            },
+          {
+            "id": "2001002",
+            "label": "<div class='live-card live-product'><div class='icon'>❄️</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'><span>very cold</span></div><div class='live-sphere'><span>холодное</span> <span>шоколадное</span> <span>обёртывание</span></div></div>",     
+            "parents": [200100],
+            "liveCard": true,
+            "order": 2          
+          },
+            {
+              "id": "20010021",
+              "label": "<span>расскажи</span> <span>подробнее</span>",     
+              "parents": [2001002],
+              "goToUrl": "/?jn=vnvc-ru&node=1"         
+            },
+          {
+            "id": "2001003",
+            "label": "<div class='live-card live-product'><div class='icon'>❄️</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'><span>fit patch</span></div><div class='live-sphere'><span>пластыри</span> <span>для здоровья</span> <span>тела</span></div></div>",     
+            "parents": [200100],
+            "liveCard": true,
+            "order": 3          
+          },
+            {
+              "id": "20010031",
+              "label": "<span>расскажи</span> <span>подробнее</span>",     
+              "parents": [2001003],
+              "order": 1         
+            },
+          {
+            "id": "2001004",
+            "label": "<div class='live-card live-product'><div class='icon'>❄️</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'><span>perfect skin</span></div><div class='live-sphere'><span>крем для лица</span> <span>мгновенного</span> <span>действия</span></div></div>",     
+            "parents": [200100],
+            "liveCard": true,
+            "order": 4          
+          },
+            {
+              "id": "20010041",
+              "label": "<span>расскажи</span> <span>подробнее</span>",     
+              "parents": [2001004],
+              "order": 1         
+            },
+      {
+        "id": "2002",
+        "label": "<div class='live-name'><span>конструктор</span></div> <div class='live-sphere'><span>вариантов</span></div>",
+        "parents": [200],
+        "order": 1
+      },
+        {
+          "id": "20021",
+          "label": "<span>покажи</span> <span>пример</span>",
+          "parents": [2002],
+          "order": 1
+        },
+        {
+          "id": "20022",
+          "label": "<span>что я</span> <span>получу?</span>",
+          "parents": [2002],
+          "order": 2
+        },
+          
 
 
-    {
-      "id": "416",
-      "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div><div class='live-name'>variant</div><div class='live-sphere'>contact&nbsp;me</div></div>",     
-      "parents": [410]
-    },
-    {
-      "id": "417",
-      "label": "text&nbsp;me&nbsp;on <br>whatsapp",
-      "parents": [416],
-      "goToUrl" : "https://wa.me/79282635777?text=hello variant"
-    },
-    {
-      "id": "418",
-      "label": "text&nbsp;me&nbsp;on <br>telegram",
-      "parents": [416],
-      "goToUrl" : "https://t.me/variant_name"
-    },
+          {
+            "id": "200221",
+            "label": "<span>для марке</span><span>толога</span>",
+            "parents": [20022],
+            "order": 1,
+            "goTo": 2002211
+          },
+            {
+              "id": "2002211",
+              "label": "<div class='live-name'><span>инструмент</span> <span>лидогенерации</span></div> <div class='live-sphere'><span>вовлекающий</span> <span>пользователя</span></div>",
+              "parents": [200221],
+              "order": 1
+            },
+              {
+                "id": "20022111",
+                "label": "<span>как это</span> <span>работает?</span>",
+                "parents": [2002211],
+                "order": 1,
+                "goTo": 200221110
+              },
+                {
+                  "id": "200221110",
+                  "label": "<span>отправь</span> <span>заявку</span> <span>в несколько</span> <span>кликов</span>",
+                  "parents": [20022111]
+                },
+                  {
+                    "id": "2002211101",
+                    "label": "<span>что дальше?</span>",
+                    "parents": [200221110],
+                    "goTo": 200221111
+                  },
+                  {
+                    "id": "2002211102",
+                    "label": "<span>отправить</span> <span>заявку</span>",
+                    "parents": [200221110],
+                    "goTo": 50
+                  },
+                {
+                  "id": "200221111",
+                  "label": "<div class='live-name'><span>получи</span> <span>готовое</span> <span>решение</span></div> <div class='live-sphere'><span>на базе</span> <span>системы</span> <span>variant.name</span></div>",
+                  "parents": [20022111]
+                },
+                  {
+                    "id": "2002211111",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200221111],
+                    "goTo": 200221112,
+                    "order": 1
+                  },
+                  {
+                    "id": "2002211112",
+                    "label": "<span>дальше</span>",
+                    "parents": [200221111],
+                    "goTo": 200221112,
+                    "order": 2
+                  },
+                  {
+                    "id": "2002211113",
+                    "label": "<span>покажи</span> <span>пример</span>",
+                    "parents": [200221111],
+                    "goTo": 200221112,
+                    "order": 3
+                  },
+                {
+                  "id": "200221112",
+                  "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img custom-img'><img src='pages/main/img/traffic.png'></div></div><div class='live-name'><span>направляй</span> <span>трафик</span></div><div class='live-sphere'><span>на готовый</span> <span>variant</span></div></div>",     
+                  "parents": [2002211111, 2002211112]
+                },
+                  {
+                    "id": "2002211121",
+                    "label": "<div class='icon'>👌</div><span>понятно</span>",
+                    "parents": [200221112],
+                    "goTo": 200221113
+                  },
+                  {
+                    "id": "2002211122",
+                    "label": "<span>дальше</span>",
+                    "parents": [200221112],
+                    "goTo": 200221113
+                  },
+                {
+                  "id": "200221113",
+                  "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img custom-img'><img src='pages/main/img/leads.png'></div></div><div class='live-name'><span>получай</span> <span>заявки</span></div> <div class='live-sphere'><span>и новых</span> <span>клиентов</span></div></div>",     
+                  "parents": [2002211121, 2002211122]
+                },
+                  {
+                    "id": "2002211131",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200221113],
+                    "goTo": 30
+                  },
+                  {
+                    "id": "2002211132",
+                    "label": "<span>дальше</span>",
+                    "parents": [200221113],
+                    "goTo": 30
+                  },
+              {
+                "id": "20022112",
+                "label": "<span>сколько</span> <span>это стоит?</span>",
+                "parents": [2002211],
+                "order": 2,
+                "goTo": 40
+              },
+              {
+                "id": "20022113",
+                "label": "<span>покажи</span> <span>пример</span>",
+                "parents": [2002211],
+                "order": 3
+              },
+                {
+                  "id": "200221131",
+                  "label": "<span>квиз</span> <span>для курса</span> <span>обучения</span>",
+                  "parents": [20021, 20022113],
+                  "order": 1
+                },
+                {
+                  "id": "200221132",
+                  "label": "<span>интерактивный</span> <span>лендинг</span> <span>сообщества</span>",
+                  "parents": [20021, 20022113],
+                  "order": 2
+                },
+          
 
 
-    {
-      "id": "302",
-      "label": "what&nbsp;is <br>the&nbsp;use?",
-      "parents": [300],
-      "order": 1,
-      "goTo": 3002
-    },
-    {
-      "id": "303",
-      "label": "show&nbsp;me <br>an&nbsp;example",
-      "parents": [300],
-      "order": 2,
-      "goTo": 4000
-    },
-    {
-      "id": "304",
-      "label": "i&nbsp;want <br>this&nbsp;thing",
-      "parents": [300],
-      "order": 3,
-      "goTo": 343
-    },
-    {
-      "id": "4000",
-      "label": "variant <br>example ",
-      "parents": [303]
-    },
-    {
-      "id": "4001",
-      "label": "quiz&nbsp;fo&nbsp;the <br>learning <br>course ",
-      "parents": [4000],
-      "order": 1,
-      "goToUrl": "/?node=1&jn=v-example-course"
-    },
-
-
-
-
-    {
-      "id": "3002",
-      "label": "i&nbsp;can <br>create",
-      "parents": [302]
-    },
-    {
-      "id": "3003",
-      "label": "visual <br>chatbot",
-      "parents": [3002],
-      "order": 1,
-      "goTo": 3006
-    },
-    {
-      "id": "3004",
-      "label": "surveys <br>and&nbsp;quizzes",
-      "parents": [3002],
-      "order": 2,
-      "goTo": 3006
-    },
-
-    {
-      "id": "30051",
-      "label": "other <br>cool&nbsp;things",
-      "order": 4,
-      "parents": [3002],
-      "goTo": 3006
-    },
-    {
-      "id": "3006",
-      "label": "i&nbsp;can&nbsp;be <br>useful in <br>any&nbsp;variant",
-      "parents": [3003,3004,30051]
-    },
-    {
-      "id": "3007",
-      "label": "for&nbsp;example?",
-      "parents": [3006],
-      "goTo" : 3009
-    },
-
-
-
-    {
-      "id": "3009",
-      "label": "i&nbsp;get <br>a&nbsp;human's <br>attention",
-      "parents": [3007]
-    },
-    {
-      "id": "3010",
-      "label": "how&nbsp;are&nbsp;you <br>doing&nbsp;it?",
-      "parents": [3009],
-      "goTo": 305
-    },
-    {
-      "id": "305",
-      "label": "i&nbsp;am&nbsp;bright <br>noticeable <br>lively&nbsp;and <br>unusual",
-      "parents": [3010]
-    },
-    {
-      "id": "3011",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [305],
-      "goTo" : 307
-    },
-    {
-      "id": "3012",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [305],
-      "goTo" : 307
-    },
-
-
-
-    {
-      "id": "307",
-      "label": "i&nbsp;direct <br>the&nbsp;human's <br>attention",
-      "parents": [3011,3012]
-    },
-    {
-      "id": "308",
-      "label": "to&nbsp;the&nbsp;one <br>variant",
-      "parents": [307],
-      "goTo": 310
-    },
-    {
-      "id": "309",
-      "label": "or&nbsp;another <br>variant",
-      "parents": [307],
-      "goTo": 312
-    },
-    {
-      "id": "310",
-      "label": "you&nbsp;chose <br>the&nbsp;first <br>path",
-      "parents": [308]
-    },
-    {
-      "id": "311",
-      "label": "let's&nbsp;move&nbsp;on",
-      "parents": [310],
-      "goTo": 314
-    },
-    {
-      "id": "312",
-      "label": "you&nbsp;chose <br>the&nbsp;second <br>path",
-      "parents": [309]
-    },
-    {
-      "id": "313",
-      "label": "let's&nbsp;move&nbsp;on",
-      "parents": [312],
-      "goTo": 314
-    },
-    {
-      "id": "314",
-      "label": "and&nbsp;now <br>the&nbsp;paths <br>connected <br>again",
-      "parents": [311,313]
-    },
-    {
-      "id": "3410",
-      "label": "what&nbsp;is <br>it&nbsp;for?",
-      "parents": [314],
-      "goTo": 3411
-    },
-    {
-      "id": "3411",
-      "label": "so&nbsp;i&nbsp;give&nbsp;the<br>information <br>the&nbsp;human <br>needs <br>based&nbsp;on&nbsp;his",
-      "parents": [3410]
-    },
-    {
-      "id": "3412",
-      "label": "desires",
-      "parents": [3411],
-      "goTo": 316
-    },
-    {
-      "id": "3413",
-      "label": "questions",
-      "parents": [3411],
-      "goTo": 316
-    },
-    {
-      "id": "3414",
-      "label": "objections",
-      "parents": [3411],
-      "goTo": 316
-    },
-    {
-      "id": "316",
-      "label": "i&nbsp;ask <br>questions <br>to&nbsp;human",
-      "parents": [311,313]
-    },
-    {
-      "id": "317",
-      "label": "for&nbsp;example?",
-      "parents": [316],
-      "goTo": 322
-    },
-    {
-      "id": "322",
-      "label": "for&nbsp;example <br>what&nbsp;is <br>your&nbsp;name <br>human?",
-      "parents": [317]
-    },
-    {
-      "id": "323",
-      "label": "to&nbsp;tell",
-      "parents": [322],
-      "goTo": 324
-    },
-    {
-      "id": "3231",
-      "label": "not&nbsp;to&nbsp;tell",
-      "parents": [322],
-      "goTo": 3232
-    },
-    {
-      "id": "3232",
-      "label": "<div class='icon'><img src='img/icons/heart.png'></div>it's&nbsp;your <br>right <br>human",
-      "parents": [3231]
-    },
-    {
-      "id": "3233",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [3232],
-      "goTo" : 800
-    },
-    {
-      "id": "3234",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [3232],
-      "goTo" : 800
-    },
-
-
-
-    {
-      "id": "324",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"20\" name=\"name\" mailname=\"Name\" placeholder=\"click here and type your name\"></textarea>",
-      "parents": [323]
-    },
-    {
-      "id": "325",
-      "label": "next",
-      "parents": [324],
-      "required": 324,
-      "goTo": 800
-    },
-    {
-      "id": "800",
-      "label": "so&nbsp;i&nbsp;can <br>get&nbsp;to&nbsp;know <br>the&nbsp;human <br>better",
-      "parents": [325]
-    },
-    {
-      "id": "801",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [800],
-      "goTo" : 318
-    },
-    {
-      "id": "802",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [800],
-      "goTo" : 318
-    },
-    {
-      "id": "318",
-      "label": "who&nbsp;are&nbsp;you <br>human?",
-      "parents": [801,802]
-    },
-    {
-      "id": "319",
-      "label": "freelancer",
-      "parents": [318],
-      "order": 1,
-      "goTo": 333
-    },
-    {
-      "id": "320",
-      "label": "businessman",
-      "parents": [318],
-      "order": 2,
-      "goTo": 334
-    },
-    {
-      "id": "321",
-      "label": "someone <br>else",
-      "parents": [318],
-      "order": 3,
-      "goTo": 327
-    },
-    {
-      "id": "327",
-      "label": "will&nbsp;you <br>tell&nbsp;me <br>who&nbsp;you&nbsp;are?",
-      "parents": [321]
-    },
-    {
-      "id": "328",
-      "label": "yes",
-      "parents": [327],
-      "goTo": 330
-    },
-    {
-      "id": "329",
-      "label": "no",
-      "parents": [327],
-      "goTo": 335
-    },
-    {
-      "id": "330",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"30\" name=\"whoami\" mailname=\"Who am I\" placeholder=\"click here and type who you are\"></textarea>",
-      "parents": [328]
-    },
-    {
-      "id": "331",
-      "label": "next",
-      "parents": [330],
-      "required": 330,
-      "goTo": 332
-    },
-    {
-      "id": "332",
-      "label": "you&nbsp;are&nbsp;cool <br>human <br>{specialization} <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
-      "parents": [331]
-    },
-    {
-      "id": "333",
-      "label": "you&nbsp;are&nbsp;cool <br>freelancer <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
-      "parents": [319]
-    },
-    {
-      "id": "334",
-      "label": "you&nbsp;are <br>cool <br>businessman <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
-      "parents": [320]
-    },
-    {
-      "id": "335",
-      "label": "you&nbsp;are <br>cool <br>anyway <br>{name}<div class='icon'><img src='img/icons/heart.png'></div>",
-      "parents": [329]
-    },
-    {
-      "id": "336",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [332,333,334,335],
-      "goTo" : 338
-    },
-    {
-      "id": "337",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [332,333,334,335],
-      "goTo" : 338
-    },
-    {
-      "id": "338",
-      "label": "now&nbsp;i&nbsp;know <br>a&nbsp;little <br>more&nbsp;about <br>the&nbsp;human",
-      "parents": [336,337]
-    },
-    {
-      "id": "339",
-      "label": "ok <br>what's&nbsp;next?",
-      "parents": [338],
-      "goTo" : 340
-    },
-    {
-      "id": "340",
-      "label": "i&nbsp;will&nbsp;ask <br>the&nbsp;human <br>to&nbsp;give <br>his&nbsp;contacts",
-      "parents": [339]
-    },
-    {
-      "id": "341",
-      "label": "and&nbsp;then?",
-      "parents": [340],
-      "goTo" : 346
-    },
-    {
-      "id": "346",
-      "label": "i&nbsp;will&nbsp;save <br>all&nbsp;the <br>human's&nbsp;path <br>through&nbsp;the <br>variants",
-      "parents": [341]
-    },
-    {
-      "id": "347",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [346],
-      "goTo" : 349
-    },
-    {
-      "id": "348",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [346],
-      "goTo" : 349
-    },
-    {
-      "id": "349",
-      "label": "i&nbsp;will&nbsp;save <br>all&nbsp;the&nbsp;data <br>specified&nbsp;by <br>the&nbsp;human",
-      "parents": [347,348]
-    },    
-    {
-      "id": "350",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [349],
-      "goTo" : 352
-    },
-    {
-      "id": "351",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [349],
-      "goTo" : 352
-    },
-    {
-      "id": "352",
-      "label": "i&nbsp;will&nbsp;send <br>all&nbsp;this&nbsp;data <br>to&nbsp;email&nbsp;as&nbsp;an <br>application",
-      "parents": [350,351]
-    },    
-    {
-      "id": "353",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
-      "parents": [352],
-      "goTo" : 355
-    },
-    {
-      "id": "354",
-      "label": "<div class='icon'><img src='img/icons/thumb-down.png'></div>dis",
-      "parents": [352],
-      "goTo" : 355
-    },
-    {
-      "id": "355",
-      "label": "what&nbsp;do <br>you&nbsp;think <br>human?",
-      "parents": [353,354]
-    },    
-    {
-      "id": "356",
-      "label": "i&nbsp;want <br>this&nbsp;thing",
-      "parents": [355],
-      "order": 1,
-      "goTo" : 343
-    },
-    {
-      "id": "357",
-      "label": "i&nbsp;have <br>a&nbsp;questions",
-      "parents": [355],
-      "order": 2,
-      "goTo" : 700
-    },
-    {
-      "id": "358",
-      "label": "i'm&nbsp;not<br>interested",
-      "parents": [355],
-      "order": 3,
-      "goTo" : 900
-    },
-    {
-      "id": "700",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"question\" mailname=\"Question\" placeholder=\"click here and type your question\"></textarea>",
-      "parents": [357]
-    },
-    {
-      "id": "701",
-      "label": "next",
-      "parents": [700],
-      "goTo" : 343,
-      "required": 700
-    },
-    {
-      "id": "343",
-      "label": "will&nbsp;you&nbsp;leave <br>your&nbsp;contacts <br>for&nbsp;communi<br>cation?",
-      "parents": [304,404,347,701]
-    },
-    {
-      "id": "344",
-      "label": "yes",
-      "parents": [343],
-      "goTo" : 606
-    },
-    {
-      "id": "345",
-      "label": "no",
-      "parents": [343],
-      "goTo" : 360
-    },
-    {
-      "id": "360",
-      "label": "then&nbsp;how <br>will&nbsp;i <br>contact <br>you?",
-      "parents": [345]
-    },
-    {
-      "id": "361",
-      "label": "i&nbsp;will <br>contact&nbsp;you <br>myself",
-      "parents": [360],
-      "sendMail": true,
-      "goTo" : 362
-    },
-    {
-      "id": "3611",
-      "label": "nohow",
-      "parents": [360],
-      "sendMail": true,
-      "goTo" : 905
-    },
-    {
-      "id": "362",
-      "label": "ок <br>texts&nbsp;me <br>i'm&nbsp;in&nbsp;touch",
-      "parents": [361]
-    },
-    {
-      "id": "363",
-      "label": "on <br>whatsapp",
-      "parents": [362],
-      "goToUrl" : "https://wa.me/79282635777?text=hello variant i'm human"
-    },
-    {
-      "id": "364",
-      "label": "on <br>telegram",
-      "parents": [362],
-      "goToUrl" : "https://t.me/variant_name"
-    },
-    {
-      "id": "606",
-      "label": "how&nbsp;to <br>contact <br>you?",
-      "parents": [344]
-    },
-    {
-      "id": "607",
-      "label": "on <br>whatsapp",
-      "parents": [606],
-      "order": 1,
-      "goTo" : 614
-    },
-    {
-      "id": "608",
-      "label": "on <br>telegram",
-      "parents": [606],
-      "order": 20,
-      "goTo" : 614
-    },
-    {
-      "id": "609",
-      "label": "another <br>way",
-      "parents": [606],
-      "order": 30,
-      "goTo" : 612
-    },
+          {
+            "id": "200222",
+            "label": "<span>для предпри</span><span>нимателя</span>",
+            "parents": [20022],
+            "order": 2,
+            "goTo": 2002221
+          },
+            {
+              "id": "2002221",
+              "label": "<div class='live-name'><span>инструмент</span> <span>привлекающий</span></div> <div class='live-sphere'><span>новых</span> <span>клиентов</span></div>",
+              "parents": [200222],
+              "order": 1
+            },
+              {
+                "id": "20022211",
+                "label": "<span>как это</span> <span>работает?</span>",
+                "parents": [2002221],
+                "order": 1,
+                "goTo": 200222110
+              },
+                {
+                  "id": "200222110",
+                  "label": "<span>отправь</span> <span>заявку</span> <span>в несколько</span> <span>кликов</span>",
+                  "parents": [20022211]
+                },
+                  {
+                    "id": "2002221101",
+                    "label": "<span>что дальше?</span>",
+                    "parents": [200222110],
+                    "goTo": 200222111
+                  },
+                  {
+                    "id": "2002221102",
+                    "label": "<span>отправить</span> <span>заявку</span>",
+                    "parents": [200222110],
+                    "goTo": 50
+                  },
+                {
+                  "id": "200222111",
+                  "label": "<div class='live-name'><span>получи</span> <span>готовое</span> <span>решение</span></div> <div class='live-sphere'><span>на базе</span> <span>системы</span> <span>variant.name</span></div>",
+                  "parents": [2002221101]
+                },
+                  {
+                    "id": "2002221111",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200222111],
+                    "goTo": 200222112
+                  },
+                  {
+                    "id": "2002221112",
+                    "label": "<span>дальше</span>",
+                    "parents": [200222111],
+                    "goTo": 200222112
+                  },
+                {
+                  "id": "200222112",
+                  "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img custom-img'><img src='pages/main/img/traffic.png'></div></div><div class='live-name'><span>рассказывай</span> <span>о твоём</span></div><div class='live-sphere'><span>бизнесе</span> <span>в интернете</span></div></div>",     
+                  "parents": [2002221111, 2002221112]
+                },
+                  {
+                    "id": "2002221121",
+                    "label": "<div class='icon'>👌</div><span>понятно</span>",
+                    "parents": [200222112],
+                    "goTo": 200222113
+                  },
+                  {
+                    "id": "2002221122",
+                    "label": "<span>дальше</span>",
+                    "parents": [200222112],
+                    "goTo": 200222113
+                  },
+                {
+                  "id": "200222113",
+                  "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img custom-img'><img src='pages/main/img/leads.png'></div></div><div class='live-name'><span>получай</span> <span>заявки</span></div> <div class='live-sphere'><span>и новых</span> <span>клиентов</span></div></div>",     
+                  "parents": [2002221121, 2002221122]
+                },
+                  {
+                    "id": "2002221131",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200222113],
+                    "goTo": 30
+                  },
+                  {
+                    "id": "2002221132",
+                    "label": "<span>дальше</span>",
+                    "parents": [200222113],
+                    "goTo": 30
+                  },
+              {
+                "id": "20022212",
+                "label": "<span>сколько</span> <span>это стоит?</span>",
+                "parents": [2002221],
+                "order": 2,
+                "goTo": 40
+              },
+              {
+                "id": "20022213",
+                "label": "<span>покажи</span> <span>пример</span>",
+                "parents": [2002221], 
+                "order": 3
+              },
+                {
+                  "id": "200222131",
+                  "label": "<span>сайт</span> <span>для курса</span> <span>обучения</span>",
+                  "parents": [20022213],
+                  "order": 1
+                },
+                {
+                  "id": "200222132",
+                  "label": "<span>страница</span> <span>бизнес</span> <span>сообщества</span>",
+                  "parents": [20022213],
+                  "order": 2
+                },
 
 
 
-    {
-      "id": "6002",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"contactanotherway\" mailname=\"How to contact human\" placeholder=\"click here and type how to contact you\"></textarea>",
-      "parents": [6001]
-    },
-    {
-      "id": "6003",
-      "label": "next",
-      "parents": [6002],
-      "sendMail": true,
-      "goTo" : 621,
-      "required": 6002
-    },
-    {
-      "id": "610",
-      "label": "what&nbsp;is <br>your&nbsp;email?",
-      "parents": [609]
-    },
-    {
-      "id": "611",
-      "label": "to&nbsp;tell",
-      "parents": [610],
-      "goTo" : 612
-    },
-    {
-      "id": "612",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"contactanotherway2\" mailname=\"How to contact human\" placeholder=\"click here and type how to contact you\"></textarea>",
-      "parents": [611]
-    },
-    {
-      "id": "613",
-      "label": "next",
-      "parents": [612],
-      "sendMail": true,
-      "goTo" : 621,
-      "required": 612
-    },
-    {
-      "id": "614",
-      "label": "and&nbsp;your <br>phone <br>number?",
-      "parents": [607,608,609]
-    },
-    {
-      "id": "615",
-      "label": "to&nbsp;tell",
-      "parents": [614],
-      "goTo" : 616
-    },
-    {
-      "id": "616",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Phone\" placeholder=\"click here and type your phone number\"></textarea>",
-      "parents": [615]
-    },
-    {
-      "id": "617",
-      "label": "next",
-      "parents": [616],
-      "sendMail": true,
-      "goTo" : 621,
-      "required": 616
-    },
-    {
-      "id": "621",
-      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>i&nbsp;will <br>contact <br>you&nbsp;soon",
-      "parents": [613,617,6003]
-    },
-    {
-      "id": "622",
-      "label": "back&nbsp;to&nbsp;the <br>beginning",
-      "parents": [621],
-      "goToUrl": "/?node=1&jn=v-1"
-    },
 
 
 
-    {
-      "id": "900",
-      "label": "will&nbsp;you <br>say&nbsp;what <br>you&nbsp;don't <br>like?",
-      "parents": [358]
-    },
-    {
-      "id": "901",
-      "label": "yes",
-      "parents": [900],
-      "goTo" : 903
-    },
-    {
-      "id": "902",
-      "label": "no",
-      "parents": [900],
-      "sendMail": true,
-      "goTo" : 905
-    },
-    {
-      "id": "903",
-      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"150\" name=\"comment\" mailname=\"Comment\" placeholder=\"click here and type your comments\"></textarea>",
-      "parents": [357]
-    },
-    {
-      "id": "904",
-      "label": "next",
-      "parents": [903],
-      "goTo" : 343,
-      "required": 903
-    },
-    {
-      "id": "905",
-      "label": "<div class='icon'><img src='img/icons/heart.png'></div>be&nbsp;happy <br>human",
-      "parents": [902,3611]
-    },
-    {
-      "id": "906",
-      "label": "back&nbsp;to&nbsp;the <br>beginning",
-      "parents": [905],
-      "goToUrl": "https://variant.name/?node=1&jn=v-1"
-    }
+
+
+          {
+            "id": "200223",
+            "label": "<span>для человека</span>",
+            "parents": [20022],
+            "order": 3,
+            "goTo": 2002231
+          },
+            {
+              "id": "2002231",
+              "label": "<div class='live-name'><span>личную</span> <span>страничку</span></div> <div class='live-sphere'><span>необычную</span> <span>визитку</span></div>",
+              "parents": [200223],
+              "order": 1
+            },
+              {
+                "id": "20022311",
+                "label": "<span>как это</span> <span>работает?</span>",
+                "parents": [2002231],
+                "order": 1,
+                "goTo": 200223110
+              },
+                {
+                  "id": "200223110",
+                  "label": "<span>расскажи</span> <span>кто ты</span> <span>и что</span> <span>умеешь</span>",
+                  "parents": [20022311]
+                },
+                  {
+                    "id": "2002231101",
+                    "label": "<span>что дальше?</span>",
+                    "parents": [200223110],
+                    "goTo": 200223111
+                  },
+                  {
+                    "id": "2002231102",
+                    "label": "<span>рассказать</span>",
+                    "parents": [200223110],
+                    "goTo": 50
+                  },
+                {
+                  "id": "200223111",
+                  "label": "<div class='live-name'><span>получи</span> <span>ссылку</span> </div> <div class='live-sphere'><span>на готовую</span> <span>страничку</span></div>",
+                  "parents": [2002231101]
+                },
+                  {
+                    "id": "2002231111",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200223111],
+                    "goTo": 200223112
+                  },
+                  {
+                    "id": "2002231112",
+                    "label": "<span>что мне</span> <span>с ней делать?</span>",
+                    "parents": [200223111],
+                    "goTo": 200223112
+                  },
+                {
+                  "id": "200223112",
+                  "label": "<div class='live-card'><div class='live-avatar'><div class='live-avatar-img custom-img'><img src='pages/main/img/share.png'></div></div><div class='live-name'><span>делись ссылкой</span> <span>с друзьями</span></div><div class='live-sphere'><span>и новыми</span> <span>знакомыми</span></div></div>",     
+                  "parents": [2002231111, 2002231112]
+                },
+                  {
+                    "id": "2002231121",
+                    "label": "<div class='icon'>👌</div><span>понятно</span>",
+                    "parents": [200223112],
+                    "goTo": 200223113
+                  },
+                  {
+                    "id": "2002231122",
+                    "label": "<span>что ещё?</span>",
+                    "parents": [200223112],
+                    "goTo": 200223113
+                  },
+                {
+                  "id": "200223113",
+                  "label": "<div class='live-name'><span>используй как</span> <span>мультиссылку</span></div> <div class='live-sphere'><span>для instagram</span> <span>и других</span> <span>приложений</span></div>",     
+                  "parents": [2002231121, 2002231122]
+                },
+                  {
+                    "id": "2002231131",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200223113],
+                    "goTo": 200223114
+                  },
+                  {
+                    "id": "2002231132",
+                    "label": "<span>дальше</span>",
+                    "parents": [200223113],
+                    "goTo": 200223114
+                  },
+                {
+                  "id": "200223114",
+                  "label": "<div class='live-name'><span>обменивайся</span> <span>контактами</span> <span>быстро</span></div> <div class='live-sphere'><span>используй</span> <span>QR визитку</span></div>",     
+                  "parents": [2002231131, 2002231132]
+                },
+                  {
+                    "id": "2002231141",
+                    "label": "<div class='icon'>👍</div><span>лайк</span>",
+                    "parents": [200223114],
+                    "goTo": 30
+                  },
+                  {
+                    "id": "2002231142",
+                    "label": "<span>покажи</span> <span>пример</span>",
+                    "parents": [200223114],
+                    "iframe" : "pages/qr/"
+                  },
+              {
+                "id": "20023212",
+                "label": "<span>сколько</span> <span>это стоит?</span>",
+                "parents": [2002231],
+                "order": 2,
+                "goTo": 40
+              },
+              {
+                "id": "20022313",
+                "label": "<span>покажи</span> <span>пример</span>",
+                "parents": [2002231], 
+                "order": 3
+              },
+                {
+                  "id": "200223131",
+                  "label": "<span>сайт</span> <span>для курса</span> <span>обучения</span>",
+                  "parents": [20022313],
+                  "order": 1
+                },
+                {
+                  "id": "200222132",
+                  "label": "<span>страница</span> <span>бизнес</span> <span>сообщества</span>",
+                  "parents": [20022313],
+                  "order": 2
+                },
+
+
+
+
+
+
+
+
+
+
+
+        {
+          "id": "20023",
+          "label": "<span>хочу такую</span> <span>штуку</span>",
+          "parents": [2002],
+          "order": 3,
+          "goTo": 50
+        },
+      {
+        "id": "2003",
+        "label": "<div class='live-name'><span>QR</span></div> <div class='live-sphere'><span>визитка</span></div>",
+        "parents": [200],
+        "order": 2
+      },
+        {
+          "id": "20031",
+          "label": "<span>покажи</span> <span>пример</span>",
+          "parents": [2003],
+          "order": 1
+        },
+        {
+          "id": "20032",
+          "label": "<span>что я получу?</span>",
+          "parents": [2003],
+          "order": 2
+        },
+        {
+          "id": "20033",
+          "label": "<span>хочу такую</span> <span>штуку</span>",
+          "parents": [2003],
+          "order": 3,
+          "goTo": 50
+        },
+      
+
+
+      {
+        "id": "30",
+        "label": "<span>что</span> <span>скажешь</span> <span>человек?</span>",
+        "parents": [2002211131, 2002211132, 2002221131, 2002221132],
+        "order": 2
+      },
+        {
+          "id": "301",
+          "label": "<span>хочу</span> <span>такую штуку</span>",
+          "parents": [30],
+          "order": 1,
+          "goTo": 50
+        },
+        {
+          "id": "302",
+          "label": "<span>я меня</span> <span>есть вопрос</span>",
+          "parents": [30],
+          "order": 2
+        },
+        {
+          "id": "303",
+          "label": "<span>мне это</span> <span>не интересно</span>",
+          "parents": [30],
+          "order": 3,
+          "goTo": 3031
+        },
+          {
+            "id": "3031",
+            "label": "<div class='icon'>❤️</div><div class='live-name'><span>благодарю</span> <span>за честность</span></div> <div class='live-sphere'><span>ты классный</span> <span>человек</span></div>",
+            "parents": [303]
+          },
+            {
+              "id": "30311",
+              "label": "<span>вернуться</span> <span>в начало</span> ",
+              "parents": [3031],
+              "goTo": 1
+            },
+
+
+
+      {
+        "id": "40",
+        "label": "<div class='icon'>❤️</div> <span>бесплатно</span>",
+        "parents": [20022112],
+        "order": 2
+      },
+        {
+          "id": "401",
+          "label": "<span>хочу</span> <span>такую штуку</span>",
+          "parents": [40],
+          "order": 1
+        },
+        {
+          "id": "402",
+          "label": "<span>отправить</span> <span>заявку</span>",
+          "parents": [40],
+          "order": 2
+        },
+
+
+
+      {
+        "id": "50",
+        "label": "<span>как с тобой</span> <span>связаться?</span>",
+        "parents": [2002211102, 2002221102, 20023, 20033, 301]
+      },
+        {
+          "id": "501",
+          "label": "<span>whatsapp</span>",
+          "parents": [50]
+        },
+        {
+          "id": "502",
+          "label": "<span>telegram</span>",
+          "parents": [50]
+        },
+        {
+          "id": "503",
+          "label": "<span>другой способ</span>",
+          "parents": [50]
+        },
+      {
+        "id": "60",
+        "label": "<span>каким</span> <span>ты хочешь</span> <span>меня видеть?</span>",
+        "parents": [36, 3213]        
+      },
+        {
+          "id": "6001",
+          "label": "<span>выбрать</span>",
+          "parents": [60],        
+          "goTo": 601       
+        },
+        {
+          "id": "601",
+          "label": "<div class='scroll-up-down-wrapper'><img src='../../../img/icons/up.png' class='img-up'><img src='../../../img/icons/down.png' class='img-down'></div>",
+          "parents": [6001],        
+          "goOut": true      
+        },
+          {
+            "id": "6011",
+            "label": "<span>ярким</span>",
+            "parents": [601],        
+            "lineCount": 1
+          },
+          {
+            "id": "6012",
+            "label": "<span>тёмным</span>",
+            "parents": [601],        
+            "lineCount": 1
+          },
+          {
+            "id": "6013",
+            "label": "<span>позитивным</span>",
+            "parents": [601],        
+            "lineCount": 1
+          },
+          {
+            "id": "6014",
+            "label": "<span>серьёзным</span>",
+            "parents": [601],        
+            "lineCount": 1
+          },
+          {
+            "id": "6015",
+            "label": "<span>спокойным</span>",
+            "parents": [601],        
+            "lineCount": 1
+          }
+
+
   ]
 }
 

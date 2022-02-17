@@ -1,0 +1,22 @@
+body.innovator .main-bg {
+	background: #0A5DA6;
+	background: -webkit-radial-gradient(center, #0A5DA6, #162652);
+	background: -moz-radial-gradient(center, #0A5DA6, #162652);
+	background: radial-gradient(ellipse at center, #0A5DA6, #162652);
+	animation: mainBgStart 3s 0s ease-in forwards;
+}
+
+.main-bg:after {
+	display: none;
+}
+
+@keyframes mainBgStart {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}

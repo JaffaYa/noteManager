@@ -6,33 +6,35 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>qr визитка</title>
-<link rel="icon" type="image/png" href="favicon.png" />
-<link href="../../../css/common.css?v=1008" rel="stylesheet">
-<link href="../../../css/styles.css?v=1008" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../../favicon.png" />
+<link href="../../../css/common.css?v=1061" rel="stylesheet">
+<link href="../../../css/styles.css?v=1061" rel="stylesheet">
 
 </head>
-<body>
+<body class="font-firasans">
 
     <div class="qr-list">
         
         <div class="qr-item">
-            <div class="qr-code">
-                <img src="qr-instagram.png">    
-            </div>
-            <div class="qr-description">            
+            <div class="qr-item-block">
+                <div class="qr-code">
+                    <img src="qr-instagram.png">    
+                </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-icon" style="
                 /* variables here - data from DB */
                 -webkit-mask-image: url(../../img/icons/qr/instagram.svg); 
                 mask-image: url(../../img/icons/qr/instagram.svg);
                 ">
                 </div>
-                <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                 <div class="qr-text">instagram</div>
             </div>
             <div class="qr-item-active">
                 <div class="qr-code">
                     <img src="qr-instagram.png">    
                 </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-description">            
                     <div class="qr-icon" style="
                     /* variables here - data from DB */
@@ -40,30 +42,37 @@
                     mask-image: url(../../img/icons/qr/instagram.svg);
                     ">
                     </div>
-                    <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                    <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                     <div class="qr-text">instagram</div>
                 </div>
+                <a href="https://www.instagram.com/variant.name/" target="_blank" class="node-btn show btn-iframe">
+                    <div class="v-content"><span>покажи</span> <span>страницу</span></div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </a>
             </div>
         </div>
-        
+
         <div class="qr-item">
-            <div class="qr-code">
-                <img src="qr-telegram.png">    
-            </div>
-            <div class="qr-description">            
+            <div class="qr-item-block">
+                <div class="qr-code">
+                    <img src="qr-telegram.png">    
+                </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-icon" style="
                 /* variables here - data from DB */
                 -webkit-mask-image: url(../../img/icons/qr/telegram.svg); 
                 mask-image: url(../../img/icons/qr/telegram.svg);
                 ">
                 </div>
-                <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                 <div class="qr-text">telegram</div>
             </div>
             <div class="qr-item-active">
                 <div class="qr-code">
                     <img src="qr-telegram.png">    
                 </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-description">            
                     <div class="qr-icon" style="
                     /* variables here - data from DB */
@@ -71,30 +80,37 @@
                     mask-image: url(../../img/icons/qr/telegram.svg);
                     ">
                     </div>
-                    <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                    <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                     <div class="qr-text">telegram</div>
                 </div>
+                <a href="https://t.me/variant_name" target="_blank" class="node-btn show btn-iframe">
+                    <div class="v-content"><span>отправить</span> <span>сообщение</span></div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </a>
             </div>
         </div>
 
         <div class="qr-item">
-            <div class="qr-code">
-                <img src="qr-whatsapp.png">    
-            </div>
-            <div class="qr-description">            
+            <div class="qr-item-block">
+                <div class="qr-code">
+                    <img src="qr-whatsapp.png">    
+                </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-icon" style="
                 /* variables here - data from DB */
                 -webkit-mask-image: url(../../img/icons/qr/whatsapp.svg); 
                 mask-image: url(../../img/icons/qr/whatsapp.svg);
                 ">
                 </div>
-                <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                 <div class="qr-text">whatsapp</div>
             </div>
             <div class="qr-item-active">
                 <div class="qr-code">
                     <img src="qr-whatsapp.png">    
                 </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-description">            
                     <div class="qr-icon" style="
                     /* variables here - data from DB */
@@ -102,45 +118,57 @@
                     mask-image: url(../../img/icons/qr/whatsapp.svg);
                     ">
                     </div>
-                    <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                    <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                     <div class="qr-text">whatsapp</div>
                 </div>
+                <a href="https://wa.me/79282635777?text=hello variant" target="_blank" class="node-btn show btn-iframe">
+                    <div class="v-content"><span>отправить</span> <span>сообщение</span></div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </a>
             </div>
         </div>
 
         <div class="qr-item">
-            <div class="qr-code">
-                <img src="qr-site.png">    
-            </div>
-            <div class="qr-description">            
+            <div class="qr-item-block">
+                <div class="qr-code">
+                    <img src="qr-website.png">    
+                </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-icon" style="
                 /* variables here - data from DB */
-                -webkit-mask-image: url(../../img/icons/qr/web.svg); 
-                mask-image: url(../../img/icons/qr/web.svg);
+                -webkit-mask-image: url(../../img/icons/qr/website.svg); 
+                mask-image: url(../../img/icons/qr/website.svg);
                 ">
                 </div>
-                <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                 <div class="qr-text">website</div>
             </div>
             <div class="qr-item-active">
                 <div class="qr-code">
-                    <img src="qr-site.png">    
+                    <img src="qr-website.png">    
                 </div>
+                <div class="qr-arrow"></div>            
                 <div class="qr-description">            
                     <div class="qr-icon" style="
                     /* variables here - data from DB */
-                    -webkit-mask-image: url(../../img/icons/qr/web.svg); 
-                    mask-image: url(../../img/icons/qr/web.svg);
+                    -webkit-mask-image: url(../../img/icons/qr/website.svg); 
+                    mask-image: url(../../img/icons/qr/website.svg);
                     ">
                     </div>
-                    <div class="qr-dash"style="-webkit-mask-image: url(../../img/icons/qr/dash.svg); mask-image: url(../../img/icons/qr/dash.svg);"></div>
+                    <div class="qr-dash"><img src="../../img/icons/qr/dash.svg"></div>
                     <div class="qr-text">website</div>
                 </div>
+                <a href="https://variant.name" target="_blank" class="node-btn show btn-iframe">
+                    <div class="v-content"><span>покажи</span> <span>страницу</span></div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </a>
             </div>
         </div>
-        
+                
 
 </div>
-<script src="qr.js?v=1008"></script>
+<script src="qr.js?v=1061"></script>
 </body>  
 </html>

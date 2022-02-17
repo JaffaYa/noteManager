@@ -1,0 +1,151 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "fontFamily": "font-bebas",
+  "themeStyle": "innovator",
+  "customStyleName": "innovator",
+  "customFileCss": "pages/livecard/innovator/css/custom.css",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/innovator/1.jpg'></div></div></div><div class='live-name'><span>INNOVATOR</span></div> <div class='live-sphere'><span>бизнес</span></div> <div class='live-sphere'><span>сообщество</span></div></div></div>",     
+      "parents": [0],
+      "liveCardS": false
+    },
+      {
+        "id": "11",
+        "label": "<span>кто&nbsp;мы</span>",
+        "parents": [1],
+        "liveCardS": true
+      },
+        {
+          "id": "111",
+          "label": "<span>о&nbsp;сообществе</span>",
+          "parents": [11],
+          "liveCard": true
+        },
+        {
+          "id": "112",
+          "label": "<span>участники</span>",
+          "parents": [11],
+          "liveCard": true
+        },
+          {
+            "id": "112",
+            "label": "<span>участники</span>",
+            "parents": [11],
+            "liveCard": true
+          },
+        {
+          "id": "113",
+          "label": "<span>вступить&nbsp;в</span> <span>сообщество</span>",
+          "parents": [11],
+          "liveCard": true
+        },
+      {
+        "id": "12",
+        "label": "<span>что&nbsp;мы&nbsp;делаем</span>",
+        "parents": [1],
+        "liveCardS": true
+      },
+        {
+          "id": "124",
+          "label": "<span>услуги</span>",
+          "parents": [12],
+          "liveCard": true,
+          "order": 1
+        },
+        {
+          "id": "121",
+          "label": "<span>мероприятия</span>",
+          "parents": [12],
+          "liveCardS": true,
+          "order": 2
+        },
+          {
+            "id": "1211",
+            "label": "<span>форум</span> <span>маркетплейсы</span> <span>05.02.2020</span>",
+            "parents": [121],
+            "liveCard": true
+          },
+          {
+            "id": "1212",
+            "label": "<span>бизнес</span> <span>бранчи</span>",
+            "parents": [121],
+            "liveCard": true
+          },
+          {
+            "id": "1213",
+            "label": "<span>путешествия</span>",
+            "parents": [121],
+            "liveCard": true
+          },
+          {
+            "id": "1214",
+            "label": "<span>делаем&nbsp;добро</span>",
+            "parents": [121],
+            "liveCard": true
+          },
+        {
+          "id": "122",
+          "label": "<span>проекты</span>",
+          "parents": [12],
+          "liveCard": true,
+          "order": 3
+        },
+      {
+        "id": "14",
+        "label": "<span>контакты</span>",
+        "parents": [1],
+        "liveCardS": true
+      },
+        {
+          "id": "141",
+          "label": "<span>whatsapp</span>",
+          "parents": [14],
+          "goToUrl" : "https://wa.me/79182266770",
+          "liveCard": true,
+          "order": 1
+        },
+        {
+          "id": "142",
+          "label": "<span>telegram</span>",
+          "parents": [14],
+          "goToUrl" : "https://t.me/variant_name",
+          "liveCard": true,
+          "order": 2
+        },
+        {
+          "id": "143",
+          "label": "<a href='tel:+79182266770'><span>позвонить</span></a>",
+          "parents": [14],
+          "liveCard": true,
+          "order": 3
+        },
+        {
+          "id": "144",
+          "label": "<span>соц&nbsp;сети</span>",
+          "parents": [1411],
+          "liveCardS": true,
+          "liveCard": true,
+          "order": 4
+        },
+          {
+            "id": "1441",
+            "label": "<span>instagram</span>",
+            "parents": [144],
+            "goToUrl" : "https://wa.me/79182266770",
+            "liveCard": true
+          },
+          {
+            "id": "1442",
+            "label": "<span>facebook</span>",
+            "parents": [144],
+            "goToUrl" : "https://t.me/variant_name",
+            "liveCard": true
+          }
+
+  ]
+}
+

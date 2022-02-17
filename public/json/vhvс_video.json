@@ -1,0 +1,23 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card live-product'><div class='icon'>🔥</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div><div class='live-sphere'>горячее <br>шоколадное <br>обёртывание</div>",     
+      "parents": [0]
+    },
+    {
+      "id": "2",
+      "label": "красивое <br>стройное <br>тело",
+      "parents": [1]
+    },
+    {
+      "id": "3",
+      "label": "нежная <br>гладкая <br>кожа",
+      "parents": [1]
+    }
+  ]
+}
+

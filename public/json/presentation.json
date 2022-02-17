@@ -1,0 +1,22 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='img/logo-anim-500.gif'></div></div></div><div class='live-name'><span>онлайн</span> <span>конструктор</span> <span>вариантов</span></div></div></div>",     
+      "label": "<span>онлайн</span> <span>конструктор</span> <span>вариантов</span>",     
+      "parents": [0]
+    },
+      {
+        "id": "101",
+        "label": "<span>помогаю</span> <span>сделать</span> <span>правильный</span> <span>выбор</span>",
+        "parents": [1],
+        "liveCardS": true,
+        "order": 1
+      }
+
+  ]
+}
+

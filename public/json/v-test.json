@@ -5,92 +5,108 @@
   "nodes": [
     {
       "id": "1",
-      "label": "parent_1",
+      "label": "1",
       "parents": [0]
     },
     {
       "id": "2",
-      "label": "clild_1",
+      "label": "2",
       "parents": [1],
-      "order": 1,
-      "goTo": 16
-    },
-    {
-      "id": "3",
-      "label": "clild_2",
-      "parents": [1],
-      "order": 2,
-      "goTo": 16
-    },
-    {
-      "id": "4",
-      "label": "clild_3",
-      "parents": [1],
-      "order": 3,
-      "goTo": 16
-    },
-    {
-      "id": "16",
-      "label": "parent_2",
-      "parents": [2,3,4]
-    },
-    {
-      "id": "17",
-      "label": "child_1",
-      "parents": [16],
-      "order": 1,
-      "goTo": 16
-    },
-    {
-      "id": "18",
-      "label": "child_2",
-      "parents": [16],
-      "order": 2,
-      "goTo": 16
-    },
-    {
-      "id": "19",
-      "label": "child_more",
-      "parents": [16],
-      "order": 3,
-      "goTo": 16
-    },
-    {
-      "id": "6",
-      "label": "parent_2",
-      "parents": [19]
-    },
-    {
-      "id": "7",
-      "label": "child_1",
-      "parents": [6],
       "order": 1,
       "goTo": 6
     },
     {
+      "id": "3",
+      "label": "3",
+      "parents": [1],
+      "order": 2,
+      "goTo": 6
+    },
+    {
+      "id": "4",
+      "label": "4",
+      "parents": [1],
+      "order": 3,
+      "goTo": 6
+    },
+    {
+      "id": "6",
+      "label": "6",
+      "parents": [4,3,2]
+    },
+    {
+      "id": "7",
+      "label": "7",
+      "parents": [6],
+      "order": 1,
+      "goTo": 77
+    },
+      {
+        "id": "77",
+        "label": "77",
+        "parents": [7],
+        "order": 1,
+        "goTo": 6
+      },
+    {
       "id": "8",
-      "label": "child_2",
+      "label": "8",
       "parents": [6],
       "order": 2,
       "goTo": 6
     },
     {
       "id": "9",
-      "label": "child_3",
+      "label": "9",
       "parents": [6],
       "order": 3,
       "goTo": 6
     },
     {
       "id": "10",
-      "label": "child_4",
+      "label": "10",
       "parents": [6],
       "order": 4,
       "goTo": 6
     },
     {
       "id": "11",
-      "label": "child_5",
+      "label": "11",
+      "parents": [6],
+      "order": 5,
+      "goTo": 6
+    },
+    {
+      "id": "12",
+      "label": "12",
+      "parents": [6],
+      "order": 5,
+      "goTo": 6
+    },
+    {
+      "id": "13",
+      "label": "13",
+      "parents": [6],
+      "order": 5,
+      "goTo": 6
+    },
+    {
+      "id": "14",
+      "label": "14",
+      "parents": [6],
+      "order": 5,
+      "goTo": 6
+    },
+    {
+      "id": "15",
+      "label": "15",
+      "parents": [6],
+      "order": 5,
+      "goTo": 6
+    },
+    {
+      "id": "16",
+      "label": "16",
       "parents": [6],
       "order": 5,
       "goTo": 6

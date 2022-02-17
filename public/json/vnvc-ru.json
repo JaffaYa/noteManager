@@ -1,0 +1,683 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card live-product'><div class='icon'>❄️</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>very&nbsp;cold</div><div class='live-sphere'>холодное <br>шоколадное <br>обёртывание</div>",     
+      "parents": [0]
+    },
+      {
+        "id": "101",
+        "label": "о&nbsp;продукте",
+        "parents": [1],
+        "order": 1,
+        "goTo" : 1010
+      },
+      {
+        "id": "1010",
+        "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>very&nbsp;cold</div><div class='live-sphere'>о&nbsp;продукте</div>",     
+        "parents": [101]
+      },
+        {
+          "id": "1011",
+          "label": "что&nbsp;даст&nbsp;тебе <br>этот&nbsp;продукт?",
+          "parents": [1010],
+          "order": 1,
+          "goTo": "10111"
+        },
+          {
+            "id": "10111",
+            "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>что ты хочешь?</div>",     
+            "parents": [1011]
+          },
+          {
+            "id": "10112",
+            "label": "красивое <br>стройное <br>тело",
+            "parents": [10111],
+            "goTo": "101121"
+          },
+            {
+              "id": "101121",
+              "label": "<div class='icon'>❄️</div>сильный <br>охлождающий <br>эффект",
+              "parents": [10112,10113]
+            },
+              {
+                "id": "1011211",
+                "label": "<div class='icon'>👍</div>лайк",
+                "parents": [101121],
+                "goTo": 1011210
+              },
+              {
+                "id": "1011212",
+                "label": "дальше",
+                "parents": [101121],
+                "goTo": 1011210
+              },
+            {
+              "id": "1011210",
+              "label": "<div class='icon'>🍩</div>помогает <br>в&nbsp;процессе <br>похудения",
+              "parents": [10112]
+            },
+              {
+                "id": "10112101",
+                "label": "<div class='icon'>👍</div>лайк",
+                "parents": [1011210],
+                "goTo": 101122
+              },
+              {
+                "id": "10112102",
+                "label": "дальше",
+                "parents": [1011210],
+                "goTo": 101122
+              },
+            {
+              "id": "101122",
+              "label": "<div class='icon'>🍃</div>полезные <br>натуральные <br>вещества <br>в&nbsp;составе",
+              "parents": [1011211,1011212]
+            },
+              {
+                "id": "1011221",
+                "label": "дальше",
+                "parents": [101122],
+                "goTo": 101123
+              },
+              {
+                "id": "1011222",
+                "label": "покажи <br>состав",
+                "parents": [101122],
+                "iframe": "pages/products/vc/index.html#composition"
+              },
+            {
+              "id": "101123",
+              "label": "<div class='icon'>🧊</div>активно <br>расщипляют <br>жир",
+              "parents": [1011211,1011212]
+            },
+              {
+                "id": "1011231",
+                "label": "<div class='icon'>👍</div>лайк",
+                "parents": [101123],
+                "goTo": 101124
+              },
+              {
+                "id": "1011232",
+                "label": "дальше",
+                "parents": [101123],
+                "goTo": 101124
+              },
+            {
+              "id": "101124",
+              "label": "<div class='icon'>🍊</div>уменьшают <br>целлюлит&nbsp;и <br>растяжки",
+              "parents": [1011211,1011212]
+            },
+              {
+                "id": "1011241",
+                "label": "<div class='icon'>👍</div>лайк",
+                "parents": [101124],
+                "goTo": 101125
+              },
+              {
+                "id": "1011242",
+                "label": "дальше",
+                "parents": [101124],
+                "goTo": 101125
+              },
+            {
+              "id": "101125",
+              "label": "<div class='icon'>👍</div>кожа <br>становится <br>подтянутой <br>и&nbsp;гладкой",
+              "parents": [1011211,1011212]
+            },
+              {
+                "id": "1011251",
+                "label": "<div class='icon'>❤️</div>классно",
+                "parents": [101125],
+                "goTo": 10112511
+              },
+                {
+                  "id": "10112511",
+                  "label": "<div class='icon'>👍</div>ты <br>классный <br>человек",
+                  "parents": [1011211,1011212]
+                },
+                  {
+                    "id": "101125112",
+                    "label": "вернуться <br>в&nbsp;начало",
+                    "parents": [10112511],
+                    "goTo": 1
+                  },
+              {
+                "id": "1011252",
+                "label": "вернуться в начало",
+                "parents": [101125],
+                "goTo": 1
+              },
+          {
+            "id": "10113",
+            "label": "подтянутую <br>гладкую <br>кожу",
+            "parents": [10111],
+            "goTo": [101121]
+          },
+        {
+          "id": "1012",
+          "label": "фото&nbsp;и <br>состав",
+          "parents": [1010],
+          "order": 2,
+          "iframe": "pages/products/vc/"
+        },
+        {
+          "id": "1013199",
+          "label": "полезная <br>информация",
+          "parents": [1010],
+          "order": 3,
+          "goTo": 1013
+        },
+        {
+          "id": "1013",
+          "label": "<div class='live-card live-product'><div class='icon'>❄️</div><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>very&nbsp;cold</div><div class='live-sphere'>полезная <br>информация</div>",     
+          "parents": [1013199]
+        },
+          {
+            "id": "10133",
+            "label": "<div class='qr-item'><div class='qr-item-block'><div class='qr-code'><img src='pages/products/vc/qr-1.svg'></div><div class='qr-arrow'></div><div class='qr-icon'style='-webkit-mask-image:url(../../img/icons/qr/place.svg);mask-image:url(../../img/icons/qr/place.svg);'></div><div class='qr-dash'><img src='../../img/icons/qr/dash.svg'></div><div class='qr-text qr-text-2'>честно&nbsp;сделано <br>в России</div></div><div class='qr-item-active'><div class='qr-code'><img src='pages/products/vc/qr-1.svg'></div><div class='qr-arrow'></div><div class='qr-description'><div class='qr-icon'style='-webkit-mask-image:url(img/icons/qr/place.svg);mask-image:url(img/icons/qr/place.svg);'></div><div class='qr-dash'><img src='img/icons/qr/dash.svg'></div><div class='qr-text qr-text-2'>честно&nbsp;сделано <br>в России</div></div></div></div>",
+            "parents": [1013],
+            "order": 3
+          },
+            {
+              "id": "101311",
+              "label": "покажи&nbsp; <br>сертификат",
+              "parents": [10133],
+              "iframe": "pages/products/vc/cert.html"
+            },
+          {
+            "id": "10131",
+            "label": "<div class='qr-item'><div class='qr-item-block'><div class='qr-code'><img src='pages/products/vc/qr-2.svg'></div><div class='qr-arrow'></div><div class='qr-icon'style='-webkit-mask-image:url(../../img/icons/qr/list.svg);mask-image:url(../../img/icons/qr/list.svg);'></div><div class='qr-dash'><img src='../../img/icons/qr/dash.svg'></div><div class='qr-text'>инструкция</div></div><div class='qr-item-active'><div class='qr-code'><img src='pages/products/vc/qr-3.svg'></div><div class='qr-arrow'></div><div class='qr-description'><div class='qr-icon'style='-webkit-mask-image:url(img/icons/qr/list.svg);mask-image:url(img/icons/qr/list.svg);'></div><div class='qr-dash'><img src='img/icons/qr/dash.svg'></div><div class='qr-text'>инструкция</div></div></div></div>",
+            "parents": [1013],
+            "order": 1
+          },
+            {
+              "id": "10131001",
+              "label": "необычная",
+              "parents": [10131],
+              "goTo": 3001
+            },
+            {
+              "id": "10131002",
+              "label": "обычная",
+              "parents": [10131],
+              "iframe": "pages/products/vc/manual.html"
+            },
+          {
+            "id": "10132",
+            "label": "<div class='qr-item'><div class='qr-item-block'><div class='qr-code'><img src='pages/products/vc/qr-3.svg'></div><div class='qr-arrow'></div><div class='qr-icon'style='-webkit-mask-image:url(../../img/icons/qr/mail.svg);mask-image:url(../../img/icons/qr/mail.svg);'></div><div class='qr-dash'><img src='../../img/icons/qr/dash.svg'></div><div class='qr-text'>есть <br>претензии?</div></div><div class='qr-item-active'><div class='qr-code'><img src='pages/products/vc/qr-2.svg'></div><div class='qr-arrow'></div><div class='qr-description'><div class='qr-icon'style='-webkit-mask-image:url(img/icons/qr/mail.svg);mask-image:url(img/icons/qr/mail.svg);'></div><div class='qr-dash'><img src='img/icons/qr/dash.svg'></div><div class='qr-text'>есть <br>претензии?</div></div></div></div>",
+            "parents": [1013],
+            "order": 2,
+            "goTo": 200
+          },
+      {
+        "id": "103",
+        "label": "где&nbsp;купить?",
+        "parents": [1],
+        "order": 2,
+        "goTo" : 1030
+      },
+      {
+        "id": "1030",
+        "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>very&nbsp;cold</div><div class='live-sphere'>где&nbsp;купить?</div>",     
+        "parents": [103]
+      },
+      {
+        "id": "1031",
+        "label": "wildberries.ru",
+        "parents": [1030],
+        "order": 1,
+        "goToUrl" : "https://www.wildberries.ru/catalog/49784524/detail.aspx?targetUrl=XS"
+      },
+      {
+        "id": "1032",
+        "label": "ozon.ru",
+        "parents": [1030],
+        "order": 2,
+        "goToUrl" : "https://www.ozon.ru/product/holodnoe-shokoladnoe-kremovoe-obertyvanie-s-mentolom-protiv-tsellyulita-rastyazhek-i-lishnego-404006468"
+      },
+
+
+
+    {
+      "id": "200",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"200\" name=\"claim\" mailname=\"Претензия к VERY COLD\" placeholder=\"кликни тут и напиши что не так\"></textarea>",
+      "parents": [10132]
+    },
+    {
+      "id": "201",
+      "label": "дальше",
+      "parents": [200],
+      "sendMail": true,
+      "goTo" : 202,
+      "required": 200
+    },
+    {
+      "id": "202",
+      "label": "как&nbsp;тебе <br>ответить?",
+      "parents": [201]
+    },
+    {
+      "id": "203",
+      "label": "на&nbsp;whatsapp",
+      "parents": [202],
+      "order": 1,
+      "goTo" : 206
+    },
+    {
+      "id": "204",
+      "label": "на&nbsp;telegram",
+      "parents": [202],
+      "order": 2,
+      "goTo" : 206
+    },
+    {
+      "id": "205",
+      "label": "на&nbsp;email",
+      "parents": [202],
+      "order": 3,
+      "goTo" : 208
+    },
+    {
+      "id": "206",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"кликни тут и напиши номер телефона\"></textarea>",
+      "parents": [203,204]
+    },
+    {
+      "id": "207",
+      "label": "дальше",
+      "parents": [206],
+      "sendMail": true,
+      "required": 206,
+      "goTo" : 210
+    },
+    {
+      "id": "208",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"email\" mailname=\"Email\" placeholder=\"кликни тут и напиши твой email\"></textarea>",
+      "parents": [205]
+    },
+    {
+      "id": "209",
+      "label": "дальше",
+      "parents": [208],
+      "sendMail": true,
+      "required": 208,
+      "goTo" : 210
+    },
+    {
+      "id": "210",
+      "label": "<div class='icon'>👍</div>я&nbsp;отвечу <br>тебе <br>скоро",
+      "parents": [207,209]
+    },
+    {
+      "id": "211",
+      "label": "вернуться&nbsp;в&nbsp;самое <br>начало",
+      "parents": [210],
+      "goTo": 1
+    },
+    {
+      "id": "3001",
+      "label": "<div class='icon'>❓</div>ты <br>беременна&nbsp; <br>или&nbsp;кормишь <br>грудью?",
+      "parents": [10131001]
+    },
+      {
+        "id": "3002",
+        "label": "нет",
+        "parents": [3001],
+        "goTo": 3031
+      },
+      {
+        "id": "3003",
+        "label": "да",
+        "parents": [3001],
+        "goTo": 30031
+      },
+        {
+          "id": "30031",
+          "label": "<div class='icon'>⚠️</div>не&nbsp;используй <br>обёртывание <br>если&nbsp;ты <br>беременна <br>или&nbsp;кормишь <br>грудью",
+          "parents": [3003]
+        },
+          {
+            "id": "30032",
+            "label": "вернуться <br>в&nbsp;начало",
+            "parents": [30031],
+            "goTo": 1
+          },
+    {
+      "id": "3031",
+      "label": "<div class='icon'>❤️</div>рекомендую <br>сначала <br>провести <br>тест&nbsp;на небольшом участке&nbsp;тела",
+      "parents": [3002]
+    },
+      {
+        "id": "3032",
+        "label": "<div class='icon'>👌</div>ясно",
+        "parents": [3031],
+        "goTo": 30311
+      },
+    {
+      "id": "30311",
+      "label": "<div class='icon'>1️⃣</div>очисти <br>кожу&nbsp;перед <br>применением <br>обёртывания",
+      "parents": [3032]
+    },
+      {
+        "id": "30321",
+        "label": "хорошо",
+        "parents": [30311],
+        "goTo": 3033
+      },
+    {
+      "id": "3033",
+      "label": "<div class='icon'>2️⃣</div>нанеси <br>одну&nbsp;каплю <br>крема&nbsp;на <br>проблемный <br>участок&nbsp;тела",
+      "parents": [3032]
+    },
+      {
+        "id": "3034",
+        "label": "дальше",
+        "parents": [3033],
+        "goTo": 303301
+      },
+    {
+      "id": "303301",
+      "label": "<div class='icon'>3️⃣</div>распредели <br>крем&nbsp;на&nbsp;коже<br>равномерным <br>слоем&nbsp;1&nbsp;мм",
+      "parents": [3034]
+    },
+      {
+        "id": "303302",
+        "label": "дальше",
+        "parents": [303301],
+        "goTo": 3035
+      },
+    {
+      "id": "3035",
+      "label": "<div class='icon'>⌛</div>подожди <br>примерно <br>15&nbsp;минут",
+      "parents": [3034]
+    },
+      {
+        "id": "3036",
+        "label": "дальше",
+        "parents": [3035],
+        "goTo": 3037
+      },
+    {
+      "id": "3037",
+      "label": "<div class='icon'>❄️</div>ощущение <br>холода&nbsp;это <br>нормально",
+      "parents": [3036]
+    },
+      {
+        "id": "3038",
+        "label": "ясно",
+        "parents": [3037],
+        "goTo": 3039
+      },
+    {
+      "id": "3039",
+      "label": "чувствуешь <br>дискомфорт <br>есть <br>раздражение?",
+      "parents": [3038]
+    },
+      {
+        "id": "3040",
+        "label": "<div class='icon'>👌</div>всё&nbsp;хорошо <br>нет <br>раздражений",
+        "parents": [3039],
+        "goTo": 303
+      },
+      {
+        "id": "3041",
+        "label": "есть <br>раздражения",
+        "parents": [3039],
+        "goTo": 31031
+      },
+
+
+
+    {
+      "id": "303",
+      "label": "<div class='icon'>👍</div>ты&nbsp;молодец <br>можно <br>продолжать",
+      "parents": [3040]
+    },
+    {
+      "id": "304",
+      "label": "<div class='icon'>❤️</div>отлично",
+      "parents": [303],
+      "goTo": 305
+    },
+    {
+      "id": "305",
+      "label": "<div class='icon'>4️⃣</div>слоем&nbsp;1&nbsp;мм <br>нанеси&nbsp;крем <br>на&nbsp;другие <br>проблемные <br>участки&nbsp;тела ",
+      "parents": [304]
+    },
+    {
+      "id": "306",
+      "label": "хорошо",
+      "parents": [305],
+      "goTo": 307
+    },
+    {
+      "id": "307",
+      "label": "дальше <br>есть&nbsp;два <br>варианта",
+      "parents": [306]
+    },
+    {
+      "id": "308",
+      "label": "продолжить <br>без&nbsp;плёнки",
+      "parents": [307],
+      "goTo": 310
+    },
+    {
+      "id": "309",
+      "label": "использовать <br>плёнку",
+      "parents": [307],
+      "goTo": 600
+    },
+      {
+        "id": "600",
+        "label": "оберни <br>специальную <br>стретч&nbsp;плёнку <br>поверх&nbsp;крема",
+        "parents": [309],
+        "goTo": 600
+      },
+      {
+        "id": "601",
+        "label": "дальше",
+        "parents": [600],
+        "goTo": 310
+      },
+    {
+      "id": "310",
+      "label": "<div class='icon'>⌛</div>подожди&nbsp;ещё <br>примерно <br>15&nbsp;минут",
+      "parents": [308,601]
+    },
+    {
+      "id": "311",
+      "label": "дальше",
+      "parents": [310],
+      "goTo": 3101
+    },
+      {
+        "id": "3101",
+        "label": "<div class='icon'>❤️</div>как&nbsp;ты&nbsp;себя <br>чувствуешь?",
+        "parents": [311]
+      },
+      {
+        "id": "3102",
+        "label": "<div class='icon'>👌</div>я&nbsp;в&nbsp;порядке <br>терплю",
+        "parents": [3101],
+        "goTo": 400
+      },
+      {
+        "id": "3103",
+        "label": "<div class='icon'>❄️</div>я&nbsp;больше <br>не&nbsp;могу <br>терпеть",
+        "parents": [3101],
+        "goTo": 31031
+      },
+        {
+          "id": "31031",
+          "label": "<div class='icon'>⚠️</div>не&nbsp;смывай <br>крем <br>горячей <br>водой",
+          "parents": [3103,3041,401002,401003]
+        },
+        {
+          "id": "31032",
+          "label": "<div class='icon'>👌</div>понятно",
+          "parents": [31031],
+          "goTo": 31033
+        },
+        {
+          "id": "31033",
+          "label": "<div class='icon'>5️⃣</div>не&nbsp;втирая <br>удали&nbsp;крем <br>бумажными <br>полотенцами <br>или <br>салфетками",
+          "parents": [31032]
+        },
+        {
+          "id": "31034",
+          "label": "хорошо",
+          "parents": [31033],
+          "goTo": 31037
+        },
+        {
+          "id": "31037",
+          "label": "<div class='icon'>💧</div>тёплой <br>водой&nbsp;смой <br>остаки&nbsp;крема <br>с&nbsp;кожи",
+          "parents": [31034]
+        },
+        {
+          "id": "31038",
+          "label": "дальше",
+          "parents": [31037],
+          "goTo": 31040
+        },
+        {
+          "id": "31040",
+          "label": "<div class='icon'>6️⃣</div>увлажни <br>кожу <br>лосьоном <br>или&nbsp;кремом",
+          "parents": [31038]
+        },
+        {
+          "id": "31041",
+          "label": "хорошо",
+          "parents": [31040],
+          "goTo": 31042
+        },
+        {
+          "id": "31042",
+          "label": "<div class='icon'>❓</div>проявились <br>ли&nbsp;у&nbsp;тебя <br>аллергические <br>реакции?",
+          "parents": [31041]
+        },
+        {
+          "id": "31043",
+          "label": "да",
+          "parents": [31042],
+          "order": 2,
+          "goTo": 3104311
+        },
+          {
+            "id": "3104311",
+            "label": "<div class='icon'>⚠️</div>если&nbsp;есть <br>аллергия <br>лучше <br>не&nbsp;используй <br>этот&nbsp;крем",
+            "parents": [31043]
+          },
+            {
+              "id": "31043222",
+              "label": "понятно(",
+              "parents": [3104311],
+              "goTo": 31043111
+            },
+          {
+            "id": "31043111",
+            "label": "<div class='icon'>💗</div>лучше <br>попробуй <br>горячее <br>обёртывание",
+            "parents": [31043222]
+          },
+            {
+              "id": "3104312",
+              "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div><div class='live-sphere'>горячее <br>обёртывание</div>",     
+              "parents": [31043111],
+              "goToUrl": "/?node=1&jn=vnhc-ru"
+            },
+            {
+              "id": "3104313",
+              "label": "дальше",
+              "parents": [31043111],
+              "goTo": 500
+            },
+        {
+          "id": "310431",
+          "label": "нет",
+          "parents": [31042],
+          "order": 1,
+          "goTo": 310421
+        },
+        {
+          "id": "310421",
+          "label": "<div class='icon'>⏱️</div>используй <br>обёртывание <br>1-3&nbsp;раза <br>в&nbsp;неделю",
+          "parents": [31041,310431]
+        },
+        {
+          "id": "3104322",
+          "label": "дальше",
+          "parents": [310421],
+          "goTo": 31044
+        },
+        {
+          "id": "31044",
+          "label": "<div class='icon'>💞</div>для&nbsp;лучшего <br>эффекта <br>чередуй <br>холодное <br>и&nbsp;горячее <br>обёртывание",
+          "parents": [31041]
+        },
+        {
+          "id": "31045",
+          "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div><div class='live-sphere'>горячее <br>обёртывание</div>",     
+          "parents": [31044],
+          "goToUrl": "/?node=1&jn=vnvh-ru"
+        },
+        {
+          "id": "31046",
+          "label": "дальше",
+          "parents": [31044],
+          "goTo": 500
+        },
+    {
+      "id": "400",
+      "label": "<div class='icon'>⌛</div>подожди <br>ещё&nbsp;30&nbsp;-&nbsp;45 <br>минут",
+      "parents": [308]
+    },
+    {
+      "id": "401",
+      "label": "<div class='icon'>😎</div>я&nbsp;постараюсь",
+      "parents": [400],
+      "goTo": 401001
+    },
+    {
+      "id": "401001",
+      "label": "<div class='icon'>❤️</div>ты <br>молодец <br>у&nbsp;тебя&nbsp;всё <br>получается",
+      "parents": [401]
+    },
+      {
+        "id": "401002",
+        "label": "<div class='icon'>👍</div>лайк",
+        "parents": [401001],
+        "goTo": 31031
+      },
+      {
+        "id": "401003",
+        "label": "дальше",
+        "parents": [401001],
+        "goTo": 31031
+      },
+
+    {
+      "id": "500",
+      "label": "<div class='icon'>💕</div>будь <br>здоров <br>красив <br>и&nbsp;стастлив <br>человек",
+      "parents": [31043,3104313]
+    },  
+    {
+      "id": "501",
+      "label": "<div class='icon'>👍</div>лайк",
+      "parents": [500],
+      "goTo": 1,
+      "sendMail": true
+    },
+    {
+      "id": "502",
+      "label": "веруться <br>в&nbsp;начало",
+      "parents": [500],
+      "goTo": 1,
+      "sendMail": true
+    }
+  ]
+}
+

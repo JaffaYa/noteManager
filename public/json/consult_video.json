@@ -1,0 +1,23 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='icon'>❤️</div>помогаем <br>по&nbsp;теме маркет<br>плейсов",    
+       "parents": [0]
+    },
+    {
+      "id": "2",
+      "label": "<div class='icon'>👍</div>от&nbsp;создания товара до входа в ТОП",
+      "parents": [1]
+    },
+    {
+      "id": "4",
+      "label": "<div class='icon'>⬇️</div>подробности <br>ниже",
+      "parents": [1]
+    }
+  ]
+}
+

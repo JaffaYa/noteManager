@@ -1,0 +1,28 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='icon'>❤️</div>бесплатно <br>резберём карточку <br>вашего&nbsp;товара <br>и&nbsp;дадим рекомендации",    
+       "parents": [0]
+    },
+    {
+      "id": "2",
+      "label": "помогаем <br>начинающим <br>продавцам",
+      "parents": [1]
+    },
+    {
+      "id": "3",
+      "label": "и&nbsp;крупным компаниям",
+      "parents": [1]
+    },
+    {
+      "id": "4",
+      "label": "<div class='icon'>⬇️</div>подробности <br>ниже",
+      "parents": [1]
+    }
+  ]
+}
+

@@ -1,0 +1,576 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div>",     
+      "parents": [0]
+    },
+      {
+        "id": "101",
+        "label": "product details",
+        "parents": [1],
+        "order": 1,
+        "goTo" : 1010
+      },
+      {
+        "id": "1010",
+        "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div>",     
+        "parents": [101]
+      },
+        {
+          "id": "1011_1",
+          "label": "<div class='qr-item'><div class='qr-item-block'><div class='qr-code'><img src='pages/qr/qr-instagram.png'></div><div class='qr-arrow'></div><div class='qr-icon'style='-webkit-mask-image:url(../../img/icons/qr/instagram.svg);mask-image:url(../../img/icons/qr/instagram.svg);'></div><div class='qr-dash'><img src='../../img/icons/qr/dash.svg'></div><div class='qr-text qr-text-2'>honestly made <br>in Russia</div></div><div class='qr-item-active'><div class='qr-code'><img src='pages/qr/qr-instagram.png'></div><div class='qr-arrow'></div><div class='qr-description'><div class='qr-icon'style='-webkit-mask-image:url(img/icons/qr/instagram.svg);mask-image:url(img/icons/qr/instagram.svg);'></div><div class='qr-dash'><img src='img/icons/qr/dash.svg'></div><div class='qr-text qr-text-2'>honestly made <br>in Russia</div></div></div></div>",
+          "parents": [10101111],
+          "order": 3
+        },
+          {
+            "id": "1012",
+            "label": "show&nbsp;me&nbsp;the <br>certificate",
+            "parents": [1011],
+            "iframe": "pages/products/vh/cert.html"
+          },
+        {
+          "id": "1020",
+          "label": "photos&nbsp;and <br>ingredients",
+          "parents": [1010],
+          "order": 1,
+          "iframe": "pages/products/vh/"
+        },
+        {
+          "id": "1021",
+          "label": "instructions",
+          "parents": [1010],
+          "order": 2,
+          "goTo": 300
+        },
+      {
+        "id": "102",
+        "label": "have&nbsp;a <br>complaint?",
+        "parents": [1],
+        "order": 3,
+        "goTo" : 200
+      },
+      {
+        "id": "103",
+        "label": "where <br>to&nbsp;buy",
+        "parents": [1],
+        "order": 2,
+        "goTo" : 1030
+      },
+      {
+        "id": "1030",
+        "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vh/1.png'></div></div><div class='live-name'>very&nbsp;hot</div><div class='live-sphere'>where&nbsp;to&nbsp;buy</div>",     
+        "parents": [103]
+      },
+      {
+        "id": "1031",
+        "label": "buy&nbsp;on <br>wildberries.ru",
+        "parents": [1030],
+        "order": 1,
+        "goToUrl" : "https://www.wildberries.ru/catalog/49779093/detail.aspx?targetUrl=XS"
+      },
+      {
+        "id": "1032",
+        "label": "buy&nbsp;on <br>ozon.ru",
+        "parents": [1030],
+        "order": 2,
+        "goToUrl" : "https://www.ozon.ru/product/very-hot-shokoladnoe-goryachee-obertyvanie-antitsellyulitnoe-antitsellyulitnyy-krem-dlya-403990549"
+      },
+
+
+
+    {
+      "id": "200",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"200\" name=\"claim\" mailname=\"Претензия к VERY HOT\" placeholder=\"click here and type what is the problem\"></textarea>",
+      "parents": [102]
+    },
+    {
+      "id": "201",
+      "label": "next",
+      "parents": [200],
+      "sendMail": true,
+      "goTo" : 202,
+      "required": 200
+    },
+    {
+      "id": "202",
+      "label": "how&nbsp;to <br>contact <br>you?",
+      "parents": [201]
+    },
+    {
+      "id": "203",
+      "label": "on&nbsp;whatsapp",
+      "parents": [202],
+      "order": 1,
+      "goTo" : 206
+    },
+    {
+      "id": "204",
+      "label": "on&nbsp;telegram",
+      "parents": [202],
+      "order": 2,
+      "goTo" : 206
+    },
+    {
+      "id": "205",
+      "label": "send&nbsp;me <br>email",
+      "parents": [202],
+      "order": 3,
+      "goTo" : 208
+    },
+    {
+      "id": "206",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Телефон\" placeholder=\"click here and type your phone number\"></textarea>",
+      "parents": [203,204]
+    },
+    {
+      "id": "207",
+      "label": "next",
+      "parents": [206],
+      "sendMail": true,
+      "required": 206,
+      "goTo" : 210
+    },
+    {
+      "id": "208",
+      "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" name=\"email\" mailname=\"Email\" placeholder=\"click here and type your email\"></textarea>",
+      "parents": [205]
+    },
+    {
+      "id": "209",
+      "label": "next",
+      "parents": [208],
+      "sendMail": true,
+      "required": 208,
+      "goTo" : 210
+    },
+    {
+      "id": "210",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>i&nbsp;will <br>reply&nbsp;to <br>you&nbsp;soon",
+      "parents": [207,209]
+    },
+    {
+      "id": "211",
+      "label": "back&nbsp;to&nbsp;the <br>beginning",
+      "parents": [210],
+      "goTo": 1
+    },
+    {
+      "id": "300",
+      "label": "<div class='icon'><img src='img/icons/warning.png'></div>do&nbsp;you <br>have <br>varicose <br>veins?",
+      "parents": [1021]
+    },
+    {
+      "id": "301",
+      "label": "no",
+      "parents": [300],
+      "goTo": 3001
+    },
+    {
+      "id": "302",
+      "label": "yes",
+      "parents": [300],
+      "goTo": 3021
+    },
+      {
+        "id": "3021",
+        "label": "<div class='icon'><img src='img/icons/warning.png'></div>don't&nbsp;use <br>this&nbsp;product <br>if&nbsp;you&nbsp;have <br>varicose <br>veins",
+        "parents": [302]
+      },
+      {
+        "id": "3022",
+        "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>better&nbsp;try <br>this&nbsp;one</div>",     
+        "parents": [3021],
+        "goToUrl": "/?node=1&jn=vnvc-en"
+      },
+    {
+      "id": "3001",
+      "label": "<div class='icon'><img src='img/icons/warning.png'></div>are&nbsp;you <br>pregnant&nbsp;or <br>breastfeeding?",
+      "parents": [1021]
+    },
+      {
+        "id": "3002",
+        "label": "no",
+        "parents": [3001],
+        "goTo": 3004
+      },
+      {
+        "id": "3003",
+        "label": "yes",
+        "parents": [3001],
+        "goTo": 3021
+      },
+        {
+          "id": "30031",
+          "label": "<div class='icon'><img src='img/icons/warning.png'></div>don't&nbsp;use <br>this&nbsp;product <br>if&nbsp;you&nbsp;are <br>pregnant&nbsp;or <br>breastfeeding",
+          "parents": [3003]
+        },
+          {
+            "id": "30032",
+            "label": "back&nbsp;to&nbsp;the <br>beginning",
+            "parents": [30031],
+            "goTo": 1,
+            "sendMail": true
+          },
+    {
+      "id": "3004",
+      "label": "<div class='icon'><img src='img/icons/warning.png'></div>do&nbsp;you&nbsp;have <br>gynecological <br>cardiovascular <br>or&nbsp;skin <br>diseases?",
+      "parents": [1021]
+    },
+      {
+        "id": "3005",
+        "label": "no",
+        "parents": [3004],
+        "goTo": 3031
+      },
+      {
+        "id": "3006",
+        "label": "yes",
+        "parents": [3004],
+        "goTo": 30061
+      },
+        {
+          "id": "30061",
+          "label": "<div class='icon'><img src='img/icons/warning.png'></div>don't&nbsp;use <br>this&nbsp;product <br>if&nbsp;you&nbsp;have <br>any&nbsp;of&nbsp;these <br>diseases",
+          "parents": [3006]
+        },
+          {
+            "id": "30062",
+            "label": "back&nbsp;to&nbsp;the <br>beginning",
+            "parents": [30061],
+            "goTo": 1,
+            "sendMail": true
+          },
+
+
+
+    {
+      "id": "3031",
+      "label": "before&nbsp;use <br>you&nbsp;need <br>to&nbsp;test <br>the&nbsp;product",
+      "parents": [301]
+    },
+      {
+        "id": "3032",
+        "label": "next",
+        "parents": [3031],
+        "goTo": 30311
+      },
+    {
+      "id": "30311",
+      "label": "cleanse <br>your&nbsp;skin <br>before&nbsp;using <br>this&nbsp;product",
+      "parents": [3032]
+    },
+      {
+        "id": "30321",
+        "label": "next",
+        "parents": [30311],
+        "goTo": 3033
+      },
+    {
+      "id": "3033",
+      "label": "apply&nbsp;a&nbsp;small <br>drop&nbsp;of&nbsp;cream <br>to&nbsp;the&nbsp;problem <br>area&nbsp;of&nbsp;the&nbsp;skin",
+      "parents": [3032]
+    },
+      {
+        "id": "3034",
+        "label": "next",
+        "parents": [3033],
+        "goTo": 3035
+      },
+    {
+      "id": "3035",
+      "label": "wait&nbsp;about <br>15&nbsp;minutes",
+      "parents": [3034]
+    },
+      {
+        "id": "3036",
+        "label": "next",
+        "parents": [3035],
+        "goTo": 3037
+      },
+    {
+      "id": "3037",
+      "label": "feeling <br>warm&nbsp;and <br>burning <br>is&nbsp;normal",
+      "parents": [3036]
+    },
+      {
+        "id": "3038",
+        "label": "next",
+        "parents": [3037],
+        "goTo": 3039
+      },
+    {
+      "id": "3039",
+      "label": "are&nbsp;there&nbsp;any <br>discomfort <br>or&nbsp;irritation?",
+      "parents": [3038]
+    },
+      {
+        "id": "3040",
+        "label": "no",
+        "parents": [3039],
+        "goTo": 303
+      },
+      {
+        "id": "3041",
+        "label": "yes",
+        "parents": [3039],
+        "goTo": 31031
+      },
+
+
+
+    {
+      "id": "303",
+      "label": "you&nbsp;can <br>proceed&nbsp;to <br>the&nbsp;next&nbsp;step",
+      "parents": [301]
+    },
+    {
+      "id": "304",
+      "label": "next",
+      "parents": [303],
+      "goTo": 305
+    },
+    {
+      "id": "305",
+      "label": "apply&nbsp;an&nbsp;even <br>1mm&nbsp;thin&nbsp;layer <br>of&nbsp;cream&nbsp;on <br>problem&nbsp;areas <br>of&nbsp;your&nbsp;body",
+      "parents": [304]
+    },
+    {
+      "id": "306",
+      "label": "next",
+      "parents": [305],
+      "goTo": 307
+    },
+    {
+      "id": "307",
+      "label": "then <br>there&nbsp;are <br>two&nbsp;options",
+      "parents": [306]
+    },
+    {
+      "id": "308",
+      "label": "use&nbsp;a&nbsp;cream <br>without <br>a&nbsp;wrap",
+      "parents": [307],
+      "goTo": 310
+    },
+    {
+      "id": "309",
+      "label": "use&nbsp;a&nbsp;cream <br>with&nbsp;a <br>wrapping&nbsp;film",
+      "parents": [307],
+      "goTo": 600
+    },
+      {
+        "id": "600",
+        "label": "wrap&nbsp;your <br>skin&nbsp;with&nbsp;a <br>stretching <br>film",
+        "parents": [309],
+        "goTo": 600
+      },
+      {
+        "id": "601",
+        "label": "next",
+        "parents": [600],
+        "goTo": 310
+      },
+    {
+      "id": "310",
+      "label": "wait&nbsp;about <br>15&nbsp;minutes",
+      "parents": [308,601]
+    },
+    {
+      "id": "311",
+      "label": "next",
+      "parents": [310],
+      "goTo": 3101
+    },
+      {
+        "id": "3101",
+        "label": "how&nbsp;do <br>you&nbsp;feel?",
+        "parents": [311]
+      },
+      {
+        "id": "3102",
+        "label": "i'm&nbsp;ok",
+        "parents": [3101],
+        "goTo": 400
+      },
+      {
+        "id": "3103",
+        "label": "i&nbsp;can't <br>take&nbsp;it <br>anymore",
+        "parents": [3101],
+        "goTo": 31031
+      },
+        {
+          "id": "31031",
+          "label": "<div class='icon'><img src='img/icons/warning.png'></div>do&nbsp;not <br>use&nbsp;warm <br>water",
+          "parents": [3103]
+        },
+        {
+          "id": "31032",
+          "label": "next",
+          "parents": [31031],
+          "goTo": 31033
+        },
+        {
+          "id": "31033",
+          "label": "gently <br>remove <br>the&nbsp;cream <br>from&nbsp;the <br>skin&nbsp;with <br>paper&nbsp;towels",
+          "parents": [31032]
+        },
+        {
+          "id": "31034",
+          "label": "next",
+          "parents": [31033],
+          "goTo": 31035
+        },
+        {
+          "id": "31035",
+          "label": "wait&nbsp;until <br>the&nbsp;burning <br>feeling <br>begins&nbsp;to <br>disappear",
+          "parents": [31034]
+        },
+        {
+          "id": "31036",
+          "label": "next",
+          "parents": [31035],
+          "goTo": 31037
+        },
+        {
+          "id": "31037",
+          "label": "rinse&nbsp;off <br>the&nbsp;remaining <br>cream&nbsp;with <br>cool&nbsp;water",
+          "parents": [31036]
+        },
+        {
+          "id": "31038",
+          "label": "next",
+          "parents": [31037],
+          "goTo": 31040
+        },
+        {
+          "id": "31040",
+          "label": "moisturize <br>your&nbsp;skin <br>with&nbsp;lotion <br>or&nbsp;cream",
+          "parents": [31036]
+        },
+        {
+          "id": "31041",
+          "label": "next",
+          "parents": [31040],
+          "goTo": 31042
+        },
+        {
+          "id": "31042",
+          "label": "do&nbsp;you&nbsp;have <br>any&nbsp;allergic <br>reactions&nbsp;to <br>this&nbsp;product?",
+          "parents": [31041]
+        },
+        {
+          "id": "31043",
+          "label": "yes",
+          "parents": [31042],
+          "goTo": 3104311
+        },
+          {
+            "id": "3104311",
+            "label": "<div class='icon'><img src='img/icons/warning.png'></div>don't&nbsp;use <br>this&nbsp;product <br>if&nbsp;you&nbsp;have <br>allergic <br>reactions",
+            "parents": [31043]
+          },
+            {
+              "id": "31043222",
+              "label": "next",
+              "parents": [3104311],
+              "goTo": 31043111
+            },
+          {
+            "id": "31043111",
+            "label": "<div class='icon'><img src='img/icons/heart.png'></div>i'd&nbsp;like&nbsp;to advise&nbsp;you another <br>product",
+            "parents": [31043222]
+          },
+            {
+              "id": "3104312",
+              "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>very&nbsp;cold</div><div class='live-sphere'>body&nbsp;wrap</div>",     
+              "parents": [31043111],
+              "goToUrl": "/?node=1&jn=vnvc-en"
+            },
+            {
+              "id": "3104313",
+              "label": "next",
+              "parents": [31043111],
+              "goTo": 500
+            },
+        {
+          "id": "310431",
+          "label": "no",
+          "parents": [31042],
+          "goTo": 310421
+        },
+        {
+          "id": "310421",
+          "label": "<div class='icon'><img src='img/icons/repeat.png'></div>repeat&nbsp;this <br>procedure <br>3&nbsp;times <br>a&nbsp;week",
+          "parents": [31041,310431]
+        },
+        {
+          "id": "3104322",
+          "label": "next",
+          "parents": [310421],
+          "goTo": 31044
+        },
+        {
+          "id": "3104323",
+          "label": "next",
+          "parents": [3104322],
+          "goTo": 31044
+        },
+        {
+          "id": "31044",
+          "label": "for&nbsp;the best&nbsp;effect alternate the&nbsp;use&nbsp;with a&nbsp;cold <br>body&nbsp;wrap",
+          "parents": [31041]
+        },
+        {
+          "id": "31045",
+          "label": "<div class='live-card live-product'><div class='live-avatar'><div class='live-avatar-img'><img src='pages/products/vc/1.png'></div></div><div class='live-name'>very&nbsp;cold</div><div class='live-sphere'>body&nbsp;wrap</div>",     
+          "parents": [31044],
+          "goToUrl": "/?node=1&jn=vnvc-en"
+        },
+        {
+          "id": "31046",
+          "label": "next",
+          "parents": [31044],
+          "goTo": 500
+        },
+    {
+      "id": "400",
+      "label": "wait <br>another <br>30-45 <br>minutes",
+      "parents": [308]
+    },
+    {
+      "id": "401",
+      "label": "next",
+      "parents": [400],
+      "goTo": 31031
+    },
+    {
+      "id": "402",
+      "label": "i&nbsp;can't <br>take&nbsp;it <br>anymore",
+      "parents": [400],
+      "goTo": 31031
+    },
+    {
+      "id": "500",
+      "label": "<div class='icon'><img src='img/icons/heart.png'></div>be&nbsp;happy <br>human",
+      "parents": [31043,3104313]
+    },  
+    {
+      "id": "501",
+      "label": "<div class='icon'><img src='img/icons/thumb-up.png'></div>like",
+      "parents": [500],
+      "goTo": 1,
+      "sendMail": true
+    },
+    {
+      "id": "502",
+      "label": "back&nbsp;to&nbsp;the <br>beginning",
+      "parents": [500],
+      "goTo": 1,
+      "sendMail": true
+    }
+  ]
+}
+

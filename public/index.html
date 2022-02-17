@@ -3,58 +3,74 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="%PUBLIC_URL%/css/common.css?v=1035" rel="stylesheet">
-    <link href="%PUBLIC_URL%/css/styles.css?v=1035" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=no">
+    <link href="%PUBLIC_URL%/css/common.css?v=1144" rel="stylesheet">
+    <link href="%PUBLIC_URL%/css/styles.css?v=1144" rel="stylesheet">
     <title>my name is variant</title>
   </head>
-  <body class="main-body">
-    
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    
-    <div class="main-bg"></div>
-        <div id="plexus"></div>
-        <div id="my_data">
-        </div>
+  <body class="main-body ddd">
         
-        <div class="hider">
-            <div class="node-btn back show">
-                <div class="v-content"><div class="icon"><img src="img/icons/back.png"></div>back</div>
-                <div class="c1"></div>
-                <div class="c2"></div>
+        <div class="main-bg-wrapper"><div class="main-bg"></div></div>
+        <div id="plexus"></div>
+        <div class="data-wrapper3d">
+            <div class="data-wrapper">
+                <div id="my_data">
+                </div>
             </div>
         </div>
-        <div class="paranja"></div>
-        <div class="popup menu">
+
+        <div class="hider">
+            <div class="node-btn back hide">
+                <div class="node-wrap-scale">
+                    <div class="v-content"><div class="icon"><img src="img/icons/back.png"></div><span>назад</span></div>
+                    <div class="c1"></div>
+                    <div class="c2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup menu-container">
             <div class="menu-wrapper">
-                <a href="/?node=1">
-                    <div class="node-btn show">
-                        <div class="v-content">back&nbsp;to&nbsp;the <br>beginning</div>
-                        <div class="c1"></div>
-                        <div class="c2"></div>
+                <a href="/?node=1" class="exit-link">
+                    <div class="node-btn hide">
+                        <div class="node-wrap-scale">
+                            <div class="v-content"><span>в самое начало</span></div>
+                            <div class="c1"></div>
+                            <div class="c2"></div>
+                        </div>
                     </div>
                 </a>
                 <a id="fullscreenButton">
-                    <div class="node-btn show">
-                        <div class="v-content">fullscreen</div>
-                        <div class="c1"></div>
-                        <div class="c2"></div>
+                    <div class="node-btn hide">
+                        <div class="node-wrap-scale">
+                            <div class="v-content"><span>на весь экран</span></div>
+                            <div class="c1"></div>
+                            <div class="c2"></div>
+                        </div>
                     </div>                
                 </a>
                 <a class="v-active-btn">
+                    <div class="node-btn hide">
+                        <div class="node-wrap-scale">
+                            <div class="v-content"><span>залипнуть</span></div>
+                            <div class="c1"></div>
+                            <div class="c2"></div>
+                        </div>
+                    </div>                
+                </a>
+                <!-- <a href="/?node=203&jn=v-1" target="_blank">
                     <div class="node-btn show">
-                        <div class="v-content">to&nbsp;stuck&nbsp;on</div>
+                        <div class="v-content">классные <br>продукты</div>
                         <div class="c1"></div>
                         <div class="c2"></div>
                     </div>                
-                </a>
-                <a href="/?jn=v-1&node=204" target="_blank">
+                </a> -->
+                <!-- <a href="/?node=205&jn=v-1" target="_blank">
                     <div class="node-btn show">
-                        <div class="v-content">tools&nbsp;for <br>business <br>and&nbsp;human</div>
+                        <div class="v-content">инструменты <br>для&nbsp;бизнеса и&nbsp;<br>человека</div>
                         <div class="c1"></div>
                         <div class="c2"></div>
                     </div>                
-                </a>
+                </a> -->
             </div>
         </div>
 
@@ -68,16 +84,51 @@
     <div class="v-logo"><img src="img/logo-anim-500.gif"></div>
 
   
-    <div class="node-btn btn-functional active help-message hide">
-        <div class="v-content">click&nbsp;on <br>the&nbsp;screen <br>and&nbsp;spin&nbsp;it <br>here&nbsp;and&nbsp;there</div>
-        <div class="c1"></div>
-        <div class="c2"></div>
+    <div class="node-btn btn-functional active help-message help-message-1 hide">
+        <div class="node-wrap-scale">
+            <div class="v-content">
+                <span>нажми</span>
+                <span>на экран</span> 
+                <span>и крути</span> 
+                <span>туда сюда</span>
+            </div>
+            <div class="c1"></div>
+            <div class="c2"></div>
+        </div>
+    </div>
+
+    <div class="node-btn btn-functional active help-message help-message-2 hide">
+        <div class="node-wrap-scale">
+            <div class="v-content">
+                <span>приближай&nbsp;и</span> 
+                <span>отдаляй</span>
+            </div>
+            <div class="c1"></div>
+            <div class="c2"></div>
+        </div>
+    </div>
+
+    <div class="node-btn btn-functional active help-message help-message-3 hide">
+        <div class="node-wrap-scale">
+            <div class="v-content">
+                <span>просто</span>
+                <span>расслабься</span>
+                <span>человек</span>
+            </div>
+            <div class="c1"></div>
+            <div class="c2"></div>
+        </div>
     </div>
 
     <div class="node-btn btn-back btn-functional v-active-back hide">
-        <div class="v-content"><div class="icon"><img src="img/icons/back.png"></div>back</div>
-        <div class="c1"></div>
-        <div class="c2"></div>
+        <div class="node-wrap-scale">
+            <div class="v-content">
+                <div class="icon"><img src="img/icons/back.png"></div>
+                <span>назад</span>
+            </div>
+            <div class="c1"></div>
+            <div class="c2"></div>
+        </div>
     </div>
 
     <div class="cursor">
@@ -91,14 +142,10 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init('user_Eb7PZqLYZZ3t7MJGUoc45');
-        })();
-    </script>
-
-    <script src="js/script.js?v=1035"></script>
-    <script src="pages/qr/qr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gpu.js@latest/dist/gpu-browser.min.js"></script>
+    
+    <script src="js/script.js?v=1144"></script>
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
@@ -115,18 +162,5 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/86930946" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
-
-
-
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

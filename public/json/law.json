@@ -1,0 +1,316 @@
+{
+  "emailUserId": "user_Eb7PZqLYZZ3t7MJGUoc45",
+  "emailProvider": "mail_variant_name",
+  "emailTemplate": "template_ih7ziro",
+  "fontFamily": "font-bebas",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/law/1.jpg'></div></div></div><div class='live-name'><span>сообщество</span> <span>адвокатов</span> <span>Краснодара</span></div></div></div>",     
+      "parents": [0]
+    },
+      {
+        "id": "101",
+        "label": "<span>специалисты</span>",
+        "parents": [1],
+        "liveCardS": true,
+        "order": 1
+      },
+          {
+            "id": "10101",
+            "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/cristina1/1.jpg'></div></div></div><div class='live-name'><span>Кристина</span></div><div class='live-sphere'><span>адвокат</span></div></div></div>",     
+            "parents": [101],
+            "liveCard": true
+          },
+            {
+              "id": "101011",
+              "label": "<span>кто&nbsp;я</span>",
+              "parents": [10101]
+            },
+              {
+                "id": "1010111",
+                "label": "<span>мой&nbsp;опыт</span>",
+                "parents": [101011],
+                "iframe": "pages/livecard/law/how1.html"
+              },
+              {
+                "id": "1010112",
+                "label": "<span>мои&nbsp;сообщества</span>",
+                "parents": [101011],
+                "liveCardS": true
+              },
+                {
+                  "id": "10101121",
+                  "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/law/1.jpg'></div></div></div><div class='live-name'><span>сообщество</span> <span>адвокатов</span> <span>Краснодара</span></div></div></div>",     
+                  "parents": [1010112],
+                  "goTo": 1,
+                  "liveCard": true
+                },
+                {
+                  "id": "10101122",
+                  "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/innovator/1.jpg'></div></div></div><div class='live-name'><span>INNOVATOR</span></div> <div class='live-sphere'><span>бизнес</span></div> <div class='live-sphere'><span>сообщество</span></div></div></div>",     
+                  "parents": [1010112],
+                  "liveCard": true
+                },
+                  {
+                    "id": "101011221",
+                    "label": "<span>покажи</span> <span>сообщество</span>",
+                    "parents": [10101122],
+                    "goToUrl": "/?jn=innovator&node=1"
+                  },
+            {
+              "id": "101012",
+              "label": "<span>что&nbsp;я&nbsp;умею</span>",
+              "parents": [10101]
+            },
+            {
+              "id": "101013",
+              "label": "<span>мои&nbsp;контакты</span>",
+              "parents": [10101],
+              "liveCardS": true
+            },
+              {
+                "id": "1010131",
+                "label": "<span>whatsapp</span>",
+                "parents": [101013],
+                "goToUrl" : "https://wa.me/79182266770",
+                "liveCard": true
+              },
+              {
+                "id": "1010132",
+                "label": "<span>telegram</span>",
+                "parents": [101013],
+                "goToUrl" : "https://t.me/variant_name",
+                "liveCard": true
+              },
+              {
+                "id": "1010133",
+                "label": "<a href='tel:+79182266770'><span>позвонить</span></a>",
+                "parents": [101013],
+                "liveCard": true
+              },
+          {
+            "id": "10102",
+            "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/elena1/1.jpg'></div></div></div><div class='live-name'><span>Елена</span></div><div class='live-sphere'><span>адвокат</span></div></div></div>",     
+            "parents": [101],
+            "liveCard": true
+          },
+            {
+              "id": "101021",
+              "label": "<span>кто&nbsp;я</span>",
+              "parents": [10102]
+            },
+            {
+              "id": "101022",
+              "label": "<span>что&nbsp;я&nbsp;умею</span>",
+              "parents": [10102]
+            },
+            {
+              "id": "101023",
+              "label": "<span>мои&nbsp;контакты</span>",
+              "parents": [10102]
+            },
+          {
+            "id": "10103",
+            "label": "<div class='live-card'><div class='wrap-3d'><div class='live-avatar'><div class='wrap-3d'><div class='live-avatar-img'><img src='pages/livecard/vladimir1/1.jpg'></div></div></div><div class='live-name'><span>Владимир</span></div><div class='live-sphere'><span>адвокат</span></div></div></div>",     
+            "parents": [101],
+            "liveCard": true
+          },
+            {
+              "id": "101031",
+              "label": "<span>кто&nbsp;я</span>",
+              "parents": [10103]
+            },
+            {
+              "id": "101032",
+              "label": "<span>что&nbsp;я&nbsp;умею</span>",
+              "parents": [10103]
+            },
+            {
+              "id": "101033",
+              "label": "<span>мои&nbsp;контакты</span>",
+              "parents": [10103]
+            },
+      {
+        "id": "102",
+        "label": "<span>услуги</span>",
+        "parents": [1],
+        "order": 2,
+        "liveCardS": true
+      },
+        {
+          "id": "1021",
+          "label": "<span>онлайн&nbsp;проверка</span> <span>документов</span> <span>на&nbsp;недвижимость</span>",
+          "parents": [102],
+          "liveCard": true,
+          "order": 1
+        },
+          {
+            "id": "10211",
+            "label": "<span>что&nbsp;я&nbsp;получу?</span>",
+            "parents": [1021],
+            "order": 1,
+            "iframe": "pages/livecard/law/whatiget1.html"
+          },
+          {
+            "id": "10212",
+            "label": "<span>как&nbsp;это&nbsp;работает?</span>",
+            "parents": [1021],
+            "order": 2,
+            "iframe": "pages/livecard/law/how1.html"
+          },
+          {
+            "id": "10213",
+            "label": "<span>отправить&nbsp;заявку</span>",
+            "parents": [1021],
+            "order": 3,
+            "goTo": 200
+          },
+        {
+          "id": "1022",
+          "label": "<span>юридические</span> <span>консультации</span> <span>24/7</span>",
+          "parents": [102],
+          "liveCard": true,
+          "order": 1
+        },
+          {
+            "id": "10221",
+            "label": "<span>что&nbsp;я&nbsp;получу?</span>",
+            "parents": [1022],
+            "order": 1,
+            "iframe": "pages/livecard/law/whatiget2.html"
+          },
+          {
+            "id": "10222",
+            "label": "<span>как&nbsp;это&nbsp;работает?</span>",
+            "parents": [1022],
+            "order": 2,
+            "iframe": "pages/livecard/law/how2.html"
+          },
+          {
+            "id": "10223",
+            "label": "<span>отправить&nbsp;заявку</span>",
+            "parents": [1022],
+            "order": 3,
+            "goTo": 200
+          },
+        {
+          "id": "1023",
+          "label": "<span>юрист</span> <span>для&nbsp;бизнеса</span>",
+          "parents": [102],
+          "liveCard": true,
+          "order": 1
+        },
+          {
+            "id": "10231",
+            "label": "<span>что&nbsp;я&nbsp;получу?</span>",
+            "parents": [1023],
+            "order": 1,
+            "iframe": "pages/livecard/law/whatiget3.html"
+          },
+          {
+            "id": "10232",
+            "label": "<span>как&nbsp;это&nbsp;работает?</span>",
+            "parents": [1023],
+            "order": 2,
+            "iframe": "pages/livecard/law/how3.html"
+          },
+          {
+            "id": "10233",
+            "label": "<span>отправить&nbsp;заявку</span>",
+            "parents": [1023],
+            "order": 3,
+            "goTo": 200
+          },
+      {
+        "id": "103",
+        "label": "<span>контакты</span>",
+        "parents": [1],
+        "order": 3,
+        "liveCardS": true
+      },
+          {
+            "id": "1031",
+            "label": "<span>whatsapp</span>",
+            "parents": [103],
+            "goToUrl" : "https://wa.me/79182266770",
+            "liveCard": true
+          },
+          {
+            "id": "1032",
+            "label": "<span>telegram</span>",
+            "parents": [103],
+            "goToUrl" : "https://t.me/variant_name",
+            "liveCard": true
+          },
+          {
+            "id": "10103210133",
+            "label": "<a href='tel:+79182266770'><span>позвонить</span></a>",
+            "parents": [103],
+            "liveCard": true
+          },
+      {
+        "id": "200",
+        "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"25\" name=\"name\" mailname=\"Имя\" placeholder=\"ваше имя?\"></textarea>",
+        "parents": [10213,10223,10233],
+        "order": 1
+      },
+        {
+          "id": "2001",
+          "label": "<span>далее</span>",
+          "parents": [200],
+          "required": 200,
+          "goTo": 201
+        },
+      {
+        "id": "201",
+        "label": "<span>как&nbsp;с&nbsp;вами</span> <span>связаться?</span>",
+        "parents": [2001],
+        "order": 1
+      },
+        {
+          "id": "2011",
+          "label": "<span>по&nbsp;whatsapp</span>",
+          "parents": [201],
+          "goTo": 202
+        },
+        {
+          "id": "2012",
+          "label": "<span>в&nbsp;telegram</span>",
+          "parents": [201],
+          "goTo": 202
+        },
+        {
+          "id": "2013",
+          "label": "<span>по&nbsp;телефону</span>",
+          "parents": [201],
+          "goTo": 202
+        },
+      {
+        "id": "202",
+        "label": "<div class='icon warning-icon'><img src='img/icons/warning.png'></div><textarea class=\"textarea\" rows=\"2\" data-min-rows=\"2\" maxlength=\"12\" name=\"phone\" mailname=\"Номер телефона\" placeholder=\"напишите номер телефона\"></textarea>",
+        "parents": [2011,2012,2013]
+      },
+        {
+          "id": "2021",
+          "label": "<span>далее</span>",
+          "parents": [202],
+          "required": 202,
+          "goTo": 203
+        },
+      {
+        "id": "203",
+        "label": "<span>{name}</span> <span>скоро&nbsp;мы&nbsp;свяжемся</span> <span>с&nbsp;вами&nbsp;по&nbsp;номеру</span> <span>{phone} </span>",
+        "parents": [2021]
+      },
+        {
+          "id": "2031",
+          "label": "<span>вернуться</span> <span>в&nbsp;начало</span>",
+          "parents": [203],
+          "goTo": 1,
+          "sendMail": true
+        }
+
+  ]
+}
+
