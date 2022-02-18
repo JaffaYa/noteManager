@@ -661,15 +661,15 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                     break;
                 case 'backBegin':
                     event.preventDefault();
-                    newLocation = this.getElementsByTagName('a')[0].href;
-                    bodyClass.classList.add('fadeOut');
-                    setTimeout(function () {
-                      newPage();
-                    }, 2000);
+                    // newLocation = this.getElementsByTagName('a')[0].href;
+                    // bodyClass.classList.add('fadeOut');
+                    // setTimeout(function () {
+                    //   newPage();
+                    // }, 2000);
 
-                    function newPage() {
-                      window.location = newLocation;
-                    }
+                    // function newPage() {
+                    //   window.location = newLocation;
+                    // }
                     break;
                 case 'menu':
                     popupActive('menu-container');
@@ -936,11 +936,11 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         //     });
 
         d3newNodes // работа с новыми узлами (выполняеться для каждого узла в отдельности)
-          // .classed('show',  d => d.functional )
-          // .filter( d => !d.functional )
-          .transition() // к новому узлу привязывем плавный переход
-          .delay(makenodeDelay()) // задержка перехода (значение формирует ф-ция makenodeDelay)
-          .on('start', function repeat() {
+		// .classed('show',  d => d.functional )
+		// .filter( d => !d.functional )
+		.transition() // к новому узлу привязывем плавный переход
+		.delay(makenodeDelay()) // задержка перехода (значение формирует ф-ция makenodeDelay)
+		.on('start', function repeat() {
             // при старте выполни ф-цию repeat
             this.classList.add('show'); // добавить к узлу класс show (управляет прозрачностью)
             delta = mobileDelta = 0;
@@ -981,7 +981,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
               // console.log('-----');
               // bodyClass.classList.remove('goOut');
             }
-          });
+		});
 
         let d3newNodesWrapScale = d3newNodes.append('div')
             .classed('node-wrap-scale', true)
@@ -1007,8 +1007,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
         //set handler for inputs
         d3newNodesLabels
-            .select('input')
-            .attr("value", d => {
+        .select('input')
+        .attr("value", d => {
             let div = document.createElement('div');
             div.innerHTML = d.label;
             let input = div.querySelector('input');
@@ -1021,14 +1021,14 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             return '';
         })
         .on('change', e => {
-                let name = d3.event.target.getAttribute('name');
-            let mailname = d3.event.target.getAttribute('mailname');
-            model.nodeInputs[name] = {
-                mailname: mailname,
-                val: d3.event.target.value
-            };
-            model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
-        })
+		    let name = d3.event.target.getAttribute('name');
+		    let mailname = d3.event.target.getAttribute('mailname');
+		    model.nodeInputs[name] = {
+		        mailname: mailname,
+		        val: d3.event.target.value
+		    };
+		    model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
+		})
         .on('blur', e => {
             //remove mobile class on unfocus
             let nodeElem = view.findParenNodeElement(d3.event.target);
@@ -1049,53 +1049,53 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
         //set handler for textarea
         d3newNodesLabels
-            .select('textarea')
-            // .attr("value", d => {
-            .html( d => {
+        .select('textarea')
+        // .attr("value", d => {
+        .html( d => {
             let div = document.createElement('div');
-        div.innerHTML = d.label;
-        let textarea = div.querySelector('textarea');
-        if(textarea){
-            let name = textarea.getAttribute('name');
-            if(model.nodeInputs[name] && model.nodeInputs[name].val){
-                return model.nodeInputs[name].val;
-            }
-        }
-        return '';
-    })
-    .on('change', (e,d) => { //changes newer d3js requires 2 param to send output
-            // let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
-        let name = e.path[0].getAttribute('name');
-        let mailname = e.path[0].getAttribute('mailname');
-        model.nodeInputs[name] = {
-            mailname: mailname,
-            val: e.path[0].value
-        };
-        model.userData.push(null, 'ввод в textarea '+name+' значения '+e.path[0].value);
-    })
-    .on('blur', (e,d) => {
-            //remove mobile class on unfocus
-            //view.setTextareaHeight(e.path[0]); //changes
+	        div.innerHTML = d.label;
+	        let textarea = div.querySelector('textarea');
+	        if(textarea){
+	            let name = textarea.getAttribute('name');
+	            if(model.nodeInputs[name] && model.nodeInputs[name].val){
+	                return model.nodeInputs[name].val;
+	            }
+	        }
+	        return '';
+	    })
+	    .on('change', (e,d) => { //changes newer d3js requires 2 param to send output
+	            // let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
+	        let name = e.path[0].getAttribute('name');
+	        let mailname = e.path[0].getAttribute('mailname');
+	        model.nodeInputs[name] = {
+	            mailname: mailname,
+	            val: e.path[0].value
+	        };
+	        model.userData.push(null, 'ввод в textarea '+name+' значения '+e.path[0].value);
+	    })
+	    .on('blur', (e,d) => {
+	            //remove mobile class on unfocus
+	            //view.setTextareaHeight(e.path[0]); //changes
 
-        let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
-        nodeElem.classList.remove('inputMobile');
-        bodyClass.classList.remove('inputMobile-active');
-        let node = model.getNodeById(nodeElem.__data__.id);
-        node.fx = null;
-        node.fy = null;
-        model.mobileInpuntActive = false;
-        simulation.alpha(0.5)
-        // .restart();
-        // simulation.stop();
-        requestAnimationFrame(manualTick);
+	        let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
+	        nodeElem.classList.remove('inputMobile');
+	        bodyClass.classList.remove('inputMobile-active');
+	        let node = model.getNodeById(nodeElem.__data__.id);
+	        node.fx = null;
+	        node.fy = null;
+	        model.mobileInpuntActive = false;
+	        simulation.alpha(0.5)
+	        // .restart();
+	        // simulation.stop();
+	        requestAnimationFrame(manualTick);
 
-        //set textarea size in inactive state \
-        // d3.target
-        view.setTextareaHeight(e.path[0]);
+	        //set textarea size in inactive state \
+	        // d3.target
+	        view.setTextareaHeight(e.path[0]);
 
-        //remove error class on unfocus
-        nodeElem.classList.remove('error');
-    }).each(function(d, i) {
+	        //remove error class on unfocus
+	        nodeElem.classList.remove('error');
+	    }).each(function(d, i) {
             view.setTextareaHeight(this);
             // view.setTextareaHeight(i.path[0]); //it should be like this-- changes
 
@@ -1127,9 +1127,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
         //exit
         d3exitNodes = d3nodes.exit();
+        // d3exitNodes.remove();
 
         d3exitNodes
-            .classed('hide', true)
+        .classed('hide', true)
         // d3exitNodes
         // .filter( d => d.functional )
         // .classed('show',  d => !d.functional )
@@ -1138,15 +1139,17 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
         d3exitNodes
         // .filter( d => !d.functional )
-            .transition()
-            .delay(hideSlideDelay) // delay before hide
-            .duration(hideNodeCssDuration) // time before delete
-            .on('start', function(){
-                this.classList.remove('show');
-            })
-            .on('end', function(){
-                this.remove();
-            });
+        .transition()
+        // .delay(hideSlideDelay) // delay before hide
+        .delay(0) // delay before hide
+        // .duration(hideNodeCssDuration) // time before delete
+        .duration(0) // time before delete
+        .on('start', function(){
+            this.classList.remove('show');
+        })
+        .on('end', function(){
+            this.remove();
+        });
 
         delta = mobileDelta = 0; // обнуляем коэффициенты смещения индивид. осей притяжения для дочерних узлов
         //return updated nodes list
@@ -2141,14 +2144,14 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             // addFunctionalButton(10000, 'назад', 'back');
             // addFunctionalButton(10001, 'меню', 'menu');
             addFunctionalButton(10000, '<div class="icon"><img src="img/icons/back.png"></div><span>назад</span>', 'back');
-            addFunctionalButton(10003, '<a href="/?node=1"><div class="icon"><img src="img/icons/back.png"></div><span>в&nbsp;начало</span></a>', 'backBegin');
+            addFunctionalButton(10003, '<div class="icon"><img src="img/icons/back.png"></div><span>в&nbsp;начало</span>', 'backBegin', 1);
             // if(showMenu == true) {           
               addFunctionalButton(10001, '<div class="icon"><img src="img/icons/menu-2.png"></div><span>меню</span>', 'menu');
             // }
             addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-anim-500.gif"></div>', 'logo');
         }
 
-        function addFunctionalButton(id, name, function1){
+        function addFunctionalButton(id, name, function1, goTo = undefined){
             if(!getNodeById(id)){
                 myThis.nodes.push({
                     id: id,
@@ -2165,7 +2168,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                     display: false,
                     sendMail: false,
                     order: undefined,
-                    goTo: undefined,
+                    goTo: goTo,
                     goToUrl: undefined,
                     liveCard: undefined,
                     liveCardS: undefined,
