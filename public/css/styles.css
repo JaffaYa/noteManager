@@ -21,7 +21,7 @@
   font-family: 'Fira Sans', sans-serif;
   font-weight: 900;
   line-height: 0.9;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
 .font-ubuntu {
@@ -38,7 +38,7 @@
   font-weight: bold;
   letter-spacing: 0.01rem;
   line-height: 1.1;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .font-robotoslab {
@@ -240,7 +240,7 @@ body.main-body {
 .content-wrap-3d {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .logo-main {
@@ -508,6 +508,13 @@ body.main-body {
 */
 }
 
+.node.liveCard .v-content {
+  transform: scale(1) translate3d(0%, -40%, 15vw);
+}
+.node.liveCard.show .v-content {
+  transform: scale(1) translate3d(0%, -40%, 15vw);
+}
+
 .node .v-content span,
 .node-btn .v-content span {
   /*display: inline-block;*/
@@ -549,11 +556,43 @@ body.main-body {
   transform: translate3d(0, 0, 13vw);
 }
 
+.font-bebas .node .v-content span:nth-of-type(1) {
+  transform: translate3d(0, 0, -8vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(2) {
+  transform: translate3d(0, 0.5vw, -5vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(3) {
+  transform: translate3d(0, 1vw, -2vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(4) {
+  transform: translate3d(0, 1.5vw, 1vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(5) {
+  transform: translate3d(0, 2vw, 4vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(6) {
+  transform: translate3d(0, 0, 7vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(7) {
+  transform: translate3d(0, 0, 10vw);
+}
+
+.font-bebas .node .v-content span:nth-of-type(8) {
+  transform: translate3d(0, 0, 13vw);
+}
+
 .font-bebas .node .v-content span,
 .font-bebas .node-btn .v-content span {
+  display: inline-block;
   background-color: #fafafa;
-  padding: 0.1rem 0.4rem;
-  margin: 0.075rem 0;
+  padding: 0.15rem 0.6rem;
   box-shadow: rgba(33, 33, 33, 0.25) 0px 0px 13px;
   border: 1px solid transparent;
   border-radius: 0.5vw;
@@ -584,7 +623,7 @@ body.main-body {
 .node.show .v-content,
 .node-btn.show .v-content {
   /*transform: perspective(1000px) scale(0.85) translateX(1.2vw) translateY(-1vw) translateZ(11vw);*/
-  transform: scale(0.85) translateX(1vw) translateY(-25%) translateZ(12vw);
+  transform: scale(0.85) translate3d(1vw, -15%, 12vw);
 }
 
 /*.node.show:hover .v-content,
@@ -1211,13 +1250,13 @@ textarea::-webkit-scrollbar-thumb {
 
 .node .v-content textarea {
   display: block;
-  width: 30vw;
+  width: 40vw;
   font-size: 1rem;
   font-family: inherit;
   font-weight: inherit;
   background-color: transparent;
   color: #212121;
-  line-height: 0.87rem;
+  line-height: 0.97rem;
   padding: 20px 10px 10px 10px;
   overflow: hidden;
   resize: none;
@@ -1819,6 +1858,10 @@ textarea::-webkit-scrollbar-thumb {
 
   .node.active.show .v-content {
     transform: scale(1) translate3d(0%, -110%, 20vw);
+  }
+  .node.active.show.goOut .v-content {
+    opacity: 0;
+    transform: scale(1) translate3d(0%, -110%, 5vw);
   }
 
   .horizontal .node.inputMobile .v-content,

@@ -596,7 +596,21 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     // function bubleClick(d, i, arr) {
     //d3 v7
     function bubleClick(event, d) {
-            // flexText();
+        
+        if(d.themeOption1){
+          bodyClass.classList.remove('dark');
+        }
+        
+        if(d.themeOption2){
+          bodyClass.classList.add('dark');
+          bodyClass.classList.remove('colorful');
+          // bodyClass.classList.remove('dark');
+        }
+
+        if(d.themeOption3){
+          bodyClass.classList.add('themeOption2');
+        }
+
         //prevent click by click in input tag
         if(event.type == 'click'){
             if( event.target.nodeName == 'INPUT' ||
@@ -881,12 +895,12 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             .classed('active', d => d.active)
             .classed('show', d => d.display)
             .classed('hide', d => {
-            let activeNodeCildren = model.activeNode.children
-            if( d.active ) return false;
-            if( d.functional ) return false;
-            if( activeNodeCildren.includes(d.id) ) return false;
-            return true;
-        });
+	            let activeNodeCildren = model.activeNode.children
+	            if( d.active ) return false;
+	            if( d.functional ) return false;
+	            if( activeNodeCildren.includes(d.id) ) return false;
+	            return true;
+	        });
 
         // d3nodes
         // .transition()
@@ -905,6 +919,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             .classed('active', d => d.active)
             .classed('goOut', d => d.goOut)
             .classed('liveCard', d => d.liveCard)
+            .classed('isQR', d => d.isQR)
+            .classed('themeOption1', d => d.themeOption1)
+            .classed('themeOption2', d => d.themeOption2)
+            .classed('themeOption3', d => d.themeOption3)
             .attr("node-id", d => d.id)
 
             // .call(
@@ -918,7 +936,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
             .on("click", bubleClick);
 
-        d3newNodes.call(drag)
+        // d3newNodes.call(drag)
         // перенести эту функцию в туда, где можно использовать фильтр
         // и если d.goOut = false то вызываем d3newNodes.call(drag)
         // если true то нет
@@ -936,11 +954,11 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         //     });
 
         d3newNodes // работа с новыми узлами (выполняеться для каждого узла в отдельности)
-		// .classed('show',  d => d.functional )
-		// .filter( d => !d.functional )
-		.transition() // к новому узлу привязывем плавный переход
-		.delay(makenodeDelay()) // задержка перехода (значение формирует ф-ция makenodeDelay)
-		.on('start', function repeat() {
+        // .classed('show',  d => d.functional )
+        // .filter( d => !d.functional )
+        .transition() // к новому узлу привязывем плавный переход
+        .delay(makenodeDelay()) // задержка перехода (значение формирует ф-ция makenodeDelay)
+        .on('start', function repeat() {
             // при старте выполни ф-цию repeat
             this.classList.add('show'); // добавить к узлу класс show (управляет прозрачностью)
             delta = mobileDelta = 0;
@@ -970,6 +988,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
               document.addEventListener('wheel', movingForce); // установи ф-цию отслеживания вращений колёсиком для смещения осей
               // console.log('+++++');
               bodyClass.classList.add('goOut');
+              if(!verticalScreen){
+                d3newNodes.call(drag);
+              }
             }
             if (numsOfChildren < 4 && currentNodeID === lastNodeID) {
               // иначе (если узлов < 4)
@@ -980,8 +1001,9 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
               document.removeEventListener('touchmove', mobileMovingForce);
               // console.log('-----');
               // bodyClass.classList.remove('goOut');
+              d3newNodes.call(drag);
             }
-		});
+    });
 
         let d3newNodesWrapScale = d3newNodes.append('div')
             .classed('node-wrap-scale', true)
@@ -1021,14 +1043,14 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             return '';
         })
         .on('change', e => {
-		    let name = d3.event.target.getAttribute('name');
-		    let mailname = d3.event.target.getAttribute('mailname');
-		    model.nodeInputs[name] = {
-		        mailname: mailname,
-		        val: d3.event.target.value
-		    };
-		    model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
-		})
+        let name = d3.event.target.getAttribute('name');
+        let mailname = d3.event.target.getAttribute('mailname');
+        model.nodeInputs[name] = {
+            mailname: mailname,
+            val: d3.event.target.value
+        };
+        model.userData.push(null, 'ввод в инпут '+name+' значения '+d3.event.target.value);
+    })
         .on('blur', e => {
             //remove mobile class on unfocus
             let nodeElem = view.findParenNodeElement(d3.event.target);
@@ -1053,56 +1075,55 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         // .attr("value", d => {
         .html( d => {
             let div = document.createElement('div');
-	        div.innerHTML = d.label;
-	        let textarea = div.querySelector('textarea');
-	        if(textarea){
-	            let name = textarea.getAttribute('name');
-	            if(model.nodeInputs[name] && model.nodeInputs[name].val){
-	                return model.nodeInputs[name].val;
-	            }
-	        }
-	        return '';
-	    })
-	    .on('change', (e,d) => { //changes newer d3js requires 2 param to send output
-	            // let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
-	        let name = e.path[0].getAttribute('name');
-	        let mailname = e.path[0].getAttribute('mailname');
-	        model.nodeInputs[name] = {
-	            mailname: mailname,
-	            val: e.path[0].value
-	        };
-	        model.userData.push(null, 'ввод в textarea '+name+' значения '+e.path[0].value);
-	    })
-	    .on('blur', (e,d) => {
-	            //remove mobile class on unfocus
-	            //view.setTextareaHeight(e.path[0]); //changes
+          div.innerHTML = d.label;
+          let textarea = div.querySelector('textarea');
+          if(textarea){
+              let name = textarea.getAttribute('name');
+              if(model.nodeInputs[name] && model.nodeInputs[name].val){
+                  return model.nodeInputs[name].val;
+              }
+          }
+          return '';
+      })
+      .on('change', (e,d) => { //changes newer d3js requires 2 param to send output
+              // let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
+          let name = e.path[0].getAttribute('name');
+          let mailname = e.path[0].getAttribute('mailname');
+          model.nodeInputs[name] = {
+              mailname: mailname,
+              val: e.path[0].value
+          };
+          model.userData.push(null, 'ввод в textarea '+name+' значения '+e.path[0].value);
+      })
+      .on('blur', (e,d) => {
+              //remove mobile class on unfocus
+              //view.setTextareaHeight(e.path[0]); //changes
 
-	        let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
-	        nodeElem.classList.remove('inputMobile');
-	        bodyClass.classList.remove('inputMobile-active');
-	        let node = model.getNodeById(nodeElem.__data__.id);
-	        node.fx = null;
-	        node.fy = null;
-	        model.mobileInpuntActive = false;
-	        simulation.alpha(0.5)
-	        // .restart();
-	        // simulation.stop();
-	        requestAnimationFrame(manualTick);
+          let nodeElem = view.findParenNodeElement(e.path[0]); // changes d3.event.target is removed in newer d3js version
+          nodeElem.classList.remove('inputMobile');
+          bodyClass.classList.remove('inputMobile-active');
+          let node = model.getNodeById(nodeElem.__data__.id);
+          node.fx = null;
+          node.fy = null;
+          model.mobileInpuntActive = false;
+          simulation.alpha(0.5)
+          // .restart();
+          // simulation.stop();
+          requestAnimationFrame(manualTick);
 
-	        //set textarea size in inactive state \
-	        // d3.target
-	        view.setTextareaHeight(e.path[0]);
+          //set textarea size in inactive state \
+          // d3.target
+          view.setTextareaHeight(e.path[0]);
 
-	        //remove error class on unfocus
-	        nodeElem.classList.remove('error');
-	    }).each(function(d, i) {
+          //remove error class on unfocus
+          nodeElem.classList.remove('error');
+      }).each(function(d, i) {
             view.setTextareaHeight(this);
             // view.setTextareaHeight(i.path[0]); //it should be like this-- changes
 
         }).on('input', (e,d) => { //changes
             view.setTextareaHeight(e.path[0]); //changes
         });
-
 
         d3newNodesWrap3d.append("div")
             .classed('c1', true);
@@ -1143,7 +1164,13 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         // .delay(hideSlideDelay) // delay before hide
         .delay(0) // delay before hide
         // .duration(hideNodeCssDuration) // time before delete
-        .duration(0) // time before delete
+        .duration(function(d){
+        	if(d.functional){
+        		return hideNodeCssDuration;
+        	}else{
+        		return 0;
+        	}
+        }) // time before delete
         .on('start', function(){
             this.classList.remove('show');
         })
@@ -1590,7 +1617,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
               }
               if(customStyleName == null) {
                 // set default font-family
-                bodyClass.classList.add('theme-bg-gradient-anim');
+                bodyClass.classList.add('colorful');
               }else{
                 bodyClass.classList.add(customStyleName);
               }
@@ -2146,7 +2173,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             addFunctionalButton(10000, '<div class="icon"><img src="img/icons/back.png"></div><span>назад</span>', 'back');
             addFunctionalButton(10003, '<div class="icon"><img src="img/icons/back.png"></div><span>в&nbsp;начало</span>', 'backBegin', 1);
             // if(showMenu == true) {           
-              addFunctionalButton(10001, '<div class="icon"><img src="img/icons/menu-2.png"></div><span>меню</span>', 'menu');
+            addFunctionalButton(10001, '<div class="icon"><img src="img/icons/menu-2.png"></div><span>меню</span>', 'menu');
             // }
             addFunctionalButton(10002, '<div class="logo-main"><img src="img/logo-anim-500.gif"></div>', 'logo');
         }
@@ -2883,6 +2910,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
           }
           return radius;
         }
+
         //мощность радиальной силы
         function radialStr(d){
             return forceSettings('radialStr', d);
@@ -2901,12 +2929,13 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         function radialX(d) {
           let radialXDelta = 200; // коеффициент смещения окр-ти притяжения по оси X
           if (!verticalScreen) {
-           
             // если горизонтальное расположение экрана
-            radialXDelta = width / 5;
+            radialXCoord = - width / 5; // смещение по оси X
+          }else {
+            // console.log('radialXDelta', radialXDelta);
+            // radialXCoord = - width / 2; // смещение по оси X
+            radialXCoord = forceSettings('slideForce', model.activeNode) - radialXDelta; // смещение по оси X            
           }
-          // console.log('radialXDelta', radialXDelta);
-          radialXCoord = forceSettings('slideForce', model.activeNode) - radialXDelta; // смещение по оси X
           return radialXCoord;
         }
         //координата Y для центра окружности притяжения
@@ -2937,7 +2966,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         //но также увеличеться сложность просчетов
         function getColideRadiusIterations(){
             // return 1;
-            return 0.1;
+            return 1;
         }
 
         //позиция силы ордера
@@ -2975,6 +3004,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             let liveCard = d.liveCard;
             let liveCardS = d.liveCardS;
             let goOut = d.goOut;
+            let isThemeOption = d.isThemeOption;
 
             if( !model.isSlide(activeNode) && 
                 childrens.length == 0 &&
@@ -2982,7 +3012,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             ){
                 activeDepth--;
             }
-            
+
             //для мобилок, планшетов и всего у чего вертикальная оринетация экрана
             if(verticalScreen){
                 if(!d.functional){
@@ -3009,7 +3039,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                         //задаёт горизонтальную координату для каждой ноды
                         case 'slideForce':
                             if ((d.active) && goOut) { 
-                              coords = - width * 0.5;
+                              coords = - width * 0.47;
                             }else if(d.active){
                               coords = (width/2 + width/2*(nodeDepth - activeDepth)) - width/1.15;
                             }else{
@@ -3127,9 +3157,12 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                               } else if(liveCard){
                                 // если дочерних узлов > 3, расстояние фиксированное
                                 onePart = (height / 4) * 1.8;
-                              } else {
+                              } else if(isThemeOption){
                                 // если дочерних узлов > 3, расстояние фиксированное
                                 onePart = (height / 4) * 0.6;
+                              } else {
+                                // если дочерних узлов > 3, расстояние фиксированное
+                                onePart = (height / 4) * 1;
                               }
                               for (let i = 0; i < order.length; i++) {
                                 if (order[i].id == d.id) {
@@ -3271,6 +3304,8 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             //для горизонтальной ориентации экрана
                 if(!d.functional){
                     //горизонтальная о.э. - для обычных нод
+                    // let coords;
+
                     switch(force){
                         //мощность силы линка
                         case 'linkStr':
@@ -3292,16 +3327,18 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                         //задаеть горизонтальную координату для каждой ноды
                         case 'slideForce':
                             if ((d.active) && goOut) {
-                              // исправить баг - если изменить 1,95 на 1,5 то при F5 на слайде goOut
-                              // потом назад
-                              // смещаются дочерние ноды
-                              // возможно из-за того, что координаты окружности не обновляются
-                              let coords = width / 2 + (width / 2) * (nodeDepth - activeDepth) - width / 1.95; // в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно; 
+                              let coords = width / 2 + (width / 2) * (nodeDepth - activeDepth) - width / 1.5; // в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно; 
                               // draw.axis(coords, 1000, coords, -1000, d.id, 'VerticalAxis'); // отрисовка силы
                               return coords;
                             } else if (d.active) {
                               // console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
-                              let coords = width / 2 + (width / 2) * (nodeDepth - activeDepth) - width / 1.95; // в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно; 
+                              let coords = width / 2 + (width / 2) * (nodeDepth - activeDepth) - width / 1.85; // в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно; 
+                              // draw.axis(coords, 1000, coords, -1000, d.id, 'VerticalAxis'); // отрисовка силы
+                              return coords;
+                              // return 0;
+                            } else if (childrens.length > 3) {
+                              // console.log('active-x:',(width/2 + width/2*(nodeDepth - activeDepth)) - width/2);
+                              let coords = width / 4 + (width / 2) * (nodeDepth - activeDepth) - width / 1.35; // в конце должно быть width/2 иначе на некоторых разрешениях экрана может отображаться не коректно; 
                               // draw.axis(coords, 1000, coords, -1000, d.id, 'VerticalAxis'); // отрисовка силы
                               return coords;
                               // return 0;
@@ -3313,7 +3350,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                               if (nodeDepth - activeDepth == 0) {
                                 return width / 4 + (width / 2) * (nodeDepth - activeDepth - 1) - width / 2;
                               } else {
-                                return width / 4 + (width / 2) * (nodeDepth - activeDepth) - width / 1.75;
+                                return width / 4 + (width / 2) * (nodeDepth - activeDepth) - width / 1.7;
                               }
                               //? верт. оси для дочерних узлов не нужны (есть окружность притяжения)
                               // const coords = null;
@@ -3352,8 +3389,37 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                             break;
                         //сила задает вертикальную координату для каждой ноды
                         case 'verticalForce':
-                            return d.active ? -(height*2/50) : 0.05;
+                            if ((d.active) && goOut) { 
+                              coords = - (height*2/50);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else if (d.active) {
+                              coords = - (height*2/50);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else if (isThemeOption) {
+                              coords = - (height*2);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else if (childrens.length > 3) {
+                              coords = - (height*2/50);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else if (childrens.length == 3){
+                              coords = - (height*0.7);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else if (childrens.length == 2){
+                              coords = (height*0.2);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else if (childrens.length == 1){
+                              coords = (height*0.3);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            } else {
+                              coords = - (height*2/50);
+                              // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            }
+                            // draw.axis(1000, coords, -1000, coords, d.id, 'HorizontalAxis'); // отрисовка оси
+                            return coords;
                             break;
+
+                            // return d.active ? -(height*2/50) : 0.05;
+                            // break;
                         //мощность силы которая задает вертикальную координату
                         case 'verticalForceStr':
                             return d.active ? 0.35 : 0.05;
@@ -3394,55 +3460,15 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                             break;
                         //радиус силы столкновения
                         case 'getColideRadius':
-                            // let collRadCoef = 2040/120;
-                            // let collRadCoef = 2040/100;
-                            // return width/collRadCoef;
-                            // break;
-
-                              if (childrens.includes(d.id)) {
-                                let collRadCoef = 2040 / 100;
-                                return width / collRadCoef;
-                                // return 0;
-                              } else {
-                                return 0;
-                              }
-
-                            // if(d.liveCard){
-                            //     if(d.active){
-                            //         // liveCard active
-                            //         let collRadCoef = 2040/20;
-                            //         return width/collRadCoef;
-                            //     }else{
-                            //         // children with liveCard only
-                            //         if(childrens.length > 2) {
-                            //           let collRadCoef = 2040/130;
-                            //           return width/collRadCoef;
-                            //         }else{
-                            //           let collRadCoef = 2040/150;
-                            //           return width/collRadCoef;
-                            //         }
-                            //     }
-                            // }else if(d.liveCardS){
-                            //     if(d.active){
-                            //         // liveCardS active
-                            //         let collRadCoef = 2040/20;
-                            //         return width/collRadCoef;
-                            //     }else{
-                            //         // children liveCardS when not active 
-                            //         let collRadCoef = 2040/110;
-                            //         return width/collRadCoef;
-                            //     }
-                            // }else{
-                            //     if(d.active){
-                            //         // active liveCardS = false and liveCard = false
-                            //         let collRadCoef = 2040/20;
-                            //         return width/collRadCoef;
-                            //     }else{
-                            //         // children liveCardS = false and liveCard = false
-                            //         let collRadCoef = 2040/110;
-                            //         return width/collRadCoef;
-                            //     }
-                            // }
+                            if (isThemeOption) {
+                              let collRadCoef = 2040 / 50;
+                              return width / collRadCoef;
+                            } else if (childrens.includes(d.id)) {
+                              let collRadCoef = 2040 / 100;
+                              return width / collRadCoef;
+                            } else {
+                              return 0;
+                            }
                             break;
                         //позиция силы ордера
                         case 'orderForce':
@@ -3469,12 +3495,40 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                                 }
                               }
 
-                              if(childrens.length >= 4) {
+                              if(isThemeOption) {
                                 for (let i = 0; i < order.length; i++) {
                                   if (order[i].id == d.id) {
                                     if (order.length > 1) {
-                                      const coords = (onePart * (i + 1) - onePart - height / 6 + delta) * 1;
-                                      draw.axis(1000, coords, -1000, coords, d.id, 'orderForce'); // отрисовка оси
+                                      const coords = (onePart * (i + 1) - onePart - height / 6 + delta) * 0.6;
+                                      // draw.axis(1000, coords, -1000, coords, d.id, 'orderForce'); // отрисовка оси
+                                      return coords;
+                                    } else {
+                                      const coords = onePart * (i + 1) - onePart + delta;
+                                      // draw.axis(1000, coords, -1000, coords, d.id, 'orderForce'); // отрисовка оси
+                                      return coords;
+                                    }
+                                  }
+                                }
+                              } else if(liveCard) {
+                                for (let i = 0; i < order.length; i++) {
+                                  if (order[i].id == d.id) {
+                                    if (order.length > 1) {
+                                      const coords = (onePart * (i + 1) - onePart - height / 6 + delta) * 0.8;
+                                      // draw.axis(1000, coords, -1000, coords, d.id, 'orderForce'); // отрисовка оси
+                                      return coords;
+                                    } else {
+                                      const coords = onePart * (i + 1) - onePart + delta;
+                                      // draw.axis(1000, coords, -1000, coords, d.id, 'orderForce'); // отрисовка оси
+                                      return coords;
+                                    }
+                                  }
+                                }
+                              } else if(childrens.length > 3) {
+                                for (let i = 0; i < order.length; i++) {
+                                  if (order[i].id == d.id) {
+                                    if (order.length > 1) {
+                                      const coords = (onePart * (i + 1) - onePart - height / 6 + delta) * 0.9;
+                                      // draw.axis(1000, coords, -1000, coords, d.id, 'orderForce'); // отрисовка оси
                                       return coords;
                                     } else {
                                       const coords = onePart * (i + 1) - onePart + delta;
@@ -3969,7 +4023,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     simulation // инициализация новых осей с новыми координатами
       .alpha(0.1) // начальный коеффициент активности среды после начала симмуляции
       .alphaTarget(0.1) // целевой коеффициент активности среды
-      .velocityDecay(0.6)
+      .velocityDecay(0.5)
       .force('order') // эту ось необходимо обновить
       .initialize(model.nodesToDisplay); // узлы для обновления
     // .restart();
