@@ -969,11 +969,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
             let currentNodeClasslist = Array.from(this.classList); // составляем массив из класслиста узла
             // если класслист не включает значения 'active' или 'btn-functional',
             // то добавь узел в массив activeNodeChildrens
-            if (!currentNodeClasslist.includes('active') && !currentNodeClasslist.includes('btn-functional')) {
-             
-              activeNodeChildrens.push(this);
-            }
-            let numsOfChildren = activeNodeChildrens.length; // количество дочерних узлов 
+            let numsOfChildren = model.activeNode.children.length; // количество дочерних узлов
 
             //// console.log('currentNodeID', currentNodeID);
             //// console.log('currentNodeClasslist', currentNodeClasslist);
@@ -4020,6 +4016,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     // e.preventDefault();
     removeOldLines();
     delta -= e.deltaY / 2.5;
+    console.dir(delta);
     simulation // инициализация новых осей с новыми координатами
       .alpha(0.1) // начальный коеффициент активности среды после начала симмуляции
       .alphaTarget(0.1) // целевой коеффициент активности среды

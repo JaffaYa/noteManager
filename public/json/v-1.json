@@ -40,18 +40,11 @@
           "parents": [32]
         },
           {
-            "id": "3211",
-            "label": "<div class='icon'>👍</div><span>лайк</span>",
-            "parents": [321],
-            "goTo": 200,
-            "order": 1
-          },
-          {
             "id": "3212",
             "label": "<div class='icon'>👋</div><span>сказать</span> <span>привет</span>",
             "parents": [321],
             "goTo": 200,
-            "order": 3
+            "order": 1
           },
           {
             "id": "3213",
@@ -86,7 +79,7 @@
     {
       "id": "200",
       "label": "<span>что ты</span> <span>хочешь</span> <span>человек?</span>",
-      "parents": [2,35,3211,3212],
+      "parents": [2,35,3212],
       "order": 1
     },
       {
@@ -98,7 +91,7 @@
       },
         {
           "id": "200100",
-          "label": "<div class='scroll-up-down-wrapper'><img src='../../../img/icons/up.png' class='img-up'><img src='../../../img/icons/down.png' class='img-down'></div>",
+          "label": "<div class='scroll-wheel'><span>крути</span> <span>колесо</span> <span>мышки</span></div> <div class='scroll-up-down-wrapper'><img src='../../../img/icons/up.png' class='img-up'><img src='../../../img/icons/down.png' class='img-down'></div>",
           "parents": [2001],        
           "goOut": true,
           "order": 3
@@ -681,51 +674,44 @@
         },
       {
         "id": "60",
-        "label": "<span>каким</span> <span>ты хочешь</span> <span>меня видеть?</span>",
+        "label": "<span>каким</span> <span>ты хочешь</span> <span>меня видеть?</span><div class='scroll-wheel'><span>крути</span> <span>колесо</span> <span>мышки</span></div>",
         "parents": [36, 3213]        
       },
         {
-          "id": "6001",
-          "label": "<span>выбрать</span>",
+          "id": "6011",
+          "label": "<span>ярким</span>",
           "parents": [60],        
-          "goTo": 601       
+          "isThemeOption": true,
+          "themeOption1": true
         },
         {
-          "id": "601",
-          "label": "<div class='scroll-up-down-wrapper'><img src='../../../img/icons/up.png' class='img-up'><img src='../../../img/icons/down.png' class='img-down'></div>",
-          "parents": [6001],        
-          "goOut": true      
+          "id": "6012",
+          "label": "<span>тёмным</span>",
+          "parents": [60],        
+          "isThemeOption": true,
+          "themeOption2": true
         },
-          {
-            "id": "6011",
-            "label": "<span>ярким</span>",
-            "parents": [601],        
-            "lineCount": 1
-          },
-          {
-            "id": "6012",
-            "label": "<span>тёмным</span>",
-            "parents": [601],        
-            "lineCount": 1
-          },
-          {
-            "id": "6013",
-            "label": "<span>позитивным</span>",
-            "parents": [601],        
-            "lineCount": 1
-          },
-          {
-            "id": "6014",
-            "label": "<span>серьёзным</span>",
-            "parents": [601],        
-            "lineCount": 1
-          },
-          {
-            "id": "6015",
-            "label": "<span>спокойным</span>",
-            "parents": [601],        
-            "lineCount": 1
-          }
+        {
+          "id": "6013",
+          "label": "<span>позитивным</span>",
+          "parents": [60],        
+          "isThemeOption": true,
+          "themeOption3": true
+        },
+        {
+          "id": "6014",
+          "label": "<span>солидным</span>",
+          "parents": [60],        
+          "isThemeOption": true,
+          "themeOption4": true
+        },
+        {
+          "id": "6015",
+          "label": "<span>спокойным</span>",
+          "parents": [60],        
+          "isThemeOption": true,
+          "themeOption5": true
+        }
 
 
   ]
