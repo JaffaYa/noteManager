@@ -4016,7 +4016,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     // e.preventDefault();
     removeOldLines();
     delta -= e.deltaY / 2.5;
-    console.dir(delta);
+
+    //ограничение прокрутки параметры: delta и количество помещающееся на 1 экран нод
+    delta = movingForceRestriction(delta, 2.85);
+
     simulation // инициализация новых осей с новыми координатами
       .alpha(0.1) // начальный коеффициент активности среды после начала симмуляции
       .alphaTarget(0.1) // целевой коеффициент активности среды
@@ -4056,7 +4059,11 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     if (prevToutchY) {
       mobileDelta -= (prevToutchY - currToutchY) * 0.75;
     }
+
+    //ограничение прокрутки параметры: delta и количество помещающееся на 1 экран нод
+    mobileDelta = movingForceRestriction(mobileDelta, 2.85);
     // console.log('mobileDelta = ', mobileDelta);
+
     simulation.alpha(0.1)
     .alphaTarget(0.1)
     .velocityDecay(0.6)
@@ -4065,5 +4072,23 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     // .restart();
     prevToutchY = currToutchY;
   };
+
+  //фукция ограничения прокрутки
+  //nps количество помещающееся на 1 экран нод
+  function movingForceRestriction(delta, nps){
+	//общее количестов нод для прокруки
+    let noc = model.activeNode.children.length;
+    //примерное пространство для 1 ноды
+    let oneNode = height/nps;
+    //отнимаем 2 ноды с конца что бы при макс прокрутке ноды оставались на экране
+    let maxDelta = -((noc -2) * oneNode);
+
+    if(delta > 0){
+    	delta = 0;
+    }else if(delta < maxDelta){
+    	delta = maxDelta;
+    }
+    return delta;
+  }
 
 });
