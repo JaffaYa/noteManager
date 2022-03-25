@@ -454,10 +454,13 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
                 simulation.tick();
             }
 
+            view.restrictionScrolltick();
+
             // simulation.tick();
             model.stats.tick();
             //render
             simulationTick();
+
 
 
             ++animFrameCount;
@@ -953,6 +956,10 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         //         this.classList.add('show');
         //     });
 
+        if(model.activeNode.children.length < 4){
+        	view.scrollingFlag = false;
+        }
+
         d3newNodes // работа с новыми узлами (выполняеться для каждого узла в отдельности)
         // .classed('show',  d => d.functional )
         // .filter( d => !d.functional )
@@ -987,6 +994,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
               if(!verticalScreen){
                 d3newNodes.call(drag);
               }
+              view.scrollingFlag = true;
             }
             if (numsOfChildren < 4 && currentNodeID === lastNodeID) {
               // иначе (если узлов < 4)
@@ -2809,6 +2817,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
         this.isMobileWidth = isMobileWidth;
         this.findParenNodeElement = findParenNodeElement;
         this.setTextareaHeight = setTextareaHeight;
+        this.restrictionScrolltick = restrictionScrolltick;
         this.cursor = new cursor();
 
         var width = window.innerWidth;
@@ -4075,6 +4084,7 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 
   //фукция ограничения прокрутки
   //nps количество помещающееся на 1 экран нод
+  var lastDelta;
   function movingForceRestriction(delta, nps){
 	//общее количестов нод для прокруки
     let noc = model.activeNode.children.length;
@@ -4083,12 +4093,47 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
     //отнимаем 2 ноды с конца что бы при макс прокрутке ноды оставались на экране
     let maxDelta = -((noc -2) * oneNode);
 
-    if(delta > 0){
-    	delta = 0;
-    }else if(delta < maxDelta){
-    	delta = maxDelta;
+	let fcnode = model.getNodeById(model.activeNode.children[0]);
+    let lcnode = model.getNodeById(model.activeNode.children[noc-1]);
+    // console.dir(lcnode.y);
+    // console.dir(delta);
+
+    if(fcnode.y > 0 && delta >= lastDelta){
+    	delta = lastDelta;
     }
+    else if( lcnode.y < height/4 && delta <= lastDelta){
+    	delta = lastDelta;
+    }
+    // else if(delta < maxDelta ){
+    // 	delta = maxDelta;
+    // }
+
+
+
+    lastDelta = delta;
+
     return delta;
+  }
+
+  function restrictionScrolltick(){
+  	if(view.scrollingFlag){
+	  	let lcnode = model.getNodeById(model.activeNode.children[model.activeNode.children.length-1]);
+	  	let fcnode = model.getNodeById(model.activeNode.children[0]);
+	  	// console.dir(fcnode.y);
+	    if(lcnode.y < height/4){
+	    	delta += 10;
+	    	mobileDelta += 10;
+	    	simulation
+	    	.force('order')
+	    	.initialize(model.nodesToDisplay);
+	    }else if(fcnode.y > -100){
+	    	delta -= 10;
+	    	mobileDelta -= 10;
+	    	simulation
+	    	.force('order')
+	    	.initialize(model.nodesToDisplay);
+	    }
+	}
   }
 
 });
